@@ -122,6 +122,11 @@ test('C01-C04/C06/C10-C12: revised wording keeps authored effects and grounded c
  for(const [id,old]of Object.entries(before.events)){
   const strip=v=>JSON.parse(JSON.stringify(v,(k,x)=>['text','label','note','maxRemain','foreseeable','sleep'].includes(k)?undefined:x));
   const current=h.json(`event('${id}')`);
+  if(id==='loc_lake'){
+   assert.deepEqual(current.turnSpeakers,[{who:'passer_elder',name:'낚시꾼'}]);
+   assert.equal(old.turnSpeakers,undefined);
+   delete current.turnSpeakers;
+  }
   if(id==='wx_bigwash'){
    assert.deepEqual(current.turnSpeakers,['party_first']);
    assert.deepEqual(current.choices[0].out[0].turnSpeakers,[]);
@@ -142,11 +147,18 @@ test('C01-C04/C06/C10-C12: revised wording keeps authored effects and grounded c
    delete current.choices[0].out[0].turnSpeakers;
    delete current.choices[1].out[0].turnSpeakers;
   }
+  if(id==='water_toll'){
+   assert.deepEqual(current.choices[1].out[0].turnSpeakers,['me',{who:'passer_man',name:'청년'},'me']);
+   assert.equal(old.choices[1].out[0].turnSpeakers,undefined);
+   delete current.choices[1].out[0].turnSpeakers;
+  }
   if(id==='crisis_drowsy'){
    assert.equal(current.choices[0].out[0].fx.sleeping,true);
    delete current.choices[0].out[0].fx.sleeping;
   }
   if(id==='exp_temple'){
+   assert.deepEqual(current.choices[0].out[0].turnSpeakers,[{who:'passer_elder',name:'노보살'}]);
+   delete current.choices[0].out[0].turnSpeakers;
    assert.deepEqual(current.choices[1].req,{scrap:1});
    delete current.choices[1].req;
   }

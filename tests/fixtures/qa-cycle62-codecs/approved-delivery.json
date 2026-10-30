@@ -1,0 +1,62 @@
+[
+  {
+    "source": "assets/scenes/comp-talk-parkss-camp-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/comp-talk-parkss-camp-v1.webp",
+    "target": "assets/scenes/comp-talk-parkss-camp-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 93386,
+    "candidateBytes": 54100,
+    "saved": 39286,
+    "meanAbsoluteError": 1.3317187901877572,
+    "psnr": 42.95842041217962,
+    "sourceSha256": "6dac78422f40e72a17fe3f517be4f2e2d02b1294e917ecb656606d6a23d0ae5c",
+    "candidateSha256": "8d7f17247c425f84c1e4b997becd789c12336ddc974d8c02e57a0ddf6344e4d7"
+  },
+  {
+    "source": "assets/scenes/comp-talk-eunsu-camp-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/comp-talk-eunsu-camp-v1.webp",
+    "target": "assets/scenes/comp-talk-eunsu-camp-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 93405,
+    "candidateBytes": 54146,
+    "saved": 39259,
+    "meanAbsoluteError": 1.3319398228523662,
+    "psnr": 42.987172630320735,
+    "sourceSha256": "d07edcbbe7c947ebc18538816bdad3991103d1059562d09a717215c316f65983",
+    "candidateSha256": "ac197e33d5f25bec21950083fb332ad2ce7b2afadac01a608e40dc62fa677cdb"
+  },
+  {
+    "source": "assets/scenes/comp-talk-jaeyi-camp-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/comp-talk-jaeyi-camp-v1.webp",
+    "target": "assets/scenes/comp-talk-jaeyi-camp-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 97606,
+    "candidateBytes": 59318,
+    "saved": 38288,
+    "meanAbsoluteError": 1.3287459008487654,
+    "psnr": 43.100810392947,
+    "sourceSha256": "ad1606297eb0c5cea4da6adb2f9528e3a109057c3a25f2ccc704c9647616e71d",
+    "candidateSha256": "92f632b7fdec1f145eca6ba90c55fd3303ab5915585b8ddaae71e98ef16c02da"
+  },
+  {
+    "source": "assets/scenes/comp-talk-kangwoo-camp-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/comp-talk-kangwoo-camp-v1.webp",
+    "target": "assets/scenes/comp-talk-kangwoo-camp-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 78414,
+    "candidateBytes": 41706,
+    "saved": 36708,
+    "meanAbsoluteError": 1.200833293145576,
+    "psnr": 43.784984889530094,
+    "sourceSha256": "701c91f5f6fb4b10d1f589507d8909ec76443528c582ab1438deecebcde5e003",
+    "candidateSha256": "0f7bbb97f7ffeb3befb1a29ade97b0ea352dd5eb3a7bed282ae8879966b0861a"
+  }
+]

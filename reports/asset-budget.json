@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-26T12:13:06.620Z",
+  "generatedAt": "2026-10-30T11:30:19.053Z",
   "html": {
-    "bytes": 113875041,
-    "warnBytes": 32000000,
-    "maxBytes": 120000000
+    "bytes": 123298992,
+    "warnBytes": 160000000,
+    "maxBytes": 200000000
   },
   "literalPool": {
     "assets": 5,
     "savedBytes": 315331
   },
   "losslessDelivery": {
-    "assets": 650,
-    "savedBytes": 4510068
+    "assets": 776,
+    "savedBytes": 5130523
   },
   "embedded": {
-    "files": 893,
-    "bytes": 82373295,
+    "files": 1019,
+    "bytes": 89851079,
     "categories": {
       "audio": {
         "files": 45,
@@ -27,15 +27,15 @@
         "bytes": 27902332,
         "encodedBytes": 37203340
       },
-      "scene": {
-        "files": 541,
-        "bytes": 40516333,
-        "encodedBytes": 54022520
-      },
       "other": {
         "files": 78,
         "bytes": 3196537,
         "encodedBytes": 4262172
+      },
+      "scene": {
+        "files": 667,
+        "bytes": 47994117,
+        "encodedBytes": 63993076
       },
       "portrait": {
         "files": 50,
@@ -106,18 +106,6 @@
       "encodedBytes": 458304
     },
     {
-      "path": "assets/scenes/intro-departure-start-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 342821,
-      "encodedBytes": 457096
-    },
-    {
-      "path": "assets/scenes/onboarding-first-road-scan-v1.jpg",
-      "mime": "image/jpeg",
-      "bytes": 328076,
-      "encodedBytes": 437436
-    },
-    {
       "path": "assets/ui/road-studies/atlas-v1/gangneung--sokcho.webp",
       "mime": "image/webp",
       "bytes": 321190,
@@ -128,12 +116,6 @@
       "mime": "image/webp",
       "bytes": 320574,
       "encodedBytes": 427432
-    },
-    {
-      "path": "assets/scenes/intro-departure-conversation-v4.jpg",
-      "mime": "image/jpeg",
-      "bytes": 316589,
-      "encodedBytes": 422120
     },
     {
       "path": "assets/ui/road-studies/atlas-v1/filmset--namwon.webp",
@@ -164,6 +146,24 @@
       "mime": "image/webp",
       "bytes": 298220,
       "encodedBytes": 397628
+    },
+    {
+      "path": "assets/ui/road-studies/atlas-v1/daegwallyeong--gangneung.webp",
+      "mime": "image/webp",
+      "bytes": 297456,
+      "encodedBytes": 396608
+    },
+    {
+      "path": "assets/ui/road-studies/atlas-v1/cablecar--mungyeong.webp",
+      "mime": "image/webp",
+      "bytes": 297044,
+      "encodedBytes": 396060
+    },
+    {
+      "path": "assets/ui/road-studies/atlas-v1/gimhae--jinju.webp",
+      "mime": "image/webp",
+      "bytes": 296938,
+      "encodedBytes": 395920
     }
   ]
 }

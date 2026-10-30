@@ -1,0 +1,51 @@
+[
+  {
+    "kind": "narration",
+    "text": "바리케이드 앞에 쪼그려 앉아 아이들과 눈높이를 맞췄다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "재미없으면요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "…재미없으면 못 지나가요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "그런 규칙이야?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "방금 정했어요."
+  },
+  {
+    "kind": "narration",
+    "text": "아이들은 배를 잡고 웃더니"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "통과!!"
+  },
+  {
+    "kind": "narration",
+    "text": "를 외치며 경례했다. 초소 옆 바구니에서 삶은 감자 세 알을 통행증으로 줬다."
+  },
+  {
+    "kind": "narration",
+    "text": "어른들이 멀리서 고개를 숙였다. 고마움의 각도였다."
+  }
+]

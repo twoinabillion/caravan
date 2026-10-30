@@ -1,3 +1,12 @@
+
+// Cycle29: project only the reviewed standalone-attribution edit into frozen baselines.
+function projectCycle29(id,now,old){
+ const changes={talk_mj_18:[0,'중간에 "아니 그게 아니라"를 두 번쯤 하더니 고개를 끄덕였다.','중간에 두 번쯤 말했다. "아니 그게 아니라" 그러더니 고개를 끄덕였다.'],talk_jy_18:[1,'웃다가 다시 "저녁 뭐예요?" 하고 물었다.','웃다가 다시 물었다. "저녁 뭐예요?"']};
+ const change=changes[id];if(!change)return now;
+ const [i,from,to]=change,was=old.choices[i].out[0].text,cur=now.choices[i].out[0].text;
+ assert.equal(was.split(from).length,2,id+' old fragment');assert.equal(cur,was.replace(from,to),id+' exact cycle29 delta');
+ now.choices[i].out[0].text=was;return now;
+}
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
 const dir=path.join(__dirname,'../qa-artifacts/qa-cycle-20261026/cycle12/survival/reader-fix');
@@ -36,6 +45,6 @@ test('only explicit speaker metadata changes: prose, choices, gates, probabiliti
    assert.equal(old.choices[1].out[0].text.split(previous).length,2);
    current.choices[1].out[0].text=text.replace(revised,previous);
   }
-  assert.deepEqual(current,old,id);
+  assert.deepEqual(projectCycle29(id,current,old),old,id);
  }
 });

@@ -1,0 +1,25 @@
+[
+  {
+    "source": "assets/upgrades/passenger-seat-v1.jpg",
+    "sourceSha256": "b708c8e1eb58a03e4f201fdd6f1b999c3175284917690bcbc68d9aec5f008cfc",
+    "sourceBytes": 227369,
+    "width": 1440,
+    "height": 480,
+    "sourceAlpha": false,
+    "quality": 92,
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle64/explorer/codec/q92/assets/upgrades/passenger-seat-v1.webp",
+    "candidateSha256": "37673d73498c0cb8a80f83a1dd783e9e2c0e84c596d2c0df32c0304274d3a16b",
+    "candidateBytes": 142078,
+    "candidateWidth": 1440,
+    "candidateHeight": 480,
+    "candidateAlpha": false,
+    "psnr": 42.820353241851556,
+    "mae": 1.3738937114197531,
+    "saved": 85291,
+    "referencedInBuilder": true,
+    "estimatedEmbeddedSavings": 113720,
+    "passes": true,
+    "target": "assets/upgrades/passenger-seat-v1.webp",
+    "measurement": "RGB decoded sRGB, alpha metadata checked independently"
+  }
+]

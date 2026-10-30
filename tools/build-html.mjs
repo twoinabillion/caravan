@@ -56,17 +56,17 @@ const introScenes = {
   INTRO_DEPARTURE_CHOICE:'assets/intro/08-departure-choice-v3.jpg',
   INTRO_PARENTS_DISCOVERY:'assets/intro/09-parents-discovery.webp',
   INTRO_SILENCED_PRESENTATION:'assets/intro/10-silenced-presentation.webp',
-  INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion-v2.jpg',
+  INTRO_CURRENT_EXPULSION:'assets/intro/11-current-expulsion-v2.webp',
   INTRO_DOCK_AID:'assets/scenes/opening-bus-family-v3.webp',
   INTRO_APPEAL_DENIED:'assets/intro/15-appeal-denied.jpg',
   INTRO_DASHBOARD_MODULE:'assets/intro/13-dashboard-module.jpg',
   INTRO_WORKSHOP_DEPARTURE:'assets/intro/16-workshop-shutter-v2.jpg'
 };
 const upgradeScenes = {
-  FUEL:'assets/upgrades/fuel.jpg', SEATING:'assets/upgrades/seating-v2.jpg',
+  FUEL:'assets/upgrades/fuel.jpg', SEATING:'assets/upgrades/seating-v2.webp',
   CHASSIS:'assets/upgrades/chassis.jpg', UTILITY:'assets/upgrades/utility.jpg',
   POWER:'assets/upgrades/power.jpg', CAMP:'assets/upgrades/camp.jpg',
-  LIVING:'assets/upgrades/living.jpg', PASSENGER:'assets/upgrades/passenger-seat-v1.jpg',
+  LIVING:'assets/upgrades/living.jpg', PASSENGER:'assets/upgrades/passenger-seat-v1.webp',
   ITEM_TANK1:'assets/upgrades/upgrade-tank1-v1.webp',
   ITEM_TANK2:'assets/upgrades/upgrade-tank2-v1.webp',
   ITEM_BENCH:'assets/upgrades/upgrade-bench-v1.webp',

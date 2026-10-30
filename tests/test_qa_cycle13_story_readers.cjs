@@ -10,8 +10,10 @@ for(const spec of cases){
  for(const party of [owner?[owner]:[],['jaeyi','parkss']])test(`${spec.id}.${spec.i} real reader / ${party.join('+')||'solo'} and paid reload`,()=>{
   const h=fixture(spec,party);h.run(`globalThis.r=G.resolvePresentedChoice(e,e.choices[${spec.i}])`);assert(h.run('r.ok&&r.applied'));
   const turns=reader(h,spec.i),spoken=turns.filter(t=>['dialogue','radio','record'].includes(t.kind));
-  assert.deepEqual(spoken.map(t=>[t.kind,t.who]),spec.route.map(r=>typeof r==='string'?['dialogue',r]:[r.kind||'dialogue',r.who]));
-  spec.route.forEach((r,i)=>{if(r.name)assert.equal(spoken[i].name,r.name);if(r.medium)assert.equal(spoken[i].medium,r.medium);});
+  const route=spec.id==='cleaners_recall'&&spec.i===1?['me',...spec.route.slice(1)]:spec.route;
+  if(spec.id==='cleaners_recall'&&spec.i===1){assert.equal(spec.route[0].who,'passer_man');assert.equal(spoken[0].text,'본인 의사는 확인하셨습니까.');}
+  assert.deepEqual(spoken.map(t=>[t.kind,t.who]),route.map(r=>typeof r==='string'?['dialogue',r]:[r.kind||'dialogue',r.who]));
+  route.forEach((r,i)=>{if(r.name)assert.equal(spoken[i].name,r.name);if(r.medium)assert.equal(spoken[i].medium,r.medium);});
   assert(spoken.every(t=>t.name!=='???'&&!t.speakerUncertain));
   const paid=state(h);h.run(`S.pendingPresentation.view={turns,index:1};G.save();G.load();globalThis.r=G.resolvePresentedChoice(e,e.choices[${spec.i}])`);
   assert.equal(h.run('r.applied'),false);assert.deepEqual(reader(h,spec.i),turns);assert.equal(state(h),paid);
@@ -24,7 +26,11 @@ test('legacy text-only paid receipt does not borrow new source routes',()=>{
  for(const spec of cases){const h=setup(),paid=JSON.parse(fs.readFileSync(path.join(dir,spec.id+'-legacy-paid.json'),'utf8'));delete paid.pendingPresentation.view;assert(h.run('G.load('+JSON.stringify(JSON.stringify(paid))+')'));const before=state(h);h.run(`globalThis.e=event('${spec.id}');globalThis.r=G.resolvePresentedChoice(e,e.choices[${spec.i}])`);assert.equal(h.run('r.applied'),false);assert.equal(h.run('!!r.out.frozenTextOnly'),true);assert.deepEqual(reader(h,spec.i),h.json('buildStoryTurns(r.out.text,e,{frozenTextOnly:true,turnSpeakers:[]})'));assert.equal(state(h),before);}
 });
 test('all authored event words, costs, gates, probabilities and effects remain equal',()=>{
- const h=setup();for(const id of Object.keys(baseline)){const now=JSON.parse(h.run(`JSON.stringify(event('${id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));const old=JSON.parse(JSON.stringify(baseline[id],(k,v)=>k==='turnSpeakers'?undefined:v));assert.deepEqual(now,old);}
+ const h=setup();for(const id of Object.keys(baseline)){const now=JSON.parse(h.run(`JSON.stringify(event('${id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));const old=JSON.parse(JSON.stringify(baseline[id],(k,v)=>k==='turnSpeakers'?undefined:v));
+  for(const [changed,ci,before,after] of [
+   ['cleaners_recall',1,'우리가 창문을 올리지 않고 버티자, 회수조는 "오늘은 여기까지"라며 물러났다.', '우리가 창문을 올리지 않고 버티자, 회수조 선두가 말했다.\n\n"오늘은 여기까지."\n\n회수조는 물러났다.'],
+   ['talkr_pss_1',0,'답에 따라 처방이 나왔다. 물 한 잔이거나, 스트레칭이거나, "오늘은 일찍 자" 한마디거나.', '답에 따라 물 한 잔을 권하거나 스트레칭을 알려줬다.\n\n"오늘은 일찍 자."\n\n그 말도 처방이었다.']]) if(id===changed){let expected=old.choices[ci].out[0].text.replace(before,after);if(id==='cleaners_recall')expected=expected.replace('남자가 되물었다.','남자가 대답했다.');assert.equal(now.choices[ci].out[0].text,expected);now.choices[ci].out[0].text=old.choices[ci].out[0].text;}
+  assert.deepEqual(now,old);}
 });
 test('roof work describes the repair during an existing storm without changing its cost/effects',()=>{
  const h=setup();h.run("S.at='jeonju';S.weather='storm';S.min=900");const now=h.json("D.stls.jeonju.field.actions.find(x=>x.id==='roof_tiles')"),old=require(path.join(dir,'before-roof.json'));

@@ -1,0 +1,51 @@
+[
+  {
+    "kind": "narration",
+    "text": "고철을 세어 주자 남자가 장부를 펼쳤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "남자",
+    "text": "차 번호."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "…차 쪽에 적혀 있어요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "남자",
+    "text": "여기서 안 보이는데."
+  },
+  {
+    "kind": "narration",
+    "text": "펜을 물고 잠깐 생각하더니 그냥 「오늘 세 번째 차」라고 썼다. 옆에서 누가"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_worker",
+    "name": "옆의 사람",
+    "text": "네 번째예요"
+  },
+  {
+    "kind": "narration",
+    "text": "했지만 고치지 않았다."
+  },
+  {
+    "kind": "narration",
+    "text": "「통행 허가 · 유효 3일」. 창고 안은 이미 절반이 비어 있었고, 남은 것도 쓸 만하진 않았다."
+  },
+  {
+    "kind": "narration",
+    "text": "나오는데 남자가 굳이 일러줬다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "남자",
+    "text": "3일 지나면 또 받습니다."
+  }
+]

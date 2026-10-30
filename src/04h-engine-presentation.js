@@ -32,6 +32,26 @@ G.deferSkylineOpening = id=>{
 };
 G.presentationCopy = value=>JSON.parse(JSON.stringify(value));
 G.presentationText = value=>typeof value==='string'?value.slice(0,40000):'';
+// Optional clock provenance for newly created opt-in scene receipts only.
+G.presentationSceneTime = value=>value&&Number.isInteger(value.day)&&value.day>=1
+  &&Number.isFinite(value.min)&&value.min>=0&&value.min<1440
+  ?{day:value.day,min:value.min}:null;
+// Fixed scene provenance belongs to the receipt, not the present clock or registry.
+G.presentationFixedScene = value=>value&&typeof value.base==='string'&&typeof value.scene==='string'
+  &&D.scenes&&Object.hasOwn(D.scenes,value.base)&&Object.hasOwn(D.scenes,value.scene)
+  &&typeof D.scenes[value.base]==='string'&&typeof D.scenes[value.scene]==='string'
+  ?{base:value.base,scene:value.scene}:null;
+D.eventSceneTimeVariantFor = id=>D.eventSceneTimeVariants?.[id]
+  ||(typeof id==='string'&&/^camp_\d+_minji$/.test(id)
+    ?{base:'comp-talk-minji-road-v1',day:'comp-minji-closed-panel-day-v1',night:'comp-talk-minji-camp-v1'}
+    :(()=>{
+      const match=typeof id==='string'&&/^camp_\d+_(jaeyi|leo|eunsu|parkss|kangwoo)$/.exec(id);
+      if(!match)return null;
+      const cid=match[1],day=`comp-talk-${cid}-camp-day-v1`,night=`comp-talk-${cid}-camp-v1`;
+      return {byBase:{[`comp-talk-${cid}-road-v1`]:{day,night},[night]:{day,night}}};
+    })());
+G.newPresentationSceneTime = event=>D.eventSceneTimeVariantFor(event?.id)
+  ?G.presentationSceneTime({day:S.day,min:S.min}):null;
 // Reading state belongs to the existing gameplay receipt, including the two
 // specialized owners. It never contains executable effects or rendered HTML.
 G.presentationOwner = eventId=>{
@@ -64,6 +84,7 @@ G.presentationView = view=>{
     });
   if(!turns.length) return null;
   return {turns,index:clamp(Math.floor(Number(view.index)||0),0,turns.length-1),
+    ...(G.presentationSceneTime(view.sceneTime)?{sceneTime:G.presentationSceneTime(view.sceneTime)}:{}),
     knownSpeaker:view.knownSpeaker===true,readingRecord:G.presentationText(view.readingRecord),
     recordOpen:view.recordOpen===true,readingRecordLabel:G.presentationText(view.readingRecordLabel),
     ...(view.readingPage?{readingPage:{
@@ -86,6 +107,8 @@ G.validatePresentation = value=>{
   if(!event) return null;
   const row={version:1,eventId:event.id,phase:value.phase};
   if(value.phase==='transition') return row;
+  if(G.presentationSceneTime(value.sceneTime))row.sceneTime=G.presentationSceneTime(value.sceneTime);
+  if(G.presentationFixedScene(value.fixedScene))row.fixedScene=G.presentationFixedScene(value.fixedScene);
   if(event.roadCheckIn&&value.phase==='event'&&(!S?.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn))) return null;
   row.text=G.presentationText(value.text);
   row.view=G.presentationView(value.view);
@@ -118,6 +141,8 @@ G.beginPresentation = event=>{
   const saved=S.pendingPresentation;
   if(saved&&saved.eventId===event.id&&saved.phase!=='transition') return saved;
   S.pendingPresentation={version:1,eventId:event.id,phase:'event',
+    ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
+    ...(G.presentationFixedScene(D.eventSceneFixedVariants?.[event.id])?{fixedScene:G.presentationFixedScene(D.eventSceneFixedVariants[event.id])}:{}),
     text:G.presentationText(typeof event.text==='function'?event.text(S):event.text)};
   G.save();
   return S.pendingPresentation;
@@ -220,6 +245,8 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
     }
     if(!own&&!S.ended){
       S.pendingPresentation=G.validatePresentation({version:1,phase:'result',eventId:event.id,
+        ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
+        ...(saved?.eventId===event.id&&G.presentationFixedScene(saved.fixedScene)?{fixedScene:G.presentationFixedScene(saved.fixedScene)}:{}),
         choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState,authoredView});
     }
     if(!S.ended&&(!own||own.applied)){

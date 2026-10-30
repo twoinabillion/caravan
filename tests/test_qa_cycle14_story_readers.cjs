@@ -1,3 +1,12 @@
+
+// Cycle29: project only the reviewed standalone-attribution edit into frozen baselines.
+function projectCycle29(id,now,old){
+ const changes={talk_mj_18:[0,'중간에 "아니 그게 아니라"를 두 번쯤 하더니 고개를 끄덕였다.','중간에 두 번쯤 말했다. "아니 그게 아니라" 그러더니 고개를 끄덕였다.'],talk_jy_18:[1,'웃다가 다시 "저녁 뭐예요?" 하고 물었다.','웃다가 다시 물었다. "저녁 뭐예요?"']};
+ const change=changes[id];if(!change)return now;
+ const [i,from,to]=change,was=old.choices[i].out[0].text,cur=now.choices[i].out[0].text;
+ assert.equal(was.split(from).length,2,id+' old fragment');assert.equal(cur,was.replace(from,to),id+' exact cycle29 delta');
+ now.choices[i].out[0].text=was;return now;
+}
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const dir=path.join(__dirname,'../qa-artifacts/qa-cycle-20261026/cycle14/story/reader-fix');
 const {setup}=require(path.join(dir,'setup.cjs')),specs=[...require(path.join(dir,'cases.json')),...require(path.join(dir,'pair-cases.json')),...require(path.join(dir,'clarity-cases.json'))],baseline={...require(path.join(dir,'before-events.json')),...require(path.join(dir,'before-pair-events.json')),...require(path.join(dir,'before-clarity-events.json'))};
@@ -37,7 +46,7 @@ test('all words/mechanics stay equal except three exact reviewed prose correctio
   if(id==='loc_mungyeong'){assert(Array.isArray(now.turns));delete now.turns;}
   if(id==='loc_airfield'){assert.equal(now.choices[1].out[0].text,'케이블을 찾아 끊었다. 활주로를 따라 켜져 있던 유도등이 일제히 꺼졌다.\n\n뭘 기다리고 있었는지 몰라도, 이제 이 불빛을 따라오지는 못할 거다.\n\n끊은 케이블은 좋은 구리값이 됐다.');now.choices[1].out[0].text=was.choices[1].out[0].text;}
   if(id==='ev_comp_birthday'){assert.equal(now.choices[0].out[0].fx.note.body,'국을 끓이고 사탕을 초 대신 세워 민지 생일을 챙겼다. 시크한 척하던 눈가가 붉었다.');now.choices[0].out[0].fx.note.body=was.choices[0].out[0].fx.note.body;}
-  assert.deepEqual(now,was,id);
+  assert.deepEqual(projectCycle29(id,now,was),was,id);
  }
 });
 test('airfield cut-cable result works at morning, afternoon, night and after midnight with time unchanged',()=>{
@@ -59,10 +68,17 @@ test('all 48 personal events / 74 outcomes preserve words and unaffected actual-
    assert.equal(row.event.choices[0].out[0].fx.note.body,'밤 단파로 들은 모르는 나라의 노래. 헤드폰 반쪽의 동맹.');
    current.choices[0].out[0].fx.note.body=row.event.choices[0].out[0].fx.note.body;
   }
-  assert.deepEqual(clean(current),clean(row.event),row.id+' words/effects');
+  if(row.id==='talk_mj_10'){const was=row.event.choices[1].out[0].text;assert.equal(current.choices[1].out[0].text,was.replace('받았다. 무게가 렌치 무게가 아니었다.','받았다. 렌치에 새겨진 17mm를 손가락으로 짚었다. 무게가 렌치 무게가 아니었다.'));current.choices[1].out[0].text=was;}
+  assert.deepEqual(clean(projectCycle29(row.id,current,row.event)),clean(row.event),row.id+' words/effects');
   for(const c of row.choices){if(specs.find(s=>s.id===row.id)?.choices[c.i+'.'+c.o])continue;
    h.run(`globalThis.out=e.choices[${c.i}].out[${c.o}];globalThis.ts=typeof out.turns==='function'?out.turns(S):Array.isArray(out.turns)&&out.turns.length?out.turns:buildStoryTurns(prose(out.text),e,{knownSpeaker:!!entry.knownSpeaker,speakers:out.speakers,turnSpeakers:out.turnSpeakers})`);
-   assert.deepEqual(h.json('ts'),c.turns,row.id+'.'+c.i+'.'+c.o+' unchanged reader');
+   const expected=JSON.parse(JSON.stringify(c.turns));
+   if(row.id==='talk_mj_18'&&c.i===0&&c.o===0){
+    const first=expected.find(t=>t.text==='다시 불게 하고, 또 불게 하고, 중간에');const last=expected.find(t=>t.text==='를 두 번쯤 하더니 고개를 끄덕였다.');
+    assert(first&&last);first.text='다시 불게 하고, 또 불게 하고, 중간에 두 번쯤 말했다.';last.text='그러더니 고개를 끄덕였다.';
+   }
+   if(row.id==='talk_mj_10'&&c.i===1&&c.o===0){const turn=expected.find(t=>t.text.includes('받았다. 무게가 렌치 무게가 아니었다.'));assert(turn);turn.text=turn.text.replace('받았다. 무게가 렌치 무게가 아니었다.','받았다. 렌치에 새겨진 17mm를 손가락으로 짚었다. 무게가 렌치 무게가 아니었다.');}
+   assert.deepEqual(h.json('ts'),expected,row.id+'.'+c.i+'.'+c.o+' unchanged reader');
   }
  }
 });
@@ -80,7 +96,8 @@ test('all ten Minji pair events preserve prose/FX and unaffected actual-reader r
   const clean=v=>JSON.parse(JSON.stringify(v,(k,v)=>['turnSpeakers','turns'].includes(k)?undefined:v));
   const current=JSON.parse(h.run("JSON.stringify(e,(k,v)=>typeof v==='function'?v.toString():v)"));
   if(row.id==='pair_mj_es_2')current.choices[0].out[0].fx.note.body=row.event.choices[0].out[0].fx.note.body;
-  assert.deepEqual(clean(current),clean(row.event),row.id+' words/effects');
+  if(row.id==='talk_mj_10'){const was=row.event.choices[1].out[0].text;assert.equal(current.choices[1].out[0].text,was.replace('받았다. 무게가 렌치 무게가 아니었다.','받았다. 렌치에 새겨진 17mm를 손가락으로 짚었다. 무게가 렌치 무게가 아니었다.'));current.choices[1].out[0].text=was;}
+  assert.deepEqual(clean(projectCycle29(row.id,current,row.event)),clean(row.event),row.id+' words/effects');
   for(const c of row.choices){if(changed?.choices[c.i+'.'+c.o])continue;
    h.run(`globalThis.out=e.choices[${c.i}].out[${c.o}];globalThis.ts=buildStoryTurns(prose(out.text),e,{knownSpeaker:!!entry.knownSpeaker,speakers:out.speakers,turnSpeakers:out.turnSpeakers})`);assert.deepEqual(h.json('ts'),c.turns,row.id+' result');
   }

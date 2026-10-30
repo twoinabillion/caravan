@@ -1,0 +1,4 @@
+27b9873f3cdf5b5548fff91e42c14ae65f4a4d7a4f2a87de9bd581c620d9b355  tests/fixtures/qa-cycle81-wine/baseline.json
+46fb8272ca7cda5204dd6080adda0d03030bd264ddccafa181b2465804968217  tests/fixtures/qa-cycle81-wine/entry-after-view-346-lc_yeongdong_wine.json
+c09de10e4d00109b5a2bd46be61598822f648d14b1975e9951aa071f12992480  tests/fixtures/qa-cycle81-wine/normal-unpaid-346-lc_yeongdong_wine.json
+060ed7833a91758614b77d261cac5da1ac25570264f16d420a891d2857479db7  tests/fixtures/qa-cycle81-wine/paid-from-natural-entry.json

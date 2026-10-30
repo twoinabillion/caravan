@@ -590,6 +590,13 @@ G.pickOutcome = (evd, choice)=>{
   }
   if(combatResult&&out&&out.fx&&!out.fx.combatResult)
     return {...out,presentationOutcomeIndex:index,fx:{...out.fx,combatResult},...(combatMeta?{combatMeta}:{} )};
+  if(evd?.id==='ev_fuel_thief_night'&&choice===evd.choices[1]&&!G.isInfiniteResourceMode()&&S.fuel<4){
+    out={...out,text:'가만히 봤다. 사내는 남은 기름을 조금 받아내더니, 미안하다는 듯 고개를 숙이고 사라졌다.\n\n쫓을 마음이 사라졌다.',fx:{...out.fx,note:{...out.fx.note,title:'남은 기름',body:'밤손님은 남은 기름을 조금 가져갔다. 세상엔 그런 도둑도 있다.'}}};
+  }
+  if(evd?.id==='ev_fuel_thief_night'&&choice===evd.choices[2]&&!G.hasResource('food',1)){
+    const ending=S.food>0?'기름통을 되찾고, 남은 식량을 조금 건네 돌려보냈다.':'기름통을 되찾자 사내는 빈손으로 물러났다.';
+    out={...out,text:'강우가 소리 없이 내려 사내의 손목을 잡았다. 실랑이는 없었다. \"…배고프면 말을 해. 이건 다음엔 안 봐준다.\" '+ending};
+  }
   return {...out,presentationOutcomeIndex:index,...(combatMeta?{combatMeta}:{})};
 };
 

@@ -1,0 +1,26 @@
+[
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "점수는요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "안 매겨."
+  },
+  {
+    "kind": "dialogue",
+    "who": "parkss",
+    "text": "왜요."
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "다 붙었어. 어디 내려놔도 밥은 얻어먹겠더라."
+  },
+  {
+    "kind": "narration",
+    "text": "채점표는 끝내 안 나왔다."
+  }
+]

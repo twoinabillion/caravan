@@ -1,3 +1,12 @@
+
+// Cycle29: project only the reviewed standalone-attribution edit into frozen baselines.
+function projectCycle29(id,now,old){
+ const changes={talk_mj_18:[0,'중간에 "아니 그게 아니라"를 두 번쯤 하더니 고개를 끄덕였다.','중간에 두 번쯤 말했다. "아니 그게 아니라" 그러더니 고개를 끄덕였다.'],talk_jy_18:[1,'웃다가 다시 "저녁 뭐예요?" 하고 물었다.','웃다가 다시 물었다. "저녁 뭐예요?"']};
+ const change=changes[id];if(!change)return now;
+ const [i,from,to]=change,was=old.choices[i].out[0].text,cur=now.choices[i].out[0].text;
+ assert.equal(was.split(from).length,2,id+' old fragment');assert.equal(cur,was.replace(from,to),id+' exact cycle29 delta');
+ now.choices[i].out[0].text=was;return now;
+}
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
 const dir=path.join(__dirname,'../qa-artifacts/qa-cycle-20261026/cycle13/survival/reader-fix');
@@ -25,7 +34,7 @@ test('text-only previous receipts do not acquire newly authored speaker routes',
  }
 });
 test('only explicit speaker metadata changes: prose, choices, gates, probabilities and effects stay identical',()=>{
- const h=setup();for(const id of Object.keys(baseline)){const current=JSON.parse(h.run(`JSON.stringify(event('${id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));const old=JSON.parse(JSON.stringify(baseline[id],(k,v)=>k==='turnSpeakers'?undefined:v));assert.deepEqual(current,old,id);}
+ const h=setup();for(const id of Object.keys(baseline)){const current=JSON.parse(h.run(`JSON.stringify(event('${id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));const old=JSON.parse(JSON.stringify(baseline[id],(k,v)=>k==='turnSpeakers'?undefined:v));assert.deepEqual(projectCycle29(id,current,old),old,id);}
 });
 
 // Complete result matrix beneath every entry route introduced by survival in cycles12–14.
@@ -42,5 +51,5 @@ test('all entry-owner result fixtures preserve their prior paid view',()=>{
  for(const c of entryMatrix)for(const b of c.choices){const h=setup(),stem=`${c.id}-${b.i}-${b.o}`,folder=path.join(dir,'entry-sweep');assert(h.run('G.load('+JSON.stringify(fs.readFileSync(path.join(folder,stem+'-paid.json'),'utf8'))+')'));const before=state(h);h.run(`globalThis.knownSpeaker=!!S.pendingPresentation.reading.view.knownSpeaker;globalThis.e=event('${c.id}');globalThis.r=G.resolvePresentedChoice(e,e.choices[${b.i}]);`);assert.equal(h.run('r.applied'),false);assert.deepEqual(reader(h,b.i),JSON.parse(fs.readFileSync(path.join(folder,stem+'-reader.json'),'utf8')));assert.equal(state(h),before);}
 });
 test('complete entry-owner outcome matrix has unchanged prose and mechanics',()=>{
- const old=require(path.join(dir,'entry-sweep/before-events.json')),h=setup();for(const c of entryMatrix){assert.equal(h.run(`event('${c.id}').choices.reduce((n,c)=>n+c.out.length,0)`),c.choices.length,'matrix misses outcome '+c.id);const curr=JSON.parse(h.run(`JSON.stringify(event('${c.id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));assert.deepEqual(curr,JSON.parse(JSON.stringify(old[c.id],(k,v)=>k==='turnSpeakers'?undefined:v)));}
+ const old=require(path.join(dir,'entry-sweep/before-events.json')),h=setup();for(const c of entryMatrix){assert.equal(h.run(`event('${c.id}').choices.reduce((n,c)=>n+c.out.length,0)`),c.choices.length,'matrix misses outcome '+c.id);const curr=JSON.parse(h.run(`JSON.stringify(event('${c.id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));const was=JSON.parse(JSON.stringify(old[c.id],(k,v)=>k==='turnSpeakers'?undefined:v));assert.deepEqual(projectCycle29(c.id,curr,was),was);}
 });

@@ -1,0 +1,457 @@
+{
+  "definition": {
+    "id": "exp_kiln",
+    "minParty": 1,
+    "type": "탐색",
+    "w": 6,
+    "region": [
+      "south",
+      "mid"
+    ],
+    "title": "옹기 가마",
+    "text": "언덕 비탈에 오름가마가 누워 있다. 옹기 가마다.\n\n가마 입구가 흙벽돌로 봉해져 있다— 마지막 소성을 마치고 열지 못한 채인 것이다.\n\n안엔 오래전에 다 구워진 옹기들이 식은 채 기다리고 있을 것이다.",
+    "choices": [
+      {
+        "label": "가마를 연다",
+        "out": [
+          {
+            "p": 1,
+            "text": "벽돌을 조심히 헐었다. 서늘한 흙냄새와 함께— 옹기 수십 점이 나왔다. 항아리, 뚝배기, 시루. 전부 무사하다. 가마는 여러 해짜리 금고였다.\n\n뚝배기 두 개와 물항아리 하나를 모셔 실었다. 나머지는 가마에 도로 봉했다. 다음 사람의 금고로.\n\n떠나기 전에 누가 말했다. \"이거 구운 사람은 자기 마지막 작품이 다 잘 나온 거 알까.\" 알았으면 좋겠다고, 다들 생각했다.",
+            "fx": {
+              "time": 50,
+              "scrap": 3,
+              "water": 1,
+              "moodAll": 4,
+              "note": {
+                "type": "사건",
+                "title": "여러 해 금고",
+                "body": "봉인된 가마 속 무사한 옹기들. 셋만 모시고 도로 봉했다. 마지막 소성은 성공했다."
+              }
+            },
+            "turnSpeakers": [
+              "party_first"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "봉인을 존중한다",
+        "out": [
+          {
+            "p": 1,
+            "text": "열지 않았다. 봉한 사람이 돌아와서 열 수도 있으니까.\n\n가마 옆에 돌 하나만 얹었다. 잘 구워졌길 비는 마음으로.",
+            "fx": {
+              "moodAll": 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "entry": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":9,\"min\":600,\"at\":\"miryang\",\"driving\":null,\"fuel\":60,\"fuelMax\":70,\"water\":28,\"waterMax\":28,\"food\":24,\"foodMax\":24,\"scrap\":50,\"van\":82,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":1,\"의약품\":1,\"탄약\":0,\"남산행 편지\":1},\"party\":[\"minji\",\"jaeyi\",\"kangwoo\"],\"comps\":{\"minji\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":false,\"intro_appeal_failed\":false,\"intro_module_seen\":false,\"intro_workshop_left\":false,\"recruit_migration_v2\":true,\"seed_borrowed\":true,\"sea_route\":true,\"dome_dossier\":true,\"postman_met\":true},\"pursuit\":0,\"used\":[],\"quest\":null,\"recruitQ\":null,\"wx\":\"clear\",\"wxNext\":\"storm\",\"up\":{\"bench\":true},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1}],\"noteSeq\":5,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":0,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":0,\"events\":0,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":202020,\"fatigue\":35,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":1,\"_lunchDay\":0,\"_storyQueue\":[],\"_recentEvents\":[],\"_recentEventTypes\":[],\"_eventBreather\":0,\"_beatQueue\":[],\"_driveLegsSinceBlock\":3,\"_roadEventDay\":1,\"_roadEventCount\":0,\"_lastRoadEventKm\":-999,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":10,\"phase\":\"build\",\"relaxEvents\":0},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":1,\"_exploreNodes\":{},\"_salvagedNodes\":{},\"_salvageCount\":0,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793014000000,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":0,\"choices\":0,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":0,\"lockedChoices\":0},\"eventIds\":{},\"eventTypes\":{},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":0,\"choices\":0,\"combats\":0},\"lastEventType\":\"\",\"typeStreak\":0,\"maxTypeStreak\":0,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[]},\"resourceLatch\":{},\"routes\":{},\"settlements\":{},\"activeSettlement\":null,\"upgrades\":[],\"choiceEchoes\":0,\"milestones\":{},\"choiceCallbacks\":{\"remembered\":0,\"near\":0,\"late\":0,\"items\":{}},\"endings\":{},\"timeline\":[]},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":null,\"journeyRecaps\":[],\"_stlField\":{\"daily\":{},\"once\":{},\"impact\":{},\"roadEchoed\":{},\"log\":[]},\"_impactEcho\":{\"key\":\"miryang:parts\",\"stlId\":\"miryang\",\"from\":\"miryang\",\"to\":\"daegu\",\"actionId\":\"parts\",\"label\":\"부품 정리\",\"visual\":\"order\",\"wx\":\"clear\",\"done\":false},\"_rescues\":{},\"_stlNights\":{},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":0,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":0,\"pendingResult\":null,\"decisions\":{},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\"},\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 도윤 가족의 이송표를 확인한다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"companion_minji\",\"kind\":\"companion\",\"title\":\"새 임무 · 민지\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"},{\"id\":\"companion_jaeyi\",\"kind\":\"companion\",\"title\":\"새 임무 · 재이\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"},{\"id\":\"companion_kangwoo\",\"kind\":\"companion\",\"title\":\"새 임무 · 강우\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"}],\"mainHistory\":[],\"seenUpdateCount\":0,\"snapshot\":{\"main_namsan\":\"active|부산 감천 부두 · 떠나기 전|양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)|0/13\",\"companion_minji\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\",\"companion_jaeyi\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\",\"companion_kangwoo\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\"},\"mainState\":{\"chapterId\":\"prologue-family\",\"act\":\"서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":\"0/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"exp_kiln\",\"phase\":\"event\",\"text\":\"언덕 비탈에 오름가마가 누워 있다. 옹기 가마다.\\n\\n가마 입구가 흙벽돌로 봉해져 있다— 마지막 소성을 마치고 열지 못한 채인 것이다.\\n\\n안엔 오래전에 다 구워진 옹기들이 식은 채 기다리고 있을 것이다.\",\"reading\":{\"eventId\":\"exp_kiln\",\"phase\":\"event\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"언덕 비탈에 오름가마가 누워 있다. 옹기 가마다.\"},{\"kind\":\"narration\",\"text\":\"가마 입구가 흙벽돌로 봉해져 있다— 마지막 소성을 마치고 열지 못한 채인 것이다.\"},{\"kind\":\"narration\",\"text\":\"안엔 오래전에 다 구워진 옹기들이 식은 채 기다리고 있을 것이다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"event-explore-workshop\"]},\"history\":null,\"selection\":\"\",\"updates\":[]}}}",
+  "entryTurns": [
+    {
+      "kind": "narration",
+      "text": "언덕 비탈에 오름가마가 누워 있다. 옹기 가마다."
+    },
+    {
+      "kind": "narration",
+      "text": "가마 입구가 흙벽돌로 봉해져 있다— 마지막 소성을 마치고 열지 못한 채인 것이다."
+    },
+    {
+      "kind": "narration",
+      "text": "안엔 오래전에 다 구워진 옹기들이 식은 채 기다리고 있을 것이다."
+    }
+  ],
+  "outcomes": [
+    {
+      "ci": 0,
+      "oi": 0,
+      "result": {
+        "text": "벽돌을 조심히 헐었다. 서늘한 흙냄새와 함께— 옹기 수십 점이 나왔다. 항아리, 뚝배기, 시루. 전부 무사하다. 가마는 여러 해짜리 금고였다.\n\n뚝배기 두 개와 물항아리 하나를 모셔 실었다. 나머지는 가마에 도로 봉했다. 다음 사람의 금고로.\n\n떠나기 전에 누가 말했다. \"이거 구운 사람은 자기 마지막 작품이 다 잘 나온 거 알까.\" 알았으면 좋겠다고, 다들 생각했다.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "벽돌을 조심히 헐었다. 서늘한 흙냄새와 함께— 옹기 수십 점이 나왔다. 항아리, 뚝배기, 시루. 전부 무사하다. 가마는 여러 해짜리 금고였다."
+          },
+          {
+            "kind": "narration",
+            "text": "뚝배기 두 개와 물항아리 하나를 모셔 실었다. 나머지는 가마에 도로 봉했다. 다음 사람의 금고로."
+          },
+          {
+            "kind": "narration",
+            "text": "떠나기 전에 누가 말했다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "minji",
+            "text": "이거 구운 사람은 자기 마지막 작품이 다 잘 나온 거 알까."
+          },
+          {
+            "kind": "narration",
+            "text": "알았으면 좋겠다고, 다들 생각했다."
+          }
+        ],
+        "chips": [
+          {
+            "t": "물 0 · 적재 한도",
+            "c": ""
+          },
+          {
+            "t": "고철 +4",
+            "c": "plus"
+          },
+          {
+            "t": "50분 경과",
+            "c": ""
+          },
+          {
+            "t": "사기 +4",
+            "c": "plus"
+          },
+          {
+            "t": "새 기록 · 여러 해 금고",
+            "c": "item"
+          }
+        ],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "event-explore-workshop"
+          ]
+        }
+      },
+      "state": {
+        "day": 9,
+        "min": 650,
+        "food": 20,
+        "water": 24,
+        "fuel": 60,
+        "scrap": 54,
+        "van": 82,
+        "fatigue": 37.25,
+        "party": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ],
+        "comps": {
+          "minji": {
+            "mood": 69,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 69,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 69,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": false,
+          "intro_appeal_failed": false,
+          "intro_module_seen": false,
+          "intro_workshop_left": false,
+          "recruit_migration_v2": true,
+          "seed_borrowed": true,
+          "sea_route": true,
+          "dome_dossier": true,
+          "postman_met": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n5",
+            "type": "사건",
+            "title": "여러 해 금고",
+            "body": "봉인된 가마 속 무사한 옹기들. 셋만 모시고 도로 봉했다. 마지막 소성은 성공했다.",
+            "links": [],
+            "day": 9
+          }
+        ],
+        "items": {
+          "부품": 1,
+          "의약품": 1,
+          "탄약": 0,
+          "남산행 편지": 1
+        },
+        "seed": 202020,
+        "impact": {
+          "key": "miryang:parts",
+          "stlId": "miryang",
+          "from": "miryang",
+          "to": "daegu",
+          "actionId": "parts",
+          "label": "부품 정리",
+          "visual": "order",
+          "wx": "clear",
+          "done": false
+        },
+        "field": {
+          "daily": {},
+          "once": {},
+          "impact": {},
+          "roadEchoed": {},
+          "log": []
+        }
+      },
+      "paid": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":9,\"min\":650,\"at\":\"miryang\",\"driving\":null,\"fuel\":60,\"fuelMax\":70,\"water\":24,\"waterMax\":28,\"food\":20,\"foodMax\":24,\"scrap\":54,\"van\":82,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":1,\"의약품\":1,\"탄약\":0,\"남산행 편지\":1},\"party\":[\"minji\",\"jaeyi\",\"kangwoo\"],\"comps\":{\"minji\":{\"mood\":69,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":69,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":69,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":false,\"intro_appeal_failed\":false,\"intro_module_seen\":false,\"intro_workshop_left\":false,\"recruit_migration_v2\":true,\"seed_borrowed\":true,\"sea_route\":true,\"dome_dossier\":true,\"postman_met\":true},\"pursuit\":0,\"used\":[],\"quest\":null,\"recruitQ\":null,\"wx\":\"clear\",\"wxNext\":\"storm\",\"up\":{\"bench\":true},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1},{\"id\":\"n5\",\"type\":\"사건\",\"title\":\"여러 해 금고\",\"body\":\"봉인된 가마 속 무사한 옹기들. 셋만 모시고 도로 봉했다. 마지막 소성은 성공했다.\",\"links\":[],\"day\":9}],\"noteSeq\":6,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":0,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":0,\"events\":0,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":202020,\"fatigue\":37.25,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":9,\"_lunchDay\":0,\"_storyQueue\":[],\"_recentEvents\":[],\"_recentEventTypes\":[],\"_eventBreather\":0,\"_beatQueue\":[],\"_driveLegsSinceBlock\":3,\"_roadEventDay\":1,\"_roadEventCount\":0,\"_lastRoadEventKm\":-999,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":10,\"phase\":\"build\",\"relaxEvents\":0},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":1,\"_exploreNodes\":{},\"_salvagedNodes\":{},\"_salvageCount\":0,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793014000000,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":0,\"choices\":1,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":2,\"lockedChoices\":0},\"eventIds\":{},\"eventTypes\":{},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":0,\"choices\":1,\"combats\":0},\"lastEventType\":\"\",\"typeStreak\":0,\"maxTypeStreak\":0,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{},\"activeSettlement\":null,\"upgrades\":[],\"choiceEchoes\":0,\"milestones\":{\"first_choice\":{\"playMin\":0,\"day\":9,\"min\":600,\"km\":0,\"eventId\":\"exp_kiln\",\"choiceIndex\":0}},\"choiceCallbacks\":{\"remembered\":0,\"near\":0,\"late\":0,\"items\":{}},\"endings\":{},\"timeline\":[{\"type\":\"choice\",\"day\":9,\"min\":600,\"km\":0,\"playMin\":0,\"eventId\":\"exp_kiln\",\"eventType\":\"탐색\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":9,\"min\":600,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"exp_kiln\",\"choiceIndex\":0}],\"lastSeenAt\":1793014000000},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":null,\"journeyRecaps\":[],\"_stlField\":{\"daily\":{},\"once\":{},\"impact\":{},\"roadEchoed\":{},\"log\":[]},\"_impactEcho\":{\"key\":\"miryang:parts\",\"stlId\":\"miryang\",\"from\":\"miryang\",\"to\":\"daegu\",\"actionId\":\"parts\",\"label\":\"부품 정리\",\"visual\":\"order\",\"wx\":\"clear\",\"done\":false},\"_rescues\":{},\"_stlNights\":{},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":0,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":0,\"pendingResult\":null,\"decisions\":{},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\"},\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 도윤 가족의 이송표를 확인한다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"companion_minji\",\"kind\":\"companion\",\"title\":\"새 임무 · 민지\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"},{\"id\":\"companion_jaeyi\",\"kind\":\"companion\",\"title\":\"새 임무 · 재이\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"},{\"id\":\"companion_kangwoo\",\"kind\":\"companion\",\"title\":\"새 임무 · 강우\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"}],\"mainHistory\":[],\"seenUpdateCount\":4,\"snapshot\":{\"main_namsan\":\"active|부산 감천 부두 · 떠나기 전|양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)|0/13\",\"companion_minji\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\",\"companion_jaeyi\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\",\"companion_kangwoo\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\"},\"mainState\":{\"chapterId\":\"prologue-family\",\"act\":\"서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":\"0/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"exp_kiln\",\"phase\":\"result\",\"text\":\"벽돌을 조심히 헐었다. 서늘한 흙냄새와 함께— 옹기 수십 점이 나왔다. 항아리, 뚝배기, 시루. 전부 무사하다. 가마는 여러 해짜리 금고였다.\\n\\n뚝배기 두 개와 물항아리 하나를 모셔 실었다. 나머지는 가마에 도로 봉했다. 다음 사람의 금고로.\\n\\n떠나기 전에 누가 말했다. \\\"이거 구운 사람은 자기 마지막 작품이 다 잘 나온 거 알까.\\\" 알았으면 좋겠다고, 다들 생각했다.\",\"view\":null,\"reading\":{\"eventId\":\"exp_kiln\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"벽돌을 조심히 헐었다. 서늘한 흙냄새와 함께— 옹기 수십 점이 나왔다. 항아리, 뚝배기, 시루. 전부 무사하다. 가마는 여러 해짜리 금고였다.\"},{\"kind\":\"narration\",\"text\":\"뚝배기 두 개와 물항아리 하나를 모셔 실었다. 나머지는 가마에 도로 봉했다. 다음 사람의 금고로.\"},{\"kind\":\"narration\",\"text\":\"떠나기 전에 누가 말했다.\"},{\"kind\":\"dialogue\",\"text\":\"이거 구운 사람은 자기 마지막 작품이 다 잘 나온 거 알까.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"알았으면 좋겠다고, 다들 생각했다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"event-explore-workshop\"]},\"history\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"언덕 비탈에 오름가마가 누워 있다. 옹기 가마다.\"},{\"kind\":\"narration\",\"text\":\"가마 입구가 흙벽돌로 봉해져 있다— 마지막 소성을 마치고 열지 못한 채인 것이다.\"},{\"kind\":\"narration\",\"text\":\"안엔 오래전에 다 구워진 옹기들이 식은 채 기다리고 있을 것이다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"event-explore-workshop\"]},\"selection\":\"가마를 연다\",\"updates\":[{\"title\":\"메인 스토리 진행 · 도윤 가족의 이송표를 확인한다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"kind\":\"main\"},{\"title\":\"새 임무 · 민지\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"kind\":\"side\"},{\"title\":\"새 임무 · 재이\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"kind\":\"side\"},{\"title\":\"새 임무 · 강우\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"kind\":\"side\"}]},\"choiceIndex\":0,\"outcomeIndex\":0,\"chips\":[{\"t\":\"물 0 · 적재 한도\",\"c\":\"item\"},{\"t\":\"고철 +4\",\"c\":\"plus\"},{\"t\":\"50분 경과\",\"c\":\"item\"},{\"t\":\"사기 +4\",\"c\":\"plus\"},{\"t\":\"새 기록 · 여러 해 금고\",\"c\":\"item\"}]}}"
+    },
+    {
+      "ci": 1,
+      "oi": 0,
+      "result": {
+        "text": "열지 않았다. 봉한 사람이 돌아와서 열 수도 있으니까.\n\n가마 옆에 돌 하나만 얹었다. 잘 구워졌길 비는 마음으로.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "열지 않았다. 봉한 사람이 돌아와서 열 수도 있으니까."
+          },
+          {
+            "kind": "narration",
+            "text": "가마 옆에 돌 하나만 얹었다. 잘 구워졌길 비는 마음으로."
+          }
+        ],
+        "chips": [
+          {
+            "t": "사기 +2",
+            "c": "plus"
+          }
+        ],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "event-explore-workshop"
+          ]
+        }
+      },
+      "state": {
+        "day": 9,
+        "min": 600,
+        "food": 24,
+        "water": 28,
+        "fuel": 60,
+        "scrap": 50,
+        "van": 82,
+        "fatigue": 35,
+        "party": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ],
+        "comps": {
+          "minji": {
+            "mood": 67,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 67,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 67,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": false,
+          "intro_appeal_failed": false,
+          "intro_module_seen": false,
+          "intro_workshop_left": false,
+          "recruit_migration_v2": true,
+          "seed_borrowed": true,
+          "sea_route": true,
+          "dome_dossier": true,
+          "postman_met": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          }
+        ],
+        "items": {
+          "부품": 1,
+          "의약품": 1,
+          "탄약": 0,
+          "남산행 편지": 1
+        },
+        "seed": 202020,
+        "impact": {
+          "key": "miryang:parts",
+          "stlId": "miryang",
+          "from": "miryang",
+          "to": "daegu",
+          "actionId": "parts",
+          "label": "부품 정리",
+          "visual": "order",
+          "wx": "clear",
+          "done": false
+        },
+        "field": {
+          "daily": {},
+          "once": {},
+          "impact": {},
+          "roadEchoed": {},
+          "log": []
+        }
+      },
+      "paid": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":9,\"min\":600,\"at\":\"miryang\",\"driving\":null,\"fuel\":60,\"fuelMax\":70,\"water\":28,\"waterMax\":28,\"food\":24,\"foodMax\":24,\"scrap\":50,\"van\":82,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":1,\"의약품\":1,\"탄약\":0,\"남산행 편지\":1},\"party\":[\"minji\",\"jaeyi\",\"kangwoo\"],\"comps\":{\"minji\":{\"mood\":67,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":67,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":67,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":false,\"intro_appeal_failed\":false,\"intro_module_seen\":false,\"intro_workshop_left\":false,\"recruit_migration_v2\":true,\"seed_borrowed\":true,\"sea_route\":true,\"dome_dossier\":true,\"postman_met\":true},\"pursuit\":0,\"used\":[],\"quest\":null,\"recruitQ\":null,\"wx\":\"clear\",\"wxNext\":\"storm\",\"up\":{\"bench\":true},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1}],\"noteSeq\":5,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":0,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":0,\"events\":0,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":202020,\"fatigue\":35,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":1,\"_lunchDay\":0,\"_storyQueue\":[],\"_recentEvents\":[],\"_recentEventTypes\":[],\"_eventBreather\":0,\"_beatQueue\":[],\"_driveLegsSinceBlock\":3,\"_roadEventDay\":1,\"_roadEventCount\":0,\"_lastRoadEventKm\":-999,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":10,\"phase\":\"build\",\"relaxEvents\":0},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":1,\"_exploreNodes\":{},\"_salvagedNodes\":{},\"_salvageCount\":0,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793014000000,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":0,\"choices\":1,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":2,\"lockedChoices\":0},\"eventIds\":{},\"eventTypes\":{},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":0,\"choices\":1,\"combats\":0},\"lastEventType\":\"\",\"typeStreak\":0,\"maxTypeStreak\":0,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{},\"activeSettlement\":null,\"upgrades\":[],\"choiceEchoes\":0,\"milestones\":{\"first_choice\":{\"playMin\":0,\"day\":9,\"min\":600,\"km\":0,\"eventId\":\"exp_kiln\",\"choiceIndex\":1}},\"choiceCallbacks\":{\"remembered\":0,\"near\":0,\"late\":0,\"items\":{}},\"endings\":{},\"timeline\":[{\"type\":\"choice\",\"day\":9,\"min\":600,\"km\":0,\"playMin\":0,\"eventId\":\"exp_kiln\",\"eventType\":\"탐색\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":9,\"min\":600,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"exp_kiln\",\"choiceIndex\":1}],\"lastSeenAt\":1793014000000},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":null,\"journeyRecaps\":[],\"_stlField\":{\"daily\":{},\"once\":{},\"impact\":{},\"roadEchoed\":{},\"log\":[]},\"_impactEcho\":{\"key\":\"miryang:parts\",\"stlId\":\"miryang\",\"from\":\"miryang\",\"to\":\"daegu\",\"actionId\":\"parts\",\"label\":\"부품 정리\",\"visual\":\"order\",\"wx\":\"clear\",\"done\":false},\"_rescues\":{},\"_stlNights\":{},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":0,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":0,\"pendingResult\":null,\"decisions\":{},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\"},\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 도윤 가족의 이송표를 확인한다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"companion_minji\",\"kind\":\"companion\",\"title\":\"새 임무 · 민지\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"},{\"id\":\"companion_jaeyi\",\"kind\":\"companion\",\"title\":\"새 임무 · 재이\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"},{\"id\":\"companion_kangwoo\",\"kind\":\"companion\",\"title\":\"새 임무 · 강우\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"day\":9,\"at\":\"miryang\"}],\"mainHistory\":[],\"seenUpdateCount\":4,\"snapshot\":{\"main_namsan\":\"active|부산 감천 부두 · 떠나기 전|양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)|0/13\",\"companion_minji\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\",\"companion_jaeyi\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\",\"companion_kangwoo\":\"active|개인 이야기 0/3 · 동료 Lv.0 · 유대 0|야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.|0/3\"},\"mainState\":{\"chapterId\":\"prologue-family\",\"act\":\"서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":\"0/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"exp_kiln\",\"phase\":\"result\",\"text\":\"열지 않았다. 봉한 사람이 돌아와서 열 수도 있으니까.\\n\\n가마 옆에 돌 하나만 얹었다. 잘 구워졌길 비는 마음으로.\",\"view\":null,\"reading\":{\"eventId\":\"exp_kiln\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"열지 않았다. 봉한 사람이 돌아와서 열 수도 있으니까.\"},{\"kind\":\"narration\",\"text\":\"가마 옆에 돌 하나만 얹었다. 잘 구워졌길 비는 마음으로.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"event-explore-workshop\"]},\"history\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"언덕 비탈에 오름가마가 누워 있다. 옹기 가마다.\"},{\"kind\":\"narration\",\"text\":\"가마 입구가 흙벽돌로 봉해져 있다— 마지막 소성을 마치고 열지 못한 채인 것이다.\"},{\"kind\":\"narration\",\"text\":\"안엔 오래전에 다 구워진 옹기들이 식은 채 기다리고 있을 것이다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"event-explore-workshop\"]},\"selection\":\"봉인을 존중한다\",\"updates\":[{\"title\":\"메인 스토리 진행 · 도윤 가족의 이송표를 확인한다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"kind\":\"main\"},{\"title\":\"새 임무 · 민지\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"kind\":\"side\"},{\"title\":\"새 임무 · 재이\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"kind\":\"side\"},{\"title\":\"새 임무 · 강우\",\"next\":\"야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 4 더 올린다.\",\"kind\":\"side\"}]},\"choiceIndex\":1,\"outcomeIndex\":0,\"chips\":[{\"t\":\"사기 +2\",\"c\":\"plus\"}]}}"
+    }
+  ]
+}

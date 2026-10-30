@@ -1,0 +1,47 @@
+[
+  {
+    "source": "assets/scenes/intro-cheollian-automatic-rule-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/intro-cheollian-automatic-rule-v1.webp",
+    "target": "assets/scenes/intro-cheollian-automatic-rule-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 97127,
+    "candidateBytes": 55376,
+    "saved": 41751,
+    "meanAbsoluteError": 1.3712856465406378,
+    "psnr": 42.76497986596446,
+    "sourceSha256": "9d6c5ce3874ef63463cd02a0382afaede0a91bb5105dd8e1fcdaa88b208f9a90",
+    "candidateSha256": "196bf6f7f8c787cee524e2446923a7b30323a8cef5ccabd0d3d502cad56e2712"
+  },
+  {
+    "source": "assets/scenes/intro-cheollian-emergency-delegation-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/intro-cheollian-emergency-delegation-v1.webp",
+    "target": "assets/scenes/intro-cheollian-emergency-delegation-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 100073,
+    "candidateBytes": 59806,
+    "saved": 40267,
+    "meanAbsoluteError": 1.3507537213863168,
+    "psnr": 42.94214508963001,
+    "sourceSha256": "e92dd919d2ffd2c889b2094d327189fb4937a5071fedb043592bb867faac325e",
+    "candidateSha256": "56e3861a532e4f72668c040496ffdcb0fd2df6035e594d14bc19ae9aa06b2da1"
+  },
+  {
+    "source": "assets/scenes/comp-talk-eunsu-road-v1.jpg",
+    "candidate": "qa-artifacts/qa-cycle-20261026/cycle60/root/codec-candidates/comp-talk-eunsu-road-v1.webp",
+    "target": "assets/scenes/comp-talk-eunsu-road-v1.webp",
+    "width": 768,
+    "height": 432,
+    "quality": 92,
+    "originalBytes": 93494,
+    "candidateBytes": 53620,
+    "saved": 39874,
+    "meanAbsoluteError": 1.272555378729424,
+    "psnr": 43.4574167301638,
+    "sourceSha256": "edb5d285c14d6ef3b4c7d85afb80ccbe6f43ab88cd83fe00ceb7a7067945b384",
+    "candidateSha256": "48f80c7f82887b74a23d2cffea3fa2d583ddb6dcedf1dcb1288cd1518deec838"
+  }
+]

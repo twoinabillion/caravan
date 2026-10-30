@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "narration",
+    "text": "젓가락 행진곡을 쳤다. 반쪽만 기억나서 반쪽만 쳤다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "…뒤에는요?"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "speakerUncertain": true,
+    "text": "몰라."
+  },
+  {
+    "kind": "narration",
+    "text": "그래도 어디선가"
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_woman",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "브라보!"
+  },
+  {
+    "kind": "narration",
+    "text": "소리가 들렸다. 세상은 관대해졌다. 관객이 귀해져서."
+  }
+]

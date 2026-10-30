@@ -25,6 +25,9 @@ for(const spec of baseline)test(`${spec.id} every result retains its full origin
   if(spec.id.startsWith('crisis_nofuel')&&key==='1.0'){
    assert.deepEqual(turns.filter(t=>t.kind==='narration'),old.filter(t=>t.kind==='narration'));
    assert.equal(turns.filter(t=>t.kind==='dialogue')[0].name,'만물상 상인');
+  }else if(spec.id==='crisis_nofuel2'&&key==='0.0'){
+   const line=turns.find(t=>t.kind==='dialogue');assert.equal(line.who,'passer_refugee');assert.equal(line.name,'농가 사람');
+   assert.deepEqual(turns.filter(t=>t.kind==='narration'),old.filter(t=>t.kind==='narration'));
   }else assert.deepEqual(turns,old,key);
  }
 });
@@ -52,6 +55,7 @@ test('only the noise wrapper and the two merchant role routes change; all flags,
  const h=setup();for(const old of baseline){const now=h.json(`JSON.parse(JSON.stringify(event('${old.id}'),(k,v)=>typeof v==='function'?v.toString():v))`),expected=JSON.parse(JSON.stringify(old.event));
   if(old.id==='signal_bait')expected.text=expected.text.replace('<span class="ai">(잡음)</span>','잡음이 섞였다.');
   else expected.choices[1].out[0].turnSpeakers=[{who:'passer_merchant',name:'만물상 상인'}];
+  if(old.id==='crisis_nofuel2'){assert.deepEqual(now.choices[0].out[0].turnSpeakers,[{who:'passer_refugee',name:'농가 사람'}]);delete now.choices[0].out[0].turnSpeakers;}
   assert.deepEqual(now,expected,old.id);
  }
 });

@@ -1,0 +1,8 @@
+{
+ "lib_books":{"scene":"explore-collapsed-school-library-v1"},
+ "freq_source":{"scene":"frequency-school-broadcast-room-v1"},
+ "freq_catch":{"scene":"frequency-dashboard-receiver-v1"},
+ "freq_triangulate":{"day":"frequency-water-tower-day-v1","night":"frequency-water-tower-night-v1"},
+ "freq_L2":{"day":"frequency-fire-watchtower-day-v1","night":"frequency-fire-watchtower-night-v1"},
+ "story_generation_route":{"day":"story-generation-route-day-v1","night":"story-generation-route-night-v1"}
+}

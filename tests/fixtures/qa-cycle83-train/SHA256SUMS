@@ -1,0 +1,4 @@
+898b99d2372680188a1646b4924a85d9e52c3729d9b0412dcdd5b59a26a80f10  tests/fixtures/qa-cycle83-train/natural-before-view.json
+802f386a6d38a4aa2f325f7b8659482b0961f00077e711159f0f8b247a272f75  tests/fixtures/qa-cycle83-train/natural-entry.json
+66a232989d5fac2eb5ca6e8b9bb401b767b68f9a13bfc541168280f76b8c2a7d  tests/fixtures/qa-cycle83-train/natural-observations.json
+e179cb9c3d4f85765a580e0b8951662a71c344ee18b31295457bf778494c5111  tests/fixtures/qa-cycle83-train/synthetic-baseline.json

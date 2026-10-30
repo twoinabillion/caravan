@@ -67,7 +67,7 @@ test('zero-time talks no longer certify a future night/day, and retain their act
 });
 test('adjacent alternatives keep the grandmother, the decipherer and the praised driver distinct',()=>{
  const h=setup();h.run(`S.party=['parkss','minji'];`);
- for(const [id,choice,expected] of [['talk_pss_18',1,['me','parkss','me','parkss','parkss']],['talk_mj_15',0,['minji','minji','me','minji']],['near_mungyeong_omija',1,['passer_woman']]]){
+ for(const [id,choice,expected] of [['talk_pss_18',1,['me','parkss','me','parkss','parkss']],['talk_mj_15',0,['minji','minji','me','minji']],['near_mungyeong_omija',1,['passer_elder']]]){
   h.run(`globalThis.e=event('${id}');globalThis.out=e.choices[${choice}].out[0];`);
   assert.deepEqual(h.json(`buildStoryTurns(prose(out.text),e,{turnSpeakers:out.turnSpeakers}).filter(t=>t.kind==='dialogue').map(t=>t.who)`),expected);
  }
@@ -82,7 +82,7 @@ test('solo Omija contains only the introduced grandmother and the player, with t
  assert(h.run('p.ok'));assert.equal(h.run('S.scrap'),22);assert.equal(h.run('S.items["의약품"]-meds'),1);
  assert.doesNotMatch(h.run('p.out.text'),/잔을 돌렸|서로 다른 표정|난 단맛인데/);
  const roles=h.json(`buildStoryTurns(p.out.text,e,{turnSpeakers:p.out.turnSpeakers}).filter(t=>t.kind==='dialogue').map(t=>t.who)`);
- assert(roles.every(x=>['me','passer_woman'].includes(x)));
+ assert.deepEqual(roles,['me','passer_elder','me','passer_elder']);
 });
 test('solo Suncheon does not invent answering companions and still costs 120 minutes',()=>{
  const h=setup();h.run(`S.party=[];S.min=450;globalThis.e=event('loc_suncheon');G.beginPresentation(e);globalThis.p=G.resolvePresentedChoice(e,e.choices[0]);`);

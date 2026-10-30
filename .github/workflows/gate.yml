@@ -33,6 +33,8 @@ jobs:
         run: npm run test:pwa
       - name: Content + dialogue lint
         run: npm run verify:quick
+      - name: Source regression suite
+        run: npm run test:source
       - name: Save migration fixtures
         run: npm run test:save
       - name: Security (LLM output escaping)
@@ -49,20 +51,7 @@ jobs:
         run: npm run test:golden
       - name: Viewport / build-string guard
         # 전체 아티팩트 게이트는 AIT 산출물이 필요해 로컬 전용 — 러너에서는 셸 검사만 한다
-        run: |
-          node -e "
-          const fs=require('fs');
-          const build=['04a-engine-core.js','04b-engine-crew.js','04c-engine-travel.js','04d-engine-director.js','04e-engine-world.js']
-            .map(n=>fs.readFileSync('src/'+n,'utf8')).join('\n').match(/const GAME_BUILD = '([^']+)'/)[1];
-          const html=fs.readFileSync('서울까지400km.html','utf8');
-          if(!html.includes(\"const GAME_BUILD = '\"+build+\"'\")) throw new Error('build string mismatch');
-          for(const shell of ['서울까지400km.html','index.html']){
-            const doc=fs.readFileSync(shell,'utf8');
-            if(/user-scalable\\s*=\\s*(no|0)|maximum-scale\\s*=\\s*1(\\.0+)?\\s*[,\"';]/.test(doc))
-              throw new Error(shell+' restricts zoom');
-          }
-          console.log('✅ shell guards ok · '+build);
-          "
+        run: node tools/check-release-shell.mjs
 
   full:
     # 장기 밸런스 시뮬레이션은 진단용이다. 일반 UI/콘텐츠 push를 빨갛게

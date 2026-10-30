@@ -1,0 +1,9 @@
+6e587698c7fbce6790fa5ae7c7a15c657fb0ee8b12e5f2f7c7b8cc8b6ca8ac80  tests/fixtures/qa-cycle81-camp-context/camp_10_kangwoo-observations.json
+68c9323448da39aec4a4ef43d54dbba963813cce14ff3641d4fcddcd0fd1770a  tests/fixtures/qa-cycle81-camp-context/camp_2_kangwoo-observations.json
+31ed31891cfad1802ffda9ab569cf05d8fed7956b15873f31c4c49809b140b45  tests/fixtures/qa-cycle81-camp-context/camp_5_kangwoo-observations.json
+c33143f0bdcb28de2fe8cc9d7adcdf6afac69f149136b1a44afc3f9b512ea9f5  tests/fixtures/qa-cycle81-camp-context/entry-after-view-202-camp_2_kangwoo.json
+180941c2b5c2d21cea3085187a292baf950a852137d42c68999aac7cbb73f0b9  tests/fixtures/qa-cycle81-camp-context/entry-after-view-384-camp_5_kangwoo.json
+040d39942379f80fa6362fd04a611fd189c3b6644b24843bd95b0544b72574e9  tests/fixtures/qa-cycle81-camp-context/entry-after-view-658-camp_10_kangwoo.json
+c29645f2083d579e84f6ff132f007f2872eeaa65a9dd86172c4b6c392c8e26a7  tests/fixtures/qa-cycle81-camp-context/normal-unpaid-202-camp_2_kangwoo.json
+362ca1f5f9a256ba457964602dfd66da2f5b5afae0014572cd03362de32d1609  tests/fixtures/qa-cycle81-camp-context/normal-unpaid-384-camp_5_kangwoo.json
+02bc21d571cacbb3a68a1f3ad09e2110318fc135ef3a93860e3b96eff1b1acf6  tests/fixtures/qa-cycle81-camp-context/normal-unpaid-658-camp_10_kangwoo.json

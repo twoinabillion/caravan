@@ -1981,7 +1981,17 @@ function dialogueSide(turn,lanes,opt={}){
       (_,text)=>`\n\n@@AI${ai.push(text)-1}@@\n\n`);
     const tags=[];
     source=source.replace(/<[^>]+>/g,tag=>`@@TAG${tags.push(tag)-1}@@`);
-    const restore=(text)=>String(text||'').replace(/@@TAG(\d+)@@/g,(_,i)=>tags[+i]||'').trim();
+    // Keep paragraph breaks inside complete quotations until after paragraph splitting.
+    // Old text-only receipts intentionally retain their historical parsing.
+    const quoteBreaks=[];
+    let quoteMarker='@@QUOTEBREAK';
+    while(source.includes(quoteMarker)) quoteMarker+='X';
+    if(!opt.frozenTextOnly){
+      const quoted=evd&&evd.parseRecords?/[“"][\s\S]*?[”"]|「[\s\S]*?」/g:/[“"][\s\S]*?[”"]/g;
+      source=source.replace(quoted,quote=>quote.replace(/\n\s*\n/g,breakText=>quoteMarker+(quoteBreaks.push(breakText)-1)+'@@'));
+    }
+    const restore=(text)=>String(text||'').replace(/@@TAG(\d+)@@/g,(_,i)=>tags[+i]||'')
+      .replace(new RegExp(quoteMarker+'(\\d+)@@','g'),(_,i)=>quoteBreaks[+i]||'').trim();
     const hiddenSpeaker=evd&&evd.recruitStart;
     const turns=[];
     const state={
@@ -3335,6 +3345,45 @@ function dialogueSide(turn,lanes,opt={}){
     add('generic-story');
     return keys;
   }
+  function eventScenePresentation(evd,phase,leading=[],turns=[]){
+    const owner=G.presentationOwner(evd.id);
+    const reading=G.presentationReading(owner?.reading);
+    const ownerPhase=phase==='outcome'?'result':'event';
+    const stored=reading?.phase===phase&&reading.view
+      ||owner?.phase===ownerPhase&&G.presentationView(owner.view);
+    // Stored keys are historical data, never input to today's variant selector.
+    if(stored?.sceneKeys?.length)return {sceneKeys:[...stored.sceneKeys],
+      ...(stored.sceneTime?{sceneTime:stored.sceneTime}:{})};
+    const sceneTime=evd.campConversation
+      ?G.presentationSceneTime(phase==='outcome'?owner?.resultSceneTime:owner?.entrySceneTime)
+      :owner?.phase===ownerPhase?G.presentationSceneTime(owner.sceneTime):null;
+    const keys=eventSceneKeys(evd,leading),variant=D.eventSceneTimeVariantFor(evd.id);
+    const fixed=owner?.phase===ownerPhase&&G.presentationFixedScene(owner.fixedScene);
+    if(fixed)return {sceneKeys:[...new Set(keys.map(key=>key===fixed.base?fixed.scene:key))]};
+    const historical=['memory','video'].includes(evd.storyOrigin?.kind)
+      ||turns.some(turn=>turn.timeKind&&turn.timeKind!=='current');
+    if(!variant||!sceneTime||historical)return {sceneKeys:keys,...(sceneTime?{sceneTime}:{})};
+    // Matches G.isNight's 05:30/19:30 boundary, including fractional minutes.
+    const period=sceneTime.min<330||sceneTime.min>=1170?'night':'day';
+    const sceneKeys=keys.map(key=>{
+      if(variant.byBase){
+        const match=Object.entries(variant.byBase).find(([base,pair])=>
+          [base,pair.day,pair.night].includes(key));
+        return match&&D.scenes[match[1][period]]?match[1][period]:key;
+      }
+      return [].concat(variant.base,variant.day,variant.night).includes(key)
+        &&D.scenes[variant[period]]?variant[period]:key;
+    });
+    return {sceneKeys:[...new Set(sceneKeys)],sceneTime};
+  }
+  function eventSceneOrientation(evd,sceneTime){
+    if(D.eventSceneTimeVariantFor(evd.id)&&!sceneTime)return '저장된 장면';
+    const place=evd.id==='opening_parents_module'||evd.id==='opening_departure'
+      ?'감천 작업장':S.at&&D.nodes[S.at]?.name||'길 위';
+    const minute=Math.floor(Number(sceneTime?.min??S.min)||0);
+    const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
+    return `지금 · ${place} · ${clock}`;
+  }
   function sceneFormat(key){
     const declared=D.sceneAssetMeta&&D.sceneAssetMeta[key]&&D.sceneAssetMeta[key].format;
     if(declared) return declared;
@@ -4177,10 +4226,6 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.dataset.missionLayout=missionOnly?'departure':'';
     const text = pending?.phase==='event'?pending.text:typeof evd.text==='function'?evd.text(S):evd.text;
     const sceneAlt=stripTags(evd.title||'길 위의 사건');
-    const sceneKeys=eventSceneKeys(evd);
-    const scene=missionOnly
-      ?`<figure class="mission-art"><img src="${esc(D.scenes[sceneKeys[0]]||'')}" width="1280" height="720" decoding="async" alt="${esc(D.sceneDescriptions?.[sceneKeys[0]]||sceneAlt)}"></figure>`
-      :sceneFrameHtml(sceneKeys,sceneAlt);
     const storyOrigin=storyOriginHtml(evd);
     let context=D.storyContext&&D.storyContext[evd.id]
       ? `<div class="story-context"><b>앞 이야기</b>${D.storyContext[evd.id]}</div>` : '';
@@ -4202,12 +4247,13 @@ function dialogueSide(turn,lanes,opt={}){
         : prepareEventAudio(buildStoryTurns(text,evd,{turnSpeakers:D.finaleSpeakers(evd.id,-1,S)||evd.turnSpeakers}),evd);
     // Bridges belong to authored turns, not renderer-side event exceptions.
     // Existing saved turns are restored below without retroactive edits.
-    const scenePlace=evd.id==='opening_parents_module'||evd.id==='opening_departure'
-      ?'감천 작업장':S.at&&D.nodes[S.at]?.name||'';
-    const sceneMinute=Math.floor(Number(S.min)||0);
-    const sceneClock=String(Math.floor(sceneMinute/60)%24).padStart(2,'0')+':'+String(sceneMinute%60).padStart(2,'0');
+    const sceneInfo=eventScenePresentation(evd,'event',[],turns),sceneKeys=sceneInfo.sceneKeys;
+    const scene=missionOnly
+      ?`<figure class="mission-art"><img src="${esc(D.scenes[sceneKeys[0]]||'')}" width="1280" height="720" decoding="async" alt="${esc(D.sceneDescriptions?.[sceneKeys[0]]||sceneAlt)}"></figure>`
+      :sceneFrameHtml(sceneKeys,sceneAlt);
+    const sceneCurrentOrientation=eventSceneOrientation(evd,sceneInfo.sceneTime);
     const sceneOrientation=!evd.combat&&!missionOnly
-      ?`<p class="event-orientation" data-current-orientation="지금 · ${esc(scenePlace||'길 위')} · ${sceneClock}">지금 · ${esc(scenePlace||'길 위')} · ${sceneClock}</p>`:'';
+      ?`<p class="event-orientation" data-current-orientation="${esc(sceneCurrentOrientation)}">${esc(sceneCurrentOrientation)}</p>`:'';
     const presentId=evd.needsComp||(Array.isArray(evd.needBond)?evd.needBond[0]:null);
     if(presentId&&G.hasComp(presentId)&&G.crewLocation){
       const companion=D.comps[presentId];
@@ -4244,7 +4290,7 @@ function dialogueSide(turn,lanes,opt={}){
       lastAdvanceAt:0,
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
-      sceneKeys,sceneAlt,sceneStart:0,originKind:evd.storyOrigin&&evd.storyOrigin.kind||'',
+      sceneKeys,sceneTime:sceneInfo.sceneTime,sceneAlt,sceneStart:0,originKind:evd.storyOrigin&&evd.storyOrigin.kind||'',
       nameEntry:evd.nameInput===true,
       finalDock:evd.nameInput?openingNameAnswerHtml():directRoadChoice
         ?`${missionOnly?`<p class="mission-optional">${esc(mission.optional)}</p>`:''}<button class="story-next onboarding-route-start" type="button"><strong>길로 나가기</strong></button>`
@@ -4634,12 +4680,12 @@ function dialogueSide(turn,lanes,opt={}){
       scale:priorFrame.style.getPropertyValue('--scene-scale'),
       tone:priorFrame.dataset.tone
     }:null;
-    const sceneKeys=eventSceneKeys(curEv,explicitCuts);
+    const sceneInfo=eventScenePresentation(curEv,'outcome',explicitCuts,turns),sceneKeys=sceneInfo.sceneKeys;
     const hasExplicit=sceneKeys.length&&explicitCuts.some(value=>
       Array.isArray(value)?value.some(Boolean):Boolean(value));
-    const outcomeSceneKeys=hasExplicit
-      ? sceneKeys
-      : eventSceneKeys(curEv,priorScene?[priorScene]:[]);
+    const outcomeSceneInfo=hasExplicit
+      ?sceneInfo:eventScenePresentation(curEv,'outcome',priorScene?[priorScene]:[],turns);
+    const outcomeSceneKeys=outcomeSceneInfo.sceneKeys;
     const sceneCarry=priorShot&&outcomeSceneKeys[0]===priorShot.key?priorShot:null;
     const sceneStart=0;
     const scene=sceneFrameHtml(outcomeSceneKeys,sceneAlt);
@@ -4684,9 +4730,13 @@ function dialogueSide(turn,lanes,opt={}){
     const head=sheet.querySelector('.event-head h2');
     const orientation=sheet.querySelector('.event-orientation');
     if(orientation?.dataset.currentOrientation){
-      const minute=Math.floor(Number(S.min)||0);
-      const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
-      orientation.dataset.currentOrientation=orientation.dataset.currentOrientation.replace(/\d{2}:\d{2}$/,clock);
+      if(D.eventSceneTimeVariantFor(curEv.id)){
+        orientation.dataset.currentOrientation=eventSceneOrientation(curEv,outcomeSceneInfo.sceneTime);
+      }else{
+        const minute=Math.floor(Number(S.min)||0);
+        const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
+        orientation.dataset.currentOrientation=orientation.dataset.currentOrientation.replace(/\d{2}:\d{2}$/,clock);
+      }
     }
     sheet.querySelector('[data-road-later]')?.remove();
     if(head) head.textContent=visibleReportTitle;
@@ -4705,7 +4755,7 @@ function dialogueSide(turn,lanes,opt={}){
       readingRecord:typeof out.readingRecord==='function'?out.readingRecord(S):out.readingRecord,
       knownSpeaker:!!turns.knownSpeaker,
       lanes,
-      sceneKeys:outcomeSceneKeys,sceneAlt,sceneStart,sceneCarry,
+      sceneKeys:outcomeSceneKeys,sceneTime:outcomeSceneInfo.sceneTime,sceneAlt,sceneStart,sceneCarry,
       originKind:curEv.storyOrigin&&curEv.storyOrigin.kind||'',
       offerComp:out.fx&&out.fx.offerComp||null,
       finalDock:`<div class="choices" role="group" aria-label="다음 행동">${actions}</div>`,
@@ -4715,6 +4765,7 @@ function dialogueSide(turn,lanes,opt={}){
       wireFinal:(dock)=>dock.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
         if(b.hasAttribute('disabled')) return;
         if(b.dataset.r==='yes'&&out.fx.offerComp) G.doRecruit(out.fx.offerComp);
+        if(b.dataset.r==='no'&&out.fx.offerComp) G.declineRecruitOffer(out.fx.offerComp);
         closeEvent();
       })
     };
@@ -6844,6 +6895,7 @@ function dialogueSide(turn,lanes,opt={}){
             dock.querySelectorAll('.choice[data-r]').forEach(button=>button.onclick=()=>{
               if(button.hasAttribute('disabled')) return;
               if(button.dataset.r==='yes'&&restored.offerComp) G.doRecruit(restored.offerComp);
+              if(button.dataset.r==='no'&&restored.offerComp) G.declineRecruitOffer(restored.offerComp);
               closeEvent();
             });
           }

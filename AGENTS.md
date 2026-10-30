@@ -35,7 +35,15 @@
 <claude-mem-context>
 # Memory Context
 
-# [caravan] recent context, 2026-10-03 12:33pm GMT+9
+# [caravan] recent context, 2026-10-21 4:54pm GMT+9
 
 No previous sessions found.
 </claude-mem-context>
+
+## Continuous persona QA (Sang instruction, 2026-10-29)
+
+- Sang explicitly authorized a higher HTML size limit on 2026-10-30. The active budget is a 200MB hard cap with a 160MB warning threshold (`tools/build-budget.json`). Prior 120MB limits in QA history are superseded. Preserve image quality and prioritize game/content QA; do not keep adding lossy delivery variants solely to fit the former cap.
+
+- Resume from `qa-artifacts/qa-cycle-20261026/CONTINUOUS-QA.md`, not the older device-screen checkpoint. Sang wants repeated actual fixes → multiple persona subagents playing fresh finite journeys from start through ending → full dialogue/note/logic/resource/ownership/time/image evaluation. Do not stop merely because one cycle or one report finished. Additional image generation is explicitly authorized when needed.
+- Freeze production sources during each cohort, preserve source hashes, use the latest actual-presentation observer and distinguish entry load success from reader equality. Treat declared personality as a policy that must actually affect choices. Preserve old paid words, keys and receipts; never count fixtures or retries as independent fresh players.
+- UI/browser unavailability does not block authorized source/engine/art work. Report actual screen/crop/audio coverage separately and do not claim those checks occurred.

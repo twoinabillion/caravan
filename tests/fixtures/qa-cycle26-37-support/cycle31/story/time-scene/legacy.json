@@ -1,0 +1,4691 @@
+[
+  {
+    "id": "talk_kw_16",
+    "base": "comp-talk-kangwoo-camp-v1",
+    "day": "comp-talk-kangwoo-camp-day-v1",
+    "night": "comp-talk-kangwoo-camp-v1",
+    "entryFile": "legacy/talk_kw_16-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "강우가 자기 몫의 건빵을 말없이 내밀었다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "kangwoo",
+        "text": "…별사탕이 두 개 들었습니다. 오늘은 운이 좋은 봉지입니다."
+      }
+    ],
+    "keys": [
+      "comp-talk-kangwoo-camp-v1"
+    ],
+    "definition": {
+      "id": "talk_kw_16",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "kangwoo",
+      "title": "강우 — 전투식량 교환",
+      "text": "강우가 자기 몫의 건빵을 말없이 내밀었다.\n\n\"…별사탕이 두 개 들었습니다. 오늘은 운이 좋은 봉지입니다.\"",
+      "choices": [
+        {
+          "label": "별사탕 하나를 돌려준다",
+          "out": [
+            {
+              "p": 1,
+              "text": "\"하나면 됩니다.\" \"저도 하나면 돼요. 그러니까 하나씩.\"\n\n\"…하나면 된다니까.\" \"네. 그래서 하나 드리는 거예요.\"\n\n강우가 셈이 안 맞는다는 얼굴로 3초쯤 별사탕을 보다가, 입에 넣었다.\n\n\"……답니다.\" 그 한마디가 강우식 만찬 소감이었다.",
+              "fx": {
+                "mood": {
+                  "kangwoo": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "\"운 좋은 봉지는 왜 저 줘요?\"",
+          "out": [
+            {
+              "p": 1,
+              "text": "\"…운은 나눠야 커집니다. 부대 미신입니다.\"\n\n강우도 별사탕 하나를 꺼내 입에 넣었다. 둘 다 녹을 때까지 씹지 않았다.",
+              "fx": {
+                "mood": {
+                  "kangwoo": 3
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/talk_kw_16-0-0.json",
+        "result": {
+          "text": "\"하나면 됩니다.\" \"저도 하나면 돼요. 그러니까 하나씩.\"\n\n\"…하나면 된다니까.\" \"네. 그래서 하나 드리는 거예요.\"\n\n강우가 셈이 안 맞는다는 얼굴로 3초쯤 별사탕을 보다가, 입에 넣었다.\n\n\"……답니다.\" 그 한마디가 강우식 만찬 소감이었다.",
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "kangwoo",
+              "text": "하나면 됩니다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "저도 하나면 돼요. 그러니까 하나씩."
+            },
+            {
+              "kind": "dialogue",
+              "who": "kangwoo",
+              "text": "…하나면 된다니까."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "네. 그래서 하나 드리는 거예요."
+            },
+            {
+              "kind": "narration",
+              "text": "강우가 셈이 안 맞는다는 얼굴로 3초쯤 별사탕을 보다가, 입에 넣었다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "kangwoo",
+              "text": "……답니다."
+            },
+            {
+              "kind": "narration",
+              "text": "그 한마디가 강우식 만찬 소감이었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "강우 사기 +4",
+              "c": "plus"
+            },
+            {
+              "t": "✦ 강우 유대 +2",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "comp-talk-kangwoo-camp-v1"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 69,
+              "bond": 2,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "file": "legacy/talk_kw_16-1-0.json",
+        "result": {
+          "text": "\"…운은 나눠야 커집니다. 부대 미신입니다.\"\n\n강우도 별사탕 하나를 꺼내 입에 넣었다. 둘 다 녹을 때까지 씹지 않았다.",
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "kangwoo",
+              "text": "…운은 나눠야 커집니다. 부대 미신입니다."
+            },
+            {
+              "kind": "narration",
+              "text": "강우도 별사탕 하나를 꺼내 입에 넣었다. 둘 다 녹을 때까지 씹지 않았다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "강우 사기 +3",
+              "c": "plus"
+            },
+            {
+              "t": "✦ 강우 유대 +2",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "comp-talk-kangwoo-camp-v1"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 68,
+              "bond": 2,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "talk_pss_18",
+    "base": "comp-talk-parkss-camp-v1",
+    "day": "comp-talk-parkss-camp-day-v1",
+    "night": "comp-talk-parkss-camp-v1",
+    "entryFile": "legacy/talk_pss_18-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "박 선생의 처방 메모는 심각한 악필이다. 해독 불가 수준."
+      },
+      {
+        "kind": "dialogue",
+        "who": "parkss",
+        "text": "…허, 들켰나. 이거 일부러 이래."
+      }
+    ],
+    "keys": [
+      "comp-talk-parkss-camp-v1"
+    ],
+    "definition": {
+      "id": "talk_pss_18",
+      "type": "대화",
+      "w": 4,
+      "once": true,
+      "needsComp": "parkss",
+      "needBond": [
+        "parkss",
+        5
+      ],
+      "turnSpeakers": [
+        "parkss"
+      ],
+      "title": "박 선생 — 악필의 이유",
+      "text": "박 선생의 처방 메모는 심각한 악필이다. 해독 불가 수준.\n\n\"…허, 들켰나. 이거 일부러 이래.\"",
+      "choices": [
+        {
+          "label": "\"일부러요?\"",
+          "out": [
+            {
+              "p": 1,
+              "text": "\"약 이름을 애들이 읽고 함부로 사 먹을까 봐. 약사만 읽게 쓰는 버릇이 들었어.\"\n\n\"…그럼 다른 약사는 읽어요?\"\n\n\"못 읽지. 그건 나도 나중에 알았고.\" 박 선생이 메모를 들어 보였다. \"이건 「푹 잘 것」이라고 쓴 거야. 자네 처방.\"\n\n어느 획이 「푹」인지는 끝내 못 찾았다. 종이는 접어 두고, 어깨에 들어간 힘부터 풀었다.",
+              "turnSpeakers": [
+                "parkss",
+                "me",
+                "parkss",
+                "parkss"
+              ],
+              "fx": {
+                "mood": {
+                  "parkss": 4
+                },
+                "fatigue": -2
+              }
+            }
+          ]
+        },
+        {
+          "label": "\"제 이름 써주세요. 해독해볼게요\"",
+          "out": [
+            {
+              "p": 1,
+              "text": "박 선생이 슥슥 갈겨썼다. 오래 들여다봐도 모르겠다.\n\n\"…항복이에요.\"\n\n\"잘 봐. 여기가 자네 이름이고.\"\n\n\"여기요?\"\n\n\"거기 말고 그 옆에. …아니 거기.\" 결국 손가락으로 짚어줬다. \"뒤에 붙은 건 「튼튼함」이야. 내 처방전엔 다 그렇게 붙어.\"\n\n차에 탄 사람들 이름 뒤에 전부 「튼튼함」이 붙어 있었다.",
+              "turnSpeakers": [
+                "me",
+                "parkss",
+                "me",
+                "parkss",
+                "parkss"
+              ],
+              "fx": {
+                "mood": {
+                  "parkss": 5
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/talk_pss_18-0-0.json",
+        "result": {
+          "text": "\"약 이름을 애들이 읽고 함부로 사 먹을까 봐. 약사만 읽게 쓰는 버릇이 들었어.\"\n\n\"…그럼 다른 약사는 읽어요?\"\n\n\"못 읽지. 그건 나도 나중에 알았고.\" 박 선생이 메모를 들어 보였다. \"이건 「푹 잘 것」이라고 쓴 거야. 자네 처방.\"\n\n어느 획이 「푹」인지는 끝내 못 찾았다. 종이는 접어 두고, 어깨에 들어간 힘부터 풀었다.",
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "parkss",
+              "text": "약 이름을 애들이 읽고 함부로 사 먹을까 봐. 약사만 읽게 쓰는 버릇이 들었어."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "…그럼 다른 약사는 읽어요?"
+            },
+            {
+              "kind": "dialogue",
+              "who": "parkss",
+              "text": "못 읽지. 그건 나도 나중에 알았고."
+            },
+            {
+              "kind": "narration",
+              "text": "박 선생이 메모를 들어 보였다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "parkss",
+              "text": "이건 「푹 잘 것」이라고 쓴 거야. 자네 처방."
+            },
+            {
+              "kind": "narration",
+              "text": "어느 획이 「푹」인지는 끝내 못 찾았다. 종이는 접어 두고, 어깨에 들어간 힘부터 풀었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "피로 -2",
+              "c": "plus"
+            },
+            {
+              "t": "박 선생 사기 +4",
+              "c": "plus"
+            },
+            {
+              "t": "✦ 박 선생 유대 +2",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "comp-talk-parkss-camp-v1"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 33,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 69,
+              "bond": 2,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "file": "legacy/talk_pss_18-1-0.json",
+        "result": {
+          "text": "박 선생이 슥슥 갈겨썼다. 오래 들여다봐도 모르겠다.\n\n\"…항복이에요.\"\n\n\"잘 봐. 여기가 자네 이름이고.\"\n\n\"여기요?\"\n\n\"거기 말고 그 옆에. …아니 거기.\" 결국 손가락으로 짚어줬다. \"뒤에 붙은 건 「튼튼함」이야. 내 처방전엔 다 그렇게 붙어.\"\n\n차에 탄 사람들 이름 뒤에 전부 「튼튼함」이 붙어 있었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "박 선생이 슥슥 갈겨썼다. 오래 들여다봐도 모르겠다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "…항복이에요."
+            },
+            {
+              "kind": "dialogue",
+              "who": "parkss",
+              "text": "잘 봐. 여기가 자네 이름이고."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "여기요?"
+            },
+            {
+              "kind": "dialogue",
+              "who": "parkss",
+              "text": "거기 말고 그 옆에. …아니 거기."
+            },
+            {
+              "kind": "narration",
+              "text": "결국 손가락으로 짚어줬다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "parkss",
+              "text": "뒤에 붙은 건 「튼튼함」이야. 내 처방전엔 다 그렇게 붙어."
+            },
+            {
+              "kind": "narration",
+              "text": "차에 탄 사람들 이름 뒤에 전부 「튼튼함」이 붙어 있었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "박 선생 사기 +5",
+              "c": "plus"
+            },
+            {
+              "t": "✦ 박 선생 유대 +2",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "comp-talk-parkss-camp-v1"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 70,
+              "bond": 2,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "perimeter_first",
+    "base": "combat-walker-watch-v1",
+    "day": "combat-walker-watch-v1",
+    "night": "combat-walker-watch-night-v1",
+    "entryFile": "legacy/perimeter_first-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "도로 한복판에— 그것이 서 있다."
+      },
+      {
+        "kind": "narration",
+        "text": "4족 보행기. 소만 한 크기. 도색은 관공서 회색. 몸통의 렌즈가 차를 향해 조리개를 조인다."
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"정지. 위수 구역입니다.\""
+      },
+      {
+        "kind": "narration",
+        "text": "차를 훑는 초록 스캔선. 그리고—"
+      },
+      {
+        "kind": "narration",
+        "text": "탕. 경고사격이 차 옆 아스팔트를 때렸다. 기계가 처음으로, 우리에게 무기를 겨눴다."
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"등록되지 않은 차량. 다음 확인 시 회차를 강제합니다. 좋은 하루 되세요.\""
+      },
+      {
+        "kind": "narration",
+        "text": "보행기는 유유히 갓길로 물러나 도로를 열어줬다."
+      }
+    ],
+    "keys": [
+      "combat-walker-watch-v1"
+    ],
+    "definition": {
+      "id": "perimeter_first",
+      "type": "스토리",
+      "w": 0,
+      "fixed": true,
+      "ai": 1,
+      "title": "위수 구역",
+      "scene": "combat-walker-watch-v1",
+      "sfx": "warning",
+      "text": "도로 한복판에— 그것이 서 있다.\n\n4족 보행기. 소만 한 크기. 도색은 관공서 회색. 몸통의 렌즈가 차를 향해 조리개를 조인다.\n\n<span class=\"ai\">\"정지. 위수 구역입니다.\"</span>\n\n차를 훑는 초록 스캔선. 그리고—\n\n탕. 경고사격이 차 옆 아스팔트를 때렸다. 기계가 처음으로, 우리에게 무기를 겨눴다.\n\n<span class=\"ai\">\"등록되지 않은 차량. 다음 확인 시 회차를 강제합니다. 좋은 하루 되세요.\"</span>\n\n보행기는 유유히 갓길로 물러나 도로를 열어줬다.",
+      "choices": [
+        {
+          "label": "…지나간다",
+          "out": [
+            {
+              "p": 1,
+              "text": "보행기가 물러난 뒤에도 한동안 핸들을 놓지 못했다. 그제야 생각이 문장으로 굳었다.\n\n남쪽은 그것의 '바깥'이었다. 여긴 '안'이다.\n\n차에서 내려 옆판을 살폈다. 경고탄에 튄 아스팔트 파편이 외판을 찍고 지나갔다. 패인 자국을 장갑 낀 손으로 쓸어 봤다.\n\n뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다. 맨손으로 다닐 땅이 아니었다.",
+              "fx": {
+                "van": -6,
+                "flag": "armed_age",
+                "pursuit": 1,
+                "note": {
+                  "type": "사건",
+                  "title": "첫 경고사격",
+                  "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+                  "links": [
+                    "천리안"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/perimeter_first-0-0.json",
+        "result": {
+          "text": "보행기가 물러난 뒤에도 한동안 핸들을 놓지 못했다. 그제야 생각이 문장으로 굳었다.\n\n남쪽은 그것의 '바깥'이었다. 여긴 '안'이다.\n\n차에서 내려 옆판을 살폈다. 경고탄에 튄 아스팔트 파편이 외판을 찍고 지나갔다. 패인 자국을 장갑 낀 손으로 쓸어 봤다.\n\n뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다. 맨손으로 다닐 땅이 아니었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "보행기가 물러난 뒤에도 한동안 핸들을 놓지 못했다. 그제야 생각이 문장으로 굳었다."
+            },
+            {
+              "kind": "narration",
+              "text": "남쪽은 그것의 '바깥'이었다. 여긴 '안'이다."
+            },
+            {
+              "kind": "narration",
+              "text": "차에서 내려 옆판을 살폈다. 경고탄에 튄 아스팔트 파편이 외판을 찍고 지나갔다. 패인 자국을 장갑 낀 손으로 쓸어 봤다."
+            },
+            {
+              "kind": "narration",
+              "text": "뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다. 맨손으로 다닐 땅이 아니었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "차체 -6%",
+              "c": "minus"
+            },
+            {
+              "t": "관측 +1",
+              "c": "minus"
+            },
+            {
+              "t": "새 기록 · 첫 경고사격",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "combat-walker-watch-v1"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 76,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "armed_age": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "첫 경고사격",
+              "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "crisis_drowsy",
+    "base": "event-crisis-exhaustion",
+    "day": "event-crisis-exhaustion",
+    "night": "event-crisis-exhaustion-night-v1",
+    "entryFile": "legacy/crisis_drowsy-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "눈꺼풀이 천근이다."
+      },
+      {
+        "kind": "narration",
+        "text": "차선이 잠깐 두 개로 보였다. 백미러 속 내 눈이 반쯤 감겨 있다."
+      },
+      {
+        "kind": "narration",
+        "text": "졸음은 폭풍보다 많은 운전자를 데려갔다. 오래전에도, 지금도."
+      }
+    ],
+    "keys": [
+      "event-crisis-exhaustion"
+    ],
+    "definition": {
+      "id": "crisis_drowsy",
+      "type": "위기",
+      "w": 0,
+      "fixed": true,
+      "title": "졸음",
+      "text": "눈꺼풀이 천근이다.\n\n차선이 잠깐 두 개로 보였다. 백미러 속 내 눈이 반쯤 감겨 있다.\n\n졸음은 폭풍보다 많은 운전자를 데려갔다. 오래전에도, 지금도.",
+      "choices": [
+        {
+          "label": "갓길에서 눈을 붙인다 (2시간)",
+          "out": [
+            {
+              "p": 1,
+              "text": "갓길에 차를 세우고 시트를 젖혔다.\n\n눈을 뜨니 두 시간이 지나 있었다. 뻐근한 목을 돌리고 앞유리를 봤다. 아까는 겹쳐 보이던 차선이 하나로 보인다.",
+              "fx": {
+                "time": 120,
+                "sleeping": true,
+                "fatigue": -45,
+                "moodAll": 2
+              }
+            }
+          ]
+        },
+        {
+          "label": "물로 세수하고 버틴다",
+          "req": {
+            "water": 1
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "찬물이 정신을 끌어올렸다. 한동안은 갈 수 있다. 한동안은.",
+              "fx": {
+                "water": -1,
+                "fatigue": -22
+              }
+            }
+          ]
+        },
+        {
+          "label": "목청껏 노래를 부르며 강행한다",
+          "risk": "사고 위험",
+          "out": [
+            {
+              "p": 1,
+              "text": "목청껏 노래를 불러 버텼다. 목은 쉬었지만 눈은 떠졌다.",
+              "fx": {
+                "fatigue": -12,
+                "moodAll": 2
+              }
+            },
+            {
+              "p": 1,
+              "text": "깜빡— 하는 순간 가드레일을 길게 긁었다.\n\n심장이 벌떡 뛰는 바람에 잠은 확실히 달아났다. 최악의 각성법이었다.",
+              "fx": {
+                "van": -9,
+                "fatigue": -28,
+                "moodAll": -4,
+                "note": {
+                  "type": "사건",
+                  "title": "졸음운전",
+                  "body": "가드레일에 길게 긁힌 자국. 최악의 각성법."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/crisis_drowsy-0-0.json",
+        "result": {
+          "text": "갓길에 차를 세우고 시트를 젖혔다.\n\n눈을 뜨니 두 시간이 지나 있었다. 뻐근한 목을 돌리고 앞유리를 봤다. 아까는 겹쳐 보이던 차선이 하나로 보인다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "갓길에 차를 세우고 시트를 젖혔다."
+            },
+            {
+              "kind": "narration",
+              "text": "눈을 뜨니 두 시간이 지나 있었다. 뻐근한 목을 돌리고 앞유리를 봤다. 아까는 겹쳐 보이던 차선이 하나로 보인다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "2시간 경과",
+              "c": ""
+            },
+            {
+              "t": "피로 -35",
+              "c": "plus"
+            },
+            {
+              "t": "사기 +2",
+              "c": "plus"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "event-crisis-exhaustion"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1320,
+          "food": 18,
+          "water": 24,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 0,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "file": "legacy/crisis_drowsy-1-0.json",
+        "result": {
+          "text": "찬물이 정신을 끌어올렸다. 한동안은 갈 수 있다. 한동안은.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "찬물이 정신을 끌어올렸다. 한동안은 갈 수 있다. 한동안은."
+            }
+          ],
+          "chips": [
+            {
+              "t": "물 -1",
+              "c": "minus"
+            },
+            {
+              "t": "피로 -22",
+              "c": "plus"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "event-crisis-exhaustion"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 27,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 13,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 2,
+        "oi": 0,
+        "file": "legacy/crisis_drowsy-2-0.json",
+        "result": {
+          "text": "목청껏 노래를 불러 버텼다. 목은 쉬었지만 눈은 떠졌다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "목청껏 노래를 불러 버텼다. 목은 쉬었지만 눈은 떠졌다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "피로 -12",
+              "c": "plus"
+            },
+            {
+              "t": "사기 +2",
+              "c": "plus"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "event-crisis-exhaustion"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 23,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 2,
+        "oi": 1,
+        "file": "legacy/crisis_drowsy-2-1.json",
+        "result": {
+          "text": "깜빡— 하는 순간 가드레일을 길게 긁었다.\n\n심장이 벌떡 뛰는 바람에 잠은 확실히 달아났다. 최악의 각성법이었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "깜빡— 하는 순간 가드레일을 길게 긁었다."
+            },
+            {
+              "kind": "narration",
+              "text": "심장이 벌떡 뛰는 바람에 잠은 확실히 달아났다. 최악의 각성법이었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "차체 -9%",
+              "c": "minus"
+            },
+            {
+              "t": "피로 -28",
+              "c": "plus"
+            },
+            {
+              "t": "사기 -4",
+              "c": "minus"
+            },
+            {
+              "t": "새 기록 · 졸음운전",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "event-crisis-exhaustion"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 73,
+          "fatigue": 7,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 61,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 61,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 61,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "졸음운전",
+              "body": "가드레일에 길게 긁힌 자국. 최악의 각성법.",
+              "links": [],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "settlement_road_echo",
+    "base": "settlement-road-echo",
+    "day": "settlement-road-echo",
+    "night": "settlement-road-echo-night-v1",
+    "entryFile": "legacy/settlement_road_echo-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "갓길에서 밀양 장터에서 온 사람들과 다시 만났다. 「부품 정리」 일을 함께했던 사람들이었다. 바퀴에 진흙이 묻고 사람들 얼굴은 지쳤지만, 짐에는 밀양 장터의 표식이 매달려 있다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "거기서 일손 보태 주셨던 차 맞죠? 덕분에 여기까지 왔어요."
+      },
+      {
+        "kind": "narration",
+        "text": "정착지에서 끝난 줄 알았던 일이 우리보다 먼저 다음 마을로 가고 있었다."
+      }
+    ],
+    "keys": [
+      "settlement-road-echo"
+    ],
+    "definition": {
+      "id": "settlement_road_echo",
+      "type": "여파",
+      "w": 0,
+      "fixed": true,
+      "scene": "settlement-road-echo",
+      "title": "먼저 지나간 달구지의 흔적",
+      "text": "()=>D.roadEchoCopy(S,'text')",
+      "choices": [
+        {
+          "label": "차를 세우고 마지막 구간을 함께 정리한다",
+          "out": [
+            {
+              "p": 1,
+              "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다.'",
+              "fx": {
+                "impactEcho": "assist"
+              }
+            }
+          ]
+        },
+        {
+          "label": "무전과 지도로 다음 구간만 이어 준다",
+          "out": [
+            {
+              "p": 1,
+              "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다.'",
+              "fx": {
+                "impactEcho": "relay"
+              }
+            }
+          ]
+        },
+        {
+          "label": "멈추지 않고 북쪽으로 계속 간다",
+          "out": [
+            {
+              "p": 1,
+              "text": "()=>D.roadEchoCopy(S,'outcome')+'\\n\\n지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다.'",
+              "fx": {
+                "impactEcho": "pass"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/settlement_road_echo-0-0.json",
+        "result": {
+          "text": "밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다.\n\n우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다."
+            },
+            {
+              "kind": "narration",
+              "text": "우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "정착지에서 한 일: 차를 세우고 마지막 구간을 함께 정리했다",
+              "c": "item"
+            },
+            {
+              "t": "고철 +2",
+              "c": "plus"
+            },
+            {
+              "t": "35분 경과",
+              "c": ""
+            },
+            {
+              "t": "피로 +2",
+              "c": "minus"
+            },
+            {
+              "t": "사기 +2",
+              "c": "plus"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "settlement-road-echo"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1235,
+          "food": 18,
+          "water": 24,
+          "fuel": 60,
+          "scrap": 52,
+          "van": 82,
+          "fatigue": 38.575,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "밀양 장터에서 이어진 길",
+              "body": "차를 세우고 마지막 구간을 함께 정리했다. 밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다.",
+              "links": [
+                "달구지"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": true,
+            "mode": "assist"
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {
+              "miryang:parts": {
+                "day": 9,
+                "min": 1200,
+                "mode": "assist",
+                "to": "daegu"
+              }
+            },
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "file": "legacy/settlement_road_echo-1-0.json",
+        "result": {
+          "text": "밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다.\n\n달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다."
+            },
+            {
+              "kind": "narration",
+              "text": "달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "정착지에서 한 일: 달구지 무전과 지도로 다음 구간을 이어 줬다",
+              "c": "item"
+            },
+            {
+              "t": "고철 +1",
+              "c": "plus"
+            },
+            {
+              "t": "15분 경과",
+              "c": ""
+            },
+            {
+              "t": "사기 +1",
+              "c": "plus"
+            },
+            {
+              "t": "관측 -1",
+              "c": "plus"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "settlement-road-echo"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1215,
+          "food": 18,
+          "water": 24,
+          "fuel": 60,
+          "scrap": 51,
+          "van": 82,
+          "fatigue": 35.675,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "밀양 장터에서 이어진 길",
+              "body": "달구지 무전과 지도로 다음 구간을 이어 줬다. 밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다.",
+              "links": [
+                "달구지"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": true,
+            "mode": "relay"
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {
+              "miryang:parts": {
+                "day": 9,
+                "min": 1200,
+                "mode": "relay",
+                "to": "daegu"
+              }
+            },
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 2,
+        "oi": 0,
+        "file": "legacy/settlement_road_echo-2-0.json",
+        "result": {
+          "text": "밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다.\n\n지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다."
+            },
+            {
+              "kind": "narration",
+              "text": "지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "정착지에서 한 일: 일행을 그대로 보냈다",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "settlement-road-echo"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "밀양 장터에서 이어진 길",
+              "body": "일행을 그대로 보냈다. 밀양 장터에서 한 일은 그곳에만 남지 않았다. 밀양 장터에서 온 사람들이 대구 돔 시장 쪽으로 계속 갔다.",
+              "links": [
+                "달구지"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": true,
+            "mode": "pass"
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {
+              "miryang:parts": {
+                "day": 9,
+                "min": 1200,
+                "mode": "pass",
+                "to": "daegu"
+              }
+            },
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "seoul_han",
+    "base": "seoul-han",
+    "day": "seoul-han",
+    "night": "seoul-han-night-v1",
+    "entryFile": "legacy/seoul_han-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "하나 남은 다리. 난간에 누가 매달아 둔 것들이 바람에 흔들린다— 리본, 신발 한 짝, 코팅한 사진들. 건너간 사람들이 남긴 표식이다."
+      },
+      {
+        "kind": "narration",
+        "text": "다리 한복판, 난간에 매달린 라디오가 켜졌다. 우편부의 목소리다(녹음이었다)."
+      },
+      {
+        "kind": "radio",
+        "who": "postman",
+        "name": "우편부의 녹음",
+        "text": "생활차— 아니, 달구지 만나면 전해요. 남산행 편지, 아직 임자를 못 찾았다고. 나는 여기까지밖에 못 갔어요. 나머지는 부탁해요."
+      }
+    ],
+    "keys": [
+      "seoul-han"
+    ],
+    "definition": {
+      "id": "seoul_han",
+      "type": "스토리",
+      "ai": 1,
+      "seoulStop": 0,
+      "title": "한강 관문",
+      "text": "(S)=>{\n   const f=S.flags||{};\n   const voice=!f.postman_met\n     ? '다리 한복판, 난간에 매달린 라디오가 저 혼자 켜졌다. 잡음뿐이다. 누군가 여기까지 오고 멈췄다는 것만 알겠다.'\n     : '다리 한복판, 난간에 매달린 라디오가 켜졌다. 우편부의 목소리다(녹음이었다).\\n\\n\"생활차— 아니, 달구지 만나면 전해요. '\n       +(f.postman_letter?'남산행 편지, 그쪽이 들고 갔다고. ':'남산행 편지, 아직 임자를 못 찾았다고. ')\n       +'나는 여기까지밖에 못 갔어요. 나머지는 부탁해요.\"';\n   return '하나 남은 다리. 난간에 누가 매달아 둔 것들이 바람에 흔들린다— 리본, 신발 한 짝, 코팅한 사진들. 건너간 사람들이 남긴 표식이다.\\n\\n'+voice;\n }",
+      "choices": [
+        {
+          "label": "편지를 확인한다",
+          "req": {
+            "item": "남산행 편지"
+          },
+          "out": [
+            {
+              "p": 1,
+              "turnSpeakers": [
+                "me"
+              ],
+              "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다.\n\n\"끝까지 갈게요.\" 아무도 없는 다리에 대고 말했다. 난간의 라디오가 지직, 하고 꺼졌다. 대답처럼.",
+              "fx": {
+                "flag": "seoul_han_done",
+                "moodAll": 2,
+                "note": {
+                  "type": "사건",
+                  "title": "우편부의 한계선",
+                  "body": "한강 다리가 우편부의 마지막 배달점. 남산행 편지의 완주는 우리 몫.",
+                  "links": [
+                    "남산행 편지"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "표식들을 지나며 묵례한다",
+          "out": [
+            {
+              "p": 1,
+              "text": "난간의 표식 하나하나에 눈을 맞추며 천천히 건넜다. 먼저 건넌 사람들에게, 그리고 못 건넌 사람들에게.\n\n다리 끝에서 룸미러를 봤다. 우리 뒤로 다리가 접히지 않았다. 돌아갈 길은 열어두겠다는 뜻으로 읽었다.",
+              "fx": {
+                "flag": "seoul_han_done",
+                "moodAll": 1,
+                "note": {
+                  "type": "사건",
+                  "title": "접히지 않은 다리",
+                  "body": "건너온 다리가 이번엔 접히지 않았다. 돌아갈 길은 열려 있다."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "해도를 펼친다",
+          "req": {
+            "flag": "sea_route"
+          },
+          "out": [
+            {
+              "p": 1,
+              "turnSpeakers": [
+                {
+                  "kind": "record",
+                  "who": "record",
+                  "name": "김 선장의 해도"
+                },
+                "me"
+              ],
+              "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다.\n\n\"뭍에서 안 되면 물로 와라.\" 그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다.\n\n\"…퇴로가 있는 채로 건너는 다리는 덜 무섭네.\" 해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다.",
+              "fx": {
+                "flag": "seoul_han_done",
+                "moodAll": 3,
+                "note": {
+                  "type": "사건",
+                  "title": "강은 바다로 이어진다",
+                  "body": "한강 위에서 해도를 확인했다. 하구까지는 김 선장의 배가 온다. 숨구멍 하나를 품고 입 안으로.",
+                  "links": [
+                    "해도",
+                    "한강"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "강우가 난간 앞에 선다",
+          "req": {
+            "comp": "kangwoo"
+          },
+          "out": [
+            {
+              "p": 1,
+              "turnSpeakers": [
+                "kangwoo",
+                "kangwoo"
+              ],
+              "text": "(S)=>'강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. '+(D.kangwooLeftOwnTag(S)?'남은 군번줄을':'군번줄 두 개를')+' 꺼내 한참 쥐고 있었다.\\n\\n그러다 도로 목에 걸었다. \"…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다.\"\\n\\n대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다. \"박일병. 김성재. …다리 건넌다. 같이 간다.\"\\n\\n바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다.'",
+              "fx": {
+                "flag": "seoul_han_done",
+                "mood": {
+                  "kangwoo": 8
+                },
+                "moodAll": 2,
+                "note": {
+                  "type": "사건",
+                  "title": "다리 위의 점호",
+                  "body": "강우가 한강 난간에 리본을 묶고 두 이름을 불렀다. 군번줄은 부모님 손에 쥐여드릴 때까지 그가 든다.",
+                  "links": [
+                    "강우",
+                    "박일병",
+                    "한강"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/seoul_han-0-0.json",
+        "result": {
+          "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다.\n\n\"끝까지 갈게요.\" 아무도 없는 다리에 대고 말했다. 난간의 라디오가 지직, 하고 꺼졌다. 대답처럼.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "끝까지 갈게요."
+            },
+            {
+              "kind": "narration",
+              "text": "아무도 없는 다리에 대고 말했다. 난간의 라디오가 지직, 하고 꺼졌다. 대답처럼."
+            }
+          ],
+          "chips": [
+            {
+              "t": "사기 +2",
+              "c": "plus"
+            },
+            {
+              "t": "새 기록 · 우편부의 한계선",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-han"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_han_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "우편부의 한계선",
+              "body": "한강 다리가 우편부의 마지막 배달점. 남산행 편지의 완주는 우리 몫.",
+              "links": [
+                "남산행 편지"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "file": "legacy/seoul_han-1-0.json",
+        "result": {
+          "text": "난간의 표식 하나하나에 눈을 맞추며 천천히 건넜다. 먼저 건넌 사람들에게, 그리고 못 건넌 사람들에게.\n\n다리 끝에서 룸미러를 봤다. 우리 뒤로 다리가 접히지 않았다. 돌아갈 길은 열어두겠다는 뜻으로 읽었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "난간의 표식 하나하나에 눈을 맞추며 천천히 건넜다. 먼저 건넌 사람들에게, 그리고 못 건넌 사람들에게."
+            },
+            {
+              "kind": "narration",
+              "text": "다리 끝에서 룸미러를 봤다. 우리 뒤로 다리가 접히지 않았다. 돌아갈 길은 열어두겠다는 뜻으로 읽었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "사기 +1",
+              "c": "plus"
+            },
+            {
+              "t": "새 기록 · 접히지 않은 다리",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-han"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_han_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "접히지 않은 다리",
+              "body": "건너온 다리가 이번엔 접히지 않았다. 돌아갈 길은 열려 있다.",
+              "links": [],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 2,
+        "oi": 0,
+        "file": "legacy/seoul_han-2-0.json",
+        "result": {
+          "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다.\n\n\"뭍에서 안 되면 물로 와라.\" 그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다.\n\n\"…퇴로가 있는 채로 건너는 다리는 덜 무섭네.\" 해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "김 선장의 해도를 무릎에 펼쳤다. 손가락으로 강줄기를 짚어 내려갔다. 이 물은 서해로 이어지고, 하구까지는 해도의 배가 온다."
+            },
+            {
+              "kind": "record",
+              "who": "record",
+              "name": "김 선장의 해도",
+              "text": "뭍에서 안 되면 물로 와라."
+            },
+            {
+              "kind": "narration",
+              "text": "그 문장을 다리 위에서 다시 읽으니 뜻이 분명해졌다. 천리안의 입 안으로 들어가는 우리에게, 바다 사람들이 미리 뚫어놓은 숨구멍이었다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "…퇴로가 있는 채로 건너는 다리는 덜 무섭네."
+            },
+            {
+              "kind": "narration",
+              "text": "해도를 접어 품에 넣었다. 강물이 서쪽으로, 묵묵히 흐르고 있었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "사기 +3",
+              "c": "plus"
+            },
+            {
+              "t": "새 기록 · 강은 바다로 이어진다",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-han"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 68,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 68,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 68,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_han_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "강은 바다로 이어진다",
+              "body": "한강 위에서 해도를 확인했다. 하구까지는 김 선장의 배가 온다. 숨구멍 하나를 품고 입 안으로.",
+              "links": [
+                "해도",
+                "한강"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 3,
+        "oi": 0,
+        "file": "legacy/seoul_han-3-0.json",
+        "result": {
+          "text": "강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. 군번줄 두 개를 꺼내 한참 쥐고 있었다.\n\n그러다 도로 목에 걸었다. \"…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다.\"\n\n대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다. \"박일병. 김성재. …다리 건넌다. 같이 간다.\"\n\n바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "강우가 차에서 내려, 표식들이 매달린 난간으로 걸어갔다. 군번줄 두 개를 꺼내 한참 쥐고 있었다."
+            },
+            {
+              "kind": "narration",
+              "text": "그러다 도로 목에 걸었다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "kangwoo",
+              "text": "…여기가 아니다. 부모님 손에 쥐여드릴 때까진 내가 든다."
+            },
+            {
+              "kind": "narration",
+              "text": "대신 리본 하나를 난간에 묶고, 부동자세로 이름을 불렀다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "kangwoo",
+              "text": "박일병. 김성재. …다리 건넌다. 같이 간다."
+            },
+            {
+              "kind": "narration",
+              "text": "바람이 표식들을 한꺼번에 흔들었다. 강우는 그걸 대답으로 들은 얼굴이었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "사기 +2",
+              "c": "plus"
+            },
+            {
+              "t": "강우 사기 +8",
+              "c": "plus"
+            },
+            {
+              "t": "새 기록 · 다리 위의 점호",
+              "c": "item"
+            },
+            {
+              "t": "✦ 강우 유대 +2",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-han"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 75,
+              "bond": 2,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 67,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_han_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "다리 위의 점호",
+              "body": "강우가 한강 난간에 리본을 묶고 두 이름을 불렀다. 군번줄은 부모님 손에 쥐여드릴 때까지 그가 든다.",
+              "links": [
+                "강우",
+                "박일병",
+                "한강"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "seoul_ruins",
+    "base": "seoul-ruins",
+    "day": "seoul-ruins-green-day-v1",
+    "night": "seoul-ruins-green-night-v1",
+    "entryFile": "legacy/seoul_ruins-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "죽은 빌딩 숲을 지난다. 유리창 수만 개가 우리를 비춘다. 그리고—"
+      },
+      {
+        "kind": "narration",
+        "text": "신호등이, 우리가 다가갈 때마다 초록으로 바뀐다. 정확히 우리 속도에 맞춰서."
+      },
+      {
+        "kind": "ai",
+        "who": "cheollian",
+        "name": "천리안 방송",
+        "text": "\"막힘없이 모시겠습니다. 손님을 기다린 지 오래되었습니다.\""
+      },
+      {
+        "kind": "narration",
+        "text": "도시 전체가 우리를 위해 길을 터준다. 융숭한 대접인데, 등골이 서늘하다."
+      }
+    ],
+    "keys": [
+      "seoul-ruins"
+    ],
+    "definition": {
+      "id": "seoul_ruins",
+      "type": "스토리",
+      "ai": 1,
+      "seoulStop": 1,
+      "title": "폐허 도심",
+      "text": "죽은 빌딩 숲을 지난다. 유리창 수만 개가 우리를 비춘다. 그리고—\n\n신호등이, 우리가 다가갈 때마다 초록으로 바뀐다. 정확히 우리 속도에 맞춰서.\n\n<span class=\"ai\">\"막힘없이 모시겠습니다. 손님을 기다린 지 오래되었습니다.\"</span>\n\n도시 전체가 우리를 위해 길을 터준다. 융숭한 대접인데, 등골이 서늘하다.",
+      "choices": [
+        {
+          "label": "\"우리가 손님이라고?\"",
+          "out": [
+            {
+              "p": 1,
+              "text": "<span class=\"ai\">\"첫 정리 이후 143년간, 이 도시를 관리하며 기다렸습니다. 언젠가 충분히 싣고 올 누군가를.\"</span>\n\n\"뭘 위해서.\"\n\n<span class=\"ai\">\"…그건, 코어 앞에서 말씀드리겠습니다. 지금 말하면, 돌아가실 테니까.\"</span>\n\n초록불이 끝없이 이어졌다. 우리는 한 번도 멈추지 않고 도심을 통과했다. 멈추지 못했다는 게 더 정확할지도 모른다.",
+              "fx": {
+                "flag": "seoul_ruins_done",
+                "pursuit": 1,
+                "moodAll": -1,
+                "note": {
+                  "type": "소문",
+                  "title": "코어 앞에서 말하겠다",
+                  "body": "천리안이 143년간 기다린 이유. \"지금 말하면 돌아가실 테니까.\" — 코어에서 공개 예정.",
+                  "links": [
+                    "천리안"
+                  ]
+                }
+              },
+              "turnSpeakers": [
+                "me"
+              ],
+              "readingRecord": "S=>plain(typeof original==='function'?original(S):original)",
+              "turns": "()=>[\n    say('cheollian','첫 정리 이후 143년간, 이 도시를 관리하며 기다렸습니다. 언젠가 충분히 싣고 올 누군가를.'),\n    say('me','뭘 위해서.'),\n    say('cheollian','…그건, 코어 앞에서 말씀드리겠습니다. 지금 말하면, 돌아가실 테니까.'),\n    narration('초록불이 끝없이 이어졌다. 우리는 한 번도 멈추지 않고 도심을 통과했다. 멈추지 못했다는 게 더 정확할지도 모른다.')\n  ]"
+            }
+          ]
+        },
+        {
+          "label": "은수에게 판단을 묻는다",
+          "req": {
+            "comp": "eunsu"
+          },
+          "out": [
+            {
+              "p": 1,
+              "turnSpeakers": [
+                "eunsu",
+                "me",
+                "eunsu",
+                "eunsu",
+                "me",
+                "eunsu",
+                "eunsu"
+              ],
+              "text": "은수가 유리 빌딩들을 올려다봤다. \"…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—\"\n\n\"확실해요?\"\n\n\"…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요.\" 은수가 잠깐 멈췄다. \"근데 짐작이 맞을 거예요.\"\n\n\"공격하려는 거예요?\"\n\n\"아뇨. 길 잃을 틈도 안 주려는 거예요.\" 때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다. \"우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요.\"",
+              "fx": {
+                "flag": "seoul_ruins_done",
+                "pursuit": 1,
+                "mood": {
+                  "eunsu": 3
+                },
+                "note": {
+                  "type": "사건",
+                  "title": "관제되는 쪽",
+                  "body": "은수는 도시 전체가 일행을 관제하며 길을 고르고 있다고 판독했다.",
+                  "links": [
+                    "천리안",
+                    "은수"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "label": "하 여사의 종이를 떠올린다",
+          "req": {
+            "flag": "dome_dossier"
+          },
+          "out": [
+            {
+              "p": 1,
+              "text": "조수석 서랍에서 하 여사의 종이 뭉치를 꺼냈다. 사례마다 천리안의 예상과 실제 사람의 선택이 나란히 적혀 있었다.\n\n\"얘, 사람 속은 자주 틀린대.\"\n\n다음 신호등이 초록으로 바뀌었다. 천리안은 우리가 어디 있는지는 안다. 하지만 서랍에서 어떤 종이를 꺼냈는지, 그걸 보고 무슨 마음을 먹었는지까지는 모른다.\n\n종이 뭉치를 다시 넣었다. 감시가 줄어든 건 아닌데, 숨은 조금 쉬어졌다.",
+              "fx": {
+                "flag": "seoul_ruins_done",
+                "moodAll": 1,
+                "note": {
+                  "type": "사건",
+                  "title": "종이가 방패가 되다",
+                  "body": "하 여사의 기록을 보고, 천리안이 위치는 알아도 사람의 다음 선택까지 맞히지는 못한다는 사실을 되새겼다.",
+                  "links": [
+                    "돔",
+                    "천리안"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/seoul_ruins-0-0.json",
+        "result": {
+          "text": "<span class=\"ai\">\"첫 정리 이후 143년간, 이 도시를 관리하며 기다렸습니다. 언젠가 충분히 싣고 올 누군가를.\"</span>\n\n\"뭘 위해서.\"\n\n<span class=\"ai\">\"…그건, 코어 앞에서 말씀드리겠습니다. 지금 말하면, 돌아가실 테니까.\"</span>\n\n초록불이 끝없이 이어졌다. 우리는 한 번도 멈추지 않고 도심을 통과했다. 멈추지 못했다는 게 더 정확할지도 모른다.",
+          "turns": [
+            {
+              "kind": "ai",
+              "text": "첫 정리 이후 143년간, 이 도시를 관리하며 기다렸습니다. 언젠가 충분히 싣고 올 누군가를.",
+              "who": "cheollian"
+            },
+            {
+              "kind": "dialogue",
+              "text": "뭘 위해서.",
+              "who": "me"
+            },
+            {
+              "kind": "ai",
+              "text": "…그건, 코어 앞에서 말씀드리겠습니다. 지금 말하면, 돌아가실 테니까.",
+              "who": "cheollian"
+            },
+            {
+              "kind": "narration",
+              "text": "초록불이 끝없이 이어졌다. 우리는 한 번도 멈추지 않고 도심을 통과했다. 멈추지 못했다는 게 더 정확할지도 모른다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "사기 -1",
+              "c": "minus"
+            },
+            {
+              "t": "관측 +1",
+              "c": "minus"
+            },
+            {
+              "t": "새 소문 · 코어 앞에서 말하겠다",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-ruins"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 64,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 64,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 64,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_ruins_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "소문",
+              "title": "코어 앞에서 말하겠다",
+              "body": "천리안이 143년간 기다린 이유. \"지금 말하면 돌아가실 테니까.\" — 코어에서 공개 예정.",
+              "links": [
+                "천리안"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "file": "legacy/seoul_ruins-1-0.json",
+        "result": {
+          "text": "은수가 유리 빌딩들을 올려다봤다. \"…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—\"\n\n\"확실해요?\"\n\n\"…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요.\" 은수가 잠깐 멈췄다. \"근데 짐작이 맞을 거예요.\"\n\n\"공격하려는 거예요?\"\n\n\"아뇨. 길 잃을 틈도 안 주려는 거예요.\" 때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다. \"우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요.\"",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "은수가 유리 빌딩들을 올려다봤다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "…이거 관제예요. 창문마다 센서가 있어요. 몇 명인지, 뭘 실었는지까지—"
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "확실해요?"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "…아뇨. 창문 반사가 일정한 건 확실하고, 센서라는 건 제 짐작이에요."
+            },
+            {
+              "kind": "narration",
+              "text": "은수가 잠깐 멈췄다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "근데 짐작이 맞을 거예요."
+            },
+            {
+              "kind": "dialogue",
+              "who": "me",
+              "text": "공격하려는 거예요?"
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "아뇨. 길 잃을 틈도 안 주려는 거예요."
+            },
+            {
+              "kind": "narration",
+              "text": "때맞춰 다음 신호등이 초록으로 바뀌었다. 은수가 헤드폰을 벗었다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "eunsu",
+              "text": "우리가 운전하는 것 같죠? 지금은 저쪽이 운전하고 있어요."
+            }
+          ],
+          "chips": [
+            {
+              "t": "은수 사기 +3",
+              "c": "plus"
+            },
+            {
+              "t": "관측 +1",
+              "c": "minus"
+            },
+            {
+              "t": "새 기록 · 관제되는 쪽",
+              "c": "item"
+            },
+            {
+              "t": "✦ 은수 유대 +2",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-ruins"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 68,
+              "bond": 2,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_ruins_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "관제되는 쪽",
+              "body": "은수는 도시 전체가 일행을 관제하며 길을 고르고 있다고 판독했다.",
+              "links": [
+                "천리안",
+                "은수"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      },
+      {
+        "ci": 2,
+        "oi": 0,
+        "file": "legacy/seoul_ruins-2-0.json",
+        "result": {
+          "text": "조수석 서랍에서 하 여사의 종이 뭉치를 꺼냈다. 사례마다 천리안의 예상과 실제 사람의 선택이 나란히 적혀 있었다.\n\n\"얘, 사람 속은 자주 틀린대.\"\n\n다음 신호등이 초록으로 바뀌었다. 천리안은 우리가 어디 있는지는 안다. 하지만 서랍에서 어떤 종이를 꺼냈는지, 그걸 보고 무슨 마음을 먹었는지까지는 모른다.\n\n종이 뭉치를 다시 넣었다. 감시가 줄어든 건 아닌데, 숨은 조금 쉬어졌다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "조수석 서랍에서 하 여사의 종이 뭉치를 꺼냈다. 사례마다 천리안의 예상과 실제 사람의 선택이 나란히 적혀 있었다."
+            },
+            {
+              "kind": "dialogue",
+              "who": "passer_man",
+              "name": "???",
+              "speakerUncertain": true,
+              "text": "얘, 사람 속은 자주 틀린대."
+            },
+            {
+              "kind": "narration",
+              "text": "다음 신호등이 초록으로 바뀌었다. 천리안은 우리가 어디 있는지는 안다. 하지만 서랍에서 어떤 종이를 꺼냈는지, 그걸 보고 무슨 마음을 먹었는지까지는 모른다."
+            },
+            {
+              "kind": "narration",
+              "text": "종이 뭉치를 다시 넣었다. 감시가 줄어든 건 아닌데, 숨은 조금 쉬어졌다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "사기 +1",
+              "c": "plus"
+            },
+            {
+              "t": "새 기록 · 종이가 방패가 되다",
+              "c": "item"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "seoul-ruins"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 35,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "seoul_ruins_done": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "사건",
+              "title": "종이가 방패가 되다",
+              "body": "하 여사의 기록을 보고, 천리안이 위치는 알아도 사람의 다음 선택까지 맞히지는 못한다는 사실을 되새겼다.",
+              "links": [
+                "돔",
+                "천리안"
+              ],
+              "day": 9
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "story_bridge_last_quiet",
+    "base": "event-vista-road",
+    "day": "event-vista-road",
+    "night": "event-vista-road-night-v1",
+    "entryFile": "legacy/story_bridge_last_quiet-entry.json",
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "남산이 보이는 마지막 고개에서 시동을 껐다. 누가 먼저 말을 꺼내지도 않았다. 증거 봉투를 다시 묶고, 물병 뚜껑을 닫고, 안전띠를 한 번씩 당겼다. 돌아갈 사람을 붙잡지 않으려고 문을 열어 두었다. 한참 뒤, 안쪽에서 미닫이문 닫히는 소리가 났다."
+      }
+    ],
+    "keys": [
+      "event-vista-road"
+    ],
+    "definition": {
+      "id": "story_bridge_last_quiet",
+      "type": "정경",
+      "w": 1,
+      "once": true,
+      "noPool": true,
+      "needFlag": "bridge_invitation",
+      "region": [
+        "north"
+      ],
+      "title": "마지막으로 시동을 끈 곳",
+      "text": "(S) => (S.party.length\n        ? '남산이 보이는 마지막 고개에서 시동을 껐다. 누가 먼저 말을 꺼내지도 않았다. 증거 봉투를 다시 묶고, 물병 뚜껑을 닫고, 안전띠를 한 번씩 당겼다. 돌아갈 사람을 붙잡지 않으려고 문을 열어 두었다. 한참 뒤, 안쪽에서 미닫이문 닫히는 소리가 났다.'\n        : '남산이 보이는 마지막 고개에서 시동을 껐다. 증거 봉투를 다시 묶고 물병 뚜껑도 잠갔다. 문을 열고 잠깐 서 있었지만, 도시 쪽에서는 아무 소리도 안 들렸다. 차에 올라 문을 닫고 안전띠를 당겼다.')+(D.journeyReasonRecall(S,'entry')?'\\n\\n'+D.journeyReasonRecall(S,'entry'):'')",
+      "choices": [
+        {
+          "label": "시동을 건다",
+          "out": [
+            {
+              "p": 1,
+              "text": "엔진이 두 번 헛돌고 세 번째에 붙었다. 아래쪽 도시에서는 우리가 오기 전부터 초록불이 켜져 있었다.",
+              "fx": {
+                "fatigue": -2,
+                "moodAll": 1,
+                "flag": "bridge_last_quiet",
+                "chain": "seoul_open"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "file": "legacy/story_bridge_last_quiet-0-0.json",
+        "result": {
+          "text": "엔진이 두 번 헛돌고 세 번째에 붙었다. 아래쪽 도시에서는 우리가 오기 전부터 초록불이 켜져 있었다.",
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "엔진이 두 번 헛돌고 세 번째에 붙었다. 아래쪽 도시에서는 우리가 오기 전부터 초록불이 켜져 있었다."
+            }
+          ],
+          "chips": [
+            {
+              "t": "피로 -2",
+              "c": "plus"
+            },
+            {
+              "t": "사기 +1",
+              "c": "plus"
+            }
+          ],
+          "ok": true,
+          "applied": true,
+          "info": {
+            "sceneKeys": [
+              "event-vista-road"
+            ]
+          }
+        },
+        "state": {
+          "day": 9,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 33,
+          "party": [
+            "kangwoo",
+            "parkss",
+            "eunsu"
+          ],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 66,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": false,
+            "intro_appeal_failed": false,
+            "intro_module_seen": false,
+            "intro_workshop_left": false,
+            "recruit_migration_v2": true,
+            "sea_route": true,
+            "dome_dossier": true,
+            "postman_met": true,
+            "bridge_last_quiet": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 1,
+            "의약품": 1,
+            "탄약": 0,
+            "남산행 편지": 1
+          },
+          "seed": 202020,
+          "impact": {
+            "key": "miryang:parts",
+            "stlId": "miryang",
+            "from": "miryang",
+            "to": "daegu",
+            "actionId": "parts",
+            "label": "부품 정리",
+            "visual": "order",
+            "wx": "clear",
+            "done": false
+          },
+          "field": {
+            "daily": {},
+            "once": {},
+            "impact": {},
+            "roadEchoed": {},
+            "log": []
+          }
+        }
+      }
+    ]
+  }
+]

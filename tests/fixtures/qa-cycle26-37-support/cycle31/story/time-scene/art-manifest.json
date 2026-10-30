@@ -1,0 +1,65 @@
+[
+  {
+    "key": "combat-walker-watch-night-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/combat-walker-watch-night-v1.webp",
+    "target": "assets/scenes/combat-walker-watch-night-v1.webp",
+    "sha256": "27c9c946aa974ed76a908b17d871be5884a36bb3622b85882143eb31ad07b9e0",
+    "size": "1024x576"
+  },
+  {
+    "key": "comp-talk-kangwoo-camp-day-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/comp-talk-kangwoo-camp-day-v1.webp",
+    "target": "assets/scenes/comp-talk-kangwoo-camp-day-v1.webp",
+    "sha256": "af9dbe1fc28a7ceee9e9dd19fa1f23334229431e970eba2acb57ed98de74aed4",
+    "size": "1024x576"
+  },
+  {
+    "key": "comp-talk-parkss-camp-day-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/comp-talk-parkss-camp-day-v1.webp",
+    "target": "assets/scenes/comp-talk-parkss-camp-day-v1.webp",
+    "sha256": "9b9dfd3a1cb4d6b53cedb65e71fde42a7e340fc9cd477e1687e0a703e76f693c",
+    "size": "1024x576"
+  },
+  {
+    "key": "event-crisis-exhaustion-night-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/event-crisis-exhaustion-night-v1.webp",
+    "target": "assets/scenes/event-crisis-exhaustion-night-v1.webp",
+    "sha256": "7728d9794817c7eabd92e1a2ae10e4cd7c3f8a5f570ba732347f2bb1fefa9117",
+    "size": "1024x576"
+  },
+  {
+    "key": "event-vista-road-night-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/event-vista-road-night-v1.webp",
+    "target": "assets/scenes/event-vista-road-night-v1.webp",
+    "sha256": "29eda797b0528805d88f2c5a538d4f64072a04ff912dc446396aedcfa89d6d5f",
+    "size": "1024x576"
+  },
+  {
+    "key": "seoul-han-night-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-survival/delivery/seoul-han-night-v1.webp",
+    "target": "assets/scenes/seoul-han-night-v1.webp",
+    "sha256": "dfd1a3765a3b7321aa65a786836406fa571f62393ad98d47e821846096c398c2",
+    "size": "1280x720"
+  },
+  {
+    "key": "seoul-ruins-green-day-v1",
+    "from": "assets/scenes/seoul-ruins-green-day-v2.webp",
+    "target": "assets/scenes/seoul-ruins-green-day-v2.webp",
+    "sha256": "f15cbdbac22050253c7518e21fa97449fbb8bd5e8695ba17d80be5d59466b96f",
+    "size": "1024x576"
+  },
+  {
+    "key": "seoul-ruins-green-night-v1",
+    "from": "assets/scenes/seoul-ruins-green-night-v2.webp",
+    "target": "assets/scenes/seoul-ruins-green-night-v2.webp",
+    "sha256": "d2f50b1be77c92eef1e818045e60eb7c012f8e43284314d6c51992e961994f9a",
+    "size": "1024x576"
+  },
+  {
+    "key": "settlement-road-echo-night-v1",
+    "from": "qa-artifacts/qa-cycle-20261026/cycle24/visual-time-systems/settlement-road-echo-night-v1.webp",
+    "target": "assets/scenes/settlement-road-echo-night-v1.webp",
+    "sha256": "095f1b8ca1d95fcc6d1966b08acd4c361e34bc49d2a58424e91b5fa003b6111c",
+    "size": "1024x576"
+  }
+]

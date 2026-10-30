@@ -39,7 +39,7 @@ function harness(){
   mainEvidenceEntryId:id=>id,mainEvidenceLocationReady:()=>true,
   applyFx:fx=>{applied++;ctx.S.flags[fx.flag]=true;ctx.S.notes.push(plain(fx.note));return []}});
  vm.runInContext(fs.readFileSync('src/04h-engine-presentation.js','utf8'),ctx);
- for(const name of ['departureBriefHtml','renderDepartureBrief','placeStoryDock','resolveChoice','closeEvent','showEvent'])load(ctx,name);
+ for(const name of ['eventScenePresentation','eventSceneOrientation','departureBriefHtml','renderDepartureBrief','placeStoryDock','resolveChoice','closeEvent','showEvent'])load(ctx,name);
  ctx.renderStoryState=()=>{
   if(sheet.dataset.missionLayout==='departure')ctx.renderDepartureBrief(sheet,ctx.curStory);
   else ordinaryRenders++;

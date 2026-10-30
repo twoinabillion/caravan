@@ -1,0 +1,3 @@
+e5561ed6662ba35a2ef7b4d0e0b72fb31aca29e5780aaf2cdf9168391dfafe74  tests/fixtures/qa-cycle79-camp-bridge/entry-after-view-292-camp_6_kangwoo.json
+32aae2249a927f4167f05a66532eea4001dc0eaf31f8d3dff99b420a59b6f840  tests/fixtures/qa-cycle79-camp-bridge/normal-unpaid-292-camp_6_kangwoo.json
+8ccc308436c5c6179cad1de25487cfea1d1b749c8d427633eeea67523bd7c31c  tests/fixtures/qa-cycle79-camp-bridge/paid-from-natural-entry.json

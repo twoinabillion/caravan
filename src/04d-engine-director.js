@@ -636,6 +636,7 @@ G.nearestHidden = ()=>{
 };
 G.reqOk = (req)=>{
   if(!req) return {ok:true};
+  if(req.notFlag && S.flags[req.notFlag]) return {ok:false, t:'이미 확인한 내용이다'};
   if(req.perk && !G.hasPerk(req.perk)){ const p=G.perkDef(req.perk);
     return {ok:false, t:`퍼크 「${p?p.nm:req.perk}」 필요`}; }
   if(req.flagMin && (S.flags[req.flagMin[0]]||0) < req.flagMin[1]) return {ok:false, t:'아직 단골이 아니다'};
@@ -721,6 +722,7 @@ G.reqText = (req)=>{
    자원 비용은 플레이어가 계획할 정보라 reqVisible와 무관하게 계속 보여 준다. */
 G.reqVisible = (req)=>{
   if(!req) return true;
+  if(req.notFlag&&S.flags[req.notFlag]) return false;
   if(req.perk&&!G.hasPerk(req.perk)) return false;
   if(req.flagMin&&(S.flags[req.flagMin[0]]||0)<req.flagMin[1]) return false;
   if(req.flag&&!S.flags[req.flag]) return false;
@@ -850,9 +852,22 @@ G.rollOut = (outs)=>{
   for(const o of outs){ r-=o.p; if(r<=0) return o } return outs[outs.length-1];
 };
 
+// The farewell decision releases only the matching completed temporary escort.
+// Earlier stages and stale decisions must never cancel another person's request.
+G.declineRecruitOffer = (id)=>{
+  if(!id||!S.recruitQ||S.recruitQ.id!==id||S.recruitQ.stage!=='ready'||G.hasComp(id)) return false;
+  // Minji's button explicitly defers the decision instead of saying farewell.
+  if(id==='minji') return false;
+  S.recruitFarewells=S.recruitFarewells||{};
+  S.recruitFarewells[id]={choice:S.recruitQ.choice||null};
+  S.recruitQ=null;
+  if(S.driving&&S.driving.recruitEscort===id) delete S.driving.recruitEscort;
+  return true;
+};
+
 G.doRecruit = (id)=>{
   if(G.hasComp(id) || S.party.length>=G.maxParty()) return false;
-  const approach=S.recruitQ&&S.recruitQ.id===id?S.recruitQ.choice:null;
+  const approach=S.recruitQ&&S.recruitQ.id===id?S.recruitQ.choice:S.recruitFarewells?.[id]?.choice||null;
   S.party.push(id); S.comps[id] = S.comps[id]||{mood:65};
   if(S.comps[id].mood===undefined) S.comps[id].mood=65;
   S.comps[id].bond=Math.max(S.comps[id].bond||0,5);
@@ -863,6 +878,7 @@ G.doRecruit = (id)=>{
   if(approach) S.comps[id].approach=approach;
   if(id==='leo') S.dog=true;
   if(S.recruitQ&&S.recruitQ.id===id) S.recruitQ=null;
+  if(S.recruitFarewells) delete S.recruitFarewells[id];
   G.qualityMilestone('first_recruit',{companionId:id,approach:approach||''});
   G.qualityMeaningfulChange('relationship',id);
   G.checkLevel(id,{recruit:true});

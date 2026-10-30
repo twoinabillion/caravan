@@ -1,0 +1,5 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
+const {setup,root}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
+const ui=fs.readFileSync(root+'/src/07-ui.js','utf8'),scene=ui.slice(ui.indexOf('  function eventSceneKeys('),ui.indexOf('  function sceneFormat('))+';globalThis.qaSceneKeys=eventSceneKeys;';
+const rows=[['exp_orchard','explore-abandoned-orchard-v1'],['ev_container_port','local-pyeongtaek-sealed-containers-v1'],['exp_villagehall','explore-villagehall-cassette-v1'],['lc_cheonan_walnut','local-cheonan-pedal-walnut-cart-v1'],['gp_envelope','story-grandfather-envelope-detail-v1'],['ev_parking_evs','explore-ev-charging-parking-v1'],['lc_daegu_makchang','local-daegu-makchang-alley-v1']];
+for(const [id,key] of rows)test(id+' entry resolves to its reviewed physical place or object',()=>{const h=setup();h.run(scene);assert.deepEqual(h.json(`qaSceneKeys(event('${id}'))`),[key]);assert(fs.existsSync(root+'/'+h.run(`D.scenes['${key}']`)));assert(h.run(`D.sceneAssetMeta['${key}'].companions.length===0`));});

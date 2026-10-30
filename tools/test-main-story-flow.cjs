@@ -1762,10 +1762,22 @@ test('camp branch history follows chosen work, survives back/reload and never pa
     h.S.campConversation.active=false;assert(h.G.prepareCamp('talk',cid).ok);h.reload();
     assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,b.text);
     choose(b.id);enter();
-    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===a.id).out[0].text,base.followup.choices[a.id].text);
+    let expectedFollowup=base.followup.choices[a.id].text;
+    if(cid==='kangwoo'){
+      assert.equal(h.S.campConversation.replyContext,'kangwoo-rotate-trust-v1');
+      assert(expectedFollowup.startsWith('"들리면 같이 받아요."\n'));
+      expectedFollowup=expectedFollowup.replace('"들리면 같이 받아요."','"오른쪽 뒤는 제가 볼게요. 무전이 들리면 같이 받아요."');
+    }
+    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===a.id).out[0].text,expectedFollowup);
     choose(a.id);enter();
     assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===a.id).out[0].text,base.settled.choices[a.id].text);
-    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,base.followup.choices[b.id].text);
+    let expectedOther=base.followup.choices[b.id].text;
+    if(cid==='kangwoo'){
+      assert.equal(h.S.campConversation.replyContext,'kangwoo-cross-choice-v2');
+      assert(expectedOther.startsWith('"여기서는 보여요. 문도요."\n'));
+      expectedOther=expectedOther.replace('"여기서는 보여요. 문도요."','"호출 오면 같이 들을게요. 오른쪽 뒤도 여기서 보여요. 문도요."');
+    }
+    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,expectedOther);
   }
 });
 

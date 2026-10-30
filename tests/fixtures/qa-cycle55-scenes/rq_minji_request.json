@@ -1,0 +1,796 @@
+{
+  "origin": "qa-artifacts/qa-cycle-20261026/cycle52/explorer/agent52/attempt01/entry-after-view-74-rq_minji_request.json; natural entry, isolated replay of each possible paid outcome",
+  "definition": {
+    "id": "rq_minji_request",
+    "type": "대화",
+    "w": 0,
+    "noPool": 1,
+    "recruitStart": "minji",
+    "title": "울산까지 함께 갈까",
+    "turnSpeakers": [
+      "minji",
+      "minji"
+    ],
+    "text": "민지가 지도 위의 붉은 원을 짚는다.\n\n\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\"\n\n지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\n\n\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\"",
+    "choices": [
+      {
+        "label": "울산까지 태워주고, 함께 꺼낸다",
+        "out": [
+          {
+            "p": 1,
+            "text": "민지는 지도를 접고 공구함을 들었다.\n\n\"그럼 울산까지. 공구함은 제가 들고 탈게요.\"\n\n상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.",
+            "turnSpeakers": [
+              "minji"
+            ],
+            "fx": {
+              "startRecruit": "minji",
+              "note": {
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "오늘은 함께 가기 어렵다고 말한다",
+        "out": [
+          {
+            "p": 1,
+            "text": "\"알겠어요. 전 여기서 다른 방법을 찾아볼게요.\"\n\n민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.",
+            "turnSpeakers": [
+              "minji"
+            ],
+            "fx": {}
+          }
+        ]
+      }
+    ]
+  },
+  "entry": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":2,\"min\":530,\"at\":\"miryang\",\"driving\":null,\"fuel\":53.65117999999982,\"fuelMax\":70,\"water\":12,\"waterMax\":28,\"food\":9,\"foodMax\":24,\"scrap\":63,\"van\":86,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":6,\"의약품\":1,\"탄약\":0},\"party\":[],\"comps\":{\"minji\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\",\"yangsan\",\"miryang\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":true,\"intro_appeal_failed\":true,\"intro_module_seen\":true,\"intro_workshop_left\":true,\"recruit_migration_v2\":true,\"opening_call_answered\":true,\"main_mission_started\":true,\"cell_sea\":true,\"postman_met\":true,\"first_order_trace\":true,\"parent_signature_match\":true,\"miryang_oldcard\":true,\"minji_request_heard\":true},\"pursuit\":0,\"used\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"quest\":null,\"recruitQ\":null,\"wx\":\"fog\",\"wxNext\":\"clear\",\"up\":{},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1},{\"id\":\"n5\",\"type\":\"출발\",\"title\":\"닫고 나온 작업장\",\"body\":\"작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.\",\"links\":[\"달구지\",\"할아버지\"],\"day\":1},{\"id\":\"n6\",\"type\":\"출발\",\"title\":\"도윤 가족의 버스\",\"body\":\"물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.\",\"links\":[\"도윤의 가족\",\"천리안\"],\"day\":1},{\"id\":\"n7\",\"type\":\"출발\",\"title\":\"남산 주소 옆의 세 이름\",\"body\":\"하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.\",\"links\":[\"도윤의 가족\",\"남산\"],\"day\":1},{\"id\":\"n8\",\"type\":\"출발\",\"title\":\"계기판 속 검증키\",\"body\":\"엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.\",\"links\":[\"엄마의 철제 상자\",\"부모님\",\"달구지\",\"남산\"],\"day\":1},{\"id\":\"n9\",\"type\":\"출발\",\"title\":\"맡겨 둔 작업장 열쇠\",\"body\":\"감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.\",\"links\":[\"할아버지\",\"달구지\"],\"day\":1},{\"id\":\"n10\",\"type\":\"소문\",\"title\":\"한 줄로 남기지 않는 항로\",\"body\":\"해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.\",\"links\":[\"천리안\",\"저항 연대망\"],\"day\":1},{\"id\":\"n11\",\"type\":\"소문\",\"title\":\"우편부의 지름길\",\"body\":\"물 반 잔의 답례. 어느 고개의 지름길.\",\"links\":[],\"day\":1},{\"id\":\"n12\",\"type\":\"장소\",\"title\":\"양산 고가차도\",\"body\":\"DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.\",\"links\":[],\"day\":1},{\"id\":\"n13\",\"type\":\"본편\",\"title\":\"검문소 저장 모듈\",\"body\":\"이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.\",\"links\":[\"부모님\",\"천리안\",\"남산\"],\"day\":1},{\"id\":\"n14\",\"type\":\"사건\",\"title\":\"부산 터미널의 마지막 불\",\"body\":\"부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.\",\"links\":[],\"day\":1},{\"id\":\"n15\",\"type\":\"장소\",\"title\":\"밀양 장터\",\"body\":\"DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.\",\"links\":[],\"day\":1},{\"id\":\"n16\",\"type\":\"사건\",\"title\":\"밀양의 부품 천막\",\"body\":\"경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.\",\"links\":[\"밀양 장터\",\"달구지\"],\"day\":2},{\"id\":\"n17\",\"type\":\"세대의 흔적\",\"title\":\"2026년 교통카드 번호표\",\"body\":\"대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.\",\"links\":[\"밀양 장터\",\"2026년\"],\"day\":2},{\"id\":\"n18\",\"type\":\"인물\",\"title\":\"민지\",\"body\":\"밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.\",\"links\":[\"민지\",\"밀양 장터\"],\"day\":2}],\"noteSeq\":19,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":12,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":54.00000000000008,\"events\":8,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":521149,\"fatigue\":11.3,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":2,\"_lunchDay\":1,\"_storyQueue\":[],\"_recentEvents\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"_recentEventTypes\":[\"조우\",\"본편\",\"탐색\",\"스토리\",\"조우\",\"대화\"],\"_eventBreather\":3,\"_beatQueue\":[\"story_bridge_departure_echo\",\"history_transit_day\"],\"_driveLegsSinceBlock\":0,\"_roadEventDay\":1,\"_roadEventCount\":1,\"_lastRoadEventKm\":20,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":54,\"phase\":\"fade\",\"relaxEvents\":0,\"peakEvents\":0,\"lastEvent\":\"rq_minji_request\",\"lastDay\":2},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":2,\"_exploreNodes\":{},\"_salvagedNodes\":{\"busan\":true,\"yangsan\":true},\"_salvageCount\":2,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793295307157,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":8,\"choices\":7,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":15,\"lockedChoices\":0},\"eventIds\":{\"cell_sea_meet\":1,\"lc_busan_dried\":1,\"meet_postman\":1,\"onboarding_first_road\":1,\"exp_towyard\":1,\"memory_busan_terminal\":1,\"meet_scrapyard\":1,\"rq_minji_request\":1},\"eventTypes\":{\"스토리\":2,\"조우\":3,\"본편\":1,\"탐색\":1,\"대화\":1},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":8,\"choices\":7,\"combats\":0},\"lastEventType\":\"대화\",\"typeStreak\":1,\"maxTypeStreak\":2,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[{\"kind\":\"arrival\",\"id\":\"yangsan\",\"playMin\":0,\"day\":1,\"km\":20},{\"kind\":\"arrival\",\"id\":\"miryang\",\"playMin\":0,\"day\":1,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54}]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{\"miryang\":{\"visits\":1,\"playMinutes\":0,\"gameMinutes\":0,\"actions\":3}},\"activeSettlement\":{\"id\":\"miryang\",\"nodeId\":\"miryang\",\"startedPlayMs\":0,\"startedGameMin\":2831.6},\"upgrades\":[],\"choiceEchoes\":2,\"milestones\":{\"first_event\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},\"first_choice\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},\"first_departure\":{\"playMin\":0,\"day\":1,\"min\":945,\"km\":20,\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},\"first_settlement\":{\"playMin\":0,\"day\":1,\"min\":1392,\"km\":54,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"}},\"choiceCallbacks\":{\"remembered\":0,\"near\":2,\"late\":0,\"items\":{\"opening_workshop:pack_workshop\":{\"remembered\":false,\"near\":true,\"late\":false},\"opening_bus_repair:hose_bypass\":{\"remembered\":false,\"near\":true,\"late\":false}}},\"endings\":{},\"timeline\":[{\"type\":\"event_open\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_event\",\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},{\"type\":\"choice\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},{\"type\":\"event_open\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":945,\"km\":20,\"playMin\":0,\"milestone\":\"first_departure\",\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},{\"type\":\"event_open\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"yangsan\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":3,\"available\":3},{\"type\":\"event_open\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1292,\"km\":33,\"playMin\":0,\"memoryId\":\"opening_workshop:pack_workshop\",\"eventId\":\"opening_workshop\"},{\"type\":\"event_open\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"memoryId\":\"opening_bus_repair:hose_bypass\",\"eventId\":\"opening_bus_repair\"},{\"type\":\"settlement_enter\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"milestone\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"milestone\":\"first_settlement\",\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"repeatDistance\":null}],\"lastSeenAt\":1793295307315},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},\"journeyRecaps\":[{\"from\":\"busan\",\"to\":\"yangsan\",\"km\":20,\"minutes\":93,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-3.1,\"unit\":\"L\",\"good\":false},{\"label\":\"물\",\"value\":-1,\"unit\":\"\",\"good\":false},{\"label\":\"피로\",\"value\":7.9,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1}],\"_stlField\":{\"daily\":{\"2:miryang:parts\":true,\"2:miryang:pump\":true,\"2:miryang:oldcard\":true},\"once\":{\"miryang:parts\":true,\"miryang:oldcard\":true},\"impact\":{\"miryang:parts\":{\"day\":2,\"min\":440},\"miryang:pump\":{\"day\":2,\"min\":490},\"miryang:oldcard\":{\"day\":2,\"min\":515}},\"roadEchoed\":{},\"log\":[{\"stl\":\"miryang\",\"id\":\"parts\",\"day\":2,\"min\":440},{\"stl\":\"miryang\",\"id\":\"pump\",\"day\":2,\"min\":490},{\"stl\":\"miryang\",\"id\":\"oldcard\",\"day\":2,\"min\":515}]},\"_impactEcho\":null,\"_rescues\":{},\"_stlNights\":{\"miryang\":1},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":1,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":6,\"pendingResult\":null,\"decisions\":{\"opening_workshop\":{\"stepId\":\"opening_workshop\",\"choiceId\":\"pack_workshop\",\"label\":\"난로를 끄고 예비 공구까지 챙긴다\",\"day\":1,\"min\":465,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":33},\"opening_bus_repair\":{\"stepId\":\"opening_bus_repair\",\"choiceId\":\"hose_bypass\",\"label\":\"남은 호스를 잘라 우회한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":54},\"opening_name_introduction\":{\"stepId\":\"opening_name_introduction\",\"choiceId\":\"say_name\",\"label\":\"이름을 말한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0},\"opening_failed_appeal\":{\"stepId\":\"opening_failed_appeal\",\"choiceId\":\"record_names\",\"label\":\"하진에게 허락을 구하고 가족 이름부터 적는다\",\"day\":1,\"min\":550,\"outcomeIndex\":0},\"opening_parents_module\":{\"stepId\":\"opening_parents_module\",\"choiceId\":\"label_wires\",\"label\":\"배선에 번호를 붙이고 덮개를 닫는다\",\"day\":1,\"min\":575,\"outcomeIndex\":0},\"opening_departure\":{\"stepId\":\"opening_departure\",\"choiceId\":\"leave_key\",\"label\":\"단골에게 작업장 열쇠를 맡긴다\",\"day\":1,\"min\":585,\"outcomeIndex\":0},\"opening_farewell\":{\"stepId\":\"opening_farewell\",\"choiceId\":\"begin_road\",\"label\":\"길로 나간다\",\"day\":1,\"min\":585,\"outcomeIndex\":0}},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\",\"reading\":{\"eventId\":\"opening_farewell\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"양산 쪽으로 가며 이송표의 발신 기록을 찾는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-start-v1\"]},\"history\":{\"turns\":[{\"kind\":\"dialogue\",\"text\":\"남산에 가면 우리도 집에 돌아갈 수 있어요?\",\"who\":\"intro_child\",\"name\":\"도윤\",\"scene\":\"intro-departure-conversation-v4\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 부두 입구\"},{\"kind\":\"dialogue\",\"text\":\"그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"dialogue\",\"text\":\"이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\",\"who\":\"passer_woman\",\"name\":\"하진\"},{\"kind\":\"dialogue\",\"text\":\"네. 먼저 떠난 사람들도 찾아보겠습니다.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"narration\",\"text\":\"도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\"},{\"kind\":\"narration\",\"text\":\"서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\",\"scene\":\"intro-departure-start-v1\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 달구지 운전석\"},{\"kind\":\"dialogue\",\"text\":\"할아버지, 다녀올게.\",\"who\":\"me\",\"name\":\"나\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-conversation-v4\",\"intro-departure-start-v1\"]},\"selection\":\"길로 나간다\",\"updates\":[]}},\"startPack\":\"fuel\",\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 부산에서 이송 명령에 이의를 제기한다\",\"next\":\"부두 민원 단말에서 도윤 가족의 이송 명령에 이의를 제기한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 엄마가 남긴 장치를 확인한다\",\"next\":\"엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"열어 둔 기록을 계속 읽는다.\",\"day\":1,\"at\":\"yangsan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 오지 않은 부모님의 다음 차를 찾는다\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"day\":1,\"at\":\"yangsan\"}],\"mainHistory\":[{\"id\":\"main_history_prologue-family_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-appeal_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"부산에서 이송 명령에 이의를 제기한다\",\"phase\":\"부산 원격 민원 창구 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-module_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"엄마가 남긴 장치를 확인한다\",\"phase\":\"부산의 달구지 안 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_first-trace_1_yangsan\",\"eyebrow\":\"메인 스토리 기록 · 1장\",\"title\":\"이송 명령의 첫 발신 기록을 찾는다\",\"phase\":\"부산을 떠난 첫 구간 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}}],\"seenUpdateCount\":6,\"snapshot\":{\"main_namsan\":\"active|남쪽 환승소의 오래된 운행표|김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)|4/13\"},\"mainState\":{\"chapterId\":\"parents-diversion\",\"act\":\"1장\",\"title\":\"오지 않은 부모님의 다음 차를 찾는다\",\"phase\":\"남쪽 환승소의 오래된 운행표\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"expected\":\"아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.\",\"progress\":\"4/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"rq_minji_request\",\"phase\":\"event\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\\n\\n\\\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\\\"\\n\\n지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\\n\\n\\\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\\\"\",\"view\":null,\"reading\":{\"eventId\":\"rq_minji_request\",\"phase\":\"event\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\"},{\"kind\":\"dialogue\",\"text\":\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\"},{\"kind\":\"dialogue\",\"text\":\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\",\"who\":\"minji\"}],\"index\":0,\"knownSpeaker\":true,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"history\":null,\"selection\":\"\",\"updates\":[]}},\"_chain\":null,\"_lastNarrativeLeg\":\"1:null>miryang\",\"_simDeferred\":[],\"_crewChatSeen\":{},\"_strandedDays\":0,\"_shunnedDays\":0,\"_campPlan\":{}}",
+  "entryTurns": [
+    {
+      "kind": "narration",
+      "text": "민지가 지도 위의 붉은 원을 짚는다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "minji",
+      "text": "오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요."
+    },
+    {
+      "kind": "narration",
+      "text": "지도 끝이 말려 올라오자 공구함으로 눌러 둔다."
+    },
+    {
+      "kind": "dialogue",
+      "who": "minji",
+      "text": "혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요."
+    }
+  ],
+  "entryInfo": {
+    "sceneKeys": [
+      "recruit-minji"
+    ]
+  },
+  "outcomes": [
+    {
+      "ci": 0,
+      "oi": 0,
+      "entry": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":2,\"min\":530,\"at\":\"miryang\",\"driving\":null,\"fuel\":53.65117999999982,\"fuelMax\":70,\"water\":12,\"waterMax\":28,\"food\":9,\"foodMax\":24,\"scrap\":63,\"van\":86,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":6,\"의약품\":1,\"탄약\":0},\"party\":[],\"comps\":{\"minji\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\",\"yangsan\",\"miryang\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":true,\"intro_appeal_failed\":true,\"intro_module_seen\":true,\"intro_workshop_left\":true,\"recruit_migration_v2\":true,\"opening_call_answered\":true,\"main_mission_started\":true,\"cell_sea\":true,\"postman_met\":true,\"first_order_trace\":true,\"parent_signature_match\":true,\"miryang_oldcard\":true,\"minji_request_heard\":true},\"pursuit\":0,\"used\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"quest\":null,\"recruitQ\":null,\"wx\":\"fog\",\"wxNext\":\"clear\",\"up\":{},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1},{\"id\":\"n5\",\"type\":\"출발\",\"title\":\"닫고 나온 작업장\",\"body\":\"작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.\",\"links\":[\"달구지\",\"할아버지\"],\"day\":1},{\"id\":\"n6\",\"type\":\"출발\",\"title\":\"도윤 가족의 버스\",\"body\":\"물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.\",\"links\":[\"도윤의 가족\",\"천리안\"],\"day\":1},{\"id\":\"n7\",\"type\":\"출발\",\"title\":\"남산 주소 옆의 세 이름\",\"body\":\"하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.\",\"links\":[\"도윤의 가족\",\"남산\"],\"day\":1},{\"id\":\"n8\",\"type\":\"출발\",\"title\":\"계기판 속 검증키\",\"body\":\"엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.\",\"links\":[\"엄마의 철제 상자\",\"부모님\",\"달구지\",\"남산\"],\"day\":1},{\"id\":\"n9\",\"type\":\"출발\",\"title\":\"맡겨 둔 작업장 열쇠\",\"body\":\"감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.\",\"links\":[\"할아버지\",\"달구지\"],\"day\":1},{\"id\":\"n10\",\"type\":\"소문\",\"title\":\"한 줄로 남기지 않는 항로\",\"body\":\"해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.\",\"links\":[\"천리안\",\"저항 연대망\"],\"day\":1},{\"id\":\"n11\",\"type\":\"소문\",\"title\":\"우편부의 지름길\",\"body\":\"물 반 잔의 답례. 어느 고개의 지름길.\",\"links\":[],\"day\":1},{\"id\":\"n12\",\"type\":\"장소\",\"title\":\"양산 고가차도\",\"body\":\"DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.\",\"links\":[],\"day\":1},{\"id\":\"n13\",\"type\":\"본편\",\"title\":\"검문소 저장 모듈\",\"body\":\"이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.\",\"links\":[\"부모님\",\"천리안\",\"남산\"],\"day\":1},{\"id\":\"n14\",\"type\":\"사건\",\"title\":\"부산 터미널의 마지막 불\",\"body\":\"부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.\",\"links\":[],\"day\":1},{\"id\":\"n15\",\"type\":\"장소\",\"title\":\"밀양 장터\",\"body\":\"DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.\",\"links\":[],\"day\":1},{\"id\":\"n16\",\"type\":\"사건\",\"title\":\"밀양의 부품 천막\",\"body\":\"경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.\",\"links\":[\"밀양 장터\",\"달구지\"],\"day\":2},{\"id\":\"n17\",\"type\":\"세대의 흔적\",\"title\":\"2026년 교통카드 번호표\",\"body\":\"대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.\",\"links\":[\"밀양 장터\",\"2026년\"],\"day\":2},{\"id\":\"n18\",\"type\":\"인물\",\"title\":\"민지\",\"body\":\"밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.\",\"links\":[\"민지\",\"밀양 장터\"],\"day\":2}],\"noteSeq\":19,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":12,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":54.00000000000008,\"events\":8,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":521149,\"fatigue\":11.3,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":2,\"_lunchDay\":1,\"_storyQueue\":[],\"_recentEvents\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"_recentEventTypes\":[\"조우\",\"본편\",\"탐색\",\"스토리\",\"조우\",\"대화\"],\"_eventBreather\":3,\"_beatQueue\":[\"story_bridge_departure_echo\",\"history_transit_day\"],\"_driveLegsSinceBlock\":0,\"_roadEventDay\":1,\"_roadEventCount\":1,\"_lastRoadEventKm\":20,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":54,\"phase\":\"fade\",\"relaxEvents\":0,\"peakEvents\":0,\"lastEvent\":\"rq_minji_request\",\"lastDay\":2},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":2,\"_exploreNodes\":{},\"_salvagedNodes\":{\"busan\":true,\"yangsan\":true},\"_salvageCount\":2,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793295307157,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":8,\"choices\":7,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":15,\"lockedChoices\":0},\"eventIds\":{\"cell_sea_meet\":1,\"lc_busan_dried\":1,\"meet_postman\":1,\"onboarding_first_road\":1,\"exp_towyard\":1,\"memory_busan_terminal\":1,\"meet_scrapyard\":1,\"rq_minji_request\":1},\"eventTypes\":{\"스토리\":2,\"조우\":3,\"본편\":1,\"탐색\":1,\"대화\":1},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":8,\"choices\":7,\"combats\":0},\"lastEventType\":\"대화\",\"typeStreak\":1,\"maxTypeStreak\":2,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[{\"kind\":\"arrival\",\"id\":\"yangsan\",\"playMin\":0,\"day\":1,\"km\":20},{\"kind\":\"arrival\",\"id\":\"miryang\",\"playMin\":0,\"day\":1,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54}]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{\"miryang\":{\"visits\":1,\"playMinutes\":0,\"gameMinutes\":0,\"actions\":3}},\"activeSettlement\":{\"id\":\"miryang\",\"nodeId\":\"miryang\",\"startedPlayMs\":0,\"startedGameMin\":2831.6},\"upgrades\":[],\"choiceEchoes\":2,\"milestones\":{\"first_event\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},\"first_choice\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},\"first_departure\":{\"playMin\":0,\"day\":1,\"min\":945,\"km\":20,\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},\"first_settlement\":{\"playMin\":0,\"day\":1,\"min\":1392,\"km\":54,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"}},\"choiceCallbacks\":{\"remembered\":0,\"near\":2,\"late\":0,\"items\":{\"opening_workshop:pack_workshop\":{\"remembered\":false,\"near\":true,\"late\":false},\"opening_bus_repair:hose_bypass\":{\"remembered\":false,\"near\":true,\"late\":false}}},\"endings\":{},\"timeline\":[{\"type\":\"event_open\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_event\",\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},{\"type\":\"choice\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},{\"type\":\"event_open\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":945,\"km\":20,\"playMin\":0,\"milestone\":\"first_departure\",\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},{\"type\":\"event_open\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"yangsan\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":3,\"available\":3},{\"type\":\"event_open\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1292,\"km\":33,\"playMin\":0,\"memoryId\":\"opening_workshop:pack_workshop\",\"eventId\":\"opening_workshop\"},{\"type\":\"event_open\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"memoryId\":\"opening_bus_repair:hose_bypass\",\"eventId\":\"opening_bus_repair\"},{\"type\":\"settlement_enter\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"milestone\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"milestone\":\"first_settlement\",\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"repeatDistance\":null}],\"lastSeenAt\":1793295307315},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},\"journeyRecaps\":[{\"from\":\"busan\",\"to\":\"yangsan\",\"km\":20,\"minutes\":93,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-3.1,\"unit\":\"L\",\"good\":false},{\"label\":\"물\",\"value\":-1,\"unit\":\"\",\"good\":false},{\"label\":\"피로\",\"value\":7.9,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1}],\"_stlField\":{\"daily\":{\"2:miryang:parts\":true,\"2:miryang:pump\":true,\"2:miryang:oldcard\":true},\"once\":{\"miryang:parts\":true,\"miryang:oldcard\":true},\"impact\":{\"miryang:parts\":{\"day\":2,\"min\":440},\"miryang:pump\":{\"day\":2,\"min\":490},\"miryang:oldcard\":{\"day\":2,\"min\":515}},\"roadEchoed\":{},\"log\":[{\"stl\":\"miryang\",\"id\":\"parts\",\"day\":2,\"min\":440},{\"stl\":\"miryang\",\"id\":\"pump\",\"day\":2,\"min\":490},{\"stl\":\"miryang\",\"id\":\"oldcard\",\"day\":2,\"min\":515}]},\"_impactEcho\":null,\"_rescues\":{},\"_stlNights\":{\"miryang\":1},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":1,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":6,\"pendingResult\":null,\"decisions\":{\"opening_workshop\":{\"stepId\":\"opening_workshop\",\"choiceId\":\"pack_workshop\",\"label\":\"난로를 끄고 예비 공구까지 챙긴다\",\"day\":1,\"min\":465,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":33},\"opening_bus_repair\":{\"stepId\":\"opening_bus_repair\",\"choiceId\":\"hose_bypass\",\"label\":\"남은 호스를 잘라 우회한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":54},\"opening_name_introduction\":{\"stepId\":\"opening_name_introduction\",\"choiceId\":\"say_name\",\"label\":\"이름을 말한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0},\"opening_failed_appeal\":{\"stepId\":\"opening_failed_appeal\",\"choiceId\":\"record_names\",\"label\":\"하진에게 허락을 구하고 가족 이름부터 적는다\",\"day\":1,\"min\":550,\"outcomeIndex\":0},\"opening_parents_module\":{\"stepId\":\"opening_parents_module\",\"choiceId\":\"label_wires\",\"label\":\"배선에 번호를 붙이고 덮개를 닫는다\",\"day\":1,\"min\":575,\"outcomeIndex\":0},\"opening_departure\":{\"stepId\":\"opening_departure\",\"choiceId\":\"leave_key\",\"label\":\"단골에게 작업장 열쇠를 맡긴다\",\"day\":1,\"min\":585,\"outcomeIndex\":0},\"opening_farewell\":{\"stepId\":\"opening_farewell\",\"choiceId\":\"begin_road\",\"label\":\"길로 나간다\",\"day\":1,\"min\":585,\"outcomeIndex\":0}},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\",\"reading\":{\"eventId\":\"opening_farewell\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"양산 쪽으로 가며 이송표의 발신 기록을 찾는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-start-v1\"]},\"history\":{\"turns\":[{\"kind\":\"dialogue\",\"text\":\"남산에 가면 우리도 집에 돌아갈 수 있어요?\",\"who\":\"intro_child\",\"name\":\"도윤\",\"scene\":\"intro-departure-conversation-v4\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 부두 입구\"},{\"kind\":\"dialogue\",\"text\":\"그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"dialogue\",\"text\":\"이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\",\"who\":\"passer_woman\",\"name\":\"하진\"},{\"kind\":\"dialogue\",\"text\":\"네. 먼저 떠난 사람들도 찾아보겠습니다.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"narration\",\"text\":\"도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\"},{\"kind\":\"narration\",\"text\":\"서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\",\"scene\":\"intro-departure-start-v1\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 달구지 운전석\"},{\"kind\":\"dialogue\",\"text\":\"할아버지, 다녀올게.\",\"who\":\"me\",\"name\":\"나\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-conversation-v4\",\"intro-departure-start-v1\"]},\"selection\":\"길로 나간다\",\"updates\":[]}},\"startPack\":\"fuel\",\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 부산에서 이송 명령에 이의를 제기한다\",\"next\":\"부두 민원 단말에서 도윤 가족의 이송 명령에 이의를 제기한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 엄마가 남긴 장치를 확인한다\",\"next\":\"엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"열어 둔 기록을 계속 읽는다.\",\"day\":1,\"at\":\"yangsan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 오지 않은 부모님의 다음 차를 찾는다\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"day\":1,\"at\":\"yangsan\"}],\"mainHistory\":[{\"id\":\"main_history_prologue-family_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-appeal_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"부산에서 이송 명령에 이의를 제기한다\",\"phase\":\"부산 원격 민원 창구 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-module_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"엄마가 남긴 장치를 확인한다\",\"phase\":\"부산의 달구지 안 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_first-trace_1_yangsan\",\"eyebrow\":\"메인 스토리 기록 · 1장\",\"title\":\"이송 명령의 첫 발신 기록을 찾는다\",\"phase\":\"부산을 떠난 첫 구간 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}}],\"seenUpdateCount\":6,\"snapshot\":{\"main_namsan\":\"active|남쪽 환승소의 오래된 운행표|김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)|4/13\"},\"mainState\":{\"chapterId\":\"parents-diversion\",\"act\":\"1장\",\"title\":\"오지 않은 부모님의 다음 차를 찾는다\",\"phase\":\"남쪽 환승소의 오래된 운행표\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"expected\":\"아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.\",\"progress\":\"4/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"rq_minji_request\",\"phase\":\"event\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\\n\\n\\\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\\\"\\n\\n지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\\n\\n\\\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\\\"\",\"view\":null,\"reading\":{\"eventId\":\"rq_minji_request\",\"phase\":\"event\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\"},{\"kind\":\"dialogue\",\"text\":\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\"},{\"kind\":\"dialogue\",\"text\":\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\",\"who\":\"minji\"}],\"index\":0,\"knownSpeaker\":true,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"history\":null,\"selection\":\"\",\"updates\":[]}},\"_chain\":null,\"_lastNarrativeLeg\":\"1:null>miryang\",\"_simDeferred\":[],\"_crewChatSeen\":{},\"_strandedDays\":0,\"_shunnedDays\":0,\"_campPlan\":{}}",
+      "result": {
+        "text": "민지는 지도를 접고 공구함을 들었다.\n\n\"그럼 울산까지. 공구함은 제가 들고 탈게요.\"\n\n상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "민지는 지도를 접고 공구함을 들었다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "minji",
+            "text": "그럼 울산까지. 공구함은 제가 들고 탈게요."
+          },
+          {
+            "kind": "narration",
+            "text": "상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다."
+          }
+        ],
+        "chips": [
+          {
+            "t": "새 기록 · 민지와 울산까지",
+            "c": "item"
+          }
+        ],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "recruit-minji"
+          ]
+        }
+      },
+      "state": {
+        "day": 2,
+        "min": 530,
+        "food": 9,
+        "water": 12,
+        "fuel": 53.65117999999982,
+        "scrap": 63,
+        "van": 86,
+        "fatigue": 11.3,
+        "party": [],
+        "comps": {
+          "minji": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": true,
+          "intro_appeal_failed": true,
+          "intro_module_seen": true,
+          "intro_workshop_left": true,
+          "recruit_migration_v2": true,
+          "opening_call_answered": true,
+          "main_mission_started": true,
+          "cell_sea": true,
+          "postman_met": true,
+          "first_order_trace": true,
+          "parent_signature_match": true,
+          "miryang_oldcard": true,
+          "minji_request_heard": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n5",
+            "type": "출발",
+            "title": "닫고 나온 작업장",
+            "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+            "links": [
+              "달구지",
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n6",
+            "type": "출발",
+            "title": "도윤 가족의 버스",
+            "body": "물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.",
+            "links": [
+              "도윤의 가족",
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n7",
+            "type": "출발",
+            "title": "남산 주소 옆의 세 이름",
+            "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+            "links": [
+              "도윤의 가족",
+              "남산"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n8",
+            "type": "출발",
+            "title": "계기판 속 검증키",
+            "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+            "links": [
+              "엄마의 철제 상자",
+              "부모님",
+              "달구지",
+              "남산"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n9",
+            "type": "출발",
+            "title": "맡겨 둔 작업장 열쇠",
+            "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+            "links": [
+              "할아버지",
+              "달구지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n10",
+            "type": "소문",
+            "title": "한 줄로 남기지 않는 항로",
+            "body": "해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.",
+            "links": [
+              "천리안",
+              "저항 연대망"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n11",
+            "type": "소문",
+            "title": "우편부의 지름길",
+            "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n12",
+            "type": "장소",
+            "title": "양산 고가차도",
+            "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n13",
+            "type": "본편",
+            "title": "검문소 저장 모듈",
+            "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+            "links": [
+              "부모님",
+              "천리안",
+              "남산"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n14",
+            "type": "사건",
+            "title": "부산 터미널의 마지막 불",
+            "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n15",
+            "type": "장소",
+            "title": "밀양 장터",
+            "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n16",
+            "type": "사건",
+            "title": "밀양의 부품 천막",
+            "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+            "links": [
+              "밀양 장터",
+              "달구지"
+            ],
+            "day": 2
+          },
+          {
+            "id": "n17",
+            "type": "세대의 흔적",
+            "title": "2026년 교통카드 번호표",
+            "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+            "links": [
+              "밀양 장터",
+              "2026년"
+            ],
+            "day": 2
+          },
+          {
+            "id": "n18",
+            "type": "인물",
+            "title": "민지",
+            "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+            "links": [
+              "민지",
+              "밀양 장터"
+            ],
+            "day": 2
+          },
+          {
+            "id": "n19",
+            "type": "인물",
+            "title": "민지와 울산까지",
+            "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+            "links": [
+              "민지",
+              "울산 공단"
+            ],
+            "day": 2
+          }
+        ],
+        "items": {
+          "부품": 6,
+          "의약품": 1,
+          "탄약": 0
+        },
+        "seed": 521149,
+        "impact": null,
+        "field": {
+          "daily": {
+            "2:miryang:parts": true,
+            "2:miryang:pump": true,
+            "2:miryang:oldcard": true
+          },
+          "once": {
+            "miryang:parts": true,
+            "miryang:oldcard": true
+          },
+          "impact": {
+            "miryang:parts": {
+              "day": 2,
+              "min": 440
+            },
+            "miryang:pump": {
+              "day": 2,
+              "min": 490
+            },
+            "miryang:oldcard": {
+              "day": 2,
+              "min": 515
+            }
+          },
+          "roadEchoed": {},
+          "log": [
+            {
+              "stl": "miryang",
+              "id": "parts",
+              "day": 2,
+              "min": 440
+            },
+            {
+              "stl": "miryang",
+              "id": "pump",
+              "day": 2,
+              "min": 490
+            },
+            {
+              "stl": "miryang",
+              "id": "oldcard",
+              "day": 2,
+              "min": 515
+            }
+          ]
+        }
+      },
+      "paid": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":2,\"min\":530,\"at\":\"miryang\",\"driving\":null,\"fuel\":53.65117999999982,\"fuelMax\":70,\"water\":12,\"waterMax\":28,\"food\":9,\"foodMax\":24,\"scrap\":63,\"van\":86,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":6,\"의약품\":1,\"탄약\":0},\"party\":[],\"comps\":{\"minji\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\",\"yangsan\",\"miryang\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":true,\"intro_appeal_failed\":true,\"intro_module_seen\":true,\"intro_workshop_left\":true,\"recruit_migration_v2\":true,\"opening_call_answered\":true,\"main_mission_started\":true,\"cell_sea\":true,\"postman_met\":true,\"first_order_trace\":true,\"parent_signature_match\":true,\"miryang_oldcard\":true,\"minji_request_heard\":true},\"pursuit\":0,\"used\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"quest\":null,\"recruitQ\":{\"id\":\"minji\",\"stage\":\"task\",\"target\":\"ulsan\",\"startedDay\":2,\"metAt\":\"miryang\",\"sameStop\":false,\"escort\":true},\"wx\":\"fog\",\"wxNext\":\"clear\",\"up\":{},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1},{\"id\":\"n5\",\"type\":\"출발\",\"title\":\"닫고 나온 작업장\",\"body\":\"작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.\",\"links\":[\"달구지\",\"할아버지\"],\"day\":1},{\"id\":\"n6\",\"type\":\"출발\",\"title\":\"도윤 가족의 버스\",\"body\":\"물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.\",\"links\":[\"도윤의 가족\",\"천리안\"],\"day\":1},{\"id\":\"n7\",\"type\":\"출발\",\"title\":\"남산 주소 옆의 세 이름\",\"body\":\"하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.\",\"links\":[\"도윤의 가족\",\"남산\"],\"day\":1},{\"id\":\"n8\",\"type\":\"출발\",\"title\":\"계기판 속 검증키\",\"body\":\"엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.\",\"links\":[\"엄마의 철제 상자\",\"부모님\",\"달구지\",\"남산\"],\"day\":1},{\"id\":\"n9\",\"type\":\"출발\",\"title\":\"맡겨 둔 작업장 열쇠\",\"body\":\"감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.\",\"links\":[\"할아버지\",\"달구지\"],\"day\":1},{\"id\":\"n10\",\"type\":\"소문\",\"title\":\"한 줄로 남기지 않는 항로\",\"body\":\"해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.\",\"links\":[\"천리안\",\"저항 연대망\"],\"day\":1},{\"id\":\"n11\",\"type\":\"소문\",\"title\":\"우편부의 지름길\",\"body\":\"물 반 잔의 답례. 어느 고개의 지름길.\",\"links\":[],\"day\":1},{\"id\":\"n12\",\"type\":\"장소\",\"title\":\"양산 고가차도\",\"body\":\"DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.\",\"links\":[],\"day\":1},{\"id\":\"n13\",\"type\":\"본편\",\"title\":\"검문소 저장 모듈\",\"body\":\"이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.\",\"links\":[\"부모님\",\"천리안\",\"남산\"],\"day\":1},{\"id\":\"n14\",\"type\":\"사건\",\"title\":\"부산 터미널의 마지막 불\",\"body\":\"부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.\",\"links\":[],\"day\":1},{\"id\":\"n15\",\"type\":\"장소\",\"title\":\"밀양 장터\",\"body\":\"DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.\",\"links\":[],\"day\":1},{\"id\":\"n16\",\"type\":\"사건\",\"title\":\"밀양의 부품 천막\",\"body\":\"경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.\",\"links\":[\"밀양 장터\",\"달구지\"],\"day\":2},{\"id\":\"n17\",\"type\":\"세대의 흔적\",\"title\":\"2026년 교통카드 번호표\",\"body\":\"대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.\",\"links\":[\"밀양 장터\",\"2026년\"],\"day\":2},{\"id\":\"n18\",\"type\":\"인물\",\"title\":\"민지\",\"body\":\"밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.\",\"links\":[\"민지\",\"밀양 장터\"],\"day\":2},{\"id\":\"n19\",\"type\":\"인물\",\"title\":\"민지와 울산까지\",\"body\":\"오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.\",\"links\":[\"민지\",\"울산 공단\"],\"day\":2}],\"noteSeq\":20,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":12,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":54.00000000000008,\"events\":8,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":521149,\"fatigue\":11.3,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":2,\"_lunchDay\":1,\"_storyQueue\":[],\"_recentEvents\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"_recentEventTypes\":[\"조우\",\"본편\",\"탐색\",\"스토리\",\"조우\",\"대화\"],\"_eventBreather\":3,\"_beatQueue\":[\"story_bridge_departure_echo\",\"history_transit_day\"],\"_driveLegsSinceBlock\":0,\"_roadEventDay\":1,\"_roadEventCount\":1,\"_lastRoadEventKm\":20,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":54,\"phase\":\"fade\",\"relaxEvents\":0,\"peakEvents\":0,\"lastEvent\":\"rq_minji_request\",\"lastDay\":2},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":2,\"_exploreNodes\":{},\"_salvagedNodes\":{\"busan\":true,\"yangsan\":true},\"_salvageCount\":2,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793295307157,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":8,\"choices\":8,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":17,\"lockedChoices\":0},\"eventIds\":{\"cell_sea_meet\":1,\"lc_busan_dried\":1,\"meet_postman\":1,\"onboarding_first_road\":1,\"exp_towyard\":1,\"memory_busan_terminal\":1,\"meet_scrapyard\":1,\"rq_minji_request\":1},\"eventTypes\":{\"스토리\":2,\"조우\":3,\"본편\":1,\"탐색\":1,\"대화\":1},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":8,\"choices\":8,\"combats\":0},\"lastEventType\":\"대화\",\"typeStreak\":1,\"maxTypeStreak\":2,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[{\"kind\":\"arrival\",\"id\":\"yangsan\",\"playMin\":0,\"day\":1,\"km\":20},{\"kind\":\"arrival\",\"id\":\"miryang\",\"playMin\":0,\"day\":1,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54}]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{\"miryang\":{\"visits\":1,\"playMinutes\":0,\"gameMinutes\":0,\"actions\":3}},\"activeSettlement\":{\"id\":\"miryang\",\"nodeId\":\"miryang\",\"startedPlayMs\":0,\"startedGameMin\":2831.6},\"upgrades\":[],\"choiceEchoes\":2,\"milestones\":{\"first_event\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},\"first_choice\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},\"first_departure\":{\"playMin\":0,\"day\":1,\"min\":945,\"km\":20,\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},\"first_settlement\":{\"playMin\":0,\"day\":1,\"min\":1392,\"km\":54,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"}},\"choiceCallbacks\":{\"remembered\":0,\"near\":2,\"late\":0,\"items\":{\"opening_workshop:pack_workshop\":{\"remembered\":false,\"near\":true,\"late\":false},\"opening_bus_repair:hose_bypass\":{\"remembered\":false,\"near\":true,\"late\":false}}},\"endings\":{},\"timeline\":[{\"type\":\"event_open\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_event\",\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},{\"type\":\"choice\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},{\"type\":\"event_open\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":945,\"km\":20,\"playMin\":0,\"milestone\":\"first_departure\",\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},{\"type\":\"event_open\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"yangsan\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":3,\"available\":3},{\"type\":\"event_open\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1292,\"km\":33,\"playMin\":0,\"memoryId\":\"opening_workshop:pack_workshop\",\"eventId\":\"opening_workshop\"},{\"type\":\"event_open\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"memoryId\":\"opening_bus_repair:hose_bypass\",\"eventId\":\"opening_bus_repair\"},{\"type\":\"settlement_enter\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"milestone\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"milestone\":\"first_settlement\",\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2}],\"lastSeenAt\":1793014000000},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},\"journeyRecaps\":[{\"from\":\"busan\",\"to\":\"yangsan\",\"km\":20,\"minutes\":93,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-3.1,\"unit\":\"L\",\"good\":false},{\"label\":\"물\",\"value\":-1,\"unit\":\"\",\"good\":false},{\"label\":\"피로\",\"value\":7.9,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1}],\"_stlField\":{\"daily\":{\"2:miryang:parts\":true,\"2:miryang:pump\":true,\"2:miryang:oldcard\":true},\"once\":{\"miryang:parts\":true,\"miryang:oldcard\":true},\"impact\":{\"miryang:parts\":{\"day\":2,\"min\":440},\"miryang:pump\":{\"day\":2,\"min\":490},\"miryang:oldcard\":{\"day\":2,\"min\":515}},\"roadEchoed\":{},\"log\":[{\"stl\":\"miryang\",\"id\":\"parts\",\"day\":2,\"min\":440},{\"stl\":\"miryang\",\"id\":\"pump\",\"day\":2,\"min\":490},{\"stl\":\"miryang\",\"id\":\"oldcard\",\"day\":2,\"min\":515}]},\"_impactEcho\":null,\"_rescues\":{},\"_stlNights\":{\"miryang\":1},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":1,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":6,\"pendingResult\":null,\"decisions\":{\"opening_workshop\":{\"stepId\":\"opening_workshop\",\"choiceId\":\"pack_workshop\",\"label\":\"난로를 끄고 예비 공구까지 챙긴다\",\"day\":1,\"min\":465,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":33},\"opening_bus_repair\":{\"stepId\":\"opening_bus_repair\",\"choiceId\":\"hose_bypass\",\"label\":\"남은 호스를 잘라 우회한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":54},\"opening_name_introduction\":{\"stepId\":\"opening_name_introduction\",\"choiceId\":\"say_name\",\"label\":\"이름을 말한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0},\"opening_failed_appeal\":{\"stepId\":\"opening_failed_appeal\",\"choiceId\":\"record_names\",\"label\":\"하진에게 허락을 구하고 가족 이름부터 적는다\",\"day\":1,\"min\":550,\"outcomeIndex\":0},\"opening_parents_module\":{\"stepId\":\"opening_parents_module\",\"choiceId\":\"label_wires\",\"label\":\"배선에 번호를 붙이고 덮개를 닫는다\",\"day\":1,\"min\":575,\"outcomeIndex\":0},\"opening_departure\":{\"stepId\":\"opening_departure\",\"choiceId\":\"leave_key\",\"label\":\"단골에게 작업장 열쇠를 맡긴다\",\"day\":1,\"min\":585,\"outcomeIndex\":0},\"opening_farewell\":{\"stepId\":\"opening_farewell\",\"choiceId\":\"begin_road\",\"label\":\"길로 나간다\",\"day\":1,\"min\":585,\"outcomeIndex\":0}},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\",\"reading\":{\"eventId\":\"opening_farewell\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"양산 쪽으로 가며 이송표의 발신 기록을 찾는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-start-v1\"]},\"history\":{\"turns\":[{\"kind\":\"dialogue\",\"text\":\"남산에 가면 우리도 집에 돌아갈 수 있어요?\",\"who\":\"intro_child\",\"name\":\"도윤\",\"scene\":\"intro-departure-conversation-v4\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 부두 입구\"},{\"kind\":\"dialogue\",\"text\":\"그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"dialogue\",\"text\":\"이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\",\"who\":\"passer_woman\",\"name\":\"하진\"},{\"kind\":\"dialogue\",\"text\":\"네. 먼저 떠난 사람들도 찾아보겠습니다.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"narration\",\"text\":\"도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\"},{\"kind\":\"narration\",\"text\":\"서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\",\"scene\":\"intro-departure-start-v1\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 달구지 운전석\"},{\"kind\":\"dialogue\",\"text\":\"할아버지, 다녀올게.\",\"who\":\"me\",\"name\":\"나\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-conversation-v4\",\"intro-departure-start-v1\"]},\"selection\":\"길로 나간다\",\"updates\":[]}},\"startPack\":\"fuel\",\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 부산에서 이송 명령에 이의를 제기한다\",\"next\":\"부두 민원 단말에서 도윤 가족의 이송 명령에 이의를 제기한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 엄마가 남긴 장치를 확인한다\",\"next\":\"엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"열어 둔 기록을 계속 읽는다.\",\"day\":1,\"at\":\"yangsan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 오지 않은 부모님의 다음 차를 찾는다\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"day\":1,\"at\":\"yangsan\"},{\"id\":\"companion_minji\",\"kind\":\"companion\",\"title\":\"새 임무 · 민지와 함께할 이유\",\"next\":\"울산 공업탑에 가서 민지가 부탁한 일을 한다.\",\"day\":2,\"at\":\"miryang\"}],\"mainHistory\":[{\"id\":\"main_history_prologue-family_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-appeal_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"부산에서 이송 명령에 이의를 제기한다\",\"phase\":\"부산 원격 민원 창구 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-module_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"엄마가 남긴 장치를 확인한다\",\"phase\":\"부산의 달구지 안 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_first-trace_1_yangsan\",\"eyebrow\":\"메인 스토리 기록 · 1장\",\"title\":\"이송 명령의 첫 발신 기록을 찾는다\",\"phase\":\"부산을 떠난 첫 구간 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}}],\"seenUpdateCount\":7,\"snapshot\":{\"main_namsan\":\"active|남쪽 환승소의 오래된 운행표|김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)|4/13\",\"companion_minji\":\"active|합류 조건 진행 중|울산 공업탑에 가서 민지가 부탁한 일을 한다.|합류 전\"},\"mainState\":{\"chapterId\":\"parents-diversion\",\"act\":\"1장\",\"title\":\"오지 않은 부모님의 다음 차를 찾는다\",\"phase\":\"남쪽 환승소의 오래된 운행표\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"expected\":\"아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.\",\"progress\":\"4/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"rq_minji_request\",\"phase\":\"result\",\"text\":\"민지는 지도를 접고 공구함을 들었다.\\n\\n\\\"그럼 울산까지. 공구함은 제가 들고 탈게요.\\\"\\n\\n상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.\",\"view\":null,\"reading\":{\"eventId\":\"rq_minji_request\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"민지는 지도를 접고 공구함을 들었다.\"},{\"kind\":\"dialogue\",\"text\":\"그럼 울산까지. 공구함은 제가 들고 탈게요.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"상자를 무릎에 올려놓고 손잡이를 쥔다. 아직 어디에 묶어 둘지는 묻지 않는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"history\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\"},{\"kind\":\"dialogue\",\"text\":\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\"},{\"kind\":\"dialogue\",\"text\":\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\",\"who\":\"minji\"}],\"index\":0,\"knownSpeaker\":true,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"selection\":\"울산까지 태워주고, 함께 꺼낸다\",\"updates\":[{\"title\":\"새 임무 · 민지와 함께할 이유\",\"next\":\"울산 공업탑에 가서 민지가 부탁한 일을 한다.\",\"kind\":\"side\"}]},\"choiceIndex\":0,\"outcomeIndex\":0,\"chips\":[{\"t\":\"새 기록 · 민지와 울산까지\",\"c\":\"item\"}]},\"_chain\":null,\"_lastNarrativeLeg\":\"1:null>miryang\",\"_simDeferred\":[],\"_crewChatSeen\":{},\"_strandedDays\":0,\"_shunnedDays\":0,\"_campPlan\":{}}"
+    },
+    {
+      "ci": 1,
+      "oi": 0,
+      "entry": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":2,\"min\":530,\"at\":\"miryang\",\"driving\":null,\"fuel\":53.65117999999982,\"fuelMax\":70,\"water\":12,\"waterMax\":28,\"food\":9,\"foodMax\":24,\"scrap\":63,\"van\":86,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":6,\"의약품\":1,\"탄약\":0},\"party\":[],\"comps\":{\"minji\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\",\"yangsan\",\"miryang\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":true,\"intro_appeal_failed\":true,\"intro_module_seen\":true,\"intro_workshop_left\":true,\"recruit_migration_v2\":true,\"opening_call_answered\":true,\"main_mission_started\":true,\"cell_sea\":true,\"postman_met\":true,\"first_order_trace\":true,\"parent_signature_match\":true,\"miryang_oldcard\":true,\"minji_request_heard\":true},\"pursuit\":0,\"used\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"quest\":null,\"recruitQ\":null,\"wx\":\"fog\",\"wxNext\":\"clear\",\"up\":{},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1},{\"id\":\"n5\",\"type\":\"출발\",\"title\":\"닫고 나온 작업장\",\"body\":\"작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.\",\"links\":[\"달구지\",\"할아버지\"],\"day\":1},{\"id\":\"n6\",\"type\":\"출발\",\"title\":\"도윤 가족의 버스\",\"body\":\"물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.\",\"links\":[\"도윤의 가족\",\"천리안\"],\"day\":1},{\"id\":\"n7\",\"type\":\"출발\",\"title\":\"남산 주소 옆의 세 이름\",\"body\":\"하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.\",\"links\":[\"도윤의 가족\",\"남산\"],\"day\":1},{\"id\":\"n8\",\"type\":\"출발\",\"title\":\"계기판 속 검증키\",\"body\":\"엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.\",\"links\":[\"엄마의 철제 상자\",\"부모님\",\"달구지\",\"남산\"],\"day\":1},{\"id\":\"n9\",\"type\":\"출발\",\"title\":\"맡겨 둔 작업장 열쇠\",\"body\":\"감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.\",\"links\":[\"할아버지\",\"달구지\"],\"day\":1},{\"id\":\"n10\",\"type\":\"소문\",\"title\":\"한 줄로 남기지 않는 항로\",\"body\":\"해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.\",\"links\":[\"천리안\",\"저항 연대망\"],\"day\":1},{\"id\":\"n11\",\"type\":\"소문\",\"title\":\"우편부의 지름길\",\"body\":\"물 반 잔의 답례. 어느 고개의 지름길.\",\"links\":[],\"day\":1},{\"id\":\"n12\",\"type\":\"장소\",\"title\":\"양산 고가차도\",\"body\":\"DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.\",\"links\":[],\"day\":1},{\"id\":\"n13\",\"type\":\"본편\",\"title\":\"검문소 저장 모듈\",\"body\":\"이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.\",\"links\":[\"부모님\",\"천리안\",\"남산\"],\"day\":1},{\"id\":\"n14\",\"type\":\"사건\",\"title\":\"부산 터미널의 마지막 불\",\"body\":\"부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.\",\"links\":[],\"day\":1},{\"id\":\"n15\",\"type\":\"장소\",\"title\":\"밀양 장터\",\"body\":\"DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.\",\"links\":[],\"day\":1},{\"id\":\"n16\",\"type\":\"사건\",\"title\":\"밀양의 부품 천막\",\"body\":\"경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.\",\"links\":[\"밀양 장터\",\"달구지\"],\"day\":2},{\"id\":\"n17\",\"type\":\"세대의 흔적\",\"title\":\"2026년 교통카드 번호표\",\"body\":\"대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.\",\"links\":[\"밀양 장터\",\"2026년\"],\"day\":2},{\"id\":\"n18\",\"type\":\"인물\",\"title\":\"민지\",\"body\":\"밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.\",\"links\":[\"민지\",\"밀양 장터\"],\"day\":2}],\"noteSeq\":19,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":12,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":54.00000000000008,\"events\":8,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":521149,\"fatigue\":11.3,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":2,\"_lunchDay\":1,\"_storyQueue\":[],\"_recentEvents\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"_recentEventTypes\":[\"조우\",\"본편\",\"탐색\",\"스토리\",\"조우\",\"대화\"],\"_eventBreather\":3,\"_beatQueue\":[\"story_bridge_departure_echo\",\"history_transit_day\"],\"_driveLegsSinceBlock\":0,\"_roadEventDay\":1,\"_roadEventCount\":1,\"_lastRoadEventKm\":20,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":54,\"phase\":\"fade\",\"relaxEvents\":0,\"peakEvents\":0,\"lastEvent\":\"rq_minji_request\",\"lastDay\":2},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":2,\"_exploreNodes\":{},\"_salvagedNodes\":{\"busan\":true,\"yangsan\":true},\"_salvageCount\":2,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793295307157,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":8,\"choices\":7,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":15,\"lockedChoices\":0},\"eventIds\":{\"cell_sea_meet\":1,\"lc_busan_dried\":1,\"meet_postman\":1,\"onboarding_first_road\":1,\"exp_towyard\":1,\"memory_busan_terminal\":1,\"meet_scrapyard\":1,\"rq_minji_request\":1},\"eventTypes\":{\"스토리\":2,\"조우\":3,\"본편\":1,\"탐색\":1,\"대화\":1},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":8,\"choices\":7,\"combats\":0},\"lastEventType\":\"대화\",\"typeStreak\":1,\"maxTypeStreak\":2,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[{\"kind\":\"arrival\",\"id\":\"yangsan\",\"playMin\":0,\"day\":1,\"km\":20},{\"kind\":\"arrival\",\"id\":\"miryang\",\"playMin\":0,\"day\":1,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54}]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{\"miryang\":{\"visits\":1,\"playMinutes\":0,\"gameMinutes\":0,\"actions\":3}},\"activeSettlement\":{\"id\":\"miryang\",\"nodeId\":\"miryang\",\"startedPlayMs\":0,\"startedGameMin\":2831.6},\"upgrades\":[],\"choiceEchoes\":2,\"milestones\":{\"first_event\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},\"first_choice\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},\"first_departure\":{\"playMin\":0,\"day\":1,\"min\":945,\"km\":20,\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},\"first_settlement\":{\"playMin\":0,\"day\":1,\"min\":1392,\"km\":54,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"}},\"choiceCallbacks\":{\"remembered\":0,\"near\":2,\"late\":0,\"items\":{\"opening_workshop:pack_workshop\":{\"remembered\":false,\"near\":true,\"late\":false},\"opening_bus_repair:hose_bypass\":{\"remembered\":false,\"near\":true,\"late\":false}}},\"endings\":{},\"timeline\":[{\"type\":\"event_open\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_event\",\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},{\"type\":\"choice\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},{\"type\":\"event_open\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":945,\"km\":20,\"playMin\":0,\"milestone\":\"first_departure\",\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},{\"type\":\"event_open\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"yangsan\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":3,\"available\":3},{\"type\":\"event_open\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1292,\"km\":33,\"playMin\":0,\"memoryId\":\"opening_workshop:pack_workshop\",\"eventId\":\"opening_workshop\"},{\"type\":\"event_open\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"memoryId\":\"opening_bus_repair:hose_bypass\",\"eventId\":\"opening_bus_repair\"},{\"type\":\"settlement_enter\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"milestone\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"milestone\":\"first_settlement\",\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"repeatDistance\":null}],\"lastSeenAt\":1793295307315},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},\"journeyRecaps\":[{\"from\":\"busan\",\"to\":\"yangsan\",\"km\":20,\"minutes\":93,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-3.1,\"unit\":\"L\",\"good\":false},{\"label\":\"물\",\"value\":-1,\"unit\":\"\",\"good\":false},{\"label\":\"피로\",\"value\":7.9,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1}],\"_stlField\":{\"daily\":{\"2:miryang:parts\":true,\"2:miryang:pump\":true,\"2:miryang:oldcard\":true},\"once\":{\"miryang:parts\":true,\"miryang:oldcard\":true},\"impact\":{\"miryang:parts\":{\"day\":2,\"min\":440},\"miryang:pump\":{\"day\":2,\"min\":490},\"miryang:oldcard\":{\"day\":2,\"min\":515}},\"roadEchoed\":{},\"log\":[{\"stl\":\"miryang\",\"id\":\"parts\",\"day\":2,\"min\":440},{\"stl\":\"miryang\",\"id\":\"pump\",\"day\":2,\"min\":490},{\"stl\":\"miryang\",\"id\":\"oldcard\",\"day\":2,\"min\":515}]},\"_impactEcho\":null,\"_rescues\":{},\"_stlNights\":{\"miryang\":1},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":1,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":6,\"pendingResult\":null,\"decisions\":{\"opening_workshop\":{\"stepId\":\"opening_workshop\",\"choiceId\":\"pack_workshop\",\"label\":\"난로를 끄고 예비 공구까지 챙긴다\",\"day\":1,\"min\":465,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":33},\"opening_bus_repair\":{\"stepId\":\"opening_bus_repair\",\"choiceId\":\"hose_bypass\",\"label\":\"남은 호스를 잘라 우회한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":54},\"opening_name_introduction\":{\"stepId\":\"opening_name_introduction\",\"choiceId\":\"say_name\",\"label\":\"이름을 말한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0},\"opening_failed_appeal\":{\"stepId\":\"opening_failed_appeal\",\"choiceId\":\"record_names\",\"label\":\"하진에게 허락을 구하고 가족 이름부터 적는다\",\"day\":1,\"min\":550,\"outcomeIndex\":0},\"opening_parents_module\":{\"stepId\":\"opening_parents_module\",\"choiceId\":\"label_wires\",\"label\":\"배선에 번호를 붙이고 덮개를 닫는다\",\"day\":1,\"min\":575,\"outcomeIndex\":0},\"opening_departure\":{\"stepId\":\"opening_departure\",\"choiceId\":\"leave_key\",\"label\":\"단골에게 작업장 열쇠를 맡긴다\",\"day\":1,\"min\":585,\"outcomeIndex\":0},\"opening_farewell\":{\"stepId\":\"opening_farewell\",\"choiceId\":\"begin_road\",\"label\":\"길로 나간다\",\"day\":1,\"min\":585,\"outcomeIndex\":0}},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\",\"reading\":{\"eventId\":\"opening_farewell\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"양산 쪽으로 가며 이송표의 발신 기록을 찾는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-start-v1\"]},\"history\":{\"turns\":[{\"kind\":\"dialogue\",\"text\":\"남산에 가면 우리도 집에 돌아갈 수 있어요?\",\"who\":\"intro_child\",\"name\":\"도윤\",\"scene\":\"intro-departure-conversation-v4\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 부두 입구\"},{\"kind\":\"dialogue\",\"text\":\"그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"dialogue\",\"text\":\"이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\",\"who\":\"passer_woman\",\"name\":\"하진\"},{\"kind\":\"dialogue\",\"text\":\"네. 먼저 떠난 사람들도 찾아보겠습니다.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"narration\",\"text\":\"도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\"},{\"kind\":\"narration\",\"text\":\"서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\",\"scene\":\"intro-departure-start-v1\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 달구지 운전석\"},{\"kind\":\"dialogue\",\"text\":\"할아버지, 다녀올게.\",\"who\":\"me\",\"name\":\"나\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-conversation-v4\",\"intro-departure-start-v1\"]},\"selection\":\"길로 나간다\",\"updates\":[]}},\"startPack\":\"fuel\",\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 부산에서 이송 명령에 이의를 제기한다\",\"next\":\"부두 민원 단말에서 도윤 가족의 이송 명령에 이의를 제기한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 엄마가 남긴 장치를 확인한다\",\"next\":\"엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"열어 둔 기록을 계속 읽는다.\",\"day\":1,\"at\":\"yangsan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 오지 않은 부모님의 다음 차를 찾는다\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"day\":1,\"at\":\"yangsan\"}],\"mainHistory\":[{\"id\":\"main_history_prologue-family_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-appeal_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"부산에서 이송 명령에 이의를 제기한다\",\"phase\":\"부산 원격 민원 창구 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-module_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"엄마가 남긴 장치를 확인한다\",\"phase\":\"부산의 달구지 안 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_first-trace_1_yangsan\",\"eyebrow\":\"메인 스토리 기록 · 1장\",\"title\":\"이송 명령의 첫 발신 기록을 찾는다\",\"phase\":\"부산을 떠난 첫 구간 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}}],\"seenUpdateCount\":6,\"snapshot\":{\"main_namsan\":\"active|남쪽 환승소의 오래된 운행표|김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)|4/13\"},\"mainState\":{\"chapterId\":\"parents-diversion\",\"act\":\"1장\",\"title\":\"오지 않은 부모님의 다음 차를 찾는다\",\"phase\":\"남쪽 환승소의 오래된 운행표\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"expected\":\"아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.\",\"progress\":\"4/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"rq_minji_request\",\"phase\":\"event\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\\n\\n\\\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\\\"\\n\\n지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\\n\\n\\\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\\\"\",\"view\":null,\"reading\":{\"eventId\":\"rq_minji_request\",\"phase\":\"event\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\"},{\"kind\":\"dialogue\",\"text\":\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\"},{\"kind\":\"dialogue\",\"text\":\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\",\"who\":\"minji\"}],\"index\":0,\"knownSpeaker\":true,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"history\":null,\"selection\":\"\",\"updates\":[]}},\"_chain\":null,\"_lastNarrativeLeg\":\"1:null>miryang\",\"_simDeferred\":[],\"_crewChatSeen\":{},\"_strandedDays\":0,\"_shunnedDays\":0,\"_campPlan\":{}}",
+      "result": {
+        "text": "\"알겠어요. 전 여기서 다른 방법을 찾아볼게요.\"\n\n민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.",
+        "turns": [
+          {
+            "kind": "dialogue",
+            "who": "minji",
+            "name": "???",
+            "text": "알겠어요. 전 여기서 다른 방법을 찾아볼게요."
+          },
+          {
+            "kind": "narration",
+            "text": "민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다."
+          }
+        ],
+        "chips": [],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "recruit-minji"
+          ]
+        }
+      },
+      "state": {
+        "day": 2,
+        "min": 530,
+        "food": 9,
+        "water": 12,
+        "fuel": 53.65117999999982,
+        "scrap": 63,
+        "van": 86,
+        "fatigue": 11.3,
+        "party": [],
+        "comps": {
+          "minji": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": true,
+          "intro_appeal_failed": true,
+          "intro_module_seen": true,
+          "intro_workshop_left": true,
+          "recruit_migration_v2": true,
+          "opening_call_answered": true,
+          "main_mission_started": true,
+          "cell_sea": true,
+          "postman_met": true,
+          "first_order_trace": true,
+          "parent_signature_match": true,
+          "miryang_oldcard": true,
+          "minji_request_heard": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n5",
+            "type": "출발",
+            "title": "닫고 나온 작업장",
+            "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+            "links": [
+              "달구지",
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n6",
+            "type": "출발",
+            "title": "도윤 가족의 버스",
+            "body": "물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.",
+            "links": [
+              "도윤의 가족",
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n7",
+            "type": "출발",
+            "title": "남산 주소 옆의 세 이름",
+            "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+            "links": [
+              "도윤의 가족",
+              "남산"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n8",
+            "type": "출발",
+            "title": "계기판 속 검증키",
+            "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+            "links": [
+              "엄마의 철제 상자",
+              "부모님",
+              "달구지",
+              "남산"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n9",
+            "type": "출발",
+            "title": "맡겨 둔 작업장 열쇠",
+            "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+            "links": [
+              "할아버지",
+              "달구지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n10",
+            "type": "소문",
+            "title": "한 줄로 남기지 않는 항로",
+            "body": "해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.",
+            "links": [
+              "천리안",
+              "저항 연대망"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n11",
+            "type": "소문",
+            "title": "우편부의 지름길",
+            "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n12",
+            "type": "장소",
+            "title": "양산 고가차도",
+            "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n13",
+            "type": "본편",
+            "title": "검문소 저장 모듈",
+            "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+            "links": [
+              "부모님",
+              "천리안",
+              "남산"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n14",
+            "type": "사건",
+            "title": "부산 터미널의 마지막 불",
+            "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n15",
+            "type": "장소",
+            "title": "밀양 장터",
+            "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n16",
+            "type": "사건",
+            "title": "밀양의 부품 천막",
+            "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+            "links": [
+              "밀양 장터",
+              "달구지"
+            ],
+            "day": 2
+          },
+          {
+            "id": "n17",
+            "type": "세대의 흔적",
+            "title": "2026년 교통카드 번호표",
+            "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+            "links": [
+              "밀양 장터",
+              "2026년"
+            ],
+            "day": 2
+          },
+          {
+            "id": "n18",
+            "type": "인물",
+            "title": "민지",
+            "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+            "links": [
+              "민지",
+              "밀양 장터"
+            ],
+            "day": 2
+          }
+        ],
+        "items": {
+          "부품": 6,
+          "의약품": 1,
+          "탄약": 0
+        },
+        "seed": 521149,
+        "impact": null,
+        "field": {
+          "daily": {
+            "2:miryang:parts": true,
+            "2:miryang:pump": true,
+            "2:miryang:oldcard": true
+          },
+          "once": {
+            "miryang:parts": true,
+            "miryang:oldcard": true
+          },
+          "impact": {
+            "miryang:parts": {
+              "day": 2,
+              "min": 440
+            },
+            "miryang:pump": {
+              "day": 2,
+              "min": 490
+            },
+            "miryang:oldcard": {
+              "day": 2,
+              "min": 515
+            }
+          },
+          "roadEchoed": {},
+          "log": [
+            {
+              "stl": "miryang",
+              "id": "parts",
+              "day": 2,
+              "min": 440
+            },
+            {
+              "stl": "miryang",
+              "id": "pump",
+              "day": 2,
+              "min": 490
+            },
+            {
+              "stl": "miryang",
+              "id": "oldcard",
+              "day": 2,
+              "min": 515
+            }
+          ]
+        }
+      },
+      "paid": "{\"v\":9,\"mode\":\"onroad\",\"entryMode\":\"interactive\",\"name\":\"상혁\",\"day\":2,\"min\":530,\"at\":\"miryang\",\"driving\":null,\"fuel\":53.65117999999982,\"fuelMax\":70,\"water\":12,\"waterMax\":28,\"food\":9,\"foodMax\":24,\"scrap\":63,\"van\":86,\"vanMax\":100,\"vanName\":\"달구지\",\"items\":{\"부품\":6,\"의약품\":1,\"탄약\":0},\"party\":[],\"comps\":{\"minji\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"parkss\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"kangwoo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"leo\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"jaeyi\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0},\"eunsu\":{\"mood\":65,\"bond\":0,\"lvl\":0,\"perks\":[],\"pending\":0}},\"dog\":false,\"_scrapKm\":0,\"known\":[\"busan\",\"gimhae\",\"yangsan\",\"miryang\",\"jinju\",\"hapcheon\",\"geochang\",\"daegu\",\"gumi\",\"gimcheon\",\"muju\",\"namwon\",\"jeonju\",\"yeongdong\",\"daejeon\",\"nonsan\",\"gongju\",\"cheongju\",\"cheonan\",\"pyeongtaek\",\"suwon\",\"seoul\",\"ulsan\",\"yeosu\",\"suncheon\",\"gwangju\",\"damyang\",\"mokpo\",\"andong\",\"mungyeong\",\"danyang\",\"wonju\",\"daegwallyeong\",\"gangneung\",\"sokcho\",\"icheon\",\"gyeongju\",\"pohang\",\"sangju\",\"gunsan\",\"chungju\",\"sejong\"],\"visited\":[\"busan\",\"yangsan\",\"miryang\"],\"flags\":{\"mother_keepsakes\":true,\"intro_family_helped\":true,\"intro_appeal_failed\":true,\"intro_module_seen\":true,\"intro_workshop_left\":true,\"recruit_migration_v2\":true,\"opening_call_answered\":true,\"main_mission_started\":true,\"cell_sea\":true,\"postman_met\":true,\"first_order_trace\":true,\"parent_signature_match\":true,\"miryang_oldcard\":true,\"minji_request_heard\":true},\"pursuit\":0,\"used\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"quest\":null,\"recruitQ\":null,\"wx\":\"fog\",\"wxNext\":\"clear\",\"up\":{},\"notes\":[{\"id\":\"n0\",\"type\":\"장소\",\"title\":\"부산 감천 부두\",\"body\":\"모든 것이 시작된 곳. 달구지에 시동을 걸었다.\",\"links\":[],\"day\":1},{\"id\":\"n1\",\"type\":\"물건\",\"title\":\"달구지\",\"body\":\"낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.\",\"links\":[\"할아버지\"],\"day\":1},{\"id\":\"n2\",\"type\":\"인물\",\"title\":\"천리안\",\"body\":\"2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.\",\"links\":[],\"day\":1},{\"id\":\"n3\",\"type\":\"인물\",\"title\":\"부모님\",\"body\":\"엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.\",\"links\":[\"천리안\"],\"day\":1},{\"id\":\"n4\",\"type\":\"인물\",\"title\":\"할아버지\",\"body\":\"나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.\",\"links\":[\"달구지\",\"부모님\"],\"day\":1},{\"id\":\"n5\",\"type\":\"출발\",\"title\":\"닫고 나온 작업장\",\"body\":\"작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.\",\"links\":[\"달구지\",\"할아버지\"],\"day\":1},{\"id\":\"n6\",\"type\":\"출발\",\"title\":\"도윤 가족의 버스\",\"body\":\"물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.\",\"links\":[\"도윤의 가족\",\"천리안\"],\"day\":1},{\"id\":\"n7\",\"type\":\"출발\",\"title\":\"남산 주소 옆의 세 이름\",\"body\":\"하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.\",\"links\":[\"도윤의 가족\",\"남산\"],\"day\":1},{\"id\":\"n8\",\"type\":\"출발\",\"title\":\"계기판 속 검증키\",\"body\":\"엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.\",\"links\":[\"엄마의 철제 상자\",\"부모님\",\"달구지\",\"남산\"],\"day\":1},{\"id\":\"n9\",\"type\":\"출발\",\"title\":\"맡겨 둔 작업장 열쇠\",\"body\":\"감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.\",\"links\":[\"할아버지\",\"달구지\"],\"day\":1},{\"id\":\"n10\",\"type\":\"소문\",\"title\":\"한 줄로 남기지 않는 항로\",\"body\":\"해도의 배들은 출항 시각·포구·운반선을 나눠 감시 기록이 하나의 이동 경로로 이어지지 않게 한다.\",\"links\":[\"천리안\",\"저항 연대망\"],\"day\":1},{\"id\":\"n11\",\"type\":\"소문\",\"title\":\"우편부의 지름길\",\"body\":\"물 반 잔의 답례. 어느 고개의 지름길.\",\"links\":[],\"day\":1},{\"id\":\"n12\",\"type\":\"장소\",\"title\":\"양산 고가차도\",\"body\":\"DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.\",\"links\":[],\"day\":1},{\"id\":\"n13\",\"type\":\"본편\",\"title\":\"검문소 저장 모듈\",\"body\":\"이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.\",\"links\":[\"부모님\",\"천리안\",\"남산\"],\"day\":1},{\"id\":\"n14\",\"type\":\"사건\",\"title\":\"부산 터미널의 마지막 불\",\"body\":\"부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.\",\"links\":[],\"day\":1},{\"id\":\"n15\",\"type\":\"장소\",\"title\":\"밀양 장터\",\"body\":\"DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.\",\"links\":[],\"day\":1},{\"id\":\"n16\",\"type\":\"사건\",\"title\":\"밀양의 부품 천막\",\"body\":\"경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.\",\"links\":[\"밀양 장터\",\"달구지\"],\"day\":2},{\"id\":\"n17\",\"type\":\"세대의 흔적\",\"title\":\"2026년 교통카드 번호표\",\"body\":\"대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.\",\"links\":[\"밀양 장터\",\"2026년\"],\"day\":2},{\"id\":\"n18\",\"type\":\"인물\",\"title\":\"민지\",\"body\":\"밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.\",\"links\":[\"민지\",\"밀양 장터\"],\"day\":2}],\"noteSeq\":19,\"npcs\":{\"geumja\":{\"att\":0,\"met\":false,\"chat\":[]},\"sundeok\":{\"att\":12,\"met\":false,\"chat\":[]},\"taeho\":{\"att\":0,\"met\":false,\"chat\":[]},\"jaepil\":{\"att\":0,\"met\":false,\"chat\":[]},\"miyoung\":{\"att\":0,\"met\":false,\"chat\":[]},\"drhan\":{\"att\":0,\"met\":false,\"chat\":[]},\"deokgu\":{\"att\":0,\"met\":false,\"chat\":[]},\"suwan\":{\"att\":0,\"met\":false,\"chat\":[]},\"byungchul\":{\"att\":0,\"met\":false,\"chat\":[]},\"yeongok\":{\"att\":0,\"met\":false,\"chat\":[]},\"sera\":{\"att\":0,\"met\":false,\"chat\":[]},\"mansu\":{\"att\":0,\"met\":false,\"chat\":[]},\"jeomrye\":{\"att\":0,\"met\":false,\"chat\":[]},\"dongsu\":{\"att\":0,\"met\":false,\"chat\":[]},\"noah\":{\"att\":0,\"met\":false,\"chat\":[]},\"hwasun\":{\"att\":0,\"met\":false,\"chat\":[]},\"gitae\":{\"att\":0,\"met\":false,\"chat\":[]}},\"stats\":{\"km\":54.00000000000008,\"events\":8,\"nonlethal\":0},\"routePlan\":null,\"thirst\":0,\"hunger\":0,\"ended\":false,\"seed\":521149,\"fatigue\":11.3,\"_dlv\":0,\"_drowsyDay\":0,\"_drowsyAt\":-999,\"_breakfastDay\":2,\"_lunchDay\":1,\"_storyQueue\":[],\"_recentEvents\":[\"cell_sea_meet\",\"lc_busan_dried\",\"meet_postman\",\"onboarding_first_road\",\"exp_towyard\",\"memory_busan_terminal\",\"meet_scrapyard\",\"rq_minji_request\"],\"_recentEventTypes\":[\"조우\",\"본편\",\"탐색\",\"스토리\",\"조우\",\"대화\"],\"_eventBreather\":3,\"_beatQueue\":[\"story_bridge_departure_echo\",\"history_transit_day\"],\"_driveLegsSinceBlock\":0,\"_roadEventDay\":1,\"_roadEventCount\":1,\"_lastRoadEventKm\":20,\"_lastCampEventDay\":-999,\"memories\":{\"choices\":{},\"pending\":[],\"history\":[]},\"knowledge\":{\"current_exodus\":2,\"parents_work\":2,\"parent_principle\":0,\"parent_key\":0,\"repeated_expulsions\":0,\"family_order_source\":0,\"uplink_gap\":0,\"ai_identifies_caravan\":0,\"resistance_network\":0},\"relations\":{\"pairs\":{},\"seenChats\":{}},\"director\":{\"intensity\":54,\"phase\":\"fade\",\"relaxEvents\":0,\"peakEvents\":0,\"lastEvent\":\"rq_minji_request\",\"lastDay\":2},\"combat\":null,\"lastCombatReport\":null,\"injuries\":{},\"_exploreDay\":2,\"_exploreNodes\":{},\"_salvagedNodes\":{\"busan\":true,\"yangsan\":true},\"_salvageCount\":2,\"_combatFlow\":{\"runId\":0,\"adjust\":0,\"history\":[]},\"profile\":\"keeper\",\"_quality\":{\"version\":3,\"build\":\"2026-09-11-director-journey\",\"entryMode\":\"interactive\",\"createdAt\":1793295307157,\"playMs\":0,\"activeSession\":null,\"sessions\":[],\"counts\":{\"events\":8,\"choices\":8,\"combats\":0,\"repeatEvents\":0,\"visibleChoices\":17,\"lockedChoices\":0},\"eventIds\":{\"cell_sea_meet\":1,\"lc_busan_dried\":1,\"meet_postman\":1,\"onboarding_first_road\":1,\"exp_towyard\":1,\"memory_busan_terminal\":1,\"meet_scrapyard\":1,\"rq_minji_request\":1},\"eventTypes\":{\"스토리\":2,\"조우\":3,\"본편\":1,\"탐색\":1,\"대화\":1},\"combat\":{\"success\":0,\"partial\":0,\"failure\":0},\"resources\":{},\"first45\":{\"events\":8,\"choices\":8,\"combats\":0},\"lastEventType\":\"대화\",\"typeStreak\":1,\"maxTypeStreak\":2,\"heavyStreak\":0,\"maxHeavyStreak\":0,\"meaningful\":{\"lastPlayMs\":0,\"maxGapMinutes\":0,\"changes\":[{\"kind\":\"arrival\",\"id\":\"yangsan\",\"playMin\":0,\"day\":1,\"km\":20},{\"kind\":\"arrival\",\"id\":\"miryang\",\"playMin\":0,\"day\":1,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54},{\"kind\":\"settlement\",\"id\":\"miryang\",\"playMin\":0,\"day\":2,\"km\":54}]},\"resourceLatch\":{\"fuel\":false,\"water\":false,\"food\":false,\"van\":false,\"fatigue\":false,\"pursuit\":false},\"routes\":{},\"settlements\":{\"miryang\":{\"visits\":1,\"playMinutes\":0,\"gameMinutes\":0,\"actions\":3}},\"activeSettlement\":{\"id\":\"miryang\",\"nodeId\":\"miryang\",\"startedPlayMs\":0,\"startedGameMin\":2831.6},\"upgrades\":[],\"choiceEchoes\":2,\"milestones\":{\"first_event\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},\"first_choice\":{\"playMin\":0,\"day\":1,\"min\":705,\"km\":0,\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},\"first_departure\":{\"playMin\":0,\"day\":1,\"min\":945,\"km\":20,\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},\"first_settlement\":{\"playMin\":0,\"day\":1,\"min\":1392,\"km\":54,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"}},\"choiceCallbacks\":{\"remembered\":0,\"near\":2,\"late\":0,\"items\":{\"opening_workshop:pack_workshop\":{\"remembered\":false,\"near\":true,\"late\":false},\"opening_bus_repair:hose_bypass\":{\"remembered\":false,\"near\":true,\"late\":false}}},\"endings\":{},\"timeline\":[{\"type\":\"event_open\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_event\",\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\"},{\"type\":\"choice\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"eventId\":\"cell_sea_meet\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":705,\"km\":0,\"playMin\":0,\"milestone\":\"first_choice\",\"eventId\":\"cell_sea_meet\",\"choiceIndex\":1},{\"type\":\"event_open\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":945,\"km\":0,\"playMin\":0,\"eventId\":\"lc_busan_dried\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"milestone\",\"day\":1,\"min\":945,\"km\":20,\"playMin\":0,\"milestone\":\"first_departure\",\"from\":\"busan\",\"to\":\"yangsan\",\"road\":\"high\"},{\"type\":\"event_open\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1008,\"km\":14,\"playMin\":0,\"eventId\":\"meet_postman\",\"eventType\":\"조우\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"yangsan\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1038,\"km\":20,\"playMin\":0,\"eventId\":\"onboarding_first_road\",\"eventType\":\"본편\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":3,\"available\":3},{\"type\":\"event_open\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1193,\"km\":20,\"playMin\":0,\"eventId\":\"exp_towyard\",\"eventType\":\"탐색\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1292,\"km\":33,\"playMin\":0,\"memoryId\":\"opening_workshop:pack_workshop\",\"eventId\":\"opening_workshop\"},{\"type\":\"event_open\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":1,\"min\":1332,\"km\":42,\"playMin\":0,\"eventId\":\"memory_busan_terminal\",\"eventType\":\"스토리\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"choice_echo\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"memoryId\":\"opening_bus_repair:hose_bypass\",\"eventId\":\"opening_bus_repair\"},{\"type\":\"settlement_enter\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"milestone\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"milestone\":\"first_settlement\",\"settlementId\":\"miryang\",\"nodeId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":1,\"min\":1392,\"km\":54,\"playMin\":0,\"kind\":\"arrival\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":440,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":490,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"settlement_action\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"settlementId\":\"miryang\"},{\"type\":\"meaningful_change\",\"day\":2,\"min\":515,\"km\":54,\"playMin\":0,\"kind\":\"settlement\",\"id\":\"miryang\",\"gapMinutes\":0},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"meet_scrapyard\",\"eventType\":\"조우\",\"choiceIndex\":0,\"tactic\":\"\",\"visible\":2,\"available\":2},{\"type\":\"event_open\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"repeatDistance\":null},{\"type\":\"choice\",\"day\":2,\"min\":530,\"km\":54,\"playMin\":0,\"eventId\":\"rq_minji_request\",\"eventType\":\"대화\",\"choiceIndex\":1,\"tactic\":\"\",\"visible\":2,\"available\":2}],\"lastSeenAt\":1793014000000},\"guideDismissed\":false,\"questTrack\":\"main\",\"lastJourneyRecap\":{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},\"journeyRecaps\":[{\"from\":\"busan\",\"to\":\"yangsan\",\"km\":20,\"minutes\":93,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-3.1,\"unit\":\"L\",\"good\":false},{\"label\":\"물\",\"value\":-1,\"unit\":\"\",\"good\":false},{\"label\":\"피로\",\"value\":7.9,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1},{\"from\":\"yangsan\",\"to\":\"miryang\",\"km\":34,\"minutes\":159,\"road\":\"high\",\"events\":2,\"build\":\"기본 생존형\",\"changes\":[{\"label\":\"연료\",\"value\":-5.3,\"unit\":\"L\",\"good\":false},{\"label\":\"피로\",\"value\":19.1,\"unit\":\"\",\"good\":false}],\"routeCompleted\":false,\"routeContract\":null,\"routeName\":\"\",\"routeProgress\":\"\",\"checkIn\":null,\"chapter\":null,\"day\":1}],\"_stlField\":{\"daily\":{\"2:miryang:parts\":true,\"2:miryang:pump\":true,\"2:miryang:oldcard\":true},\"once\":{\"miryang:parts\":true,\"miryang:oldcard\":true},\"impact\":{\"miryang:parts\":{\"day\":2,\"min\":440},\"miryang:pump\":{\"day\":2,\"min\":490},\"miryang:oldcard\":{\"day\":2,\"min\":515}},\"roadEchoed\":{},\"log\":[{\"stl\":\"miryang\",\"id\":\"parts\",\"day\":2,\"min\":440},{\"stl\":\"miryang\",\"id\":\"pump\",\"day\":2,\"min\":490},{\"stl\":\"miryang\",\"id\":\"oldcard\",\"day\":2,\"min\":515}]},\"_impactEcho\":null,\"_rescues\":{},\"_stlNights\":{\"miryang\":1},\"stopover\":null,\"locationContractVersion\":2,\"campNight\":1,\"campConversation\":null,\"campMemories\":{},\"opening\":{\"version\":2,\"narrativeVersion\":1,\"step\":6,\"pendingResult\":null,\"decisions\":{\"opening_workshop\":{\"stepId\":\"opening_workshop\",\"choiceId\":\"pack_workshop\",\"label\":\"난로를 끄고 예비 공구까지 챙긴다\",\"day\":1,\"min\":465,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":33},\"opening_bus_repair\":{\"stepId\":\"opening_bus_repair\",\"choiceId\":\"hose_bypass\",\"label\":\"남은 호스를 잘라 우회한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0,\"callbackEchoed\":true,\"callbackDay\":1,\"callbackKm\":54},\"opening_name_introduction\":{\"stepId\":\"opening_name_introduction\",\"choiceId\":\"say_name\",\"label\":\"이름을 말한다\",\"day\":1,\"min\":520,\"outcomeIndex\":0},\"opening_failed_appeal\":{\"stepId\":\"opening_failed_appeal\",\"choiceId\":\"record_names\",\"label\":\"하진에게 허락을 구하고 가족 이름부터 적는다\",\"day\":1,\"min\":550,\"outcomeIndex\":0},\"opening_parents_module\":{\"stepId\":\"opening_parents_module\",\"choiceId\":\"label_wires\",\"label\":\"배선에 번호를 붙이고 덮개를 닫는다\",\"day\":1,\"min\":575,\"outcomeIndex\":0},\"opening_departure\":{\"stepId\":\"opening_departure\",\"choiceId\":\"leave_key\",\"label\":\"단골에게 작업장 열쇠를 맡긴다\",\"day\":1,\"min\":585,\"outcomeIndex\":0},\"opening_farewell\":{\"stepId\":\"opening_farewell\",\"choiceId\":\"begin_road\",\"label\":\"길로 나간다\",\"day\":1,\"min\":585,\"outcomeIndex\":0}},\"completed\":true,\"nameIntroduction\":\"done\",\"nameDraft\":\"\",\"reading\":{\"eventId\":\"opening_farewell\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"양산 쪽으로 가며 이송표의 발신 기록을 찾는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-start-v1\"]},\"history\":{\"turns\":[{\"kind\":\"dialogue\",\"text\":\"남산에 가면 우리도 집에 돌아갈 수 있어요?\",\"who\":\"intro_child\",\"name\":\"도윤\",\"scene\":\"intro-departure-conversation-v4\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 부두 입구\"},{\"kind\":\"dialogue\",\"text\":\"그렇게 만들러 가는 거야. 하지만 아직은 몰라. 더 찾아야 할 게 있어.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"dialogue\",\"text\":\"이미 떠난 사람들도 있어요. 그 사람들은 어떻게 됐는지, 가시면 알아봐 주세요.\",\"who\":\"passer_woman\",\"name\":\"하진\"},{\"kind\":\"dialogue\",\"text\":\"네. 먼저 떠난 사람들도 찾아보겠습니다.\",\"who\":\"me\",\"name\":\"나\"},{\"kind\":\"narration\",\"text\":\"도윤은 자기 이름이 적힌 이송표를 접어 품에 넣었다. 하진은 유나가 기다리는 버스로 돌아갔다.\"},{\"kind\":\"narration\",\"text\":\"서울까지 400km. 시동 모터가 한 번 헛돌았고, 두 번째에 엔진이 붙었다.\",\"scene\":\"intro-departure-start-v1\",\"timeKind\":\"current\",\"timeLabel\":\"지금 · 달구지 운전석\"},{\"kind\":\"dialogue\",\"text\":\"할아버지, 다녀올게.\",\"who\":\"me\",\"name\":\"나\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"intro-departure-conversation-v4\",\"intro-departure-start-v1\"]},\"selection\":\"길로 나간다\",\"updates\":[]}},\"startPack\":\"fuel\",\"questLedger\":{\"tracked\":[],\"completed\":[],\"updates\":[{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 부산에서 이송 명령에 이의를 제기한다\",\"next\":\"부두 민원 단말에서 도윤 가족의 이송 명령에 이의를 제기한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"서장 · 엄마가 남긴 장치를 확인한다\",\"next\":\"엄마의 회로도와 달구지 계기판 안쪽의 배선을 비교한다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 쪽 첫 구간으로 출발해 이송표의 발신 번호가 남은 기록을 찾는다.\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"양산 고가차도에서 ‘주변 탐색’을 눌러 「첫 번째 발신 기록」 기록을 확인한다 (열람 준비 30분 + 선택·후속 작업 10~35분)\",\"day\":1,\"at\":\"busan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"메인 스토리 진행 · 이송 명령의 첫 발신 기록을 찾는다\",\"next\":\"열어 둔 기록을 계속 읽는다.\",\"day\":1,\"at\":\"yangsan\"},{\"id\":\"main_namsan\",\"kind\":\"main\",\"title\":\"1장 · 오지 않은 부모님의 다음 차를 찾는다\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"day\":1,\"at\":\"yangsan\"}],\"mainHistory\":[{\"id\":\"main_history_prologue-family_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"도윤 가족의 이송표를 확인한다\",\"phase\":\"부산 감천 부두 · 떠나기 전 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-appeal_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"부산에서 이송 명령에 이의를 제기한다\",\"phase\":\"부산 원격 민원 창구 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_prologue-module_1_busan\",\"eyebrow\":\"메인 스토리 기록 · 서장\",\"title\":\"엄마가 남긴 장치를 확인한다\",\"phase\":\"부산의 달구지 안 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}},{\"id\":\"main_history_first-trace_1_yangsan\",\"eyebrow\":\"메인 스토리 기록 · 1장\",\"title\":\"이송 명령의 첫 발신 기록을 찾는다\",\"phase\":\"부산을 떠난 첫 구간 · 1일차\",\"next\":\"이 장에서 해야 할 일을 마쳤다.\",\"expected\":\"부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.\",\"progress\":{\"have\":1,\"need\":1,\"label\":\"완료\"}}],\"seenUpdateCount\":6,\"snapshot\":{\"main_namsan\":\"active|남쪽 환승소의 오래된 운행표|김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)|4/13\"},\"mainState\":{\"chapterId\":\"parents-diversion\",\"act\":\"1장\",\"title\":\"오지 않은 부모님의 다음 차를 찾는다\",\"phase\":\"남쪽 환승소의 오래된 운행표\",\"next\":\"김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)\",\"expected\":\"아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.\",\"progress\":\"4/13\"}},\"_qoffer\":null,\"timedStories\":[],\"pendingPresentation\":{\"version\":1,\"eventId\":\"rq_minji_request\",\"phase\":\"result\",\"text\":\"\\\"알겠어요. 전 여기서 다른 방법을 찾아볼게요.\\\"\\n\\n민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.\",\"view\":null,\"reading\":{\"eventId\":\"rq_minji_request\",\"phase\":\"outcome\",\"view\":{\"turns\":[{\"kind\":\"dialogue\",\"text\":\"알겠어요. 전 여기서 다른 방법을 찾아볼게요.\",\"who\":\"minji\",\"name\":\"???\"},{\"kind\":\"narration\",\"text\":\"민지는 지도를 천막 기둥에 다시 꽂았다. 공구함도 그 아래 내려놓는다.\"}],\"index\":0,\"knownSpeaker\":false,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"history\":{\"turns\":[{\"kind\":\"narration\",\"text\":\"민지가 지도 위의 붉은 원을 짚는다.\"},{\"kind\":\"dialogue\",\"text\":\"오빠가 남긴 진단기가 울산 폐차장으로 넘어갔어요. 목소리가 남아 있을지도 몰라요.\",\"who\":\"minji\"},{\"kind\":\"narration\",\"text\":\"지도 끝이 말려 올라오자 공구함으로 눌러 둔다.\"},{\"kind\":\"dialogue\",\"text\":\"혼자서는 못 꺼내요. 거기까지 태워주면, 꺼낼 때 제가 손 신호 할게요.\",\"who\":\"minji\"}],\"index\":0,\"knownSpeaker\":true,\"readingRecord\":\"\",\"recordOpen\":false,\"readingRecordLabel\":\"\",\"resultRecordOpen\":false,\"restoredLineOpen\":false,\"readerMode\":\"current\",\"inspectionId\":\"\",\"inspectedIds\":[],\"sceneKeys\":[\"recruit-minji\"]},\"selection\":\"오늘은 함께 가기 어렵다고 말한다\",\"updates\":[]},\"choiceIndex\":1,\"outcomeIndex\":0,\"chips\":[]},\"_chain\":null,\"_lastNarrativeLeg\":\"1:null>miryang\",\"_simDeferred\":[],\"_crewChatSeen\":{},\"_strandedDays\":0,\"_shunnedDays\":0,\"_campPlan\":{}}"
+    }
+  ]
+}

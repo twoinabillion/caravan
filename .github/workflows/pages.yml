@@ -1,30 +1,52 @@
 name: Deploy GitHub Pages
 
-# Pages는 gh-pages 브랜치 서빙 모드 — Actions 배포(deploy-pages) 대신
-# 빌드 결과를 gh-pages 브랜치에 push한다 (기존 수동 배포와 동일 경로).
+# The standalone HTML may exceed Git's 100 MiB file limit. Publish it as a
+# Pages artifact after the release gate succeeds, without recompressing art.
 on:
-  push:
+  workflow_run:
+    workflows: [gate]
+    types: [completed]
     branches: [master]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master') ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_sha == github.sha)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
       - name: Build web release
         # Pages에는 단일 HTML만 필요하다. AIT는 로컬 Toss 빌드 산출물이므로
         # GitHub runner에서 Granite CLI를 찾지 않도록 명시적으로 제외한다.
         run: ./build.sh --html-only
       - name: Verify installable app shell
         run: node tools/check-pwa.mjs
+      - name: Verify source and embedded assets
+        run: |
+          npm run verify:quick
+          npm run test:source
       - name: Prepare site
         run: |
           mkdir -p _site/assets
@@ -32,10 +54,32 @@ jobs:
           cp manifest.webmanifest service-worker.js _site/
           cp assets/app-icon.png assets/app-icon-192.png assets/app-icon-512.png _site/assets/
           touch _site/.nojekyll
-      - name: Push to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import crypto from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const html = fs.readFileSync('서울까지400km.html');
+          fs.writeFileSync('_site/release.json', JSON.stringify({
+            commit: execFileSync('git', ['rev-parse', 'HEAD'], {encoding:'utf8'}).trim(),
+            htmlSha256: crypto.createHash('sha256').update(html).digest('hex'),
+            htmlBytes: html.length
+          }, null, 2) + '\n');
+          JS
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _site
-          publish_branch: gh-pages
-          commit_message: 'deploy: ${{ github.event.head_commit.message }}'
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

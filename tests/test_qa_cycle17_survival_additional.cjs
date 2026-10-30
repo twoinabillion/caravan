@@ -42,10 +42,15 @@ test('newsstand authored turns preserve every word and keep quoted labels inside
   const label=i===0?'재편성':'더 안전한 내일';assert(turns.some(t=>t.kind==='narration'&&t.text.includes('"'+label+'"')));assert(!turns.some(t=>t.kind==='dialogue'&&t.text===label));
  }
 });
-test('all 24 event definitions retain exact mechanics, gates, notes and prose except approved bell phrase',()=>{
+test('all 24 event definitions retain exact mechanics, gates, notes and prose except reviewed copy fixes',()=>{
  const h=setup(),clean=x=>JSON.parse(JSON.stringify(x,(k,v)=>['turnSpeakers','turns'].includes(k)?undefined:v));for(const [id,old]of Object.entries(base)){
   const now=h.json(`JSON.parse(JSON.stringify(G.presentationEvent('${id}'),(k,v)=>typeof v==='function'?v.toString():v))`);
   if(id==='ev_near_seoul_sign'){assert.equal(now.maxRemain,9);delete now.maxRemain;}
+  if(id==='ev_pc_cafe'){
+   const prior=old.choices[1].out[0].text;
+   assert.equal(now.choices[1].out[0].text,prior+'\n\n나오는 길에 매점에서 남은 과자 세 봉지를 챙겼다.');
+   now.choices[1].out[0].text=prior;
+  }
   for(const d of copies.filter(d=>d.id===id)){let o=now;for(const k of d.path.slice(0,-1))o=o[k];assert.equal(o[d.path.at(-1)],d.new);o[d.path.at(-1)]=d.old;}assert.deepEqual(clean(now),clean(old),id);
  }
 });

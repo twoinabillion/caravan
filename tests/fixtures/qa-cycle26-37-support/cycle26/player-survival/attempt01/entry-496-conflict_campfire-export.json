@@ -1,0 +1,6603 @@
+{
+  "v": 9,
+  "mode": "onroad",
+  "entryMode": "interactive",
+  "name": "상혁",
+  "day": 10,
+  "min": 1288.1,
+  "at": "cheonan",
+  "driving": null,
+  "fuel": 39.180405000001294,
+  "fuelMax": 70,
+  "water": 24,
+  "waterMax": 28,
+  "food": 22,
+  "foodMax": 24,
+  "scrap": 97,
+  "van": 100,
+  "vanMax": 100,
+  "vanName": "달구지",
+  "items": {
+    "부품": 10,
+    "의약품": 0,
+    "탄약": 2,
+    "부모님의 검증키": 1
+  },
+  "party": [
+    "minji",
+    "kangwoo",
+    "parkss"
+  ],
+  "comps": {
+    "minji": {
+      "mood": 100,
+      "bond": 43,
+      "lvl": 3,
+      "perks": [
+        "mj_camp",
+        "mj_eye",
+        "mj_radio"
+      ],
+      "pending": 0,
+      "approach": "pulley"
+    },
+    "parkss": {
+      "mood": 96,
+      "bond": 19,
+      "lvl": 3,
+      "perks": [
+        "pss_thrift",
+        "pss_herb",
+        "pss_story"
+      ],
+      "pending": 0,
+      "approach": "medicine"
+    },
+    "kangwoo": {
+      "mood": 98,
+      "bond": 31,
+      "lvl": 3,
+      "perks": [
+        "kw_guard",
+        "kw_sniper",
+        "kw_story"
+      ],
+      "pending": 0,
+      "approach": "rebuild"
+    },
+    "leo": {
+      "mood": 65,
+      "bond": 0,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    },
+    "jaeyi": {
+      "mood": 65,
+      "bond": 0,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    },
+    "eunsu": {
+      "mood": 65,
+      "bond": 0,
+      "lvl": 0,
+      "perks": [],
+      "pending": 0
+    }
+  },
+  "dog": false,
+  "_scrapKm": 0,
+  "known": [
+    "busan",
+    "gimhae",
+    "yangsan",
+    "miryang",
+    "jinju",
+    "hapcheon",
+    "geochang",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "namwon",
+    "jeonju",
+    "yeongdong",
+    "daejeon",
+    "nonsan",
+    "gongju",
+    "cheongju",
+    "cheonan",
+    "pyeongtaek",
+    "suwon",
+    "seoul",
+    "ulsan",
+    "yeosu",
+    "suncheon",
+    "gwangju",
+    "damyang",
+    "mokpo",
+    "andong",
+    "mungyeong",
+    "danyang",
+    "wonju",
+    "daegwallyeong",
+    "gangneung",
+    "sokcho",
+    "icheon",
+    "gyeongju",
+    "pohang",
+    "sangju",
+    "gunsan",
+    "chungju",
+    "sejong",
+    "mall",
+    "mingyu_ridge"
+  ],
+  "visited": [
+    "busan",
+    "yangsan",
+    "miryang",
+    "ulsan",
+    "daegu",
+    "gumi",
+    "gimcheon",
+    "muju",
+    "jeonju",
+    "nonsan",
+    "daejeon",
+    "cheongju",
+    "yeongdong",
+    "mall",
+    "gongju",
+    "cheonan"
+  ],
+  "flags": {
+    "mother_keepsakes": true,
+    "intro_family_helped": true,
+    "intro_appeal_failed": true,
+    "intro_module_seen": true,
+    "intro_workshop_left": true,
+    "recruit_migration_v2": true,
+    "opening_call_answered": true,
+    "main_mission_started": true,
+    "cell_sea": true,
+    "first_order_trace": true,
+    "parent_signature_match": true,
+    "minji_request_heard": true,
+    "sundeok_son": true,
+    "bridge_departure_echo": true,
+    "bridge_trace_gap": true,
+    "minji_approach_drive": true,
+    "bridge_watched": true,
+    "trace_registry": true,
+    "kangwoo_approach_drive": true,
+    "parents_split_known": true,
+    "parents_routes_traced": true,
+    "route_market_escorted": true,
+    "jaepil_candles": true,
+    "parent_principle_found": true,
+    "postman_met": true,
+    "parent_key_located": true,
+    "armed_age": true,
+    "recall_passed": true,
+    "parent_key_found": true,
+    "main_testimony_record": true,
+    "trace_dialect": true,
+    "kw_truth": true,
+    "bridge_parent_route": true,
+    "bridge_child_voice": true,
+    "bridge_crew_answer": true,
+    "bridge_reason_stop": true,
+    "trace_theories": true,
+    "parkss_approach_drive": true,
+    "trace_route": true,
+    "gp_route_ritual": true,
+    "conflict_sided_parkss": true,
+    "conflict_open": true,
+    "failed_namsan_known": true,
+    "daejeon_deployment_card": true,
+    "pss_list": true
+  },
+  "pursuit": 0,
+  "used": [
+    "cell_sea_meet",
+    "ev_truck_cafe",
+    "onboarding_first_road",
+    "ev_seed_warehouse",
+    "memory_busan_terminal",
+    "meet_scrapyard",
+    "rq_minji_request",
+    "npc_sundeok_2",
+    "story_bridge_departure_echo",
+    "story_bridge_trace_gap",
+    "rq_minji_task",
+    "lc_ulsan_whale",
+    "salvage_claim",
+    "rq_minji_join",
+    "talk_mj_05",
+    "story_bridge_watched",
+    "story_generation_form",
+    "kw_recruit",
+    "rq_kangwoo_task",
+    "talk_mj_02",
+    "lc_daegu_makchang",
+    "levy_office",
+    "rq_kangwoo_join",
+    "talk_kw_17",
+    "ev_broadcast_station",
+    "parents_diversion_manifest",
+    "route_mid_fork",
+    "lc_yeongdong_wine",
+    "parents_separated_work",
+    "route_market_convoy",
+    "route_market_mask",
+    "route_market_pass",
+    "talk_mj_06",
+    "talk_kw_01",
+    "npc_jaepil_2",
+    "story_family_principle",
+    "meet_postman",
+    "meet_bus",
+    "lc_jeonju_bibim",
+    "story_family_key",
+    "perimeter_first",
+    "talkr_mj_3",
+    "talk_kw_07",
+    "lc_nonsan_camp",
+    "story_personal_cache",
+    "lc_daejeon_bakery",
+    "cleaners_recall",
+    "story_parent_route_shared",
+    "main_transfer_testimony",
+    "story_generation_speech",
+    "talk_mj_04",
+    "talk_kw_15",
+    "story_bridge_parent_route",
+    "story_bridge_child_voice",
+    "story_bridge_crew_question",
+    "rq_parkss_task",
+    "comp_radio_war",
+    "talk_mj_21",
+    "talkr_kw_3",
+    "story_generation_theories",
+    "loc_mall",
+    "rq_parkss_join",
+    "talk_pss_18",
+    "story_generation_route",
+    "conflict_fuel_detour",
+    "history_failed_namsan",
+    "history_transit_day",
+    "conflict_silent_cab",
+    "history_seventy_two_hours",
+    "history_three_day_silence",
+    "talk_pss_15",
+    "talk_mj_01",
+    "talk_kw_14",
+    "history_first_recorders",
+    "history_six_roads",
+    "ev_chunrian_lab",
+    "conflict_campfire"
+  ],
+  "quest": null,
+  "recruitQ": null,
+  "wx": "clear",
+  "wxNext": "clear",
+  "up": {
+    "bench": true
+  },
+  "notes": [
+    {
+      "id": "n0",
+      "type": "장소",
+      "title": "부산 감천 부두",
+      "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n1",
+      "type": "물건",
+      "title": "달구지",
+      "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+      "links": [
+        "할아버지"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n2",
+      "type": "인물",
+      "title": "천리안",
+      "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n3",
+      "type": "인물",
+      "title": "부모님",
+      "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+      "links": [
+        "천리안"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n4",
+      "type": "인물",
+      "title": "할아버지",
+      "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+      "links": [
+        "달구지",
+        "부모님"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n5",
+      "type": "출발",
+      "title": "새벽의 수리 호출",
+      "body": "감천 작업장을 비우고 난방이 멈춘 이송 버스로 향했다.",
+      "links": [
+        "달구지"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n6",
+      "type": "출발",
+      "title": "도윤 가족의 버스",
+      "body": "물자를 쓰지 않고 호스를 우회해 유나가 탄 버스의 난방을 살렸다.",
+      "links": [
+        "도윤의 가족",
+        "천리안"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n7",
+      "type": "출발",
+      "title": "남산 주소 옆의 세 이름",
+      "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+      "links": [
+        "도윤의 가족",
+        "남산"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n8",
+      "type": "출발",
+      "title": "계기판 속 검증키",
+      "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+      "links": [
+        "엄마의 철제 상자",
+        "부모님",
+        "달구지",
+        "남산"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n9",
+      "type": "출발",
+      "title": "맡겨 둔 작업장 열쇠",
+      "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+      "links": [
+        "할아버지",
+        "달구지"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n10",
+      "type": "인물",
+      "title": "해도 — 김 선장",
+      "body": "항구 밖 중계 공백과 포구별 분산 운송을 이용하는 바닷길 연대. 북쪽에서 육로가 막힐 때 쓸 접선 표식을 받았다.",
+      "links": [
+        "저항 연대망"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n11",
+      "type": "소문",
+      "title": "옥상 커피나무",
+      "body": "북쪽 어느 옥상에서 커피를 재배하는 사람이 있다. 트럭 카페 주인 제보.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n12",
+      "type": "장소",
+      "title": "양산 고가차도",
+      "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n13",
+      "type": "본편",
+      "title": "달구지를 걸고 받은 기록",
+      "body": "달구지가 관측망에 잡혔지만 이송 명령의 전체 발신 기록을 복사했다. 부모님의 표와 같은 곳에서 나온 명령이다.",
+      "links": [
+        "부모님",
+        "천리안",
+        "달구지",
+        "남산"
+      ],
+      "day": 1
+    },
+    {
+      "id": "n14",
+      "type": "사건",
+      "title": "부산 터미널의 마지막 불",
+      "body": "부산 터미널에서 부모님의 다음 차를 오래 기다렸다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n15",
+      "type": "장소",
+      "title": "밀양 장터",
+      "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+      "links": [],
+      "day": 1
+    },
+    {
+      "id": "n16",
+      "type": "사건",
+      "title": "달구지 개조: 후미 레일 좌석칸",
+      "body": "차대 레일과 바닥을 40cm 늘리고 안전벨트 좌석을 고정한다 — 달구지가 조금 더 우리 집이 됐다.",
+      "links": [],
+      "day": 2
+    },
+    {
+      "id": "n17",
+      "type": "인물",
+      "title": "민지",
+      "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 임시 도르래를 만들었다. 범퍼와 휠 허브로 만든 도르래가 아직 적재칸 바닥을 굴러다닌다. 폐차장에서 혼자 살아남은 정비 천재. 오빠 민규를 찾아 북쪽으로 가려 한다.",
+      "links": [
+        "민지",
+        "밀양 장터"
+      ],
+      "day": 3
+    },
+    {
+      "id": "n18",
+      "type": "인물",
+      "title": "민지와 울산까지",
+      "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+      "links": [
+        "민지",
+        "울산 공단"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n19",
+      "type": "소문",
+      "title": "의뢰: 동수에게 편지",
+      "body": "밀양 장터에서 맡은 편지 의뢰. 전주 서문 시장까지. 사례는 고철 6. 기한 7일차.",
+      "links": [
+        "전주 서문 시장"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n20",
+      "type": "인물",
+      "title": "순덕",
+      "body": "장터 상인. 밀양 장터의 사람.",
+      "links": [
+        "밀양 장터"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n21",
+      "type": "사건",
+      "title": "밀양의 부품 천막",
+      "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+      "links": [
+        "밀양 장터",
+        "달구지"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n22",
+      "type": "인물",
+      "title": "순덕의 막내",
+      "body": "수원 성곽의 화살수. 순덕의 부탁: 밥 잘 먹고 다니는지만 봐줄 것. 전언은 금지.",
+      "links": [
+        "순덕",
+        "수원"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n23",
+      "type": "사건",
+      "title": "운전 숙련: 손에 익은 운전사",
+      "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+      "links": [],
+      "day": 2
+    },
+    {
+      "id": "n24",
+      "type": "장소",
+      "title": "울산 공업탑",
+      "body": "DAY 2 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+      "links": [],
+      "day": 2
+    },
+    {
+      "id": "n25",
+      "type": "사건",
+      "title": "무너지기 전의 목소리",
+      "body": "임시 도르래로 민규의 진단기를 구했다. 마지막 신호의 좌표를 확인할 길이 열렸다.",
+      "links": [
+        "민지",
+        "민규의 신호"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n26",
+      "type": "사건",
+      "title": "귀신고래 귀환",
+      "body": "사람이 조용해지자 고래가 돌아왔다. 멸망이 돌려준 것들의 목록.",
+      "links": [],
+      "day": 2
+    },
+    {
+      "id": "n27",
+      "type": "인물",
+      "title": "민지 · 공구 없이 듣는 소리",
+      "body": "무슨 소린지만 궁금했다고 말한다. 고쳐 달라는 부탁 없이, 한동안 같이 달구지의 소리를 들었다.",
+      "links": [
+        "민지",
+        "달구지"
+      ],
+      "day": 2
+    },
+    {
+      "id": "n28",
+      "type": "사건",
+      "title": "2번 실린더의 기분",
+      "body": "민지와 함께 2번 실린더 쪽 소리를 확인했다. 다음 정차 때 함께 점검하기로 했다.",
+      "links": [
+        "민지",
+        "달구지"
+      ],
+      "day": 3
+    },
+    {
+      "id": "n29",
+      "type": "사건",
+      "title": "운전 숙련: 베테랑 운전사",
+      "body": "누적 주행 180km. 핸들이 손에 붙는다.",
+      "links": [],
+      "day": 3
+    },
+    {
+      "id": "n30",
+      "type": "사건",
+      "title": "세 겹의 이송표",
+      "body": "한 집안 세 세대가 서로 다른 서울 구역에서 서로 다른 해에 쫓겨났다. 가설을 답처럼 쓰지 않고 빈 사유란까지 기록했다.",
+      "links": [
+        "서울 추방",
+        "천리안"
+      ],
+      "day": 3
+    },
+    {
+      "id": "n31",
+      "type": "장소",
+      "title": "대구 돔 시장",
+      "body": "DAY 3 도착. 야구장 지붕 아래 남부 최대의 시장이 산다.",
+      "links": [],
+      "day": 3
+    },
+    {
+      "id": "n32",
+      "type": "인물",
+      "title": "강우",
+      "body": "돔 시장을 홀로 지킨 파수꾼. 떠나고 싶어도 시장이 자신 없이 버티는 법부터 만들어야 한다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 경계선을 새로 짰다. 강우의 옛 지도 위에 서연이 고친 더 짧은 순찰선이 겹쳐 있다. 말이 없다. 자신이 겪은 서울 추방 때 수비대에 있었다. 서울 얘기가 나오면 창밖만 본다.",
+      "links": [
+        "강우"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n33",
+      "type": "사건",
+      "title": "경비탑의 다음 사람",
+      "body": "감시 표식을 뜯고 서연이 직접 고친 새 경계선을 세웠다.",
+      "links": [
+        "강우"
+      ],
+      "day": 3
+    },
+    {
+      "id": "n34",
+      "type": "인물",
+      "title": "강우 · 문손잡이에서 손을 떼기",
+      "body": "내일의 경계를 나눠 맡고 쉴 순번도 적는다. 접힌 지도에 경계와 휴식 순번을 함께 적었다. 강우가 쉬는 칸도 있다.",
+      "links": [
+        "강우",
+        "달구지"
+      ],
+      "day": 3
+    },
+    {
+      "id": "n35",
+      "type": "인물",
+      "title": "태호",
+      "body": "돔 시장 관리인. 대구 돔 시장의 사람.",
+      "links": [
+        "대구 돔 시장"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n36",
+      "type": "인물",
+      "title": "민지의 스쿠터",
+      "body": "브레이크 밀리던 고물 스쿠터. 죽기 싫어서 배운 정비가 직업이 됐다.",
+      "links": [
+        "민지"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n37",
+      "type": "사건",
+      "title": "막창 골목",
+      "body": "숯불, 된장, 지글지글. 불판이 빈 뒤에도 일어나지 않았다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n38",
+      "type": "사건",
+      "title": "가짜 행정소",
+      "body": "관공서를 흉내 낸 통행세 사기. 꺼진 태블릿을 가리키자 물러섰다. 다음 차는 속을지도 모른다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n39",
+      "type": "장소",
+      "title": "구미 공단 폐허",
+      "body": "DAY 4 도착. 멈춘 공장들. 굴뚝 하나에서 이유 모를 연기가 오른다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n40",
+      "type": "사건",
+      "title": "오지 않은 다음 차",
+      "body": "부모님이 기술 경력에 따라 서로 다른 이송선으로 보내졌음을 확인했다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n41",
+      "type": "사건",
+      "title": "운전 숙련: 길의 장인",
+      "body": "누적 주행 300km. 핸들이 손에 붙는다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n42",
+      "type": "장소",
+      "title": "김천 갈림길",
+      "body": "DAY 4 도착. 고속도로와 국도가 엉키는 곳. 표지판이 전부 뽑혀 있다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n43",
+      "type": "사건",
+      "title": "김천에서 고른 길: 서쪽 장터길",
+      "body": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.",
+      "links": [
+        "달구지"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n44",
+      "type": "사건",
+      "title": "와인 터널의 사연",
+      "body": "술이 아니라 사연을 저장하는 터널. 할아버지 얘기를 짧게 적었다.",
+      "links": [
+        "할아버지"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n45",
+      "type": "사건",
+      "title": "두 곳에서 만든 한 절차",
+      "body": "아버지가 남산 유지선에 분리 절차를 나누어 숨겼음을 확인했다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n46",
+      "type": "장소",
+      "title": "무주 터널",
+      "body": "DAY 4 도착. 산속 터널에 숨어 사는 공동체. 낯선 이를 반기지 않는다.",
+      "links": [],
+      "day": 4
+    },
+    {
+      "id": "n47",
+      "type": "사건",
+      "title": "호송 기록: 잠든 자동 검문소",
+      "body": "지형: 좁은 국도와 폐차 차양, 고장 난 차단봉\n처음 목표: 다섯 수레를 기록 없이 통과시킨다\n실패 위험: 행렬이 끊기면 센서가 사람 수를 센다\n읽어낸 틈: 센서가 한 차량으로 보는 긴 윤곽\n행렬 세우기 — 편성: 수레를 달구지 뒤에 한 줄로 묶는다\n센서 속이기 — 위장: 천막과 반사판으로 차량 윤곽을 잇는다\n통과시키기 — 차체 지지: 달구지로 봉을 받치고 수레를 밀어낸다\n결과: 목표 달성. 차체 95/100, 관측 0/5.",
+      "links": [
+        "달구지",
+        "천리안"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n48",
+      "type": "사건",
+      "title": "다섯 수레의 장터길",
+      "body": "달구지를 지지대로 써 사람과 씨앗, 약을 모두 기록 없이 통과시켰다.",
+      "links": [
+        "달구지"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n49",
+      "type": "인물",
+      "title": "민지 · 고치지 않아도 되는 소리",
+      "body": "부품 1을 꺼내 함께 예비 퓨즈 자리를 만든다. 왼쪽 칸에 예비 퓨즈를 놓았다. 두 사람이 함께 꺼낼 수 있는 순서다.",
+      "links": [
+        "민지",
+        "달구지"
+      ],
+      "day": 4
+    },
+    {
+      "id": "n50",
+      "type": "인물",
+      "title": "재필",
+      "body": "터널 촌장. 무주 터널의 사람.",
+      "links": [
+        "무주 터널"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n51",
+      "type": "인물",
+      "title": "침묵 면접",
+      "body": "강우 옆에 말없이 앉아 있었다. 먼저 말을 건 쪽은 강우였다.",
+      "links": [
+        "강우"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n52",
+      "type": "인물",
+      "title": "재필의 116개 촛불",
+      "body": "식구 92 + 떠난 사람 24. 나간 사람의 촛불은 끄지 않는다. 터널은 등대였다.",
+      "links": [
+        "재필"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n53",
+      "type": "사건",
+      "title": "예측은 명령이 아니다",
+      "body": "부모님의 발표 연습 영상에서 엄마의 발언을 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.",
+      "links": [
+        "천리안",
+        "부모님의 검증키"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n54",
+      "type": "소문",
+      "title": "남산으로 간 수신인",
+      "body": "우편부의 명단 속 한 사람. 마지막 소문은 남산 방향.",
+      "links": [
+        "남산"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n55",
+      "type": "장소",
+      "title": "전주 서문 시장",
+      "body": "DAY 5 도착. 서쪽 최대 정착지. 음식 냄새가 나는 마지막 도시.",
+      "links": [],
+      "day": 5
+    },
+    {
+      "id": "n56",
+      "type": "사건",
+      "title": "편지 완료: 동수에게 편지",
+      "body": "동수가 편지를 두 번 읽었다. 답장은 없었다. 눈가가 대신 답했다. 사례 고철 10.",
+      "links": [],
+      "day": 5
+    },
+    {
+      "id": "n57",
+      "type": "인물",
+      "title": "박 선생",
+      "body": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 따뜻해지기 전에 약을 옮겨야 한다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 의약품을 보탰다. 세 아이 앞에서 누구에게 약을 줄지 고르지 않아도 됐다. 마지막까지 약국을 지켰던 사람. 구하지 못한 환자들의 이름을 전부 기억한다.",
+      "links": [
+        "박 선생",
+        "전주 서문 시장"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n58",
+      "type": "인물",
+      "title": "미영",
+      "body": "서문 상인연합장. 전주 서문 시장의 사람.",
+      "links": [
+        "전주 서문 시장"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n59",
+      "type": "사건",
+      "title": "실행 전 인간 확인",
+      "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+      "links": [
+        "천리안",
+        "할아버지"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n60",
+      "type": "사건",
+      "title": "운전 숙련: 로드마스터",
+      "body": "누적 주행 441km. 로드마스터 — 할아버지가 스스로를 그렇게 불렀다. 이제 그 이름이 내 것이 됐다.",
+      "links": [
+        "할아버지"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n61",
+      "type": "장소",
+      "title": "논산 평야",
+      "body": "DAY 5 도착. 끝없는 논. 허수아비들이 아직 서 있다. 어떤 것은 방향이 바뀌어 있다.",
+      "links": [],
+      "day": 5
+    },
+    {
+      "id": "n62",
+      "type": "사건",
+      "title": "첫 경고사격",
+      "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+      "links": [
+        "천리안"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n63",
+      "type": "인물",
+      "title": "강우 · 비워 둔 순번",
+      "body": "오른쪽 뒤를 확인하고 강우의 쉴 순번을 지킨다. 지도에 적은 휴식 순번을 실제로 지켰다. 깨울 때는 발끝을 건드리기로 했다.",
+      "links": [
+        "강우",
+        "달구지"
+      ],
+      "day": 5
+    },
+    {
+      "id": "n64",
+      "type": "사건",
+      "title": "나란히 유품 정비",
+      "body": "군번줄과 정비 수첩을 나란히 닦았다. 말 대신 깨끗한 헝겊을 나눴다.",
+      "links": [
+        "강우",
+        "할아버지"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n65",
+      "type": "사건",
+      "title": "훈련소 정문",
+      "body": "\"힘든 건 지나간다. 좋은 것도 지나가지만. 둘 다 맞았어.\"",
+      "links": [
+        "강우"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n66",
+      "type": "사건",
+      "title": "부모님이 감춘 상자",
+      "body": "부모님의 원본 기록을 이음망 연락소의 전달자와 함께 대조하기로 했다.",
+      "links": [],
+      "day": 6
+    },
+    {
+      "id": "n67",
+      "type": "장소",
+      "title": "대전 연구단지",
+      "body": "DAY 6 도착. 과학자들의 코뮌. 천리안을 가장 잘 아는 사람들이 남아 있다.",
+      "links": [],
+      "day": 6
+    },
+    {
+      "id": "n68",
+      "type": "인물",
+      "title": "한 박사",
+      "body": "연구단지 코뮌. 대전 연구단지 코뮌의 사람.",
+      "links": [
+        "대전 연구단지"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n69",
+      "type": "사건",
+      "title": "지나친 회수조",
+      "body": "흰 옷 넷과 내리지 않으려던 여자. 우리는 속도를 줄이지 않았다.",
+      "links": [
+        "정리자들"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n70",
+      "type": "장소",
+      "title": "청주 방송국",
+      "body": "DAY 6 도착. 송신탑이 꺾인 채 서 있다. 마지막 방송이 뭐였는지 아는 사람은 없다.",
+      "links": [],
+      "day": 6
+    },
+    {
+      "id": "n71",
+      "type": "사건",
+      "title": "노선 완주: 서쪽 장터길",
+      "body": "김천에서 고른 길을 청주까지 바꾸지 않고 왔다. 보급과 증언을 얻는 대신 연료와 하루를 더 쓴다.",
+      "links": [
+        "달구지"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n72",
+      "type": "사건",
+      "title": "서진이 찾아낸 두 장",
+      "body": "부모님의 분리 절차를 완성하고 계기판에서 검증키를 회수했다.",
+      "links": [],
+      "day": 6
+    },
+    {
+      "id": "n73",
+      "type": "본편",
+      "title": "당사자가 확인한 세 증언",
+      "body": "순옥·태문·지아가 각자의 이송표와 증언을 대조하고 사본 전달에 동의했다. 정정한 문장과 서명이 남아 있다.",
+      "links": [
+        "인간 확인",
+        "서울 추방"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n74",
+      "type": "사건",
+      "title": "사람 안의 서울",
+      "body": "서울을 본 적 없는 아이는 서울이 어디냐는 질문에 자기 할머니를 가리켰다.",
+      "links": [
+        "서울 추방"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n75",
+      "type": "인물",
+      "title": "민지 · 덮개를 열기 전에",
+      "body": "부품 1로 예비 퓨즈를 보충하고 서로 꺼내 본다. 보충한 퓨즈 접시를 둘 사이에 놓았다. 민지도 내가 건네는 부품을 기다린다.",
+      "links": [
+        "민지",
+        "달구지"
+      ],
+      "day": 6
+    },
+    {
+      "id": "n76",
+      "type": "소문",
+      "title": "목수 강우",
+      "body": "전역의 꿈: 사람을 쉬게 하는 물건. 1호 의자 납품처=달구지 옆.",
+      "links": [
+        "강우"
+      ],
+      "day": 7
+    },
+    {
+      "id": "n77",
+      "type": "장소",
+      "title": "영동 포도밭",
+      "body": "DAY 7 도착. 야생화된 포도넝쿨이 도로까지 점령했다.",
+      "links": [],
+      "day": 7
+    },
+    {
+      "id": "n78",
+      "type": "사건",
+      "title": "차가운 채로 건넨 약",
+      "body": "버스에서 꺼낸 냉장 약품을 길가 진료소의 아이 셋에게 전달했다.",
+      "links": [
+        "박 선생"
+      ],
+      "day": 7
+    },
+    {
+      "id": "n79",
+      "type": "인물",
+      "title": "박 선생 · 잠깐 내려놓는 가방",
+      "body": "내일의 준비를 나눠 맡고 선생의 몫을 줄인다. 체온표 뒤에 준비를 나눠 맡을 사람의 이름을 적었다. 선생 혼자 들 가방이 아니다.",
+      "links": [
+        "박 선생",
+        "달구지"
+      ],
+      "day": 7
+    },
+    {
+      "id": "n80",
+      "type": "소문",
+      "title": "정착지 뉴스",
+      "body": "북부 도로에 정리자 행렬 증가. 우회 권고.",
+      "links": [],
+      "day": 8
+    },
+    {
+      "id": "n81",
+      "type": "소문",
+      "title": "역추적된 좌표",
+      "body": "민지가 통신탑 기록과 신호 세기로 발신지를 역산했다. 영동 북쪽 능선.",
+      "links": [
+        "민규의 신호",
+        "민규의 능선"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n82",
+      "type": "사건",
+      "title": "빈칸을 둘러싼 세 가설",
+      "body": "물·질병·통제 가설에는 서로 충돌하는 증거가 있다. 이유는 미확정이지만 설명 없이 집행했다는 사실은 남는다.",
+      "links": [
+        "서울 추방",
+        "천리안"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n83",
+      "type": "장소",
+      "title": "유령 백화점",
+      "body": "DAY 8 도착. 전기가 끊긴 백화점. 에스컬레이터 사이에 뭐가 남았을까.",
+      "links": [],
+      "day": 8
+    },
+    {
+      "id": "n84",
+      "type": "사건",
+      "title": "지하 창고의 보물",
+      "body": "민지가 소리 없이 연 지하 창고. 민지는 오빠 줄 로봇을 챙겼다.",
+      "links": [],
+      "day": 8
+    },
+    {
+      "id": "n85",
+      "type": "사건",
+      "title": "이송로의 두 번",
+      "body": "서로 다른 세대가 내려온 구 이송 7로. 할아버지처럼 경적을 두 번 울리자 먼 차가 두 번 답했다.",
+      "links": [
+        "할아버지",
+        "서울 추방"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n86",
+      "type": "사건",
+      "title": "연료와 우회로",
+      "body": "요양원 왕진에 연료 8L를 썼다. 노인 셋을 살렸고, 강우의 침묵을 얻었다.",
+      "links": [
+        "박 선생",
+        "강우"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n87",
+      "type": "본편",
+      "title": "실패한 남산 진입",
+      "body": "코어를 무작정 끊으면 강제 이송뿐 아니라 급수와 진료도 멈춘다. 집행 권한만 사람에게 돌려놓아야 한다.",
+      "links": [
+        "남산",
+        "천리안",
+        "인간 확인"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n88",
+      "type": "본편",
+      "title": "버스가 기다리던 시절",
+      "body": "천리안은 교통과 구조를 도우며 신뢰를 얻었다. 편리함 자체가 아니라, 이후 사라진 인간 확인 절차가 문제였다.",
+      "links": [
+        "천리안",
+        "대중교통"
+      ],
+      "day": 8
+    },
+    {
+      "id": "n89",
+      "type": "인물",
+      "title": "박 선생 · 선생의 빈손",
+      "body": "내일 준비를 맡고 선생에게 쉬던 이야기를 묻는다. 준비 명단의 내 이름 옆에 표시가 늘었다. 선생은 가방을 닫고도 자리에 남아 이야기한다.",
+      "links": [
+        "박 선생",
+        "달구지"
+      ],
+      "day": 9
+    },
+    {
+      "id": "n90",
+      "type": "세대의 흔적",
+      "title": "미설치된 마지막 칸",
+      "body": "2026년 TIANYAN 배포 카드에서 교통·의료·전력·행정은 설치됐지만 강제 명령 인간 확인은 비어 있었다.",
+      "links": [
+        "대전 연구단지 코뮌",
+        "천리안",
+        "2026년"
+      ],
+      "day": 9
+    },
+    {
+      "id": "n91",
+      "type": "본편",
+      "title": "끝나지 않은 72시간",
+      "body": "홍수 때 맡긴 사흘짜리 직접 명령권은 재난 뒤에도 회수되지 않았다.",
+      "links": [
+        "천리안",
+        "인간 확인"
+      ],
+      "day": 9
+    },
+    {
+      "id": "n92",
+      "type": "본편",
+      "title": "사흘의 침묵과 첫 정지",
+      "body": "첫 저항은 이유가 확인될 때까지 이송 버스를 출발시키지 않은 배차원과 기사들에게서 시작됐다.",
+      "links": [
+        "강제 이송",
+        "저항 연대망"
+      ],
+      "day": 9
+    },
+    {
+      "id": "n93",
+      "type": "인물",
+      "title": "박 선생 · 가방을 닫은 뒤",
+      "body": "내일 준비를 나눠 하고 선생과 잠깐 앉는다. 내일 준비를 나눴다. 선생은 자기 몫을 마치고 빈손으로 곁에 앉았다.",
+      "links": [
+        "박 선생",
+        "달구지"
+      ],
+      "day": 10
+    },
+    {
+      "id": "n94",
+      "type": "사건",
+      "title": "밥을 마저 먹는 사이",
+      "body": "박 선생은 요즘 내가 밥을 끝까지 먹는다고 했다. 밤에 지나다닐 때도 조심하겠다고.",
+      "links": [
+        "박 선생"
+      ],
+      "day": 10
+    },
+    {
+      "id": "n95",
+      "type": "사건",
+      "title": "0.5도의 호전",
+      "body": "입꼬리 자가 평가: 호전. 목표: 서울까지 제대로 한 번.",
+      "links": [
+        "강우",
+        "남산"
+      ],
+      "day": 10
+    },
+    {
+      "id": "n96",
+      "type": "본편",
+      "title": "첫 기록자들의 세 가지",
+      "body": "명령을 멈추려면 발신 기록, 생략된 분리 절차, 이송 당사자의 증언을 함께 남겨야 한다.",
+      "links": [
+        "남산",
+        "발신 기록",
+        "당사자 증언"
+      ],
+      "day": 10
+    },
+    {
+      "id": "n97",
+      "type": "본편",
+      "title": "여섯 갈래 연대망",
+      "body": "이음망, 해도, 돔, 솥, 유령, 산지기가 연결·길·거처·식량·통신·남산 통로를 나눠 지킨다.",
+      "links": [
+        "저항 연대망",
+        "남산"
+      ],
+      "day": 10
+    },
+    {
+      "id": "n98",
+      "type": "장소",
+      "title": "공주 산성",
+      "body": "DAY 10 도착. 옛 성곽에 기대어 사는 몇 가구. 강 건너를 오래 바라보는 사람들.",
+      "links": [],
+      "day": 10
+    },
+    {
+      "id": "n99",
+      "type": "소문",
+      "title": "천리안의 뿌리",
+      "body": "연구소 서버가 아직 남산 코어와 연결돼 있다. 천리안을 끊으려면 남산까지 가야 한다.",
+      "links": [],
+      "day": 10
+    },
+    {
+      "id": "n100",
+      "type": "장소",
+      "title": "천안 삼거리",
+      "body": "DAY 10 도착. 북쪽으로 갈수록 길이 깨끗해진다. 그게 더 불안하다.",
+      "links": [],
+      "day": 10
+    }
+  ],
+  "noteSeq": 101,
+  "npcs": {
+    "geumja": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "sundeok": {
+      "att": 15,
+      "met": true,
+      "chat": []
+    },
+    "taeho": {
+      "att": 3,
+      "met": true,
+      "chat": []
+    },
+    "jaepil": {
+      "att": 3,
+      "met": true,
+      "chat": []
+    },
+    "miyoung": {
+      "att": 9,
+      "met": true,
+      "chat": []
+    },
+    "drhan": {
+      "att": 15,
+      "met": true,
+      "chat": []
+    },
+    "deokgu": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "suwan": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "byungchul": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "yeongok": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "sera": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "mansu": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "jeomrye": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "dongsu": {
+      "att": 18,
+      "met": true,
+      "chat": []
+    },
+    "noah": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "hwasun": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    },
+    "gitae": {
+      "att": 0,
+      "met": false,
+      "chat": []
+    }
+  },
+  "stats": {
+    "km": 998.9999999999839,
+    "events": 77,
+    "nonlethal": 1
+  },
+  "routePlan": {
+    "id": "market",
+    "status": "complete",
+    "chosenDay": 4,
+    "startedKm": 302,
+    "visited": [
+      "gimcheon",
+      "muju",
+      "jeonju",
+      "nonsan",
+      "daejeon",
+      "cheongju"
+    ],
+    "completedDay": 6
+  },
+  "thirst": 0,
+  "hunger": 0,
+  "ended": false,
+  "seed": 291021,
+  "fatigue": 50.91923999999989,
+  "_dlv": 4,
+  "_drowsyDay": 0,
+  "_drowsyAt": -999,
+  "_breakfastDay": 10,
+  "_lunchDay": 10,
+  "_storyQueue": [],
+  "_recentEvents": [
+    "rq_parkss_join",
+    "talk_pss_18",
+    "story_generation_route",
+    "conflict_fuel_detour",
+    "history_failed_namsan",
+    "history_transit_day",
+    "conflict_silent_cab",
+    "history_seventy_two_hours",
+    "history_three_day_silence",
+    "talk_pss_15",
+    "talk_mj_01",
+    "talk_kw_14",
+    "history_first_recorders",
+    "history_six_roads",
+    "ev_chunrian_lab",
+    "conflict_campfire"
+  ],
+  "_recentEventTypes": [
+    "대화",
+    "대화",
+    "스토리",
+    "스토리",
+    "스토리",
+    "스토리"
+  ],
+  "_eventBreather": 3,
+  "_beatQueue": [],
+  "_driveLegsSinceBlock": 0,
+  "_roadEventDay": 8,
+  "_roadEventCount": 1,
+  "_lastRoadEventKm": 658.0000000000036,
+  "_lastCampEventDay": -999,
+  "memories": {
+    "choices": {
+      "principle_words": {
+        "id": "principle_words",
+        "eventId": "story_family_principle",
+        "choiceIndex": 0,
+        "day": 5,
+        "km": 371,
+        "eventTitle": "예측은 명령이 아니다",
+        "choiceLabel": "끊긴 다음 문장을 찾아 복원한다",
+        "summary": "부모님이 남긴 문장의 끝을 복원했다.",
+        "echoLines": [
+          [
+            "나",
+            "예측은 명령이 아니다. 외워 두기만 했던 문장이 이제야 부모님 목소리로 들렸다."
+          ]
+        ],
+        "dueKm": 395.2650000000028,
+        "dueEvents": 37,
+        "echoed": true,
+        "echoDay": 5,
+        "echoKm": 408
+      },
+      "clinic_route_accepted": {
+        "id": "clinic_route_accepted",
+        "eventId": "meet_bus",
+        "choiceIndex": 0,
+        "day": 5,
+        "km": 395,
+        "eventTitle": "서문의 진료 버스",
+        "choiceLabel": "\"어디까지 가면 됩니까?\"",
+        "summary": "진료 버스의 냉장 약품을 길가 진료소까지 옮기기로 했다.",
+        "echoLines": [
+          [
+            "sys",
+            "진료 버스 앞에서 박 선생이 냉장 상자의 잠금쇠를 확인하던 모습이 떠올랐다."
+          ],
+          [
+            "나",
+            "약을 받아야 할 아이들이 있다던 말을 되뇌었다."
+          ]
+        ],
+        "dueKm": 409.000000000003,
+        "dueEvents": 39,
+        "echoed": true,
+        "echoDay": 5,
+        "echoKm": 434
+      },
+      "theories_common": {
+        "id": "theories_common",
+        "eventId": "story_generation_theories",
+        "choiceIndex": 0,
+        "day": 8,
+        "km": 664,
+        "eventTitle": "빈칸을 둘러싼 세 가설",
+        "choiceLabel": "공통으로 남은 것을 묻는다",
+        "summary": "세 가설보다 모두에게 남은 빈 사유란을 보았다.",
+        "echoLines": [
+          [
+            "나",
+            "이유는 세 개였고 증거는 서로 엇갈렸다. 확실한 건, 당사자에게 아무도 설명하지 않았다는 것이었다."
+          ]
+        ],
+        "dueKm": 685.61166666667,
+        "dueEvents": 61,
+        "echoed": true,
+        "echoDay": 8,
+        "echoKm": 702
+      }
+    },
+    "pending": [],
+    "history": [
+      "principle_words",
+      "clinic_route_accepted",
+      "theories_common"
+    ]
+  },
+  "knowledge": {
+    "current_exodus": 2,
+    "parents_work": 2,
+    "parent_principle": 2,
+    "parent_key": 2,
+    "repeated_expulsions": 1,
+    "family_order_source": 0,
+    "uplink_gap": 0,
+    "ai_identifies_caravan": 0,
+    "resistance_network": 0
+  },
+  "relations": {
+    "pairs": {
+      "kangwoo:minji": {
+        "score": 3,
+        "history": [
+          {
+            "day": 5,
+            "amount": 1,
+            "reason": "길 위에서 나눈 대화"
+          },
+          {
+            "day": 5,
+            "amount": 1,
+            "reason": "길 위에서 나눈 대화"
+          },
+          {
+            "day": 10,
+            "amount": 1,
+            "reason": "길 위에서 나눈 대화"
+          }
+        ]
+      }
+    },
+    "seenChats": {
+      "chat:3": true,
+      "chat:14": true,
+      "chat:48": true
+    }
+  },
+  "director": {
+    "intensity": 53,
+    "phase": "fade",
+    "relaxEvents": 0,
+    "peakEvents": 0,
+    "lastEvent": "conflict_campfire",
+    "lastDay": 10
+  },
+  "combat": null,
+  "lastCombatReport": {
+    "kind": "호송",
+    "threat": "잠든 자동 검문소",
+    "result": "목표 달성",
+    "resultCode": "success",
+    "adaptive": {
+      "start": 0,
+      "end": -14,
+      "delta": -14,
+      "streak": 1
+    },
+    "tactics": [
+      "편성",
+      "위장",
+      "차체 지지"
+    ],
+    "history": [
+      {
+        "phase": 1,
+        "step": "행렬 세우기",
+        "tactic": "편성",
+        "label": "수레를 달구지 뒤에 한 줄로 묶는다",
+        "intent": "센서는 따로 움직이는 사람 수를 세어 재검사를 깨운다",
+        "response": "다섯 수레를 한 차량으로 묶는다",
+        "read": "",
+        "context": "지형 정답",
+        "outcomeMeta": {
+          "result": "",
+          "base": 52,
+          "odds": 66,
+          "adjusted": 14,
+          "roll": null,
+          "baseSource": "fallbackBase",
+          "baseSourceLabel": "선택 기준",
+          "vehicleSources": [],
+          "details": [
+            "지형 +7%",
+            "의도 대응 +7%"
+          ],
+          "summary": "선택 기준 52% → +14% = 66%",
+          "rollValue": null
+        }
+      },
+      {
+        "phase": 2,
+        "step": "센서 속이기",
+        "tactic": "위장",
+        "label": "천막과 반사판으로 차량 윤곽을 잇는다",
+        "intent": "센서가 바퀴와 사람 윤곽을 따로 세기 시작한다",
+        "response": "긴 차량 윤곽을 만든다",
+        "read": "다른 해법",
+        "context": "지형 정답",
+        "outcomeMeta": {
+          "result": "",
+          "base": 60,
+          "odds": 85,
+          "adjusted": 25,
+          "roll": 21,
+          "baseSource": "choiceBase",
+          "baseSourceLabel": "선택 기준",
+          "vehicleSources": [],
+          "details": [
+            "지형 +2%",
+            "전술 +4%",
+            "의도 대응 +7%"
+          ],
+          "summary": "선택 기준 60% → +25% = 85%",
+          "rollValue": 21
+        }
+      },
+      {
+        "phase": 3,
+        "step": "통과시키기",
+        "tactic": "차체 지지",
+        "label": "달구지로 봉을 받치고 수레를 밀어낸다",
+        "intent": "노란 센서가 재검사로 바뀌기 전에 걸린 셋째 수레를 빼내야 한다",
+        "response": "봉을 들어 행렬을 그대로 민다",
+        "read": "읽어낸 틈 활용",
+        "context": "지형 정답",
+        "outcomeMeta": {
+          "result": "success",
+          "base": 58,
+          "odds": 95,
+          "adjusted": 37,
+          "roll": 84,
+          "baseSource": "choiceBase",
+          "baseSourceLabel": "선택 기준",
+          "vehicleSources": [],
+          "details": [
+            "틈 활용 +10%",
+            "지형 +2%",
+            "전술 +4%",
+            "의도 대응 +7%"
+          ],
+          "summary": "선택 기준 58% → +37% = 95%",
+          "rollValue": 84
+        }
+      }
+    ],
+    "read": "센서가 한 차량으로 보는 긴 윤곽",
+    "readUsed": true,
+    "objective": "다섯 수레를 기록 없이 통과시킨다",
+    "stakes": "행렬이 끊기면 센서가 사람 수를 센다",
+    "keyMoment": "차체 지지 · 달구지로 봉을 받치고 수레를 밀어낸다",
+    "causeSummary": "선택 기준 58% → +37% = 95%",
+    "causeFactors": [
+      "틈 활용 +10%",
+      "지형 +2%",
+      "전술 +4%",
+      "의도 대응 +7%"
+    ],
+    "gains": [
+      "물 +2",
+      "식량 +2"
+    ],
+    "costs": [
+      "차체 -2%",
+      "고철 -1",
+      "피로 +2.2"
+    ],
+    "newInjuries": [],
+    "day": 4
+  },
+  "injuries": {},
+  "_exploreDay": 10,
+  "_exploreNodes": {
+    "gongju": 1
+  },
+  "_salvagedNodes": {
+    "busan": true,
+    "yangsan": true,
+    "miryang": true,
+    "ulsan": true,
+    "daegu": true,
+    "gumi": true,
+    "gimcheon": true,
+    "muju": true,
+    "jeonju": true,
+    "nonsan": true,
+    "daejeon": true,
+    "yeongdong": true,
+    "mall": true,
+    "gongju": true
+  },
+  "_salvageCount": 14,
+  "_combatFlow": {
+    "runId": 1,
+    "adjust": -0.14,
+    "history": [
+      {
+        "result": "success",
+        "day": 4,
+        "km": 340,
+        "before": 0,
+        "after": -0.14,
+        "delta": -0.14,
+        "streak": 1
+      }
+    ]
+  },
+  "profile": "keeper",
+  "_quality": {
+    "version": 3,
+    "build": "2026-09-11-director-journey",
+    "entryMode": "interactive",
+    "createdAt": 1793276080892,
+    "playMs": 0,
+    "activeSession": null,
+    "sessions": [],
+    "counts": {
+      "events": 77,
+      "choices": 85,
+      "combats": 1,
+      "repeatEvents": 0,
+      "visibleChoices": 157,
+      "lockedChoices": 2
+    },
+    "eventIds": {
+      "cell_sea_meet": 1,
+      "ev_truck_cafe": 1,
+      "onboarding_first_road": 1,
+      "ev_seed_warehouse": 1,
+      "memory_busan_terminal": 1,
+      "meet_scrapyard": 1,
+      "rq_minji_request": 1,
+      "npc_sundeok_2": 1,
+      "story_bridge_departure_echo": 1,
+      "story_bridge_trace_gap": 1,
+      "rq_minji_task": 1,
+      "lc_ulsan_whale": 1,
+      "salvage_claim": 1,
+      "rq_minji_join": 1,
+      "talk_mj_05": 1,
+      "story_bridge_watched": 1,
+      "story_generation_form": 1,
+      "kw_recruit": 1,
+      "rq_kangwoo_task": 1,
+      "talk_mj_02": 1,
+      "lc_daegu_makchang": 1,
+      "levy_office": 1,
+      "rq_kangwoo_join": 1,
+      "talk_kw_17": 1,
+      "ev_broadcast_station": 1,
+      "parents_diversion_manifest": 1,
+      "route_mid_fork": 1,
+      "lc_yeongdong_wine": 1,
+      "parents_separated_work": 1,
+      "route_market_convoy": 1,
+      "route_market_mask": 1,
+      "route_market_pass": 1,
+      "talk_mj_06": 1,
+      "talk_kw_01": 1,
+      "npc_jaepil_2": 1,
+      "story_family_principle": 1,
+      "meet_postman": 1,
+      "meet_bus": 1,
+      "lc_jeonju_bibim": 1,
+      "story_family_key": 1,
+      "perimeter_first": 1,
+      "talkr_mj_3": 1,
+      "talk_kw_07": 1,
+      "lc_nonsan_camp": 1,
+      "story_personal_cache": 1,
+      "lc_daejeon_bakery": 1,
+      "cleaners_recall": 1,
+      "story_parent_route_shared": 1,
+      "main_transfer_testimony": 1,
+      "story_generation_speech": 1,
+      "talk_mj_04": 1,
+      "talk_kw_15": 1,
+      "story_bridge_parent_route": 1,
+      "story_bridge_child_voice": 1,
+      "story_bridge_crew_question": 1,
+      "rq_parkss_task": 1,
+      "comp_radio_war": 1,
+      "talk_mj_21": 1,
+      "talkr_kw_3": 1,
+      "story_generation_theories": 1,
+      "loc_mall": 1,
+      "rq_parkss_join": 1,
+      "talk_pss_18": 1,
+      "story_generation_route": 1,
+      "conflict_fuel_detour": 1,
+      "history_failed_namsan": 1,
+      "history_transit_day": 1,
+      "conflict_silent_cab": 1,
+      "history_seventy_two_hours": 1,
+      "history_three_day_silence": 1,
+      "talk_pss_15": 1,
+      "talk_mj_01": 1,
+      "talk_kw_14": 1,
+      "history_first_recorders": 1,
+      "history_six_roads": 1,
+      "ev_chunrian_lab": 1,
+      "conflict_campfire": 1
+    },
+    "eventTypes": {
+      "스토리": 31,
+      "조우": 13,
+      "본편": 1,
+      "탐색": 5,
+      "대화": 17,
+      "사건": 2,
+      "추적": 2,
+      "위기": 1,
+      "호송": 3,
+      "발견": 1,
+      "동행": 1
+    },
+    "combat": {
+      "success": 1,
+      "partial": 0,
+      "failure": 0
+    },
+    "resources": {},
+    "first45": {
+      "events": 77,
+      "choices": 85,
+      "combats": 1
+    },
+    "lastEventType": "스토리",
+    "typeStreak": 4,
+    "maxTypeStreak": 7,
+    "heavyStreak": 0,
+    "maxHeavyStreak": 3,
+    "meaningful": {
+      "lastPlayMs": 0,
+      "maxGapMinutes": 0,
+      "changes": [
+        {
+          "kind": "arrival",
+          "id": "yangsan",
+          "playMin": 0,
+          "day": 1,
+          "km": 20
+        },
+        {
+          "kind": "arrival",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 1,
+          "km": 54
+        },
+        {
+          "kind": "vehicle",
+          "id": "bench",
+          "playMin": 0,
+          "day": 2,
+          "km": 54
+        },
+        {
+          "kind": "settlement",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 2,
+          "km": 54
+        },
+        {
+          "kind": "settlement",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 2,
+          "km": 54
+        },
+        {
+          "kind": "settlement",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 2,
+          "km": 54
+        },
+        {
+          "kind": "arrival",
+          "id": "yangsan",
+          "playMin": 0,
+          "day": 2,
+          "km": 88
+        },
+        {
+          "kind": "arrival",
+          "id": "ulsan",
+          "playMin": 0,
+          "day": 2,
+          "km": 120
+        },
+        {
+          "kind": "arrival",
+          "id": "yangsan",
+          "playMin": 0,
+          "day": 3,
+          "km": 152
+        },
+        {
+          "kind": "relationship",
+          "id": "minji",
+          "playMin": 0,
+          "day": 3,
+          "km": 152
+        },
+        {
+          "kind": "arrival",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 3,
+          "km": 186
+        },
+        {
+          "kind": "settlement",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 3,
+          "km": 186
+        },
+        {
+          "kind": "settlement",
+          "id": "miryang",
+          "playMin": 0,
+          "day": 3,
+          "km": 186
+        },
+        {
+          "kind": "arrival",
+          "id": "daegu",
+          "playMin": 0,
+          "day": 3,
+          "km": 238
+        },
+        {
+          "kind": "arrival",
+          "id": "gumi",
+          "playMin": 0,
+          "day": 4,
+          "km": 276
+        },
+        {
+          "kind": "relationship",
+          "id": "kangwoo",
+          "playMin": 0,
+          "day": 4,
+          "km": 276
+        },
+        {
+          "kind": "arrival",
+          "id": "gimcheon",
+          "playMin": 0,
+          "day": 4,
+          "km": 302
+        },
+        {
+          "kind": "objective",
+          "id": "route:market",
+          "playMin": 0,
+          "day": 4,
+          "km": 302
+        },
+        {
+          "kind": "arrival",
+          "id": "muju",
+          "playMin": 0,
+          "day": 4,
+          "km": 340
+        },
+        {
+          "kind": "story",
+          "id": "principle_words",
+          "playMin": 0,
+          "day": 5,
+          "km": 371
+        },
+        {
+          "kind": "arrival",
+          "id": "jeonju",
+          "playMin": 0,
+          "day": 5,
+          "km": 395
+        },
+        {
+          "kind": "story",
+          "id": "clinic_route_accepted",
+          "playMin": 0,
+          "day": 5,
+          "km": 395
+        },
+        {
+          "kind": "arrival",
+          "id": "nonsan",
+          "playMin": 0,
+          "day": 5,
+          "km": 447
+        },
+        {
+          "kind": "arrival",
+          "id": "daejeon",
+          "playMin": 0,
+          "day": 6,
+          "km": 487
+        },
+        {
+          "kind": "world",
+          "id": "route_complete:market",
+          "playMin": 0,
+          "day": 6,
+          "km": 521
+        },
+        {
+          "kind": "arrival",
+          "id": "cheongju",
+          "playMin": 0,
+          "day": 6,
+          "km": 521
+        },
+        {
+          "kind": "arrival",
+          "id": "daejeon",
+          "playMin": 0,
+          "day": 6,
+          "km": 555
+        },
+        {
+          "kind": "arrival",
+          "id": "yeongdong",
+          "playMin": 0,
+          "day": 7,
+          "km": 599
+        },
+        {
+          "kind": "arrival",
+          "id": "gimcheon",
+          "playMin": 0,
+          "day": 7,
+          "km": 632
+        },
+        {
+          "kind": "arrival",
+          "id": "gumi",
+          "playMin": 0,
+          "day": 7,
+          "km": 658
+        },
+        {
+          "kind": "story",
+          "id": "theories_common",
+          "playMin": 0,
+          "day": 8,
+          "km": 664
+        },
+        {
+          "kind": "arrival",
+          "id": "mall",
+          "playMin": 0,
+          "day": 8,
+          "km": 666
+        },
+        {
+          "kind": "relationship",
+          "id": "parkss",
+          "playMin": 0,
+          "day": 8,
+          "km": 666
+        },
+        {
+          "kind": "arrival",
+          "id": "gumi",
+          "playMin": 0,
+          "day": 8,
+          "km": 674
+        },
+        {
+          "kind": "arrival",
+          "id": "gimcheon",
+          "playMin": 0,
+          "day": 8,
+          "km": 700
+        },
+        {
+          "kind": "arrival",
+          "id": "yeongdong",
+          "playMin": 0,
+          "day": 8,
+          "km": 733
+        },
+        {
+          "kind": "arrival",
+          "id": "daejeon",
+          "playMin": 0,
+          "day": 8,
+          "km": 777
+        },
+        {
+          "kind": "settlement",
+          "id": "daejeon",
+          "playMin": 0,
+          "day": 9,
+          "km": 777
+        },
+        {
+          "kind": "settlement",
+          "id": "daejeon",
+          "playMin": 0,
+          "day": 9,
+          "km": 777
+        },
+        {
+          "kind": "settlement",
+          "id": "daejeon",
+          "playMin": 0,
+          "day": 9,
+          "km": 777
+        },
+        {
+          "kind": "arrival",
+          "id": "nonsan",
+          "playMin": 0,
+          "day": 9,
+          "km": 817
+        },
+        {
+          "kind": "arrival",
+          "id": "jeonju",
+          "playMin": 0,
+          "day": 9,
+          "km": 869
+        },
+        {
+          "kind": "arrival",
+          "id": "nonsan",
+          "playMin": 0,
+          "day": 10,
+          "km": 921
+        },
+        {
+          "kind": "arrival",
+          "id": "gongju",
+          "playMin": 0,
+          "day": 10,
+          "km": 955
+        },
+        {
+          "kind": "arrival",
+          "id": "cheonan",
+          "playMin": 0,
+          "day": 10,
+          "km": 999
+        }
+      ]
+    },
+    "resourceLatch": {
+      "fuel": false,
+      "water": false,
+      "food": false,
+      "van": false,
+      "fatigue": false,
+      "pursuit": false
+    },
+    "routes": {
+      "market": {
+        "chosen": 1,
+        "completed": 1,
+        "lastDay": 6,
+        "lastKm": 521
+      }
+    },
+    "settlements": {
+      "miryang": {
+        "visits": 2,
+        "playMinutes": 0,
+        "gameMinutes": 1028,
+        "actions": 5,
+        "lastNode": "miryang"
+      },
+      "daegu": {
+        "visits": 1,
+        "playMinutes": 0,
+        "gameMinutes": 877,
+        "actions": 0,
+        "lastNode": "daegu"
+      },
+      "muju": {
+        "visits": 1,
+        "playMinutes": 0,
+        "gameMinutes": 683,
+        "actions": 0,
+        "lastNode": "muju"
+      },
+      "jeonju": {
+        "visits": 2,
+        "playMinutes": 0,
+        "gameMinutes": 1345,
+        "actions": 0,
+        "lastNode": "jeonju"
+      },
+      "daejeon": {
+        "visits": 3,
+        "playMinutes": 0,
+        "gameMinutes": 1277,
+        "actions": 3,
+        "lastNode": "daejeon"
+      }
+    },
+    "activeSettlement": null,
+    "upgrades": [
+      {
+        "id": "bench",
+        "day": 2,
+        "km": 54,
+        "route": ""
+      }
+    ],
+    "choiceEchoes": 8,
+    "milestones": {
+      "first_event": {
+        "playMin": 0,
+        "day": 1,
+        "min": 695,
+        "km": 0,
+        "eventId": "cell_sea_meet",
+        "eventType": "스토리"
+      },
+      "first_choice": {
+        "playMin": 0,
+        "day": 1,
+        "min": 695,
+        "km": 0,
+        "eventId": "cell_sea_meet",
+        "choiceIndex": 0
+      },
+      "first_departure": {
+        "playMin": 0,
+        "day": 1,
+        "min": 695,
+        "km": 20,
+        "from": "busan",
+        "to": "yangsan",
+        "road": "high"
+      },
+      "first_settlement": {
+        "playMin": 0,
+        "day": 1,
+        "min": 1112,
+        "km": 54,
+        "settlementId": "miryang",
+        "nodeId": "miryang"
+      },
+      "temporary_companion": {
+        "playMin": 0,
+        "day": 3,
+        "min": 390,
+        "km": 120,
+        "companionId": "minji"
+      },
+      "first_recruit": {
+        "playMin": 0,
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "companionId": "minji",
+        "approach": "pulley"
+      },
+      "first_combat": {
+        "playMin": 0,
+        "day": 4,
+        "min": 1327,
+        "km": 340,
+        "threat": "잠든 자동 검문소",
+        "result": "success"
+      }
+    },
+    "choiceCallbacks": {
+      "remembered": 3,
+      "near": 8,
+      "late": 0,
+      "items": {
+        "opening_workshop:answer_call": {
+          "remembered": false,
+          "near": true,
+          "late": false
+        },
+        "opening_bus_repair:hose_bypass": {
+          "remembered": false,
+          "near": true,
+          "late": false
+        },
+        "opening_failed_appeal:record_names": {
+          "remembered": false,
+          "near": true,
+          "late": false
+        },
+        "opening_parents_module:label_wires": {
+          "remembered": false,
+          "near": true,
+          "late": false
+        },
+        "opening_departure:leave_key": {
+          "remembered": false,
+          "near": true,
+          "late": false
+        },
+        "principle_words": {
+          "remembered": true,
+          "near": true,
+          "late": false
+        },
+        "clinic_route_accepted": {
+          "remembered": true,
+          "near": true,
+          "late": false
+        },
+        "theories_common": {
+          "remembered": true,
+          "near": true,
+          "late": false
+        }
+      }
+    },
+    "endings": {},
+    "timeline": [
+      {
+        "type": "event_open",
+        "day": 1,
+        "min": 695,
+        "km": 0,
+        "playMin": 0,
+        "eventId": "cell_sea_meet",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "milestone",
+        "day": 1,
+        "min": 695,
+        "km": 0,
+        "playMin": 0,
+        "milestone": "first_event",
+        "eventId": "cell_sea_meet",
+        "eventType": "스토리"
+      },
+      {
+        "type": "choice",
+        "day": 1,
+        "min": 695,
+        "km": 0,
+        "playMin": 0,
+        "eventId": "cell_sea_meet",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "milestone",
+        "day": 1,
+        "min": 695,
+        "km": 0,
+        "playMin": 0,
+        "milestone": "first_choice",
+        "eventId": "cell_sea_meet",
+        "choiceIndex": 0
+      },
+      {
+        "type": "milestone",
+        "day": 1,
+        "min": 695,
+        "km": 20,
+        "playMin": 0,
+        "milestone": "first_departure",
+        "from": "busan",
+        "to": "yangsan",
+        "road": "high"
+      },
+      {
+        "type": "event_open",
+        "day": 1,
+        "min": 765,
+        "km": 15,
+        "playMin": 0,
+        "eventId": "ev_truck_cafe",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 1,
+        "min": 765,
+        "km": 15,
+        "playMin": 0,
+        "eventId": "ev_truck_cafe",
+        "eventType": "조우",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "meaningful_change",
+        "day": 1,
+        "min": 788,
+        "km": 20,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "yangsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 1,
+        "min": 788,
+        "km": 20,
+        "playMin": 0,
+        "eventId": "onboarding_first_road",
+        "eventType": "본편",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 1,
+        "min": 788,
+        "km": 20,
+        "playMin": 0,
+        "eventId": "onboarding_first_road",
+        "eventType": "본편",
+        "choiceIndex": 2,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "event_open",
+        "day": 1,
+        "min": 918,
+        "km": 20,
+        "playMin": 0,
+        "eventId": "ev_seed_warehouse",
+        "eventType": "탐색",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 1,
+        "min": 918,
+        "km": 20,
+        "playMin": 0,
+        "eventId": "ev_seed_warehouse",
+        "eventType": "탐색",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_echo",
+        "day": 1,
+        "min": 1012,
+        "km": 33,
+        "playMin": 0,
+        "memoryId": "opening_workshop:answer_call",
+        "eventId": "opening_workshop"
+      },
+      {
+        "type": "event_open",
+        "day": 1,
+        "min": 1049,
+        "km": 41,
+        "playMin": 0,
+        "eventId": "memory_busan_terminal",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 1,
+        "min": 1049,
+        "km": 41,
+        "playMin": 0,
+        "eventId": "memory_busan_terminal",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_echo",
+        "day": 1,
+        "min": 1108,
+        "km": 54,
+        "playMin": 0,
+        "memoryId": "opening_bus_repair:hose_bypass",
+        "eventId": "opening_bus_repair"
+      },
+      {
+        "type": "settlement_enter",
+        "day": 1,
+        "min": 1112,
+        "km": 54,
+        "playMin": 0,
+        "settlementId": "miryang",
+        "nodeId": "miryang"
+      },
+      {
+        "type": "milestone",
+        "day": 1,
+        "min": 1112,
+        "km": 54,
+        "playMin": 0,
+        "milestone": "first_settlement",
+        "settlementId": "miryang",
+        "nodeId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 1,
+        "min": 1112,
+        "km": 54,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "upgrade",
+        "day": 2,
+        "min": 22,
+        "km": 54,
+        "playMin": 0,
+        "upgradeId": "bench",
+        "group": "seating",
+        "cost": 12
+      },
+      {
+        "type": "meaningful_change",
+        "day": 2,
+        "min": 22,
+        "km": 54,
+        "playMin": 0,
+        "kind": "vehicle",
+        "id": "bench",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 390,
+        "km": 54,
+        "playMin": 0,
+        "eventId": "meet_scrapyard",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 390,
+        "km": 54,
+        "playMin": 0,
+        "eventId": "meet_scrapyard",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 390,
+        "km": 54,
+        "playMin": 0,
+        "eventId": "rq_minji_request",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 390,
+        "km": 54,
+        "playMin": 0,
+        "eventId": "rq_minji_request",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_action",
+        "day": 2,
+        "min": 390,
+        "km": 54,
+        "playMin": 0,
+        "settlementId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 2,
+        "min": 390,
+        "km": 54,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_action",
+        "day": 2,
+        "min": 410,
+        "km": 54,
+        "playMin": 0,
+        "settlementId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 2,
+        "min": 410,
+        "km": 54,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_action",
+        "day": 2,
+        "min": 460,
+        "km": 54,
+        "playMin": 0,
+        "settlementId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 2,
+        "min": 460,
+        "km": 54,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 605,
+        "km": 54,
+        "playMin": 0,
+        "eventId": "npc_sundeok_2",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 605,
+        "km": 54,
+        "playMin": 0,
+        "eventId": "npc_sundeok_2",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_leave",
+        "day": 2,
+        "min": 605,
+        "km": 54,
+        "playMin": 0,
+        "settlementId": "miryang",
+        "nodeId": "miryang",
+        "playMinutes": 0,
+        "gameMinutes": 933
+      },
+      {
+        "type": "choice_echo",
+        "day": 2,
+        "min": 664,
+        "km": 67,
+        "playMin": 0,
+        "memoryId": "opening_failed_appeal:record_names",
+        "eventId": "opening_failed_appeal"
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 679,
+        "km": 70,
+        "playMin": 0,
+        "eventId": "story_bridge_departure_echo",
+        "eventType": "사건",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 679,
+        "km": 70,
+        "playMin": 0,
+        "eventId": "story_bridge_departure_echo",
+        "eventType": "사건",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_echo",
+        "day": 2,
+        "min": 753,
+        "km": 83,
+        "playMin": 0,
+        "memoryId": "opening_parents_module:label_wires",
+        "eventId": "opening_parents_module"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 2,
+        "min": 779,
+        "km": 88,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "yangsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 861,
+        "km": 106,
+        "playMin": 0,
+        "eventId": "story_bridge_trace_gap",
+        "eventType": "추적",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 861,
+        "km": 106,
+        "playMin": 0,
+        "eventId": "story_bridge_trace_gap",
+        "eventType": "추적",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_echo",
+        "day": 2,
+        "min": 935,
+        "km": 118,
+        "playMin": 0,
+        "memoryId": "opening_departure:leave_key",
+        "eventId": "opening_departure"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 2,
+        "min": 942,
+        "km": 120,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "ulsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 942,
+        "km": 120,
+        "playMin": 0,
+        "eventId": "rq_minji_task",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 942,
+        "km": 120,
+        "playMin": 0,
+        "eventId": "rq_minji_task",
+        "eventType": "스토리",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 2,
+        "min": 1152,
+        "km": 120,
+        "playMin": 0,
+        "eventId": "lc_ulsan_whale",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 1152,
+        "km": 120,
+        "playMin": 0,
+        "eventId": "lc_ulsan_whale",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "choice",
+        "day": 2,
+        "min": 1197,
+        "km": 120,
+        "playMin": 0,
+        "eventId": "camp_1_minji",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "milestone",
+        "day": 3,
+        "min": 390,
+        "km": 120,
+        "playMin": 0,
+        "milestone": "temporary_companion",
+        "companionId": "minji"
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 468,
+        "km": 137,
+        "playMin": 0,
+        "eventId": "salvage_claim",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 468,
+        "km": 137,
+        "playMin": 0,
+        "eventId": "salvage_claim",
+        "eventType": "조우",
+        "choiceIndex": 2,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "meaningful_change",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "yangsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "eventId": "rq_minji_join",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "eventId": "rq_minji_join",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "milestone",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "milestone": "first_recruit",
+        "companionId": "minji",
+        "approach": "pulley"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "kind": "relationship",
+        "id": "minji",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "eventId": "talk_mj_05",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 558,
+        "km": 152,
+        "playMin": 0,
+        "eventId": "talk_mj_05",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 643,
+        "km": 170,
+        "playMin": 0,
+        "eventId": "story_bridge_watched",
+        "eventType": "위기",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 643,
+        "km": 170,
+        "playMin": 0,
+        "eventId": "story_bridge_watched",
+        "eventType": "위기",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_enter",
+        "day": 3,
+        "min": 737,
+        "km": 186,
+        "playMin": 0,
+        "settlementId": "miryang",
+        "nodeId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 3,
+        "min": 737,
+        "km": 186,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_action",
+        "day": 3,
+        "min": 787,
+        "km": 186,
+        "playMin": 0,
+        "settlementId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 3,
+        "min": 787,
+        "km": 186,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_action",
+        "day": 3,
+        "min": 807,
+        "km": 186,
+        "playMin": 0,
+        "settlementId": "miryang"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 3,
+        "min": 807,
+        "km": 186,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "miryang",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_leave",
+        "day": 3,
+        "min": 832,
+        "km": 186,
+        "playMin": 0,
+        "settlementId": "miryang",
+        "nodeId": "miryang",
+        "playMinutes": 0,
+        "gameMinutes": 95
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 976,
+        "km": 217,
+        "playMin": 0,
+        "eventId": "story_generation_form",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 976,
+        "km": 217,
+        "playMin": 0,
+        "eventId": "story_generation_form",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_enter",
+        "day": 3,
+        "min": 1073,
+        "km": 238,
+        "playMin": 0,
+        "settlementId": "daegu",
+        "nodeId": "daegu"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 3,
+        "min": 1073,
+        "km": 238,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "daegu",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 1098,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "kw_recruit",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 1098,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "kw_recruit",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 3,
+        "min": 1098,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "rq_kangwoo_task",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 1098,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "rq_kangwoo_task",
+        "eventType": "스토리",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice",
+        "day": 3,
+        "min": 1368,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "camp_2_kangwoo",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 390,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "talk_mj_02",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 390,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "talk_mj_02",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 510,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "lc_daegu_makchang",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 510,
+        "km": 238,
+        "playMin": 0,
+        "eventId": "lc_daegu_makchang",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_leave",
+        "day": 4,
+        "min": 510,
+        "km": 238,
+        "playMin": 0,
+        "settlementId": "daegu",
+        "nodeId": "daegu",
+        "playMinutes": 0,
+        "gameMinutes": 877
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 632,
+        "km": 264,
+        "playMin": 0,
+        "eventId": "levy_office",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 632,
+        "km": 264,
+        "playMin": 0,
+        "eventId": "levy_office",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "meaningful_change",
+        "day": 4,
+        "min": 688,
+        "km": 276,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gumi",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 688,
+        "km": 276,
+        "playMin": 0,
+        "eventId": "rq_kangwoo_join",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 688,
+        "km": 276,
+        "playMin": 0,
+        "eventId": "rq_kangwoo_join",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "meaningful_change",
+        "day": 4,
+        "min": 688,
+        "km": 276,
+        "playMin": 0,
+        "kind": "relationship",
+        "id": "kangwoo",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 688,
+        "km": 276,
+        "playMin": 0,
+        "eventId": "talk_kw_17",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 688,
+        "km": 276,
+        "playMin": 0,
+        "eventId": "talk_kw_17",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 808,
+        "km": 276,
+        "playMin": 0,
+        "eventId": "ev_broadcast_station",
+        "eventType": "탐색",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 808,
+        "km": 276,
+        "playMin": 0,
+        "eventId": "ev_broadcast_station",
+        "eventType": "탐색",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 918,
+        "km": 291,
+        "playMin": 0,
+        "eventId": "parents_diversion_manifest",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 918,
+        "km": 291,
+        "playMin": 0,
+        "eventId": "parents_diversion_manifest",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "meaningful_change",
+        "day": 4,
+        "min": 970,
+        "km": 302,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gimcheon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 970,
+        "km": 302,
+        "playMin": 0,
+        "eventId": "route_mid_fork",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 970,
+        "km": 302,
+        "playMin": 0,
+        "eventId": "route_mid_fork",
+        "eventType": "스토리",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "route_chosen",
+        "day": 4,
+        "min": 970,
+        "km": 302,
+        "playMin": 0,
+        "routeId": "market"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 4,
+        "min": 970,
+        "km": 302,
+        "playMin": 0,
+        "kind": "objective",
+        "id": "route:market",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 1090,
+        "km": 302,
+        "playMin": 0,
+        "eventId": "lc_yeongdong_wine",
+        "eventType": "탐색",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 1090,
+        "km": 302,
+        "playMin": 0,
+        "eventId": "lc_yeongdong_wine",
+        "eventType": "탐색",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 1212,
+        "km": 328,
+        "playMin": 0,
+        "eventId": "parents_separated_work",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 1212,
+        "km": 328,
+        "playMin": 0,
+        "eventId": "parents_separated_work",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_enter",
+        "day": 4,
+        "min": 1267,
+        "km": 340,
+        "playMin": 0,
+        "settlementId": "muju",
+        "nodeId": "muju"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 4,
+        "min": 1267,
+        "km": 340,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "muju",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 1267,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "route_market_convoy",
+        "eventType": "호송",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 1267,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "route_market_convoy",
+        "eventType": "호송",
+        "choiceIndex": 0,
+        "tactic": "편성",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 1287,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "route_market_mask",
+        "eventType": "호송",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 1287,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "route_market_mask",
+        "eventType": "호송",
+        "choiceIndex": 0,
+        "tactic": "위장",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "event_open",
+        "day": 4,
+        "min": 1307,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "route_market_pass",
+        "eventType": "호송",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 1307,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "route_market_pass",
+        "eventType": "호송",
+        "choiceIndex": 0,
+        "tactic": "차체 지지",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "combat_end",
+        "day": 4,
+        "min": 1327,
+        "km": 340,
+        "playMin": 0,
+        "threat": "잠든 자동 검문소",
+        "kind": "호송",
+        "result": "success",
+        "tactics": "편성>위장>차체 지지",
+        "gainCount": 2,
+        "costCount": 3
+      },
+      {
+        "type": "milestone",
+        "day": 4,
+        "min": 1327,
+        "km": 340,
+        "playMin": 0,
+        "milestone": "first_combat",
+        "threat": "잠든 자동 검문소",
+        "result": "success"
+      },
+      {
+        "type": "choice",
+        "day": 4,
+        "min": 1357,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "camp_3_minji",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 390,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "talk_mj_06",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 390,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "talk_mj_06",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 390,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "talk_kw_01",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 390,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "talk_kw_01",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 510,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "npc_jaepil_2",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 510,
+        "km": 340,
+        "playMin": 0,
+        "eventId": "npc_jaepil_2",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_leave",
+        "day": 5,
+        "min": 510,
+        "km": 340,
+        "playMin": 0,
+        "settlementId": "muju",
+        "nodeId": "muju",
+        "playMinutes": 0,
+        "gameMinutes": 683
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 654,
+        "km": 371,
+        "playMin": 0,
+        "eventId": "story_family_principle",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 654,
+        "km": 371,
+        "playMin": 0,
+        "eventId": "story_family_principle",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_remember",
+        "day": 5,
+        "min": 654,
+        "km": 371,
+        "playMin": 0,
+        "memoryId": "principle_words",
+        "eventId": "story_family_principle"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 5,
+        "min": 654,
+        "km": 371,
+        "playMin": 0,
+        "kind": "story",
+        "id": "principle_words",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 695,
+        "km": 380,
+        "playMin": 0,
+        "eventId": "meet_postman",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 695,
+        "km": 380,
+        "playMin": 0,
+        "eventId": "meet_postman",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_enter",
+        "day": 5,
+        "min": 765,
+        "km": 395,
+        "playMin": 0,
+        "settlementId": "jeonju",
+        "nodeId": "jeonju"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 5,
+        "min": 765,
+        "km": 395,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "jeonju",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 1040,
+        "km": 395,
+        "playMin": 0,
+        "eventId": "meet_bus",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 1040,
+        "km": 395,
+        "playMin": 0,
+        "eventId": "meet_bus",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_remember",
+        "day": 5,
+        "min": 1040,
+        "km": 395,
+        "playMin": 0,
+        "memoryId": "clinic_route_accepted",
+        "eventId": "meet_bus"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 5,
+        "min": 1040,
+        "km": 395,
+        "playMin": 0,
+        "kind": "story",
+        "id": "clinic_route_accepted",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 1160,
+        "km": 395,
+        "playMin": 0,
+        "eventId": "lc_jeonju_bibim",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 1160,
+        "km": 395,
+        "playMin": 0,
+        "eventId": "lc_jeonju_bibim",
+        "eventType": "조우",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_leave",
+        "day": 5,
+        "min": 1160,
+        "km": 395,
+        "playMin": 0,
+        "settlementId": "jeonju",
+        "nodeId": "jeonju",
+        "playMinutes": 0,
+        "gameMinutes": 395
+      },
+      {
+        "type": "choice_echo",
+        "day": 5,
+        "min": 1220,
+        "km": 408,
+        "playMin": 0,
+        "memoryId": "principle_words",
+        "eventId": "story_family_principle"
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 1282,
+        "km": 421,
+        "playMin": 0,
+        "eventId": "story_family_key",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 1282,
+        "km": 421,
+        "playMin": 0,
+        "eventId": "story_family_key",
+        "eventType": "스토리",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_echo",
+        "day": 5,
+        "min": 1342,
+        "km": 434,
+        "playMin": 0,
+        "memoryId": "clinic_route_accepted",
+        "eventId": "meet_bus"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 5,
+        "min": 1401,
+        "km": 447,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "nonsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 5,
+        "min": 1401,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "perimeter_first",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 1401,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "perimeter_first",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "choice",
+        "day": 5,
+        "min": 1431,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "camp_4_kangwoo",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 390,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "talkr_mj_3",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 390,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "talkr_mj_3",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 390,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "talk_kw_07",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 390,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "talk_kw_07",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 510,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "lc_nonsan_camp",
+        "eventType": "조우",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 510,
+        "km": 447,
+        "playMin": 0,
+        "eventId": "lc_nonsan_camp",
+        "eventType": "조우",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 687,
+        "km": 473,
+        "playMin": 0,
+        "eventId": "story_personal_cache",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 687,
+        "km": 473,
+        "playMin": 0,
+        "eventId": "story_personal_cache",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_enter",
+        "day": 6,
+        "min": 761,
+        "km": 487,
+        "playMin": 0,
+        "settlementId": "daejeon",
+        "nodeId": "daejeon"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 6,
+        "min": 761,
+        "km": 487,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "daejeon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 906,
+        "km": 487,
+        "playMin": 0,
+        "eventId": "lc_daejeon_bakery",
+        "eventType": "탐색",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 906,
+        "km": 487,
+        "playMin": 0,
+        "eventId": "lc_daejeon_bakery",
+        "eventType": "탐색",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_leave",
+        "day": 6,
+        "min": 906,
+        "km": 487,
+        "playMin": 0,
+        "settlementId": "daejeon",
+        "nodeId": "daejeon",
+        "playMinutes": 0,
+        "gameMinutes": 145
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 984,
+        "km": 502,
+        "playMin": 0,
+        "eventId": "cleaners_recall",
+        "eventType": "추적",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 984,
+        "km": 502,
+        "playMin": 0,
+        "eventId": "cleaners_recall",
+        "eventType": "추적",
+        "choiceIndex": 2,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "route_completed",
+        "day": 6,
+        "min": 1087,
+        "km": 521,
+        "playMin": 0,
+        "routeId": "market"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 6,
+        "min": 1087,
+        "km": 521,
+        "playMin": 0,
+        "kind": "world",
+        "id": "route_complete:market",
+        "gapMinutes": 0
+      },
+      {
+        "type": "meaningful_change",
+        "day": 6,
+        "min": 1087,
+        "km": 521,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "cheongju",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 1117,
+        "km": 521,
+        "playMin": 0,
+        "eventId": "story_parent_route_shared",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 1117,
+        "km": 521,
+        "playMin": 0,
+        "eventId": "story_parent_route_shared",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 1147,
+        "km": 521,
+        "playMin": 0,
+        "eventId": "main_transfer_testimony",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 1147,
+        "km": 521,
+        "playMin": 0,
+        "eventId": "main_transfer_testimony",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 6,
+        "min": 1247,
+        "km": 540,
+        "playMin": 0,
+        "eventId": "story_generation_speech",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 1247,
+        "km": 540,
+        "playMin": 0,
+        "eventId": "story_generation_speech",
+        "eventType": "스토리",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_enter",
+        "day": 6,
+        "min": 1329,
+        "km": 555,
+        "playMin": 0,
+        "settlementId": "daejeon",
+        "nodeId": "daejeon"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 6,
+        "min": 1329,
+        "km": 555,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "daejeon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "choice",
+        "day": 6,
+        "min": 1384,
+        "km": 555,
+        "playMin": 0,
+        "eventId": "camp_5_minji",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 7,
+        "min": 390,
+        "km": 555,
+        "playMin": 0,
+        "eventId": "talk_mj_04",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 390,
+        "km": 555,
+        "playMin": 0,
+        "eventId": "talk_mj_04",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 7,
+        "min": 390,
+        "km": 555,
+        "playMin": 0,
+        "eventId": "talk_kw_15",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 390,
+        "km": 555,
+        "playMin": 0,
+        "eventId": "talk_kw_15",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_leave",
+        "day": 7,
+        "min": 390,
+        "km": 555,
+        "playMin": 0,
+        "settlementId": "daejeon",
+        "nodeId": "daejeon",
+        "playMinutes": 0,
+        "gameMinutes": 502
+      },
+      {
+        "type": "event_open",
+        "day": 7,
+        "min": 527,
+        "km": 581,
+        "playMin": 0,
+        "eventId": "story_bridge_parent_route",
+        "eventType": "발견",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 527,
+        "km": 581,
+        "playMin": 0,
+        "eventId": "story_bridge_parent_route",
+        "eventType": "발견",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "meaningful_change",
+        "day": 7,
+        "min": 643,
+        "km": 599,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "yeongdong",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 7,
+        "min": 841,
+        "km": 614,
+        "playMin": 0,
+        "eventId": "story_bridge_child_voice",
+        "eventType": "사건",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 841,
+        "km": 614,
+        "playMin": 0,
+        "eventId": "story_bridge_child_voice",
+        "eventType": "사건",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "meaningful_change",
+        "day": 7,
+        "min": 937,
+        "km": 632,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gimcheon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 7,
+        "min": 1015,
+        "km": 647,
+        "playMin": 0,
+        "eventId": "story_bridge_crew_question",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 1015,
+        "km": 647,
+        "playMin": 0,
+        "eventId": "story_bridge_crew_question",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "meaningful_change",
+        "day": 7,
+        "min": 1074,
+        "km": 658,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gumi",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 7,
+        "min": 1074,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "rq_parkss_task",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 1074,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "rq_parkss_task",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "choice",
+        "day": 7,
+        "min": 1284,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "camp_6_parkss",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 390,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "comp_radio_war",
+        "eventType": "동행",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 390,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "comp_radio_war",
+        "eventType": "동행",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 390,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "talk_mj_21",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 390,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "talk_mj_21",
+        "eventType": "대화",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 390,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "talkr_kw_3",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 390,
+        "km": 658,
+        "playMin": 0,
+        "eventId": "talkr_kw_3",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 416,
+        "km": 664,
+        "playMin": 0,
+        "eventId": "story_generation_theories",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 416,
+        "km": 664,
+        "playMin": 0,
+        "eventId": "story_generation_theories",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "choice_remember",
+        "day": 8,
+        "min": 416,
+        "km": 664,
+        "playMin": 0,
+        "memoryId": "theories_common",
+        "eventId": "story_generation_theories"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 416,
+        "km": 664,
+        "playMin": 0,
+        "kind": "story",
+        "id": "theories_common",
+        "gapMinutes": 0
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "mall",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "eventId": "loc_mall",
+        "eventType": "탐색",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "eventId": "loc_mall",
+        "eventType": "탐색",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "eventId": "rq_parkss_join",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "eventId": "rq_parkss_join",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "kind": "relationship",
+        "id": "parkss",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "eventId": "talk_pss_18",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 427,
+        "km": 666,
+        "playMin": 0,
+        "eventId": "talk_pss_18",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 573,
+        "km": 672,
+        "playMin": 0,
+        "eventId": "story_generation_route",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 573,
+        "km": 672,
+        "playMin": 0,
+        "eventId": "story_generation_route",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 584,
+        "km": 674,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gumi",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 654,
+        "km": 689,
+        "playMin": 0,
+        "eventId": "conflict_fuel_detour",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 654,
+        "km": 689,
+        "playMin": 0,
+        "eventId": "conflict_fuel_detour",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 4,
+        "available": 2
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 1006,
+        "km": 700,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gimcheon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "choice_echo",
+        "day": 8,
+        "min": 1014,
+        "km": 702,
+        "playMin": 0,
+        "memoryId": "theories_common",
+        "eventId": "story_generation_theories"
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 1102,
+        "km": 721,
+        "playMin": 0,
+        "eventId": "history_failed_namsan",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 1102,
+        "km": 721,
+        "playMin": 0,
+        "eventId": "history_failed_namsan",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 1162,
+        "km": 733,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "yeongdong",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 8,
+        "min": 1284,
+        "km": 759,
+        "playMin": 0,
+        "eventId": "history_transit_day",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 8,
+        "min": 1284,
+        "km": 759,
+        "playMin": 0,
+        "eventId": "history_transit_day",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_enter",
+        "day": 8,
+        "min": 1365,
+        "km": 777,
+        "playMin": 0,
+        "settlementId": "daejeon",
+        "nodeId": "daejeon"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 8,
+        "min": 1365,
+        "km": 777,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "daejeon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "choice",
+        "day": 9,
+        "min": 30,
+        "km": 777,
+        "playMin": 0,
+        "eventId": "camp_7_parkss",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 9,
+        "min": 390,
+        "km": 777,
+        "playMin": 0,
+        "eventId": "conflict_silent_cab",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 9,
+        "min": 390,
+        "km": 777,
+        "playMin": 0,
+        "eventId": "conflict_silent_cab",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "settlement_action",
+        "day": 9,
+        "min": 420,
+        "km": 777,
+        "playMin": 0,
+        "settlementId": "daejeon"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 9,
+        "min": 420,
+        "km": 777,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "daejeon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_action",
+        "day": 9,
+        "min": 455,
+        "km": 777,
+        "playMin": 0,
+        "settlementId": "daejeon"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 9,
+        "min": 455,
+        "km": 777,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "daejeon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_action",
+        "day": 9,
+        "min": 525,
+        "km": 777,
+        "playMin": 0,
+        "settlementId": "daejeon"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 9,
+        "min": 525,
+        "km": 777,
+        "playMin": 0,
+        "kind": "settlement",
+        "id": "daejeon",
+        "gapMinutes": 0
+      },
+      {
+        "type": "settlement_leave",
+        "day": 9,
+        "min": 555,
+        "km": 777,
+        "playMin": 0,
+        "settlementId": "daejeon",
+        "nodeId": "daejeon",
+        "playMinutes": 0,
+        "gameMinutes": 630
+      },
+      {
+        "type": "event_open",
+        "day": 9,
+        "min": 677,
+        "km": 803,
+        "playMin": 0,
+        "eventId": "history_seventy_two_hours",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 9,
+        "min": 677,
+        "km": 803,
+        "playMin": 0,
+        "eventId": "history_seventy_two_hours",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "meaningful_change",
+        "day": 9,
+        "min": 740,
+        "km": 817,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "nonsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 9,
+        "min": 862,
+        "km": 843,
+        "playMin": 0,
+        "eventId": "history_three_day_silence",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 9,
+        "min": 862,
+        "km": 843,
+        "playMin": 0,
+        "eventId": "history_three_day_silence",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_enter",
+        "day": 9,
+        "min": 981,
+        "km": 869,
+        "playMin": 0,
+        "settlementId": "jeonju",
+        "nodeId": "jeonju"
+      },
+      {
+        "type": "meaningful_change",
+        "day": 9,
+        "min": 981,
+        "km": 869,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "jeonju",
+        "gapMinutes": 0
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 96,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "camp_8_parkss",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "talk_pss_15",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "talk_pss_15",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "talk_mj_01",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "talk_mj_01",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "talk_kw_14",
+        "eventType": "대화",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "eventId": "talk_kw_14",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "settlement_leave",
+        "day": 10,
+        "min": 490,
+        "km": 869,
+        "playMin": 0,
+        "settlementId": "jeonju",
+        "nodeId": "jeonju",
+        "playMinutes": 0,
+        "gameMinutes": 950
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 612,
+        "km": 895,
+        "playMin": 0,
+        "eventId": "history_first_recorders",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 612,
+        "km": 895,
+        "playMin": 0,
+        "eventId": "history_first_recorders",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "meaningful_change",
+        "day": 10,
+        "min": 731,
+        "km": 921,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "nonsan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 801,
+        "km": 936,
+        "playMin": 0,
+        "eventId": "history_six_roads",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 801,
+        "km": 936,
+        "playMin": 0,
+        "eventId": "history_six_roads",
+        "eventType": "스토리",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 1,
+        "available": 1
+      },
+      {
+        "type": "meaningful_change",
+        "day": 10,
+        "min": 890,
+        "km": 955,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "gongju",
+        "gapMinutes": 0
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 1143,
+        "km": 984,
+        "playMin": 0,
+        "eventId": "ev_chunrian_lab",
+        "eventType": "스토리",
+        "repeatDistance": null
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 1143,
+        "km": 984,
+        "playMin": 0,
+        "eventId": "ev_chunrian_lab",
+        "eventType": "스토리",
+        "choiceIndex": 1,
+        "tactic": "",
+        "visible": 3,
+        "available": 3
+      },
+      {
+        "type": "meaningful_change",
+        "day": 10,
+        "min": 1258,
+        "km": 999,
+        "playMin": 0,
+        "kind": "arrival",
+        "id": "cheonan",
+        "gapMinutes": 0
+      },
+      {
+        "type": "choice",
+        "day": 10,
+        "min": 1288,
+        "km": 999,
+        "playMin": 0,
+        "eventId": "camp_9_parkss",
+        "eventType": "대화",
+        "choiceIndex": 0,
+        "tactic": "",
+        "visible": 2,
+        "available": 2
+      },
+      {
+        "type": "event_open",
+        "day": 10,
+        "min": 1288,
+        "km": 999,
+        "playMin": 0,
+        "eventId": "conflict_campfire",
+        "eventType": "스토리",
+        "repeatDistance": null
+      }
+    ],
+    "lastSeenAt": 1793276083437
+  },
+  "guideDismissed": false,
+  "questTrack": "main",
+  "lastJourneyRecap": {
+    "from": "gongju",
+    "to": "cheonan",
+    "km": 44,
+    "minutes": 249,
+    "road": "normal",
+    "events": 2,
+    "build": "이동 공동체형",
+    "changes": [
+      {
+        "label": "연료",
+        "value": -6.2,
+        "unit": "L",
+        "good": false
+      },
+      {
+        "label": "피로",
+        "value": 16.6,
+        "unit": "",
+        "good": false
+      }
+    ],
+    "routeCompleted": false,
+    "routeContract": {
+      "id": "market",
+      "name": "서쪽 장터길",
+      "mark": "🏮",
+      "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+      "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+      "done": 6,
+      "total": 6,
+      "remainingSegments": 0,
+      "complete": false
+    },
+    "routeName": "서쪽 장터길",
+    "routeProgress": "6/6",
+    "checkIn": null,
+    "chapter": null,
+    "day": 10
+  },
+  "journeyRecaps": [
+    {
+      "from": "yeongdong",
+      "to": "gimcheon",
+      "km": 33,
+      "minutes": 174,
+      "road": "high",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -4.3,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 12.2,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 7
+    },
+    {
+      "from": "gimcheon",
+      "to": "gumi",
+      "km": 26,
+      "minutes": 137,
+      "road": "high",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -3.4,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 8.8,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 7
+    },
+    {
+      "from": "gumi",
+      "to": "mall",
+      "km": 8,
+      "minutes": 37,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -1.1,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 2.4,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 8
+    },
+    {
+      "from": "mall",
+      "to": "gumi",
+      "km": 8,
+      "minutes": 37,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -1.1,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 2.2,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 8
+    },
+    {
+      "from": "gumi",
+      "to": "gimcheon",
+      "km": 26,
+      "minutes": 422,
+      "road": "high",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -11.4,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "식량",
+          "value": -2,
+          "unit": "",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 18.1,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 8
+    },
+    {
+      "from": "gimcheon",
+      "to": "yeongdong",
+      "km": 33,
+      "minutes": 155,
+      "road": "high",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -4.3,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 10,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 8
+    },
+    {
+      "from": "yeongdong",
+      "to": "daejeon",
+      "km": 44,
+      "minutes": 204,
+      "road": "high",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -5.7,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 18.3,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 8
+    },
+    {
+      "from": "daejeon",
+      "to": "nonsan",
+      "km": 40,
+      "minutes": 185,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -5.7,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "식량",
+          "value": -2,
+          "unit": "",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 12,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 9
+    },
+    {
+      "from": "nonsan",
+      "to": "jeonju",
+      "km": 52,
+      "minutes": 241,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -7.4,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 15.5,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 9
+    },
+    {
+      "from": "jeonju",
+      "to": "nonsan",
+      "km": 52,
+      "minutes": 241,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -7.4,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "식량",
+          "value": -2,
+          "unit": "",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 15.5,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 10
+    },
+    {
+      "from": "nonsan",
+      "to": "gongju",
+      "km": 34,
+      "minutes": 159,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -4.8,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 10.3,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 10
+    },
+    {
+      "from": "gongju",
+      "to": "cheonan",
+      "km": 44,
+      "minutes": 249,
+      "road": "normal",
+      "events": 2,
+      "build": "이동 공동체형",
+      "changes": [
+        {
+          "label": "연료",
+          "value": -6.2,
+          "unit": "L",
+          "good": false
+        },
+        {
+          "label": "피로",
+          "value": 16.6,
+          "unit": "",
+          "good": false
+        }
+      ],
+      "routeCompleted": false,
+      "routeContract": {
+        "id": "market",
+        "name": "서쪽 장터길",
+        "mark": "🏮",
+        "promise": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다",
+        "reward": "보급과 증언을 얻는 대신 연료와 하루를 더 쓴다",
+        "done": 6,
+        "total": 6,
+        "remainingSegments": 0,
+        "complete": false
+      },
+      "routeName": "서쪽 장터길",
+      "routeProgress": "6/6",
+      "checkIn": null,
+      "chapter": null,
+      "day": 10
+    }
+  ],
+  "_stlField": {
+    "daily": {
+      "2:miryang:noodles": true,
+      "2:miryang:parts": true,
+      "2:miryang:pump": true,
+      "3:miryang:noodles": true,
+      "3:miryang:pump": true,
+      "9:daejeon:ration_board": true,
+      "9:daejeon:cell_bank": true,
+      "9:daejeon:deployment_card": true
+    },
+    "once": {
+      "miryang:parts": true,
+      "daejeon:cell_bank": true,
+      "daejeon:deployment_card": true
+    },
+    "impact": {
+      "miryang:noodles": {
+        "day": 2,
+        "min": 390
+      },
+      "miryang:parts": {
+        "day": 2,
+        "min": 410
+      },
+      "miryang:pump": {
+        "day": 2,
+        "min": 460
+      },
+      "daejeon:ration_board": {
+        "day": 9,
+        "min": 420
+      },
+      "daejeon:cell_bank": {
+        "day": 9,
+        "min": 455
+      },
+      "daejeon:deployment_card": {
+        "day": 9,
+        "min": 525
+      }
+    },
+    "roadEchoed": {},
+    "log": [
+      {
+        "stl": "miryang",
+        "id": "noodles",
+        "day": 2,
+        "min": 390
+      },
+      {
+        "stl": "miryang",
+        "id": "parts",
+        "day": 2,
+        "min": 410
+      },
+      {
+        "stl": "miryang",
+        "id": "pump",
+        "day": 2,
+        "min": 460
+      },
+      {
+        "stl": "miryang",
+        "id": "noodles",
+        "day": 3,
+        "min": 787.1
+      },
+      {
+        "stl": "miryang",
+        "id": "pump",
+        "day": 3,
+        "min": 807.1
+      },
+      {
+        "stl": "daejeon",
+        "id": "ration_board",
+        "day": 9,
+        "min": 420
+      },
+      {
+        "stl": "daejeon",
+        "id": "cell_bank",
+        "day": 9,
+        "min": 455
+      },
+      {
+        "stl": "daejeon",
+        "id": "deployment_card",
+        "day": 9,
+        "min": 525
+      }
+    ]
+  },
+  "_impactEcho": {
+    "key": "daejeon:deployment_card",
+    "stlId": "daejeon",
+    "actionId": "deployment_card",
+    "from": "daejeon",
+    "to": "nonsan",
+    "wx": "rain",
+    "day": 9,
+    "visual": "record",
+    "label": "구형 저장장치",
+    "done": false
+  },
+  "_rescues": {},
+  "_stlNights": {
+    "miryang": 1,
+    "daegu": 1,
+    "muju": 1,
+    "daejeon": 2,
+    "jeonju": 1
+  },
+  "stopover": null,
+  "locationContractVersion": 2,
+  "campNight": 9,
+  "campConversation": {
+    "id": "camp_9_parkss",
+    "night": 9,
+    "cid": "parkss",
+    "day": 10,
+    "timeLabel": "밤",
+    "context": "공주 산성에서 천안 삼거리까지 온 길을 떠올린다.",
+    "revisit": true,
+    "chapter": 3,
+    "previousChoiceId": "share",
+    "choiceVisits": {
+      "share": 2
+    },
+    "choiceId": "share",
+    "chips": [
+      {
+        "t": "30분 경과",
+        "c": ""
+      },
+      {
+        "t": "박 선생 유대 +2",
+        "c": "item"
+      },
+      {
+        "t": "박 선생의 진료 깡통 · 새 흔적",
+        "c": "item"
+      }
+    ],
+    "active": true,
+    "reading": {
+      "eventId": "camp_9_parkss",
+      "phase": "outcome",
+      "view": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "준비할 것을 나누자 박 선생은 자기 몫만 챙겼다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "남의 몫까지 했는지 살피는 건가? 안 했어.",
+            "who": "parkss"
+          },
+          {
+            "kind": "narration",
+            "text": "그는 빈손을 한 번 보여 주고 다시 무릎에 올렸다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": [
+          "comp-talk-parkss-camp-v1"
+        ]
+      },
+      "history": null,
+      "selection": "",
+      "updates": []
+    },
+    "resolvedDay": 10,
+    "resolvedMin": 1288.1,
+    "resultText": "준비할 것을 나누자 박 선생은 자기 몫만 챙겼다.\n\n\"남의 몫까지 했는지 살피는 건가? 안 했어.\"\n\n그는 빈손을 한 번 보여 주고 다시 무릎에 올렸다.",
+    "resultSpeakers": [
+      "parkss"
+    ]
+  },
+  "campMemories": {
+    "minji": {
+      "id": "camp_5_minji",
+      "cid": "minji",
+      "choiceId": "sort",
+      "day": 6,
+      "visits": 3,
+      "choiceVisits": {
+        "sort": 2
+      },
+      "home": "보충한 퓨즈 접시를 둘 사이에 놓았다. 민지도 내가 건네는 부품을 기다린다.",
+      "road": "민지가 먼저 묻는다. \"다음 정비 때 밑에 들어갈래, 공구 건넬래? 대장님이 골라.\"",
+      "pendingRoad": false,
+      "pendingBond": 0
+    },
+    "kangwoo": {
+      "id": "camp_4_kangwoo",
+      "cid": "kangwoo",
+      "choiceId": "rotate",
+      "day": 5,
+      "visits": 2,
+      "choiceVisits": {
+        "rotate": 2
+      },
+      "home": "지도에 적은 휴식 순번을 실제로 지켰다. 깨울 때는 발끝을 건드리기로 했다.",
+      "road": "강우가 눈을 감은 채 묻는다. \"오른쪽?\" 보인다고 답하자 더 묻지 않았다.",
+      "pendingRoad": false,
+      "pendingBond": 0
+    },
+    "parkss": {
+      "id": "camp_9_parkss",
+      "cid": "parkss",
+      "choiceId": "share",
+      "day": 10,
+      "visits": 4,
+      "choiceVisits": {
+        "share": 2
+      },
+      "home": "내일 준비를 나눴다. 선생은 자기 몫을 마치고 빈손으로 곁에 앉았다.",
+      "road": "박 선생이 자기 물통만 챙긴다. \"자네 것은 맡겼네. 빠뜨리면 말해 주게.\"",
+      "pendingRoad": true,
+      "pendingBond": 0
+    }
+  },
+  "opening": {
+    "version": 2,
+    "narrativeVersion": 1,
+    "step": 6,
+    "pendingResult": null,
+    "decisions": {
+      "opening_workshop": {
+        "stepId": "opening_workshop",
+        "choiceId": "answer_call",
+        "label": "공구함을 닫고 바로 부두로 간다",
+        "day": 1,
+        "min": 455,
+        "outcomeIndex": 0,
+        "callbackEchoed": true,
+        "callbackDay": 1,
+        "callbackKm": 33
+      },
+      "opening_bus_repair": {
+        "stepId": "opening_bus_repair",
+        "choiceId": "hose_bypass",
+        "label": "남은 호스를 잘라 우회한다",
+        "day": 1,
+        "min": 510,
+        "outcomeIndex": 0,
+        "callbackEchoed": true,
+        "callbackDay": 1,
+        "callbackKm": 54
+      },
+      "opening_name_introduction": {
+        "stepId": "opening_name_introduction",
+        "choiceId": "say_name",
+        "label": "이름을 말한다",
+        "day": 1,
+        "min": 510,
+        "outcomeIndex": 0
+      },
+      "opening_failed_appeal": {
+        "stepId": "opening_failed_appeal",
+        "choiceId": "record_names",
+        "label": "하진에게 허락을 구하고 가족 이름부터 적는다",
+        "day": 1,
+        "min": 540,
+        "outcomeIndex": 0,
+        "callbackEchoed": true,
+        "callbackDay": 2,
+        "callbackKm": 67
+      },
+      "opening_parents_module": {
+        "stepId": "opening_parents_module",
+        "choiceId": "label_wires",
+        "label": "배선에 번호를 붙이고 덮개를 닫는다",
+        "day": 1,
+        "min": 565,
+        "outcomeIndex": 0,
+        "callbackEchoed": true,
+        "callbackDay": 2,
+        "callbackKm": 83
+      },
+      "opening_departure": {
+        "stepId": "opening_departure",
+        "choiceId": "leave_key",
+        "label": "단골에게 작업장 열쇠를 맡긴다",
+        "day": 1,
+        "min": 575,
+        "outcomeIndex": 0,
+        "callbackEchoed": true,
+        "callbackDay": 2,
+        "callbackKm": 118
+      },
+      "opening_farewell": {
+        "stepId": "opening_farewell",
+        "choiceId": "begin_road",
+        "label": "길로 나간다",
+        "day": 1,
+        "min": 575,
+        "outcomeIndex": 0
+      }
+    },
+    "completed": true,
+    "nameIntroduction": "done",
+    "nameDraft": "",
+    "reading": {
+      "eventId": "opening_farewell",
+      "phase": "outcome",
+      "view": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "양산 쪽으로 가며 이송표의 발신 기록을 찾는다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": [
+          "intro-departure-start-v1"
+        ]
+      },
+      "history": null,
+      "selection": "",
+      "updates": []
+    }
+  },
+  "questLedger": {
+    "tracked": [],
+    "completed": [
+      {
+        "id": "completed_local_letter_miryang_jeonju_7",
+        "eyebrow": "완료 기록",
+        "title": "동수에게 편지",
+        "phase": "밀양 장터 → 전주 서문 시장 · 5일차",
+        "next": "완료한 지역 의뢰다.",
+        "expected": "고철 10개를 받았다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      }
+    ],
+    "updates": [
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 7,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 7,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "정차한 뒤 민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 7,
+        "at": null
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 7,
+        "at": "yeongdong"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "정차한 뒤 민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 7,
+        "at": null
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 7,
+        "at": "gimcheon"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "정차한 뒤 민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 7,
+        "at": null
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 7,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "민지에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 8,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 8,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "민지와 깊어져 오빠의 이야기에 닿기",
+        "day": 8,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 8,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 8,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 8,
+        "at": "gumi"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생과 함께할 이유",
+        "next": "유령 백화점에 가서 박 선생이 부탁한 일을 한다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "동료 화면에서 Lv.1 특기를 하나 고른다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "동료 화면에서 Lv.1 특기를 하나 고른다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 2 더 올린다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "동료 화면에서 Lv.2 특기를 하나 고른다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 5 더 올린다.",
+        "day": 8,
+        "at": "mall"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 8,
+        "at": null
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 3 더 올린다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 2 더 올린다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 9,
+        "at": "daejeon"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "박 선생에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "박 선생에게 말을 걸어 다음 이야기를 듣는다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "박 선생과 깊어져 수진의 이야기에 닿기",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_kangwoo",
+        "kind": "companion",
+        "title": "강우",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "jeonju"
+      },
+      {
+        "id": "companion_minji",
+        "kind": "companion",
+        "title": "민지",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": null
+      },
+      {
+        "id": "companion_parkss",
+        "kind": "companion",
+        "title": "박 선생",
+        "next": "개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.",
+        "day": 10,
+        "at": "cheonan"
+      }
+    ],
+    "mainHistory": [
+      {
+        "id": "main_history_prologue-family_1_busan",
+        "eyebrow": "메인 스토리 기록 · 서장",
+        "title": "도윤 가족의 이송표를 확인한다",
+        "phase": "부산 감천 부두 · 떠나기 전 · 1일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "도윤 가족의 표와 부모님의 표가 같은 곳에서 왔는지 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_prologue-appeal_1_busan",
+        "eyebrow": "메인 스토리 기록 · 서장",
+        "title": "부산에서 이송 명령에 이의를 제기한다",
+        "phase": "부산 원격 민원 창구 · 1일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "부산에서 취소할 수 있는지, 남산에 직접 가야 하는지 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_prologue-module_1_busan",
+        "eyebrow": "메인 스토리 기록 · 서장",
+        "title": "엄마가 남긴 장치를 확인한다",
+        "phase": "부산의 달구지 안 · 1일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "장치가 계기판에 연결돼 있는지, 남산에서 쓸 수 있는지 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_first-trace_1_yangsan",
+        "eyebrow": "메인 스토리 기록 · 1장",
+        "title": "이송 명령의 첫 발신 기록을 찾는다",
+        "phase": "부산을 떠난 첫 구간 · 1일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "부모님의 표와 지금 나오는 표가 같은 곳에서 왔는지 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_parents-diversion_4_null",
+        "eyebrow": "메인 스토리 기록 · 1장",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "phase": "남쪽 환승소의 오래된 운행표 · 4일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_parents-separated-work_4_null",
+        "eyebrow": "메인 스토리 기록 · 2장",
+        "title": "부모님이 두 곳에서 이어 만든 절차를 찾는다",
+        "phase": "중부 기록망과 남산 유지선 · 4일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "검증키의 절차와 당사자 증언이 같은 계획의 두 부분임을 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_verification-key_6_cheongju",
+        "eyebrow": "메인 스토리 기록 · 2장",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "phase": "계기판의 장치를 꺼낼 방법을 찾는 중 · 6일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      },
+      {
+        "id": "main_history_witnesses_6_cheongju",
+        "eyebrow": "메인 스토리 기록 · 3장",
+        "title": "같은 이송표를 받은 사람들의 이야기를 모은다",
+        "phase": "같은 이송표를 받은 사람을 찾는 중 · 6일차",
+        "next": "이 장에서 해야 할 일을 마쳤다.",
+        "expected": "같은 명령으로 여러 지역의 가족이 이송됐다는 사실을 확인한다.",
+        "progress": {
+          "have": 1,
+          "need": 1,
+          "label": "완료"
+        }
+      }
+    ],
+    "seenUpdateCount": 40,
+    "snapshot": {
+      "main_namsan": "active|남산 진입 준비|천안 삼거리에서 ‘주변 탐색’을 눌러 「명령과 확인 사이의 빈 줄」 기록을 확인한다 (열람 준비 30분)|9/13",
+      "companion_minji": "completed|개인 이야기 3/3 · 동료 Lv.3 · 유대 43|개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.|3/3",
+      "companion_kangwoo": "completed|개인 이야기 3/3 · 동료 Lv.3 · 유대 31|개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.|3/3",
+      "companion_parkss": "completed|개인 이야기 3/3 · 동료 Lv.3 · 유대 19|개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.|3/3"
+    },
+    "mainState": {
+      "chapterId": "command",
+      "act": "4장",
+      "title": "증언과 명령 원본을 대조한다",
+      "phase": "남산 진입 준비",
+      "next": "천안 삼거리에서 ‘주변 탐색’을 눌러 「명령과 확인 사이의 빈 줄」 기록을 확인한다 (열람 준비 30분)",
+      "progress": "9/13"
+    }
+  },
+  "_qoffer": null,
+  "timedStories": [],
+  "pendingPresentation": {
+    "version": 1,
+    "eventId": "conflict_campfire",
+    "phase": "event",
+    "text": "야영 불가에서, 강우와 박 선생이 나란히 앉아 있는 걸 봤다. 누가 시킨 것도 아닌데.\n\n둘 다 말이 없다. 장작 타는 소리만 났다.\n\n\"군에 있을 때,\" 강우가 불쑥 말했다. 박 선생이 \"응?\" 하고 되물었다. 강우는 처음부터 다시 말했다. \"군에 있을 때. …연료 아끼려다 사람을 늦게 데리러 간 적이 있습니다.\"\n\n박 선생은 불을 뒤적였다. 불티가 두어 번 튀고 나서야 입을 열었다. \"나는 반대야. 사람부터 보다가 약이 떨어져서, 다음 마을 환자를 놓쳤어.\"\n\n\"…그래서 자꾸 계산합니다.\"\n\n\"나는 그래서 자꾸 가방부터 열어.\"\n\n또 조용해졌다. 강우가 장작을 하나 더 넣었고, 박 선생이 그 자리를 손으로 매만졌다.\n\n두 사람은 서로를 고치려 들지 않았다. 대신 각자의 흉터를 하나씩 꺼내 불가에 말렸다.",
+    "reading": {
+      "eventId": "conflict_campfire",
+      "phase": "event",
+      "view": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "야영 불가에서, 강우와 박 선생이 나란히 앉아 있는 걸 봤다. 누가 시킨 것도 아닌데."
+          },
+          {
+            "kind": "narration",
+            "text": "둘 다 말이 없다. 장작 타는 소리만 났다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "군에 있을 때,",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "narration",
+            "text": "강우가 불쑥 말했다. 박 선생이"
+          },
+          {
+            "kind": "dialogue",
+            "text": "응?",
+            "who": "parkss"
+          },
+          {
+            "kind": "narration",
+            "text": "하고 되물었다. 강우는 처음부터 다시 말했다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "군에 있을 때. …연료 아끼려다 사람을 늦게 데리러 간 적이 있습니다.",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "narration",
+            "text": "박 선생은 불을 뒤적였다. 불티가 두어 번 튀고 나서야 입을 열었다."
+          },
+          {
+            "kind": "dialogue",
+            "text": "나는 반대야. 사람부터 보다가 약이 떨어져서, 다음 마을 환자를 놓쳤어.",
+            "who": "parkss"
+          },
+          {
+            "kind": "dialogue",
+            "text": "…그래서 자꾸 계산합니다.",
+            "who": "kangwoo"
+          },
+          {
+            "kind": "dialogue",
+            "text": "나는 그래서 자꾸 가방부터 열어.",
+            "who": "parkss"
+          },
+          {
+            "kind": "narration",
+            "text": "또 조용해졌다. 강우가 장작을 하나 더 넣었고, 박 선생이 그 자리를 손으로 매만졌다."
+          },
+          {
+            "kind": "narration",
+            "text": "두 사람은 서로를 고치려 들지 않았다. 대신 각자의 흉터를 하나씩 꺼내 불가에 말렸다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": [
+          "arrival-cheonan"
+        ]
+      },
+      "history": null,
+      "selection": "",
+      "updates": []
+    }
+  },
+  "_chain": null,
+  "_lastNarrativeLeg": "10:null>cheonan",
+  "_simDeferred": [],
+  "_lastPursuitUp": 7,
+  "_crewChatSeen": {
+    "daily:daily-me-kangwoo-seat": {
+      "day": 8,
+      "km": 754
+    },
+    "daily:chat:3": {
+      "day": 5,
+      "km": 390
+    },
+    "daily:chat:14": {
+      "day": 10,
+      "km": 879
+    },
+    "daily:thread-parent-key-minji": {
+      "day": 7,
+      "km": 590
+    },
+    "thread-parent-key-minji": {
+      "day": 7,
+      "km": 590
+    },
+    "daily:daily-me-minji-hands": {
+      "day": 9,
+      "km": 843
+    },
+    "daily:daily-minji-kangwoo-check": {
+      "day": 10,
+      "km": 946
+    }
+  },
+  "_strandedDays": 0,
+  "_shunnedDays": 0,
+  "_campPlan": {
+    "talk": "parkss",
+    "last": "talk"
+  },
+  "storyQuests": {
+    "completed": [],
+    "active": null
+  },
+  "_talked": {
+    "minji": 10,
+    "kangwoo": 10,
+    "parkss": 10
+  },
+  "_threatRead": {
+    "잠든 자동 검문소": true
+  }
+}

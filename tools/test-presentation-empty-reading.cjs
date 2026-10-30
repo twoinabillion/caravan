@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 function setup(reading = null, pending = null) {
-  const context = vm.createContext({G: {}, S: {pendingPresentation: pending}});
+  const context = vm.createContext({D: {eventSceneTimeVariants:{}}, G: {}, S: {pendingPresentation: pending}});
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../src/04h-engine-presentation.js'), 'utf8'), context);
   context.G.presentationOwner = () => ({reading});
   context.G.presentationReading = value => value;

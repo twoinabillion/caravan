@@ -13,7 +13,7 @@ function setup(){
 }
 const ids=["crisis_drowsy","crisis_collapse","crisis_collapse2","crisis_breakdown","crisis_breakdown2","crisis_nofuel","crisis_nofuel2","crisis_hungry","cleaners_recall","signal_bait","meet_bikers","prev_trace_thirst","meet_cinema","loc_sunflower","gp_note1","gp_note3","loc_icheon","combat_walker_strike","combat_toll_breach","ev_uplink","ev_seaside_restaurant","ev_used_bookstore","roadbeat_50_courtesy","exp_radioshop","exp_kimchi","loc_filmset","ai_census","vg_tollgate","bori_tag","exp_batting","deserter_check","exp_blanket","exp_mart","exp_mushroom","meet_tinker","exp_underground","ev_quarry_hideout","ev_typhoon","ev_night_dogs","ev_river_flood","seoul_square"];
 const event=(ctx,id)=>permanentEvents(ctx.data).find(e=>e.id===id);
-const copy=(ctx,id,c=0,o=0)=>event(ctx,id).choices[c].out[o].text;
+const copy=(ctx,id,c=0,o=0)=>{const text=event(ctx,id).choices[c].out[o].text;return typeof text==='function'?text(ctx.S):text;};
 const plain=value=>JSON.parse(JSON.stringify(value));
 test('Jaeyi trapped-box entry does not replace shared salvage or completed rescue art',()=>{
  const {data}=setup();

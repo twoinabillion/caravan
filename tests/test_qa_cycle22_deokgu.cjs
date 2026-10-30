@@ -5,6 +5,7 @@ const {load,state}=require(dir+'/fixture.cjs'),{setup}=require(dir+'/setup.cjs')
 const helper=require('../qa-artifacts/qa-cycle-20261026/cycle12/story/reader-runtime.cjs');
 const baseline=require(dir+'/baseline.json'),legacy=require(dir+'/legacy.json');
 const young={who:'passer_man',name:'밀양 청년'};
+const currentText=(text,ci)=>ci===1?text.replace('마침 야식 교대 시간이었고','마침 식사 교대 시간이었고'):text;
 const routes=[['deokgu','deokgu','deokgu'],['me',young,young,'me',young]];
 test('the exact natural pending entry retains its existing Deokgu introduction across reload',()=>{
  const h=load();assert.deepEqual(h.json('qaNamed(entry)'),baseline.entry);
@@ -16,8 +17,8 @@ for(const ci of [0,1])test(`Deokgu choice ${ci} actual reader preserves all pros
  for(const party of [null,[],['eunsu','parkss'],['parkss','eunsu']]){
   const h=load({party,youngMan:ci===1});h.run(`globalThis.c=e.choices[${ci}];globalThis.o=c.out[0]`);
   const result=h.json('qaNamed(qaResult(e,c,o,{knownSpeaker:entry.knownSpeaker}))');
-  assert.deepEqual(result.map(t=>t.text),baseline.out[ci+'.0'].map(t=>t.text));
-  assert.deepEqual(result.filter(t=>t.kind==='narration'),baseline.out[ci+'.0'].filter(t=>t.kind==='narration'));
+  assert.deepEqual(result.map(t=>t.text),baseline.out[ci+'.0'].map(t=>currentText(t.text,ci)));
+  assert.deepEqual(result.filter(t=>t.kind==='narration'),baseline.out[ci+'.0'].filter(t=>t.kind==='narration').map(t=>({...t,text:currentText(t.text,ci)})));
   const spoken=result.filter(t=>t.kind!=='narration');
   assert.deepEqual(spoken.map(t=>t.who),routes[ci].map(r=>typeof r==='string'?r:r.who));
   for(const [i,t] of spoken.entries()){
@@ -29,14 +30,14 @@ for(const ci of [0,1])test(`Deokgu choice ${ci} actual reader preserves all pros
 });
 test('only two outcome metadata arrays change; entry, all text, mechanics, flags, notes, weights and gates remain frozen22',()=>{
  const h=load(),now=h.json("JSON.parse(JSON.stringify(e,(k,v)=>typeof v==='function'?v.toString():v))"),expected=structuredClone(baseline.event);
- for(const ci of [0,1])expected.choices[ci].out[0].turnSpeakers=routes[ci];
+ for(const ci of [0,1]){expected.choices[ci].out[0].turnSpeakers=routes[ci];expected.choices[ci].out[0].text=currentText(expected.choices[ci].out[0].text,ci);}
  assert.deepEqual(now,expected);
  assert.equal(h.run('G.reqOk(e.choices[1].req).ok'),false);
 });
 for(const old of legacy)test(`choice ${old.choice} new paid reader reload retains voices and exact frozen22 effects without reapplication`,()=>{
  const h=load({youngMan:old.choice===1}),frozen=load({frozen:true,youngMan:old.choice===1});
  for(const env of [h,frozen]){env.run(`globalThis.c=e.choices[${old.choice}];globalThis.r=G.resolvePresentedChoice(e,c)`);assert(env.run('r.ok&&r.applied'));}
- assert.deepEqual(state(h),state(frozen));assert.deepEqual(h.json('r.chips'),frozen.json('r.chips'));assert.equal(h.run('r.out.text'),old.text);
+ assert.deepEqual(state(h),state(frozen));assert.deepEqual(h.json('r.chips'),frozen.json('r.chips'));assert.equal(h.run('r.out.text'),currentText(old.text,old.choice));
  h.run('globalThis.turns=qaResult(e,c,r.out,{knownSpeaker:entry.knownSpeaker})');
  const turns=h.json('qaNamed(turns)'),paid=state(h);
  h.run('G.capturePresentationView({eventId:e.id,phase:"outcome",turns,knownSpeaker:!!entry.knownSpeaker,index:0});G.save();G.load();globalThis.again=G.resolvePresentedChoice(e,c)');

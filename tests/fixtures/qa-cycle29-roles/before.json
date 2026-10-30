@@ -1,0 +1,383 @@
+[
+  {
+    "id": "lc_chungju_lake",
+    "choices": [
+      {
+        "label": "옛 주민들과 걷는다",
+        "out": [
+          {
+            "p": 1,
+            "text": "노인들이 돌담을 쓸며 옛집을 하나하나 호명했다. \"박씨네. 최씨네. 방앗간.\"\n\n\"방앗간은 저짝이여.\"\n\n\"저짝이 최씨네고.\"\n\n\"최씨네가 방앗간을 했잖여.\" 두 사람이 진흙 위에 서서 한동안 다퉜다. 결론은 안 났다.\n\n옆에 있던 노인이 이쪽을 보며 말했다. \"물에 잠긴 것도 이렇게 다시 보는데. 망한 세상도 언젠가 물 빠지듯 드러나겄지. 길이나 봐두게.\"",
+            "fx": {
+              "time": 90,
+              "moodAll": 6,
+              "note": {
+                "type": "사건",
+                "title": "물 빠진 마을",
+                "body": "\"망한 세상도 물 빠지듯 드러나겄지. 길이나 잘 봐두게.\""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "가뭄으로 충주호 수위가 내려가 옛 수몰 마을이 드러났다."
+      },
+      {
+        "kind": "narration",
+        "text": "30년 만에 물 밖으로 나온 돌담과 우물과 마을 회관 터."
+      },
+      {
+        "kind": "narration",
+        "text": "나이 든 사람들이 진흙 위를 조심조심 걷고 있다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "여기가 우리 집이었어."
+      }
+    ],
+    "out": [
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "노인들이 돌담을 쓸며 옛집을 하나하나 호명했다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_refugee",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "박씨네. 최씨네. 방앗간."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_refugee",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "방앗간은 저짝이여."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_refugee",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "저짝이 최씨네고."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_refugee",
+            "name": "???",
+            "speakerUncertain": true,
+            "text": "최씨네가 방앗간을 했잖여."
+          },
+          {
+            "kind": "narration",
+            "text": "두 사람이 진흙 위에 서서 한동안 다퉜다. 결론은 안 났다."
+          },
+          {
+            "kind": "narration",
+            "text": "옆에 있던 노인이 이쪽을 보며 말했다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_elder",
+            "name": "노인",
+            "text": "물에 잠긴 것도 이렇게 다시 보는데. 망한 세상도 언젠가 물 빠지듯 드러나겄지. 길이나 봐두게."
+          }
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "lc_damyang_juktong",
+    "choices": [
+      {
+        "label": "통조림을 죽통밥으로 바꾼다 (식량 1)",
+        "req": {
+          "food": 1
+        },
+        "out": [
+          {
+            "p": 1,
+            "text": "통조림 하나와 죽통밥 두 통을 바꿨다.\n\n대나무 향이 찬 밥. 통은 쪼개서 젓가락과 컵이 됐다. 밥도 그릇도 남김없이 쓰는 한 끼였다.",
+            "fx": {
+              "food": 1,
+              "moodAll": 5,
+              "note": {
+                "type": "사건",
+                "title": "서로 돕는 밥",
+                "body": "대나무가 밥을 지키고 밥이 향을 얻는다. 버릴 게 없는 한 끼."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "교환하지 않고 길을 잇는다",
+        "out": [
+          {
+            "p": 1,
+            "text": "오늘은 교환하지 않겠다고 말하고 달구지로 돌아왔다. 대숲 어귀에는 밥 익는 냄새가 남아 있었다.",
+            "fx": {}
+          }
+        ]
+      }
+    ],
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "대숲 어귀 모닥불에서 대나무 통이 익어간다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "죽통밥이요. 대나무가 밥을 지키고, 밥이 대나무 향을 얻고. 서로 돕는 밥이죠."
+      }
+    ],
+    "out": [
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "통조림 하나와 죽통밥 두 통을 바꿨다."
+          },
+          {
+            "kind": "narration",
+            "text": "대나무 향이 찬 밥. 통은 쪼개서 젓가락과 컵이 됐다. 밥도 그릇도 남김없이 쓰는 한 끼였다."
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "오늘은 교환하지 않겠다고 말하고 달구지로 돌아왔다. 대숲 어귀에는 밥 익는 냄새가 남아 있었다."
+          }
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "settlement_road_echo",
+    "choices": [
+      {
+        "label": "차를 세우고 마지막 구간을 함께 정리한다",
+        "out": [
+          {
+            "p": 1,
+            "fx": {
+              "impactEcho": "assist"
+            }
+          }
+        ]
+      },
+      {
+        "label": "무전과 지도로 다음 구간만 이어 준다",
+        "out": [
+          {
+            "p": 1,
+            "fx": {
+              "impactEcho": "relay"
+            }
+          }
+        ]
+      },
+      {
+        "label": "멈추지 않고 북쪽으로 계속 간다",
+        "out": [
+          {
+            "p": 1,
+            "fx": {
+              "impactEcho": "pass"
+            }
+          }
+        ]
+      }
+    ],
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "갓길에서 수원 성곽 공동체에서 온 사람들과 다시 만났다. 「일손 돕기」 일을 함께했던 사람들이었다. 바퀴에 진흙이 묻고 사람들 얼굴은 지쳤지만, 짐에는 수원 성곽 공동체의 표식이 매달려 있다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_refugee",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "거기서 일손 보태 주셨던 차 맞죠? 덕분에 여기까지 왔어요."
+      },
+      {
+        "kind": "narration",
+        "text": "정착지에서 끝난 줄 알았던 일이 우리보다 먼저 다음 마을로 가고 있었다."
+      }
+    ],
+    "out": [
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "수원 성곽 공동체에서 한 일은 그곳에만 남지 않았다. 수원 성곽 공동체에서 온 사람들이 서울 — 남산 쪽으로 계속 갔다."
+          },
+          {
+            "kind": "narration",
+            "text": "우리는 잠깐 늦어졌지만, 그 길을 쓰는 사람은 한 팀 더 늘었다."
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "수원 성곽 공동체에서 한 일은 그곳에만 남지 않았다. 수원 성곽 공동체에서 온 사람들이 서울 — 남산 쪽으로 계속 갔다."
+          },
+          {
+            "kind": "narration",
+            "text": "달구지는 먼저 움직였고, 뒤의 수레는 우리가 알려 준 표식을 따라왔다."
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "수원 성곽 공동체에서 한 일은 그곳에만 남지 않았다. 수원 성곽 공동체에서 온 사람들이 서울 — 남산 쪽으로 계속 갔다."
+          },
+          {
+            "kind": "narration",
+            "text": "지금은 서울로 가야 한다. 다만 백미러에서 그 행렬이 사라질 때까지 속도를 조금 늦췄다."
+          }
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "loc_gyeongju",
+    "choices": [
+      {
+        "label": "왕릉 아래서 쉬어간다 (5시간)",
+        "out": [
+          {
+            "p": 1,
+            "text": "능 아래 돗자리를 폈다. 마을 사람들이 찐 옥수수를 나눠줬다. 옥수수를 들고 봉분을 올려다보던 아이 하나가 내 옆에 앉았다.\n\n\"저 안에 진짜 왕이 있어요?\"\n\n\"있겠지.\"\n\n\"직접 열어 본 사람도 있어요?\"\n\n\"…그건 나도 몰라.\"\n\n아이는 옥수수를 다 먹고 친구들에게 뛰어갔다. 나는 왕릉 옆에서 한동안 눈을 붙였다.\n\n\"천 년을 버틴 곳이네. 나도 조금 더 버틸 수 있겠지.\" 잠에서 깨며 혼잣말했다.",
+            "turnSpeakers": [
+              {
+                "who": "passer_child",
+                "name": "마을 아이"
+              },
+              "me",
+              {
+                "who": "passer_child",
+                "name": "마을 아이"
+              },
+              "me",
+              "me"
+            ],
+            "fx": {
+              "sleeping": true,
+              "time": 300,
+              "moodAll": 10,
+              "food": 2,
+              "fatigue": -20,
+              "note": {
+                "type": "사건",
+                "title": "왕릉 소풍",
+                "body": "경주 왕릉 아래서 마을 아이와 옥수수를 먹고 쉬었다."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "인사만 하고 지나간다",
+        "out": [
+          {
+            "p": 1,
+            "text": "언덕의 곡선을 눈에 담고 지나갔다. 천년을 버틴 것들은 조용해서 좋다.",
+            "fx": {
+              "moodAll": 3
+            }
+          }
+        ]
+      }
+    ],
+    "entry": [
+      {
+        "kind": "narration",
+        "text": "길옆으로 천년 왕릉의 둥근 능선이 이어진다."
+      },
+      {
+        "kind": "narration",
+        "text": "능선의 곡선은 세상이 어떻게 되든 완만하다. 왕릉 마을 사람들이 언덕 아래서 손을 흔든다."
+      },
+      {
+        "kind": "dialogue",
+        "who": "passer_woman",
+        "name": "???",
+        "speakerUncertain": true,
+        "text": "소풍 오셨어요? 여기가 명당이지. 천년을 버틴 언덕이라, 뭐가 와도 끄떡없거든."
+      }
+    ],
+    "out": [
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "능 아래 돗자리를 폈다. 마을 사람들이 찐 옥수수를 나눠줬다. 옥수수를 들고 봉분을 올려다보던 아이 하나가 내 옆에 앉았다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_child",
+            "name": "마을 아이",
+            "text": "저 안에 진짜 왕이 있어요?"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "있겠지."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_child",
+            "name": "마을 아이",
+            "text": "직접 열어 본 사람도 있어요?"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "…그건 나도 몰라."
+          },
+          {
+            "kind": "narration",
+            "text": "아이는 옥수수를 다 먹고 친구들에게 뛰어갔다. 나는 왕릉 옆에서 한동안 눈을 붙였다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "천 년을 버틴 곳이네. 나도 조금 더 버틸 수 있겠지."
+          },
+          {
+            "kind": "narration",
+            "text": "잠에서 깨며 혼잣말했다."
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "kind": "narration",
+            "text": "언덕의 곡선을 눈에 담고 지나갔다. 천년을 버틴 것들은 조용해서 좋다."
+          }
+        ]
+      ]
+    ]
+  }
+]

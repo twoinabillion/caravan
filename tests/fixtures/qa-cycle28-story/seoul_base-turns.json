@@ -1,0 +1,31 @@
+[
+  {
+    "kind": "narration",
+    "text": "계단 대신, 산지기가 그려준 능선을 탔다. 도로가 아니라 산의 등뼈를."
+  },
+  {
+    "kind": "narration",
+    "text": "남산도 결국 산이었다. 승강장 카메라들이 도로 쪽만 보는 사이, 우리는 나무 사이로 코어 뒤편에 붙었다."
+  },
+  {
+    "kind": "ai",
+    "who": "cheollian",
+    "name": "천리안 방송",
+    "text": "\"…경로를 확인할 수 없습니다.\""
+  },
+  {
+    "kind": "narration",
+    "text": "천리안의 목소리가 드물게 당황한 기색이었다. 산길엔 눈이 없었으니까."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "산 사람들이 안부 전하래."
+  },
+  {
+    "kind": "narration",
+    "text": "능선 끝에서 코어를 내려다봤다. 저항이 못 온 남산에, 저항의 길로 도착했다."
+  }
+]

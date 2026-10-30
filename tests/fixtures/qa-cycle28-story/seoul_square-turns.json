@@ -1,0 +1,21 @@
+[
+  {
+    "kind": "narration",
+    "text": "금자 이모가 남긴 말이 생각났다."
+  },
+  {
+    "kind": "dialogue",
+    "who": "passer_man",
+    "name": "???",
+    "speakerUncertain": true,
+    "text": "조심히 가되, 외롭겐 가지 말래요."
+  },
+  {
+    "kind": "narration",
+    "text": "광장 한복판에 버너를 놓고 늦은 밥을 지었다. 개켜진 흰 옷 사이로 국 냄새가 퍼졌다."
+  },
+  {
+    "kind": "narration",
+    "text": "그릇을 놓다가 한 그릇을 더 꺼냈다. 우편부 몫으로 편지 옆에 두었다. 식은 뒤에는 다시 냄비에 부었다."
+  }
+]

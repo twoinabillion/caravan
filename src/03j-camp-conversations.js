@@ -151,7 +151,18 @@ D.campChoiceVisits=(cid,memory)=>{
 D.campConversationData=record=>{
   const base=D.campConversations[record.cid];
   // Use the saved voice, not current membership (including legacy saves).
-  if(record.cid==='minji'&&record.voice==='minji-guest-v1') return {
+  if(record.cid==='minji'&&record.voice==='minji-guest-v1') {
+    const chapter=record.guestChapter===2?2:record.guestChapter===3?3:1;
+    const followup=chapter===2?{
+      intro:'민지가 덮개 옆에 앉아 손바닥으로 진동을 짚는다.',line:'그때 들었던 소리, 다시 들어볼래요?',
+      label:'지난번 소리와 비교해 본다',text:'"지난번보다 조금 빨라진 것 같아."\n\n민지가 고개를 기울이고 덮개에 귀를 댔다.\n\n"맞아요. 아직 급한 건 아닌데, 다음에 멈추면 한 번 더 봐요."\n\n둘은 소리가 잦아들 때까지 기다렸다.',
+      home:'지난번 들었던 소리를 다시 비교하고 다음 정차 때 살피기로 했다.',road:'민지가 덮개를 짚었다. "다음에 멈추면 그 소리 다시 봐요."'
+    }:chapter===3?{
+      intro:'민지가 덮개 곁에 앉자 나도 조용히 엔진 소리를 들었다.',line:'오늘은 어때요?',
+      label:'익숙해진 소리를 함께 확인한다',text:'"오늘은 지난번과 비슷해."\n\n민지가 잠깐 듣고 고개를 끄덕였다.\n\n"그럼 됐어요. 달라지면 말해 주세요."\n\n공구를 꺼내지 않고 둘은 잠시 더 앉아 있었다.',
+      home:'익숙해진 달구지 소리를 함께 확인했다.',road:'민지가 덮개 쪽을 듣고 고개를 끄덕였다.'
+    }:null;
+    const guest={
     title:'공구 없이 듣는 소리',
     first:'점검 덮개 아래서 소리가 나서 민지를 불렀다. 민지는 공구함부터 끌어당겼다.',
     later:'민지가 점검 덮개 옆에 앉는다. 이번에는 공구함을 열지 않는다.',
@@ -160,7 +171,11 @@ D.campConversationData=record=>{
       text:'"무슨 소린지만 궁금했어."\n\n민지가 덮개에 귀를 가까이 댄다. 공구함을 잡았던 손은 무릎에 놓는다.\n\n"급한 소리는 아니에요. 이 정도면… 얘 꽤 오래 가겠는데요."\n\n덮개를 닫고도 둘은 잠깐 그대로 앉아 있었다.',
       home:'고쳐 달라는 부탁 없이, 한동안 같이 달구지의 소리를 들었다.',
       road:'민지가 점검 덮개 쪽으로 귀를 기울인다. "같이 들었던 그 소리예요. 급한 건 아니고요."'}]
-  };
+    };
+    if(followup){guest.first=guest.later=followup.intro;guest.line=followup.line;
+      guest.choices[0]={...guest.choices[0],label:followup.label,text:followup.text,home:followup.home,road:followup.road};}
+    return guest;
+  }
   const chapter=record.chapter===2?base.followup:record.chapter===3?base.settled:null;
   const current=chapter?{...base,title:chapter.title,first:chapter.intro,later:chapter.intro,
     line:chapter.lines?.[record.previousChoiceId]||chapter.line||base.line,
@@ -171,6 +186,16 @@ D.campConversationData=record=>{
     const visits=record.choiceVisits[choice.id]||0;
     const branch=visits>=2?base.settled:visits===1?base.followup:null;
     const next={...choice,...branch?.choices[choice.id]};
+    if(record.replyContext==='kangwoo-rotate-trust-v1'&&record.cid==='kangwoo'&&record.chapter===2&&record.previousChoiceId==='rotate'&&choice.id==='trust'&&visits===1)
+      next.text=next.text.replace('"들리면 같이 받아요."','"오른쪽 뒤는 제가 볼게요. 무전이 들리면 같이 받아요."');
+    if(record.replyContext==='kangwoo-cross-choice-v2'&&record.cid==='kangwoo'&&(record.chapter===2||record.chapter===3)){
+      if(record.previousChoiceId==='rotate'&&choice.id==='trust'){
+        if(visits===0) next.text=next.text.replace('"서연 씨한테 뭐부터 하라고 했어요?"','"오른쪽 뒤는 제가 볼게요. 서연 씨한테 뭐부터 하라고 했어요?"');
+        else if(visits===1) next.text=next.text.replace('"들리면 같이 받아요."','"오른쪽 뒤는 제가 볼게요. 무전이 들리면 같이 받아요."');
+        else if(visits===2) next.text='오른쪽 뒤를 확인한 뒤, 내가 보겠다는 손짓을 보냈다.\n\n'+next.text;
+      } else if(record.previousChoiceId==='trust'&&choice.id==='rotate'&&visits===1)
+        next.text=next.text.replace('"여기서는 보여요. 문도요."','"호출 오면 같이 들을게요. 오른쪽 뒤도 여기서 보여요. 문도요."');
+    }
     if(record.cid==='minji'&&record.previousChoiceId==='sort'&&choice.id==='listen'&&!visits)
       next.label='퓨즈 정리 대신 점검 덮개 소리를 함께 듣는다';
     return next;

@@ -1,3 +1,12 @@
+
+// Cycle29: project only the reviewed standalone-attribution edit into frozen baselines.
+function projectCycle29(id,now,old){
+ const changes={talk_mj_18:[0,'중간에 "아니 그게 아니라"를 두 번쯤 하더니 고개를 끄덕였다.','중간에 두 번쯤 말했다. "아니 그게 아니라" 그러더니 고개를 끄덕였다.'],talk_jy_18:[1,'웃다가 다시 "저녁 뭐예요?" 하고 물었다.','웃다가 다시 물었다. "저녁 뭐예요?"']};
+ const change=changes[id];if(!change)return now;
+ const [i,from,to]=change,was=old.choices[i].out[0].text,cur=now.choices[i].out[0].text;
+ assert.equal(was.split(from).length,2,id+' old fragment');assert.equal(cur,was.replace(from,to),id+' exact cycle29 delta');
+ now.choices[i].out[0].text=was;return now;
+}
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
@@ -58,14 +67,17 @@ test('all48 audited Jaeyi/Leo personal scenes preserve already-correct entry and
   if(!changed?.script?.text)assert.deepEqual(projectReviewedJy04Entry(old.id,h.json('qaNamed(entry)')),old.entry,old.id+' entry');
   for(const out of old.outcomes)if(!changed?.script?.choices?.[out.i+'.'+out.j]){
    h.run(`globalThis.c=ev.choices[${out.i}];globalThis.out=c.out[${out.j}]`);
-   assert.deepEqual(h.json('qaNamed(qaResult(ev,c,out,{knownSpeaker:!!entry.knownSpeaker}))'),out.turns,old.id+'.'+out.i+'.'+out.j);
+   const actual=h.json('qaNamed(qaResult(ev,c,out,{knownSpeaker:!!entry.knownSpeaker}))');
+   const expected=JSON.parse(JSON.stringify(out.turns));
+   if(old.id==='talk_jy_18'&&out.i===1&&out.j===0){assert.equal(expected[3].text,'손도장을 찍는 시늉을 하자 재이가 깔깔 웃었다. 웃다가 다시');assert.equal(expected[5].text,'하고 물었다.');expected[3].text='손도장을 찍는 시늉을 하자 재이가 깔깔 웃었다. 웃다가 다시 물었다.';expected.splice(5,1);}
+   assert.deepEqual(actual,expected,old.id+'.'+out.i+'.'+out.j);
   }
  }
 });
 
 test('all audited prose, gates, choices, costs, probabilities and effects remain unchanged',()=>{
  const h=setup(),clean=x=>JSON.parse(JSON.stringify(x,(k,v)=>k==='turnSpeakers'||k==='turns'?undefined:v));
- for(const old of baseline){const now=h.json(`JSON.parse(JSON.stringify(event('${old.id}'),(k,v)=>typeof v==='function'?v.toString():v))`);assert.deepEqual(clean(projectReviewedJy04Prose(old.id,now)),clean(old.raw),old.id);}
+ for(const old of baseline){const now=h.json(`JSON.parse(JSON.stringify(event('${old.id}'),(k,v)=>typeof v==='function'?v.toString():v))`);assert.deepEqual(clean(projectCycle29(old.id,projectReviewedJy04Prose(old.id,now),old.raw)),clean(old.raw),old.id);}
 });
 
 test('all23 frozen paid outcomes retain old reader identities without another payment',()=>{

@@ -627,6 +627,8 @@ G.eventAvailable = (ev,context={})=>{
   const location=G.eventLocation(ev);
   const nodeId=context.node||(mode==='waypoint'?context.to:S.at);
   if(!ev||ev.w<=0||ev.fixed||ev.locEvent) return false;
+  // A newly drawn fuel theft requires some fuel; saved presentations remain recoverable.
+  if(ev.id==='ev_fuel_thief_night'&&!G.isInfiniteResourceMode()&&S.fuel<=0) return false;
   if(context.typeFilter&&ev.type!==context.typeFilter) return false;
   /* 일반 풀에서 한 번 본 장면은 속성에 관계없이 다시 추첨하지 않는다.
      fixed 체인과 플레이어가 직접 다시 말을 거는 영입 만남은 openEventById로

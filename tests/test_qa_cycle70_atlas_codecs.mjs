@@ -1,0 +1,15 @@
+import {projectOriginalToCompressed} from './qa-cycle72-original-projection.mjs';
+import {projectCycle72} from './qa-cycle72-atlas-projection.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';import {runtimeAtlas} from '../tools/runtime-landscape-atlas.mjs';
+const root=path.resolve(import.meta.dirname,'..'),dir=path.join(root,'tests/fixtures/qa-cycle70-atlas-codecs'),baseline=JSON.parse(fs.readFileSync(path.join(dir,'baseline.json'))),rows=JSON.parse(fs.readFileSync(path.join(dir,'approved-delivery.json'))).routes;
+const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(path.join(root,p))).digest('hex');
+test('47 approved routes change only delivery path and hash; 31 prior Q88 routes unchanged',()=>{
+ assert.equal(rows.length,47);assert.equal(new Set(rows.map(x=>x.id)).size,47);assert.equal(rows.filter(x=>x.quality===87).length,12);assert.equal(rows.filter(x=>x.quality===88).length,35);
+ const map=new Map(rows.map(x=>[x.id,x])),after=projectCycle72(root,projectOriginalToCompressed(root,runtimeAtlas(root)));assert.equal(after.routes.length,78);assert.equal(after.routes.filter(x=>!map.has(x.id)).length,31);
+ for(let i=0;i<78;i++){const r=after.routes[i],old=baseline.routes[i],x=map.get(r.id);assert.equal(r.id,old.id);assert.equal(sha(old.file),old.sha256);if(x){assert.equal(x.current,old.file);assert.equal(x.currentSha,old.sha256);assert.equal(sha(x.source),x.sourceSha);assert.equal(sha(x.current),x.currentSha);assert.equal(r.file,x.target);assert.equal(r.sha256,x.candidateSha);assert.equal(sha(x.target),x.candidateSha)}else{assert.equal(r.file,old.file);assert.equal(r.sha256,old.sha256);assert.match(r.file,/atlas-v1-q88\//)}}
+ const normalized=structuredClone(after);for(let i=0;i<78;i++){normalized.routes[i].file=baseline.routes[i].file;normalized.routes[i].sha256=baseline.routes[i].sha256}assert.deepEqual(normalized,baseline);
+});
+test('both original Q90 and current delivery independently meet RGB limits and preserve exact alpha',()=>{
+ const code=`import json,sys,math\nfrom PIL import Image\nimport numpy as np\nfor x in json.load(open(sys.argv[1]))['routes']:\n b=np.asarray(Image.open(x['target']).convert('RGBA'))\n for role in ('source','current'):\n  a=np.asarray(Image.open(x[role]).convert('RGBA')); assert a.shape==b.shape==(720,2160,4),x['id']; assert np.array_equal(a[:,:,3],b[:,:,3]),x['id']\n  d=a[:,:,:3].astype(np.int16)-b[:,:,:3].astype(np.int16); mse=np.mean(d.astype(np.float32)**2);psnr=10*math.log10(65025/mse);mae=float(np.abs(d).mean())\n  assert psnr>40 and mae<2,(x['id'],role,psnr,mae)\n  expectedP=x['sourcePsnr'] if role=='source' else x['psnr'];expectedM=x['sourceMae'] if role=='source' else x['mae']; assert abs(psnr-expectedP)<.001 and abs(mae-expectedM)<.001,(x['id'],role)`;
+ execFileSync('python3',['-c',code,path.join(dir,'approved-delivery.json')],{cwd:root,env:{...process.env,OPENBLAS_NUM_THREADS:'1'},stdio:'pipe'});
+});

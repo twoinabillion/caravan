@@ -10,7 +10,7 @@ function setup(){
   for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),ctx);
   return vm.runInContext('D',ctx);
 }
-const D=setup(),events=permanentEvents(D);
+const D=setup(),events=require('./reunion-contract.cjs')(permanentEvents(D));
 const event=id=>events.find(e=>e.id===id);
 const quotes=t=>[...String(typeof t==='function'?t.toString():t||'').matchAll(/["“]([^"”\n]{2,})["”]/g)].length;
 const turns=t=>typeof t==='function'?'dynamic':(t||[]).map(t=>({kind:t.kind,who:t.who}));
@@ -20,6 +20,13 @@ test('modernization preserves all 1039 event gates, costs, effects and chains',(
   const rows=events.map(e=>JSON.parse(JSON.stringify(e,(k,v)=>omit.has(k)?undefined:v)))
     .sort((a,b)=>a.id.localeCompare(b.id));
   assert.equal(rows.length,1039);
+  const jaeyi=rows.find(row=>row.id==='jy_recruit');
+  assert.equal(jaeyi.choices.length,3);
+  assert.deepEqual(jaeyi.choices[1].req,{scrap:3,notFlag:'jaeyi_info_bought'});
+  assert.equal(jaeyi.choices[1].out[0].fx.flag,'jaeyi_info_bought');
+  assert.deepEqual(jaeyi.choices[2],{req:{flag:'jaeyi_info_bought'},out:[{p:1,fx:{}}]});
+  jaeyi.choices[1].req={scrap:3};delete jaeyi.choices[1].out[0].fx.flag;jaeyi.choices.pop();
+  const busRecord=rows.find(row=>row.id==='ev_bus_timetable');assert.equal(busRecord.parseRecords,true);delete busRecord.parseRecords;
   require('./story-review-contract.cjs')(rows);
   assert.equal(hash(rows),'df40ae877d70b811a8079d3845132af9964ddb78e5e63660c48df06197ecf2a4');
 });
@@ -28,6 +35,35 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
     choices:(e.choices||[]).map(c=>({q:quotes(c.label),out:(c.out||[]).map(o=>({
       q:quotes(o.text),speakers:o.turnSpeakers,turns:turns(o.turns)}))}))}))
     .sort((a,b)=>a.id.localeCompare(b.id));
+  {const row=rows.find(r=>r.id==='exp_gas').choices[1].out[0];assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),['minji','me','minji']);row.speakers=undefined;}
+  {const out=rows.find(r=>r.id==='ev_fire_station').choices[1].out[0];assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),[{who:'record',kind:'record',name:'소방서 출동일지',medium:'paper'}]);out.speakers=undefined;}
+  // Cycle57: exact seed-food prose is separately asserted; quotation counts remain unchanged.
+  for(const change of [{"id":"meet_seedlady","ci":0,"old":"물 두 통과 상추 씨앗 한 병을 맞바꿨다. 엄밀히는 빌린 거다.\n\n\"수확하면 두 배 반납이에요. 어디서든, 누구한테든.\"\n\n\"누구한테든이요?\"\n\n\"저 아니어도 돼요. 씨앗 필요한 사람 아무나.\" 주인이 병뚜껑을 한 번 더 조여줬다.","new":"물 두 통과 상추 씨앗 한 병을 맞바꿨다. 엄밀히는 빌린 거다. 주인은 바로 먹을 말린 채소 세 꾸러미도 함께 건넸다.\n\n\"수확하면 두 배 반납이에요. 어디서든, 누구한테든.\"\n\n\"누구한테든이요?\"\n\n\"저 아니어도 돼요. 씨앗 필요한 사람 아무나.\" 주인이 병뚜껑을 한 번 더 조여줬다."},{"id":"ev_seed_girl","ci":0,"old":"상추와 무 씨앗을 골랐다. 소녀가 심는 법까지 야무지게 설명해줬다.\n\n\"물 너무 많이 주면 죽어요. 딱 촉촉하게만. 아, 상추는 반그늘에… 아니다, 그건 여름 얘기고. 그냥 촉촉하게만 하세요.\"\n\n언젠가 우리 텃밭에 뿌릴 날을 상상했다.","new":"상추와 무 씨앗을 골랐다. 소녀는 바로 먹을 말린 채소 두 꾸러미도 함께 내주었다. 소녀가 심는 법까지 야무지게 설명해줬다.\n\n\"물 너무 많이 주면 죽어요. 딱 촉촉하게만. 아, 상추는 반그늘에… 아니다, 그건 여름 얘기고. 그냥 촉촉하게만 하세요.\"\n\n언젠가 우리 텃밭에 뿌릴 날을 상상했다."},{"id":"ev_seed_girl","ci":1,"old":"전에 얻어둔 해바라기 씨앗과 소녀의 채소 씨앗을 맞바꿨다.\n\n소녀 눈이 반짝였다. \"해바라기! 이건 우리 밭에 없어요!\" 서로 남는 걸 나누니 둘 다 부자가 됐다.","new":"전에 얻어둔 해바라기 씨앗과 소녀의 채소 씨앗을 맞바꿨다. 소녀는 말린 채소 세 꾸러미도 함께 건넸다.\n\n소녀 눈이 반짝였다. \"해바라기! 이건 우리 밭에 없어요!\" 서로 남는 걸 나누니 둘 다 부자가 됐다."}]){const out=event(change.id).choices[change.ci].out[0];assert.equal(out.text,change.new);assert.equal(quotes(change.new),quotes(change.old));}
+  // Cycle55: verified role identity; undefined source voices remain explicitly uncertain.
+  {const role=(who,name)=>({who,name}),E=role('passer_elder','경운기 할머니'),B=role('passer_elder','정류장 할머니'),L=role('passer_elder','리어카 할머니'),S=role('unknown','씨앗 파는 아이'),T=role('passer_man','달리는 학교 선생님'),A=role('passer_elder','아코디언 할머니'),I=role('passer_man','문신사'),W=role('passer_elder','방앗간 할머니'),H=role('unknown','방앗간 할아버지'),P=role('passer_elder','도로 작업 할머니'),SO=role('passer_elder','순임'),DO=role('passer_worker','도윤'),N=role('unknown','마을 노인'),U={who:'unknown',name:'???',speakerUncertain:true};
+   const specs={granny_arrive:{entry:[E,E]},meet_busstop_grandmas:{entry:[U,B,U,B],out:{'0.0':[B,B,B]}},ev_elderly_couple:{entry:[U],out:{'0.0':[L]}},ev_seed_girl:{entry:[S],out:{'0.0':[S],'1.0':[S],'2.0':[U]}},ev_traveling_teacher:{out:{'0.0':[T],'2.0':[U]}},ev_accordion_granny:{entry:[A,U,A],out:{'0.0':[A],'1.0':[A,U]}},ev_tattoo_artist:{entry:[I],out:{'0.0':[I],'1.0':[U,I]}},ev_watermill:{entry:[U,W],out:{'0.0':[H,U,U],'1.0':['minji',U,'minji','minji']}},roadcrew_line:{entry:[P,U,P],out:{'0.0':[U,SO,DO],'1.0':[SO]}},water_toll:{out:{'1.0':['me',role('passer_man','청년'),'me']}},gw_wonju:{entry:[N],out:{'0.0':[N,N,N]}}};
+   for(const [id,spec] of Object.entries(specs)){const row=rows.find(r=>r.id===id);if(spec.entry){assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),spec.entry);row.speakers=undefined}for(const [key,route] of Object.entries(spec.out||{})){const [ci,oi]=key.split('.'),out=row.choices[ci].out[oi];assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),route);out.speakers=undefined;}}
+   const teacher=rows.find(r=>r.id==='ev_traveling_teacher');assert.deepEqual(JSON.parse(JSON.stringify(teacher.turns)),[{kind:'narration'},{kind:'dialogue',who:'passer_man'},{kind:'narration'}]);teacher.turns=[];
+   const lecture=teacher.choices[1].out[0];assert.deepEqual(JSON.parse(JSON.stringify(lecture.turns)),[{kind:'narration'},{kind:'narration'},{kind:'dialogue',who:'passer_man'},{kind:'narration'}]);lecture.turns=[];
+  }
+  // Cycle53 multiline quote repairs: assert exact new role arrays before projection.
+  {const E={who:'passer_elder',name:'경운기 할머니'},A={who:'passer_man',name:'간고등어 행상'},G={who:'passer_man',name:'할머니의 손주'};
+   const andong=rows.find(r=>r.id==='lc_andong_fish');assert.deepEqual(JSON.parse(JSON.stringify(andong.speakers)),[A,'me',A]);andong.speakers=undefined;assert.deepEqual(JSON.parse(JSON.stringify(andong.choices[0].out[0].speakers)),[]);andong.choices[0].out[0].speakers=undefined;
+   const out=rows.find(r=>r.id==='granny_arrive').choices[0].out[0];assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),[G,E,E,E]);out.speakers=undefined;
+  }
+  // Cycle53: preserve original corpus after verifying evidence-supported role arrays.
+  {const E={who:'passer_elder',name:'경운기 할머니'},P={who:'passer_elder',name:'폐지 줍는 할머니'},M={who:'passer_elder',name:'매화마을 할머니'},W={who:'passer_merchant',name:'마스크 장수'},R={who:'passer_elder',name:'야영 중인 할머니'};
+   const X={who:'unknown',name:'???',speakerUncertain:true};const specs={meet_paper_grandma:{entry:[X,P,X,P],out:{'0.0':[P]}},loc_maehwa:{entry:[M],out:{'0.0':[M]}},wx_maskseller:{entry:[W,X,W],out:{'0.0':[W],'1.0':[W]}},rumor_leo:{entry:[R,R],out:{}},granny_meet:{entry:[E],out:{'0.0':[E,E,'me',E,'me',E,E],'1.0':[E,E]}},granny_again:{entry:[E,E],out:{'0.0':['minji',E,'minji',E,E,E],'1.0':[E]}}};
+   for(const [id,spec] of Object.entries(specs)){const row=rows.find(r=>r.id===id);assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),spec.entry);row.speakers=undefined;for(const [key,route] of Object.entries(spec.out)){const [ci,oi]=key.split('.'),out=row.choices[ci].out[oi];assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),route);out.speakers=undefined;}}
+  }
+  // Cycle51: preserve the original quote corpus after checking each supported speaker.
+  for(const [id,route] of [['crisis_nofuel2',[{who:'passer_refugee',name:'농가 사람'}]],['exp_temple',[{who:'passer_elder',name:'노보살'}]],['lc_cheonan_walnut',[{who:'passer_merchant',name:'호두과자 장수'},{who:'passer_merchant',name:'호두과자 장수'}]]]){
+    const row=rows.find(r=>r.id===id).choices[0].out[0];assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),route);row.speakers=undefined;
+  }
+  {const row=rows.find(r=>r.id==='lc_cheonan_walnut');assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),[{who:'passer_merchant',name:'호두과자 장수'},'me',{who:'passer_merchant',name:'호두과자 장수'}]);row.speakers=undefined;}
+  // QA proposal: project only three explicitly checked role/quote deltas.
+  for(const [id,ci] of [['seoul_ruins',2],['seoul_base',0]]){const actual=event(id).choices[ci].out[0];assert.deepEqual(Array.from(actual.turnSpeakers),['me']);rows.find(r=>r.id===id).choices[ci].out[0].speakers=undefined;}
+  const square=event('seoul_square').choices[2].out[0];assert.equal(typeof square.text,'function');assert.match(square.text({items:{}}),/북쪽 소식/);assert.doesNotMatch(square.text({items:{}}),/남산행 편지/);assert.match(square.text({items:{'남산행 편지':1}}),/남산행 편지/);const sq=rows.find(r=>r.id==='seoul_square').choices[2].out[0];assert.equal(sq.q,0);sq.q=1;
   // Cycle23: five approved copy fragments; quote counts/routes and mechanics do not change.
   const cycle23Copy=[{"id":"ev_eunsu_solo","path":["choices",1,"out",0,"text"],"value":"은수에게 무전 감청과 배급 관리를 맡겼다. 은수는 종이를 펴고 주파수 당번표와 배급표를 짰다. 줄이 자로 그은 듯 반듯했다.\n\n\"이런 건 제 전공이에요. …전공이라기보단 그냥 하던 일인데. 아무튼요.\"\n\n표를 적재함 벽에 붙이자 다들 자기 이름부터 찾았다. 물 당번이 누구냐던 질문에 은수가 표의 한 칸을 짚었다."},{"id":"comp_water_fight","path":["choices",1,"out",0,"text"],"value":"내 몫을 돌렸다. 잠시 침묵.\n\n그러자 하나둘 \"나도 반만\" \"나도\"— 남은 물은 나눠 마시기로 했다.\n\n목은 마른데 마음은 이상하게 든든하다."},{"id":"seoul_han","path":["text"],"isFunction":true,"value":"(S)=>{\n   const f=S.flags||{};\n   const voice=!f.postman_met\n     ? '다리 한복판, 난간에 매달린 라디오가 저 혼자 켜졌다. 잡음뿐이다. 누군가 여기까지 오고 멈췄다는 것만 알겠다.'\n     : '다리 한복판, 난간에 매달린 라디오가 켜졌다. 우편부의 목소리다(녹음이었다).\\n\\n\"생활차— 아니, 달구지 만나면 전해요. '\n       +(f.postman_letter?'남산행 편지, 그쪽이 들고 갔다고. ':'남산행 편지, 아직 임자를 못 찾았다고. ')\n       +'나는 여기까지밖에 못 갔어요. 나머지는 부탁해요.\"';\n   return '하나 남은 다리. 난간에 누가 매달아 둔 것들이 바람에 흔들린다— 리본, 신발 한 짝, 코팅한 사진들. 건너간 사람들이 남긴 표식이다.\\n\\n'+voice;\n }"},{"id":"seoul_han","path":["choices",0,"out",0,"text"],"value":"조수석 서랍의 편지를 꺼내 품에 옮겼다. 우편부의 여러 해가 이 손에서 마무리된다.\n\n\"끝까지 갈게요.\" 아무도 없는 다리에 대고 말했다. 난간의 라디오가 지직, 하고 꺼졌다. 대답처럼."}];
   for(const spec of cycle23Copy){
@@ -146,7 +182,7 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
     {"id":"comp_water_fight","choices":{"0.0":["party_first","me","party_first","me","party_second"],"1.0":["party_first","party_second"],"2.0":[]}},
     {"id":"comp_ghost_story","choices":{"0.1":[],"1.0":[]},"entry":["party_first"]},
     {"id":"comp_van_name","choices":{"1.0":[]},"entry":["party_first","me","party_first"]},
-    {"id":"comp_radio_war","choices":{"0.0":[{"kind":"record","who":"radio","name":"정착지 뉴스","medium":"radio"}],"1.0":["party_first"]}},
+    {"id":"comp_radio_war","choices":{"0.0":[{"kind":"record","who":"radio","name":"정착지 뉴스","medium":"radio"}],"1.0":[]}},
     {"id":"comp_storm_count","choices":{"0.0":["party_first","party_first","me","party_first","me","party_first"],"1.0":[]},"entry":["party_first"]},
     {"id":"comp_snore","choices":{"0.0":["party_first","me"],"1.0":[]}},
     {"id":"comp_dj_night","choices":{"0.0":[],"1.0":["party_first","party_second","me","party_second","me"]},"entry":["party_first","party_second","party_first","party_second","party_first"]},
@@ -571,6 +607,9 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
       {i:1,o:0,speakers:[]}]},
     {id:'talk_mj_21',choices:[{i:0,o:0,speakers:['minji','minji']},{i:1,o:0,speakers:['minji']}]});
   cycle13ReaderRoutes.push({"id":"near_hapcheon_sutra","entry":[{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"}],"choices":[{"i":0,"o":0,"speakers":["me",{"who":"passer_monk","name":"목판 옮기는 스님"},"me",{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"},{"who":"passer_monk","name":"목판 옮기는 스님"}]},{"i":1,"o":0,"speakers":[{"who":"passer_monk","name":"목판 옮기는 스님"}]},{"i":2,"o":0,"speakers":[]}]});
+  const cleaners47=rows.find(r=>r.id==='cleaners_recall').choices[1].out[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(cleaners47.speakers)),['me',{who:'passer_man',name:'회수조 선두'},{who:'passer_man',name:'회수조 선두'}]);
+  cleaners47.speakers=[{who:'passer_man',name:'회수조 선두'},{who:'passer_man',name:'회수조 선두'},{who:'passer_man',name:'회수조 선두'}];
   for(const spec of cycle13ReaderRoutes){
     const row=rows.find(r=>r.id===spec.id);
     if(spec.entry){assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),spec.entry,spec.id+' entry route');row.speakers=undefined;}
@@ -887,7 +926,11 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
   const naming=rows.find(r=>r.id==='comp_naming'),namingSource=event('comp_naming').choices[0].out[0].turns;
   assert.deepEqual(Array.from(naming.speakers),['party_first']);naming.speakers=undefined;
   assert.equal(naming.choices[0].out[0].turns,'dynamic');
-  assert.equal(hash(namingSource.toString()),'a6222c260daa7e34ba5cf8354f184ec0720e55c2fe08965952a46eaeace04ee7');
+  const namingNew=namingSource.toString();
+  const namingReplacements=[['명명식을 마치고 시동을 걸었다.','명명식을 마치고 시동을 걸며'],['엔진이 낮게 울리자 다들 웃었다.','하고 물었다. 엔진이 낮게 울리자 다들 웃었다.']];
+  let namingProjected=namingNew;
+  for(const [now,before] of namingReplacements){assert.equal(namingProjected.split(now).length,2);namingProjected=namingProjected.replace(now,before);}
+  assert.equal(hash(namingProjected),'a6222c260daa7e34ba5cf8354f184ec0720e55c2fe08965952a46eaeace04ee7');
   for(const party of [['minji','eunsu'],['parkss','jaeyi'],['kangwoo','leo','eunsu']]){
     const rendered=Array.from(namingSource({party}));
     assert.deepEqual(rendered.filter(t=>t.kind==='dialogue').map(t=>t.who),
@@ -1307,9 +1350,9 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
   }
   const omija=rows.find(r=>r.id==='near_mungyeong_omija').choices[0].out[0];
   assert.equal(omija.q,4);assert.deepEqual(JSON.parse(JSON.stringify(omija.speakers)),
-    ['me',{who:'passer_woman',name:'오미자 할머니'},'me',{who:'passer_woman',name:'오미자 할머니'}]);
+    ['me',{who:'passer_elder',name:'오미자 할머니'},'me',{who:'passer_elder',name:'오미자 할머니'}]);
   omija.q=5;omija.speakers=undefined;
-  const grandma={who:'passer_woman',name:'오미자 할머니'},stall=rows.find(r=>r.id==='near_mungyeong_omija');
+  const grandma={who:'passer_elder',name:'오미자 할머니'},stall=rows.find(r=>r.id==='near_mungyeong_omija');
   assert.deepEqual(JSON.parse(JSON.stringify(stall.speakers)),[grandma,grandma]);stall.speakers=undefined;
   assert.deepEqual(JSON.parse(JSON.stringify(stall.choices[1].out[0].speakers)),[grandma]);stall.choices[1].out[0].speakers=undefined;
   const prescription=rows.find(r=>r.id==='talk_pss_18').choices[1].out[0];
@@ -1384,6 +1427,71 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
   assert.equal(lampRoom.q,0);
   assert.match(event(lampRoom.id).text,/등대지기가 주등 옆의 작은 비상등/);
   lampRoom.q=1; // The keeper's old spoken request is now narrated without changing its role.
+  const radioResponse=rows.find(r=>r.id==='comp_radio_war').choices[1].out[0];
+  assert.equal(radioResponse.q,0);
+  assert.equal(event('comp_radio_war').choices[1].out[0].text,'전주가 나오자 모두 반가운 탄성을 질렀다. 아는 노래는 힘이 세다.\n\n한 곡이 끝날 때까지 아무도 말하지 않고 다 같이 흥얼거렸다. 뉴스는 다음에 듣기로 했다.');
+  radioResponse.q=1;
+  // Cycle26: only the player's inner thanks in the post-office parcel result is reassigned.
+  const postOffice=rows.find(r=>r.id==='ev_post_office').choices[0].out[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(postOffice.speakers)),['me']);
+  assert.equal(postOffice.q,1);postOffice.speakers=undefined;
+  // Cycle29: identify the puppet performance's child and troupe speaker explicitly.
+  const puppet=rows.find(r=>r.id==='ev_puppet_troupe').choices[0].out[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(puppet.speakers)),[{who:'passer_child',name:'아이'},{who:'passer_refugee',name:'극단 단원'},{who:'passer_refugee',name:'극단 단원'},{who:'passer_child',name:'아이들'}]);
+  assert.equal(puppet.q,4);puppet.speakers=undefined;
+  // Cycle29: named roles identify previously uncertain speakers without changing quoted words.
+  for(const [id,role] of [['loc_gyeongju',{who:'passer_refugee',name:'왕릉 마을 주민'}],['lc_damyang_juktong',{who:'passer_refugee',name:'죽통밥을 굽는 사람'}],['lc_chungju_lake',{who:'passer_elder',name:'옛 주민'}],['settlement_road_echo',{who:'passer_refugee',name:'정착지에서 온 사람'}]]){
+    const row=rows.find(r=>r.id===id);assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),[role]);row.speakers=undefined;
+  }
+  const lake=rows.find(r=>r.id==='lc_chungju_lake').choices[0].out[0];
+  assert.deepEqual(JSON.parse(JSON.stringify(lake.speakers)),[{who:'passer_elder',name:'옛 주민'},{who:'passer_elder',name:'옛 주민 1'},{who:'passer_elder',name:'옛 주민 2'},{who:'passer_elder',name:'옛 주민 1'},{who:'passer_elder',name:'노인'}]);lake.speakers=undefined;
+  // Cycle35: the lone lake angler is explicitly named without changing quotes.
+  const lakeEntry=rows.find(r=>r.id==='loc_lake');
+  assert.deepEqual(JSON.parse(JSON.stringify(lakeEntry.speakers)),[{who:'passer_elder',name:'낚시꾼'}]);
+  lakeEntry.speakers=undefined;
+  // Cycle41: the lighthouse keeper and spouse have distinct readable roles.
+  const lighthouse=rows.find(r=>r.id==='loc_lighthouse');
+  assert.deepEqual(JSON.parse(JSON.stringify(lighthouse.speakers)),[{who:'passer_elder',name:'등대지기'},{who:'passer_elder',name:'등대지기'},{who:'passer_woman',name:'등대지기 부인'}]);
+  lighthouse.speakers=undefined;
+  for(const choice of lighthouse.choices){const out=choice.out[0];assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),[{who:'passer_elder',name:'등대지기 부부'}]);out.speakers=undefined;}
+  // Cycle47: only explicitly reviewed record/player and named-speaker routes are projected.
+  for(const [id,where,expected] of [
+    ['ev_hotspring_sign',null,[{kind:'record',who:'record',name:'온천 안내판'}]],
+    ['find_windchime',[0,0],[{kind:'record',who:'record',name:'풍경 집의 나무판'}]],
+    ['wx_fog_light',[1,0],[{kind:'record',who:'record',name:'노면의 분필 글씨'}]],
+    ['van_owner',null,[{who:'passer_elder',name:'장터 노인'},{who:'passer_elder',name:'장터 노인'},'me',{who:'passer_elder',name:'장터 노인'}]],
+    ['van_owner',[0,0],[{who:'passer_elder',name:'대양'},{who:'passer_elder',name:'대양'}]],
+    ['van_owner',[1,0],[{who:'passer_elder',name:'대양'}]],
+    ['crisis_nofuel3',[1,0],[{who:'passer_worker',name:'트랙터 기사'}]],
+    ['ev_bus_timetable',null,['record']],['ev_bus_timetable',[0,0],['me']],['ev_bus_timetable',[1,0],['me']]
+  ]){let row=rows.find(r=>r.id===id);if(where)row=row.choices[where[0]].out[where[1]];assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),expected,id+' reviewed role');row.speakers=undefined;}
+  const bus47=event('ev_bus_timetable'),oldBus47=require('../tests/fixtures/qa-cycle47-bus-stop/old.json').definition;
+  assert.equal(bus47.text,oldBus47.text.replace('"○○행 07:10, 12:30, 18:00."','「○○행 07:10, 12:30, 18:00.」'));
+  const busRow47=rows.find(r=>r.id==='ev_bus_timetable');assert.equal(busRow47.q,0);busRow47.q=1;
+  // Cycle49: the entry role describes only what is already visible; the paid result identifies the speaker.
+  for(const [id,entry,out] of [
+    ['road_mechanic',{who:'passer_worker',name:'작업대 사람'},{who:'passer_worker',name:'정비공'}],
+    ['lc_icheon_rice',{who:'passer_refugee',name:'밥집 사람'},{who:'passer_elder',name:'주인 할머니'}]
+  ]){const row=rows.find(r=>r.id===id);assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),[entry]);row.speakers=undefined;const result=row.choices[0].out[0];assert.deepEqual(JSON.parse(JSON.stringify(result.speakers)),[out]);result.speakers=undefined;}
+  assert(event('cleaners_recall').choices[1].out[0].text.includes('남자가 대답했다.'));
+  // Cycle45: only a completed information purchase changes the revisit entry.
+  const jaeyiEntry=event('jy_recruit').text;
+  assert.equal(typeof jaeyiEntry,'function');
+  assert.equal(jaeyiEntry({flags:{}}),require('../tests/fixtures/qa-cycle41-story/baseline.json').events.jy_recruit.text);
+  assert.equal(jaeyiEntry({flags:{jaeyi_info_bought:true}}),'재이는 촛불 교환대에서 고물에 값을 붙이고 있었다. 우리가 다가가자 김천으로 가는 길이 표시된 지도를 다시 폈다.\n\n"가족 상자는 아직 거기 있어요. 같이 갈 생각이에요?"');
+  const jaeyiEntryRow=rows.find(r=>r.id==='jy_recruit');assert.equal(jaeyiEntryRow.q,6);jaeyiEntryRow.q=5;
+  const jaeyiExit=rows.find(r=>r.id==='jy_recruit').choices.pop();
+  assert.deepEqual(JSON.parse(JSON.stringify(jaeyiExit)),{q:0,out:[{q:1,turns:[]}]});
+  const solarRule=rows.find(r=>r.id==='exp_solar_bots').choices[1].out[0];
+  assert.equal(solarRule.q,1);
+  assert.deepEqual(JSON.parse(JSON.stringify(solarRule.speakers)),[{who:'me',kind:'thought'}]);
+  solarRule.speakers=undefined;
+  const dialect=event('comp_dialect').choices[1].out[0];
+  assert.equal(typeof dialect.text,'function');
+  assert.equal(dialect.text({party:['parkss']}),'"점수는요?" "안 매겨요." "왜요." "다 붙었어요. 어디 내려놔도 밥은 얻어먹겠더라고요."\n\n채점표는 끝내 안 나왔다.');
+  assert.equal(dialect.text({party:['minji']}),'"점수는요?" "안 매겨." "왜요." "다 붙었어. 어디 내려놔도 밥은 얻어먹겠더라."\n\n채점표는 끝내 안 나왔다.');
+  const dialectRow=rows.find(r=>r.id==='comp_dialect').choices[1].out[0];
+  assert.equal(dialectRow.q,8);dialectRow.q=4;
   assert.equal(hash(rows),'22a519e6302b890440e973e137b597b140365ab5cb7902abd3253bf194478595');
 });
 test('the register guard catches archaic humans, not dialects, nouns or formal reports',()=>{
@@ -1507,7 +1615,7 @@ test('paired Minji dialogue keeps elder honorifics and joined-player informality
   const reaction=event('react_resist_minji');
   assert.match(reaction.text,/대장님, 느려져도 이 칸은 없애자/);
   assert.doesNotMatch(reaction.text,/시작해요|없애죠/);
-  assert.equal(reaction.choices[0].out[0].text,'민지는 짧게 “좋아” 하고 표를 접었다. 이번에는 웃지 않았다.');
+  assert.equal(reaction.choices[0].out[0].text,'민지는 짧게 말했다. “좋아” 표를 접었다. 이번에는 웃지 않았다.');
   assert.match(reaction.choices[1].out[0].text,/써야 해\./);
 });
 test('wrench and unfinished-song replies still respond to the revised preceding line',()=>{

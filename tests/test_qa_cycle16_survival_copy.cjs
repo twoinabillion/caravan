@@ -5,12 +5,15 @@ const old=require(path.join(dir,'before.json')),delta=require(path.join(dir,'cop
 const plain=x=>JSON.parse(JSON.stringify(x));
 const load=(h,file)=>assert(h.run('G.load('+JSON.stringify(fs.readFileSync(path.join(dir,file),'utf8'))+')'));
 const state=h=>h.run('JSON.stringify([S.day,S.min,S.food,S.water,S.scrap,S.fuel,S.van,S.items,S.flags,S.notes,S.comps,S.stats,S.recruitQ])');
+const oldCold='그는 버스를 잠그고 왕진 가방을 멨다.';
+const newCold='그는 냉장 상자를 달구지 전원에 연결했다. 운반 중에도 상자 안을 차갑게 유지하기 위해서였다. 버스를 잠그고 왕진 가방을 멨다.';
+
 test('natural unpaid meet_bus entry gives a cold-medicine note and the same recruitment receipt',()=>{
  const h=setup();load(h,'../attempt01/entry-162-meet_bus-export.json');
  assert.match(h.run('S.pendingPresentation.text'),/冷|냉장/);h.run("globalThis.e=G.presentationEvent('meet_bus');globalThis.knownSpeaker=false;globalThis.r=G.resolvePresentedChoice(e,e.choices[0]);");
  assert(h.run('r.ok&&r.applied'));assert.equal(h.run('S.recruitQ.id'),'parkss');
  assert.equal(h.run("S.notes.find(n=>n.title==='박 선생').body"),delta[0].new);
- assert.equal(h.run('r.out.text'),old.meet_bus.choices[0].out[0].text);reader(h,0);
+ assert.equal(h.run('r.out.text'),old.meet_bus.choices[0].out[0].text.replace(oldCold,newCold));reader(h,0);
  const before=state(h);h.run("G.capturePresentationView({eventId:e.id,phase:'outcome',turns,knownSpeaker,index:0});G.save();G.load();globalThis.r=G.resolvePresentedChoice(e,e.choices[0]);");assert.equal(h.run('r.applied'),false);assert.equal(state(h),before);
 });
 test('meet_bus refusal still creates no recruitment or medicine note',()=>{
@@ -55,5 +58,6 @@ test('companion, massacre knowledge and bond6 remain necessary; once stamp persi
 test('only four approved copy fields change; event effects, choices, probability, echo timing and chat gates remain exact',()=>{
  const h=setup(),now=plain(h.json("({meet_bus:G.presentationEvent('meet_bus'),memory:D.choiceMemories.story_family_principle,chat:D.chats.find(c=>c.id==='thread-massacre-kangwoo')})"));
  for(const d of delta){let o=now[d.collection==='events'?'meet_bus':d.collection==='chats'?'chat':'memory'];for(const k of d.path.slice(0,-1))o=o[k];assert.equal(o[d.path.at(-1)],d.new);o[d.path.at(-1)]=d.old;}
+ assert.equal(now.meet_bus.choices[0].out[0].text,old.meet_bus.choices[0].out[0].text.replace(oldCold,newCold));now.meet_bus.choices[0].out[0].text=old.meet_bus.choices[0].out[0].text;
  assert.deepEqual(now,old);
 });

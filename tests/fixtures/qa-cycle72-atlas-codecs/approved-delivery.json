@@ -1,0 +1,1231 @@
+{
+  "status": "independent-native-and-480-approved-runtime-crop-pending",
+  "note": "Q87 from preserved Q90 source; lossy; actual UI crop/motion pending",
+  "routes": [
+    {
+      "id": "mungyeong--sangju",
+      "source": "assets/ui/road-studies/atlas-v1/mungyeong--sangju.webp",
+      "sourceSha": "18534c82d9837d84d5a6224fc9587a756a6365ec8ccc37bbe11a34fdc9ae0001",
+      "current": "assets/ui/road-studies/atlas-v1-q88/mungyeong--sangju.webp",
+      "currentSha": "0204ca95b1e1516494e9c3180755b7e2d7e62aa9083448411d1bba6b5b4f46a8",
+      "currentBytes": 245224,
+      "candidateSha": "a4029711f3ae92cc204ac4093a23efed0a3a989b6c113066c39a580f178f7279",
+      "candidateBytes": 234400,
+      "saved": 10824,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 42.09386624788118,
+        "mae": 1.0341237997256516,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 41.90537142768247,
+        "mae": 1.0423904749657065,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/mungyeong--sangju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 41.90537142768247,
+      "mae": 1.0423904749657065,
+      "alphaEqual": true,
+      "sourcePsnr": 42.09386624788118,
+      "sourceMae": 1.0341237997256516,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "andong--gumi",
+      "source": "assets/ui/road-studies/atlas-v1/andong--gumi.webp",
+      "sourceSha": "8d2ce4e1c58c1f7057e6f3059c69cc2a06f3f2596562df1ce69c181bd5503394",
+      "current": "assets/ui/road-studies/atlas-v1-q88/andong--gumi.webp",
+      "currentSha": "ebedf9e5019c96ea688dd94c694bce9d8cbdf0c5f57ba88e5b7984cb14d55347",
+      "currentBytes": 251654,
+      "candidateSha": "652b0f49986318647baf19a443951b3182148bcbbfbe0382694b6e0cec7c610e",
+      "candidateBytes": 241442,
+      "saved": 10212,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 42.97763110093959,
+        "mae": 0.8531828703703703,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 42.59076000069254,
+        "mae": 0.8816891718106996,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/andong--gumi.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 42.59076000069254,
+      "mae": 0.8816891718106996,
+      "alphaEqual": true,
+      "sourcePsnr": 42.97763110093959,
+      "sourceMae": 0.8531828703703703,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "hapcheon--miryang",
+      "source": "assets/ui/road-studies/atlas-v1/hapcheon--miryang.webp",
+      "sourceSha": "1e3b73136c288d00088fad22f4b29a65fd16228b1a467a2d79d87cd998b5c928",
+      "current": "assets/ui/road-studies/atlas-v1-q88/hapcheon--miryang.webp",
+      "currentSha": "8bb6ecc82ad79307492fc093f9bd0f6543fb35864ad937d270a1d058d58dcb56",
+      "currentBytes": 248712,
+      "candidateSha": "7b01abe293dd721adc41fff525c6a66c3dc7e2e9465dfe4a5bc6162a560b1900",
+      "candidateBytes": 239390,
+      "saved": 9322,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.19982717597567,
+        "mae": 0.78349408436214,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 42.91884903925254,
+        "mae": 0.7995001714677641,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/hapcheon--miryang.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 42.91884903925254,
+      "mae": 0.7995001714677641,
+      "alphaEqual": true,
+      "sourcePsnr": 43.19982717597567,
+      "sourceMae": 0.78349408436214,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "spring--yeongdong",
+      "source": "assets/ui/road-studies/atlas-v1/spring--yeongdong.webp",
+      "sourceSha": "12b02c544bcd09fe987aabbf46f7bbc4d78d4f5617f4b754ea55ce5b3ff4c61c",
+      "current": "assets/ui/road-studies/atlas-v1-q88/spring--yeongdong.webp",
+      "currentSha": "ba3c38b6faf694ef90b5195cf7ff6083c8567498818508156589ffde5b6ea0ea",
+      "currentBytes": 245638,
+      "candidateSha": "bce78ebb409e14eeadc90ae0af5118a5499de859c940e61e8063cff27cc51985",
+      "candidateBytes": 236536,
+      "saved": 9102,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.52288602987197,
+        "mae": 0.79632094478738,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.158716152362196,
+        "mae": 0.8199922839506173,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/spring--yeongdong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.158716152362196,
+      "mae": 0.8199922839506173,
+      "alphaEqual": true,
+      "sourcePsnr": 43.52288602987197,
+      "sourceMae": 0.79632094478738,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "sangju--yeongdong",
+      "source": "assets/ui/road-studies/atlas-v1/sangju--yeongdong.webp",
+      "sourceSha": "a0f284b61de4da50ee966cd8ed160c0c081a41a2bbdcf6e88a9148d97915d4e6",
+      "current": "assets/ui/road-studies/atlas-v1-q88/sangju--yeongdong.webp",
+      "currentSha": "8a72aa244beadb9c05de3ecf17b6b1c6c5e8d33ab48e8dab49468f75e1081851",
+      "currentBytes": 253492,
+      "candidateSha": "e9f692890dcca3dd31c4bba467a39134cdaae1debff3ff65b042a9c51b04636b",
+      "candidateBytes": 244904,
+      "saved": 8588,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.178519145720045,
+        "mae": 0.8137825788751715,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 42.87889825600229,
+        "mae": 0.8286927726337449,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/sangju--yeongdong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 42.87889825600229,
+      "mae": 0.8286927726337449,
+      "alphaEqual": true,
+      "sourcePsnr": 43.178519145720045,
+      "sourceMae": 0.8137825788751715,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "hapcheon--sunflower",
+      "source": "assets/ui/road-studies/atlas-v1/hapcheon--sunflower.webp",
+      "sourceSha": "aae8a7ab9d2db10cb10d51c40e14547695d894ea8dae961da2648c92cb7f5eb2",
+      "current": "assets/ui/road-studies/atlas-v1-q88/hapcheon--sunflower.webp",
+      "currentSha": "56bda2a1407d66dca638a02dfe09ab81eb530eda695b46d885b8a8a560220a75",
+      "currentBytes": 259264,
+      "candidateSha": "cee2aacbfae971d5b37ab018d96359aa8fb6d3bb3ca0063ddbe8aa26d3cb14be",
+      "candidateBytes": 251080,
+      "saved": 8184,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.188806506139336,
+        "mae": 0.7935279492455418,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 42.92046247656977,
+        "mae": 0.8059923696844993,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/hapcheon--sunflower.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 42.92046247656977,
+      "mae": 0.8059923696844993,
+      "alphaEqual": true,
+      "sourcePsnr": 43.188806506139336,
+      "sourceMae": 0.7935279492455418,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "maehwa--suncheon",
+      "source": "assets/ui/road-studies/atlas-v1/maehwa--suncheon.webp",
+      "sourceSha": "a36e4a06ad533b6cb520eb739c7ddce05d6ae7d9ec36802359a1fd346e05260e",
+      "current": "assets/ui/road-studies/atlas-v1-q88/maehwa--suncheon.webp",
+      "currentSha": "83d19208b3455b915ae9edf0882502acf1bfd48602f94d24dd8bf27898aed03c",
+      "currentBytes": 243900,
+      "candidateSha": "3912afeb123b668c3e7a4f5612cce76929f4010b9401a375a3bdb9d96c44de06",
+      "candidateBytes": 235748,
+      "saved": 8152,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.517956212866444,
+        "mae": 0.769045567558299,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.082150855967896,
+        "mae": 0.7847037894375858,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/maehwa--suncheon.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.082150855967896,
+      "mae": 0.7847037894375858,
+      "alphaEqual": true,
+      "sourcePsnr": 43.517956212866444,
+      "sourceMae": 0.769045567558299,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gimcheon--jaeyi_cache",
+      "source": "assets/ui/road-studies/atlas-v1/gimcheon--jaeyi_cache.webp",
+      "sourceSha": "4286626b1b908c1eca22b4211f6193c28c0522f4ca739a000e4a6fb2e3694acd",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gimcheon--jaeyi_cache.webp",
+      "currentSha": "9945372950d15a0035b556e70cb380b8675c24ee3b66f07ac8d04fb2ca9098b4",
+      "currentBytes": 230748,
+      "candidateSha": "0191d1d66110c490cffb99754bba47dabc2c7e141c1bb5bb6025f92be9075c28",
+      "candidateBytes": 222668,
+      "saved": 8080,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.2946574821807,
+        "mae": 0.7957163065843621,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.127400553387425,
+        "mae": 0.7971120541838135,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gimcheon--jaeyi_cache.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.127400553387425,
+      "mae": 0.7971120541838135,
+      "alphaEqual": true,
+      "sourcePsnr": 43.2946574821807,
+      "sourceMae": 0.7957163065843621,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "daejeon--yeongdong",
+      "source": "assets/ui/road-studies/atlas-v1/daejeon--yeongdong.webp",
+      "sourceSha": "4084cac3c9010eb01e0259a5af335cebb54bbba393395e9db068355040db62f4",
+      "current": "assets/ui/road-studies/atlas-v1-q88/daejeon--yeongdong.webp",
+      "currentSha": "517b34344bd51fb414d7f6533b713fc66d093bcae0bf3e462f0a8f30bc6b20d0",
+      "currentBytes": 246880,
+      "candidateSha": "4cfe41a65e88df94bd1c8e58248d0fe4d94b10743f062f9d39dc0e0550ea181d",
+      "candidateBytes": 238886,
+      "saved": 7994,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.30931205926738,
+        "mae": 0.7777111196844994,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.10383450292975,
+        "mae": 0.7838052983539094,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/daejeon--yeongdong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.10383450292975,
+      "mae": 0.7838052983539094,
+      "alphaEqual": true,
+      "sourcePsnr": 43.30931205926738,
+      "sourceMae": 0.7777111196844994,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gumi--mall",
+      "source": "assets/ui/road-studies/atlas-v1/gumi--mall.webp",
+      "sourceSha": "b59f3547dc1feff0f8dfc92e44ff3db1bbc75ec69fde6976a9a3bfab432416af",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gumi--mall.webp",
+      "currentSha": "0fd8e23dacac136f846529c4981e25381fd193c6d619dfd7ba9546676c2d220e",
+      "currentBytes": 245222,
+      "candidateSha": "70730933b0fb4d23fdf62eeaae33df005a20dd90d0791422e92dbaec8c5a6cdf",
+      "candidateBytes": 237410,
+      "saved": 7812,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.43011552390511,
+        "mae": 0.7969969564471879,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.14680163771912,
+        "mae": 0.8099048353909465,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gumi--mall.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.14680163771912,
+      "mae": 0.8099048353909465,
+      "alphaEqual": true,
+      "sourcePsnr": 43.43011552390511,
+      "sourceMae": 0.7969969564471879,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "geochang--muju",
+      "source": "assets/ui/road-studies/atlas-v1/geochang--muju.webp",
+      "sourceSha": "04b8974b1f911fa7da6ee4f6f91d2106c3bce6cac7e36f78f66c6d7879927e2f",
+      "current": "assets/ui/road-studies/atlas-v1-q88/geochang--muju.webp",
+      "currentSha": "fc886955d9e9344efe7c830b0f8d8065dfb51e7d1b9dced9918b6ad8b3f0bdea",
+      "currentBytes": 239928,
+      "candidateSha": "100889786dd886d0f32db6e4e8af2b067a735cb1c95e0e6f5f574b37a063ab0e",
+      "candidateBytes": 232258,
+      "saved": 7670,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.9587835983322,
+        "mae": 0.7418025548696845,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.726301169165424,
+        "mae": 0.7411351165980795,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/geochang--muju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.726301169165424,
+      "mae": 0.7411351165980795,
+      "alphaEqual": true,
+      "sourcePsnr": 43.9587835983322,
+      "sourceMae": 0.7418025548696845,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "chungju--mungyeong",
+      "source": "assets/ui/road-studies/atlas-v1/chungju--mungyeong.webp",
+      "sourceSha": "685fb35958743073938408154b3e26cbb3d8186f205d8d2740bb49afffa4df8d",
+      "current": "assets/ui/road-studies/atlas-v1-q88/chungju--mungyeong.webp",
+      "currentSha": "a2f3f841db5036311c0703312055beff47a08030d30bfd7aab0bf519bc52ef01",
+      "currentBytes": 240314,
+      "candidateSha": "476e6c1b1981dd12f21ffa451b77982859bcb6aad34f664485e5544e1da661f7",
+      "candidateBytes": 232772,
+      "saved": 7542,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.729277715431955,
+        "mae": 0.7814444015775034,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.44037370179684,
+        "mae": 0.7860532407407408,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/chungju--mungyeong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.44037370179684,
+      "mae": 0.7860532407407408,
+      "alphaEqual": true,
+      "sourcePsnr": 43.729277715431955,
+      "sourceMae": 0.7814444015775034,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "chungju--danyang",
+      "source": "assets/ui/road-studies/atlas-v1/chungju--danyang.webp",
+      "sourceSha": "41453f734910c3318b770c7a2817314b08ff25294dfd2cee20f5837aa6a4c3c5",
+      "current": "assets/ui/road-studies/atlas-v1-q88/chungju--danyang.webp",
+      "currentSha": "df3519cc6f3c553d171f8d593823cf468cec30389f295158ab2b5e414ce36587",
+      "currentBytes": 244288,
+      "candidateSha": "9052869c4b5615fb1d2befb763e970ca9672a34b27cd5d68dbed3c53e89959b5",
+      "candidateBytes": 236776,
+      "saved": 7512,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.69664103287435,
+        "mae": 0.7830645576131687,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.43152700869679,
+        "mae": 0.7737967249657064,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/chungju--danyang.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.43152700869679,
+      "mae": 0.7737967249657064,
+      "alphaEqual": true,
+      "sourcePsnr": 43.69664103287435,
+      "sourceMae": 0.7830645576131687,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "damyang--namwon",
+      "source": "assets/ui/road-studies/atlas-v1/damyang--namwon.webp",
+      "sourceSha": "e60bf76172fe08601764add0bf930e333058bfdcf037f9dc544da9a27688ecf5",
+      "current": "assets/ui/road-studies/atlas-v1-q88/damyang--namwon.webp",
+      "currentSha": "82a88d76d65f146069dc3550468fa2f3c65643eec8be70b9069aabfb8c665422",
+      "currentBytes": 250598,
+      "candidateSha": "21ca8d1d9f5bbdbd024cb586ab158f6a52d13f91be9c6d128b5a0d2559d13a58",
+      "candidateBytes": 243138,
+      "saved": 7460,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.83422156621197,
+        "mae": 0.7601770404663923,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.486477363044585,
+        "mae": 0.7722646604938271,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/damyang--namwon.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.486477363044585,
+      "mae": 0.7722646604938271,
+      "alphaEqual": true,
+      "sourcePsnr": 43.83422156621197,
+      "sourceMae": 0.7601770404663923,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "cheonan--cheongju",
+      "source": "assets/ui/road-studies/atlas-v1/cheonan--cheongju.webp",
+      "sourceSha": "2add860cbe83979f51d54f64d82d42a12267a4f2f944723f37dc75f2cb565da5",
+      "current": "assets/ui/road-studies/atlas-v1-q88/cheonan--cheongju.webp",
+      "currentSha": "8adf7dd1b2af431b2c27746314ddaf2078cce8690d7ac4adb54d9e1845c15e32",
+      "currentBytes": 236028,
+      "candidateSha": "afd6891d8f372d939a95abd609f93829531cec7200ed9ad0364458bfe54cce4f",
+      "candidateBytes": 228684,
+      "saved": 7344,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.7501561298589,
+        "mae": 0.7275831618655693,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.60058584205055,
+        "mae": 0.7272558727709191,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/cheonan--cheongju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.60058584205055,
+      "mae": 0.7272558727709191,
+      "alphaEqual": true,
+      "sourcePsnr": 43.7501561298589,
+      "sourceMae": 0.7275831618655693,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "jeonju--muju",
+      "source": "assets/ui/road-studies/atlas-v1/jeonju--muju.webp",
+      "sourceSha": "1e16b1840d027d471a29681874ac9f43362792975b2ee6d20abcbff18dbea371",
+      "current": "assets/ui/road-studies/atlas-v1-q88/jeonju--muju.webp",
+      "currentSha": "63c24b35276469342bfddde4e9d0d10388190684b5691e190aedbe454975b093",
+      "currentBytes": 232930,
+      "candidateSha": "038cfa1f7bca153bb2d291ed77c0c121479fce9fba47dedd0d8ebc7ba7e10933",
+      "candidateBytes": 225622,
+      "saved": 7308,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.923093704168735,
+        "mae": 0.7307713906035666,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.66142830399021,
+        "mae": 0.7417671896433471,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/jeonju--muju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.66142830399021,
+      "mae": 0.7417671896433471,
+      "alphaEqual": true,
+      "sourcePsnr": 43.923093704168735,
+      "sourceMae": 0.7307713906035666,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "pyeongtaek--suwon",
+      "source": "assets/ui/road-studies/atlas-v1/pyeongtaek--suwon.webp",
+      "sourceSha": "249a56f2f38eb73fed8fd1aeca307443fe885a08706dc77ac1a9cd9bad46741b",
+      "current": "assets/ui/road-studies/atlas-v1-q88/pyeongtaek--suwon.webp",
+      "currentSha": "0c5769a32ab29ea85ed81de6c816ec631a688346f45fbfb2b2111ef07ef6505e",
+      "currentBytes": 231492,
+      "candidateSha": "edf532a610b2c0f879d6959f23debace82d0fa289e7a44b86b415d1d6c809b0a",
+      "candidateBytes": 224226,
+      "saved": 7266,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.92711284031863,
+        "mae": 0.70565329218107,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.71729792616978,
+        "mae": 0.7141355881344307,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/pyeongtaek--suwon.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.71729792616978,
+      "mae": 0.7141355881344307,
+      "alphaEqual": true,
+      "sourcePsnr": 43.92711284031863,
+      "sourceMae": 0.70565329218107,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gyeongju--ulsan",
+      "source": "assets/ui/road-studies/atlas-v1/gyeongju--ulsan.webp",
+      "sourceSha": "ab075ab82d47349d8619c56a4baa9e995206efc0f0e70ccd6ffb93878aa70f75",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gyeongju--ulsan.webp",
+      "currentSha": "03297fc387ddc2a194ac763d7865053fb5eb2b0c0e3fd706d9d865defd921063",
+      "currentBytes": 233892,
+      "candidateSha": "a5edfb6a3afee47902577af399d733781ff203c8f81a4840351fa0d045229ad0",
+      "candidateBytes": 226668,
+      "saved": 7224,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.959838033788245,
+        "mae": 0.6886844135802469,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.80643284414074,
+        "mae": 0.6949106224279835,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gyeongju--ulsan.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.80643284414074,
+      "mae": 0.6949106224279835,
+      "alphaEqual": true,
+      "sourcePsnr": 43.959838033788245,
+      "sourceMae": 0.6886844135802469,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "cheongju--daejeon",
+      "source": "assets/ui/road-studies/atlas-v1/cheongju--daejeon.webp",
+      "sourceSha": "5261549677704cf01f63684447d7d578a9a0e7de5020b112be8f7e4978c830f0",
+      "current": "assets/ui/road-studies/atlas-v1-q88/cheongju--daejeon.webp",
+      "currentSha": "eaf4a6e887ae8cd6294aad0ad37932f243327a1b3188e4c22697285207d63c63",
+      "currentBytes": 235108,
+      "candidateSha": "52642459aef72a2e8d2070df6f73fbe16b7a7b24df3ec80734abc329f9e1d033",
+      "candidateBytes": 227900,
+      "saved": 7208,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.8173729830705,
+        "mae": 0.729409293552812,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.703436427797556,
+        "mae": 0.7195558984910837,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/cheongju--daejeon.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.703436427797556,
+      "mae": 0.7195558984910837,
+      "alphaEqual": true,
+      "sourcePsnr": 43.8173729830705,
+      "sourceMae": 0.729409293552812,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "cheongju--chungju",
+      "source": "assets/ui/road-studies/atlas-v1/cheongju--chungju.webp",
+      "sourceSha": "4adb8dd38b7784a8d0036a5edf8a8b61b2746240808edb5ef91e74ed50102bca",
+      "current": "assets/ui/road-studies/atlas-v1-q88/cheongju--chungju.webp",
+      "currentSha": "9fc11985b2314594f1b2c549ae26c17209609351e452f091ad7d21f6ff652207",
+      "currentBytes": 227342,
+      "candidateSha": "dfd0b993a64e0fd0b47820f8dc51cd2de8f477bd168efaa4e0da9c2977cc43ad",
+      "candidateBytes": 220156,
+      "saved": 7186,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.96799328859078,
+        "mae": 0.7245719735939643,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.71692803624967,
+        "mae": 0.7342830504115226,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/cheongju--chungju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.71692803624967,
+      "mae": 0.7342830504115226,
+      "alphaEqual": true,
+      "sourcePsnr": 43.96799328859078,
+      "sourceMae": 0.7245719735939643,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "cheonan--gongju",
+      "source": "assets/ui/road-studies/atlas-v1/cheonan--gongju.webp",
+      "sourceSha": "c85100b155a672e7815cdd5841d3595b5cf52510d46af9889da00d33a4edeaa3",
+      "current": "assets/ui/road-studies/atlas-v1-q88/cheonan--gongju.webp",
+      "currentSha": "39ca8d8a65a318687f2626f1c1371d87508070a616f0fe5c62afc8c86898d77d",
+      "currentBytes": 226052,
+      "candidateSha": "8a56e2f098c6fb09d3c79a7fb1de2bba9fd94cfc6c3bb09061e6fce40ba938e1",
+      "candidateBytes": 218866,
+      "saved": 7186,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.84808652423303,
+        "mae": 0.733397633744856,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.59308245792714,
+        "mae": 0.7388923182441701,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/cheonan--gongju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.59308245792714,
+      "mae": 0.7388923182441701,
+      "alphaEqual": true,
+      "sourcePsnr": 43.84808652423303,
+      "sourceMae": 0.733397633744856,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "miryang--yangsan",
+      "source": "assets/ui/road-studies/atlas-v1/miryang--yangsan.webp",
+      "sourceSha": "76a2e73032d9c452e56ee0ff737dd1c1fa593834256886b70730d43311ee727d",
+      "current": "assets/ui/road-studies/atlas-v1-q88/miryang--yangsan.webp",
+      "currentSha": "0553895985c83a8fc79882575ae150deaeb95c08519c2c607f06f53cec911dc5",
+      "currentBytes": 238304,
+      "candidateSha": "253be6f324196e85d1c15bc90fa7769d42f043d6d14661f29adb98b9622c8376",
+      "candidateBytes": 231122,
+      "saved": 7182,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.823644513197976,
+        "mae": 0.7582128772290809,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.481417582176945,
+        "mae": 0.7666908864883402,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/miryang--yangsan.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.481417582176945,
+      "mae": 0.7666908864883402,
+      "alphaEqual": true,
+      "sourcePsnr": 43.823644513197976,
+      "sourceMae": 0.7582128772290809,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gimcheon--sangju",
+      "source": "assets/ui/road-studies/atlas-v1/gimcheon--sangju.webp",
+      "sourceSha": "930db75249c6e6389889040f82d5f46ad47650f3a5861853f5ef42732554ca4b",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gimcheon--sangju.webp",
+      "currentSha": "a6a27aae59c7e9d659631ce849f1efb59fbec0b38fe22e79b77b735266cbe185",
+      "currentBytes": 230734,
+      "candidateSha": "b56aa953887b8245e6e17db51bb1de486b804e8bfc3ca772e61b183fa875f35b",
+      "candidateBytes": 223628,
+      "saved": 7106,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.94609459868036,
+        "mae": 0.7223754715363512,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.67719578396371,
+        "mae": 0.7285305212620028,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gimcheon--sangju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.67719578396371,
+      "mae": 0.7285305212620028,
+      "alphaEqual": true,
+      "sourcePsnr": 43.94609459868036,
+      "sourceMae": 0.7223754715363512,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gongju--sejong",
+      "source": "assets/ui/road-studies/atlas-v1/gongju--sejong.webp",
+      "sourceSha": "56df456dfcf06c239299e62cbd6078fd832fef6c7e1ccb89c70c3cba0b4b85f8",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gongju--sejong.webp",
+      "currentSha": "1a5303566302b47c3bc22f376dbd50ba3d260ad4ffd598ddb709b622b2efefce",
+      "currentBytes": 228958,
+      "candidateSha": "a4da19f0a0f213147a3a26315e56fdf21ff35f9c10fc4d281796fd5e5e175823",
+      "candidateBytes": 221910,
+      "saved": 7048,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 44.76898933311755,
+        "mae": 0.649491598079561,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 44.64601361725538,
+        "mae": 0.6546529921124828,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gongju--sejong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 44.64601361725538,
+      "mae": 0.6546529921124828,
+      "alphaEqual": true,
+      "sourcePsnr": 44.76898933311755,
+      "sourceMae": 0.649491598079561,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "pyeongtaek--solar",
+      "source": "assets/ui/road-studies/atlas-v1/pyeongtaek--solar.webp",
+      "sourceSha": "79d301a7694800119177e902c2ef8531d1ec1adec6c1024f61cd6dd58cbfaf1e",
+      "current": "assets/ui/road-studies/atlas-v1-q88/pyeongtaek--solar.webp",
+      "currentSha": "c63ab9ec96bd5d8b20e68c9af68e82e4d938195f7647a6b6be37d90a6881b02d",
+      "currentBytes": 225644,
+      "candidateSha": "c9f18b15e05840e2d559544fd1846d62f7ed3cd58eb928ff4f22c8b0a235746f",
+      "candidateBytes": 218600,
+      "saved": 7044,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.68880579235399,
+        "mae": 0.7292461848422497,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.60033082627045,
+        "mae": 0.7104959705075445,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/pyeongtaek--solar.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.60033082627045,
+      "mae": 0.7104959705075445,
+      "alphaEqual": true,
+      "sourcePsnr": 43.68880579235399,
+      "sourceMae": 0.7292461848422497,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gimcheon--reststop",
+      "source": "assets/ui/road-studies/atlas-v1/gimcheon--reststop.webp",
+      "sourceSha": "9f8b5a6714ba803f9cf8e09d168440e09af0aa1b74d6c3fc8710934e15f6fa49",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gimcheon--reststop.webp",
+      "currentSha": "f6ccedd1ccfa817efe8509ba38b1b2d0cb2f57b15f3d2158847a95c4f851beb4",
+      "currentBytes": 241132,
+      "candidateSha": "22e57b69b4d6e3a896cd89b9d2fefb988bd2f565586c34c869194ddfdb75dd67",
+      "candidateBytes": 234288,
+      "saved": 6844,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 44.10255188290046,
+        "mae": 0.713062628600823,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.73983133148088,
+        "mae": 0.725548053840878,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gimcheon--reststop.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.73983133148088,
+      "mae": 0.725548053840878,
+      "alphaEqual": true,
+      "sourcePsnr": 44.10255188290046,
+      "sourceMae": 0.713062628600823,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "ulsan--yangsan",
+      "source": "assets/ui/road-studies/atlas-v1/ulsan--yangsan.webp",
+      "sourceSha": "3ad5d692e17dfb8a6e430c4a0d5fbd0d90eaf6fbc8c051a6125826966c409af2",
+      "current": "assets/ui/road-studies/atlas-v1-q88/ulsan--yangsan.webp",
+      "currentSha": "71b01279edeb29ea0825cd125047f9454bfd6ce6a0eb5d2e557d3b96349e8f5f",
+      "currentBytes": 240466,
+      "candidateSha": "e3dbf0eeabaca15aa5f3186fc78b351e79be1dbb4e31995a5ae89dd4741be62e",
+      "candidateBytes": 233806,
+      "saved": 6660,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 44.651006878657704,
+        "mae": 0.6562298525377229,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 44.44874715173399,
+        "mae": 0.6648319615912208,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/ulsan--yangsan.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 44.44874715173399,
+      "mae": 0.6648319615912208,
+      "alphaEqual": true,
+      "sourcePsnr": 44.651006878657704,
+      "sourceMae": 0.6562298525377229,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gimcheon--gumi",
+      "source": "assets/ui/road-studies/atlas-v1/gimcheon--gumi.webp",
+      "sourceSha": "49c84fa974da448cde627cd7ead84f5f53bcbd95085db0e3f005d6c73d12ff4b",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gimcheon--gumi.webp",
+      "currentSha": "c4a6f127d9b9c180012c8d025ce41f27235415341883f3f459e3b9277d684f66",
+      "currentBytes": 232530,
+      "candidateSha": "57965d10657d74001a56426bad3371d5a7df0846fe8c58fa1e4fb436d56d8be5",
+      "candidateBytes": 226200,
+      "saved": 6330,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 44.56212103689354,
+        "mae": 0.646020018861454,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 44.33557264403882,
+        "mae": 0.6616640946502058,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gimcheon--gumi.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 44.33557264403882,
+      "mae": 0.6616640946502058,
+      "alphaEqual": true,
+      "sourcePsnr": 44.56212103689354,
+      "sourceMae": 0.646020018861454,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "daegwallyeong--gangneung",
+      "source": "assets/ui/road-studies/atlas-v1/daegwallyeong--gangneung.webp",
+      "sourceSha": "41b4ce5245be5e263d63808598832b5e09e24f6c3390eed479d59d60bedb3def",
+      "current": "assets/ui/road-studies/atlas-v1-q88/daegwallyeong--gangneung.webp",
+      "currentSha": "2e526f50875a2f07a17d585d665277b6cdb9600fdf7c69099682b015a5c0af60",
+      "currentBytes": 279960,
+      "candidateSha": "e83cb89f5540b9e422a7f05d41d81f34c3d0ef0ec3fb3fbd63a0304102549656",
+      "candidateBytes": 273926,
+      "saved": 6034,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.21136019197692,
+        "mae": 0.9181912294238683,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.52322398671088,
+        "mae": 0.8427426268861454,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/daegwallyeong--gangneung.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.52322398671088,
+      "mae": 0.8427426268861454,
+      "alphaEqual": true,
+      "sourcePsnr": 43.21136019197692,
+      "sourceMae": 0.9181912294238683,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "cablecar--mungyeong",
+      "source": "assets/ui/road-studies/atlas-v1/cablecar--mungyeong.webp",
+      "sourceSha": "8a1781cfa771b7bd51d7ffe3ac03e168eda4593325d8da9d63b99f004388c3b0",
+      "current": "assets/ui/road-studies/atlas-v1-q88/cablecar--mungyeong.webp",
+      "currentSha": "a80c1aac323663d342be2cc7bd053940c1c4eac18042d3707b02043a3805f8da",
+      "currentBytes": 280850,
+      "candidateSha": "9f63b69ddf2b01cddc21c0f9c8eef3e4eceb2c4170e4f41dc627b3ee02b31e97",
+      "candidateBytes": 275020,
+      "saved": 5830,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.44003545041819,
+        "mae": 0.866701817558299,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.55110784673479,
+        "mae": 0.8211235425240054,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/cablecar--mungyeong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.55110784673479,
+      "mae": 0.8211235425240054,
+      "alphaEqual": true,
+      "sourcePsnr": 43.44003545041819,
+      "sourceMae": 0.866701817558299,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "damyang--gwangju",
+      "source": "assets/ui/road-studies/atlas-v1/damyang--gwangju.webp",
+      "sourceSha": "379e0b53fffd9e7d3dd1f9825a9634d0adfbf5a155e170f344b17e84111438b3",
+      "current": "assets/ui/road-studies/atlas-v1-q88/damyang--gwangju.webp",
+      "currentSha": "9d083c473e7761b2b49e5605864c4339325712e515020dee907a2af3d2ef6def",
+      "currentBytes": 254580,
+      "candidateSha": "e659c09acc5d3de9a531b2762c9e62f888afcd00dc0a1ad985da3bb8c781a19f",
+      "candidateBytes": 248802,
+      "saved": 5778,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.431117865965696,
+        "mae": 0.8303911608367627,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.56832530103355,
+        "mae": 0.7918332047325103,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/damyang--gwangju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.56832530103355,
+      "mae": 0.7918332047325103,
+      "alphaEqual": true,
+      "sourcePsnr": 43.431117865965696,
+      "sourceMae": 0.8303911608367627,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gimcheon--muju",
+      "source": "assets/ui/road-studies/atlas-v1/gimcheon--muju.webp",
+      "sourceSha": "10bb4c2f56c332b930e5b5ae937f60d62b15830fc07ba37eb8591370be8210a3",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gimcheon--muju.webp",
+      "currentSha": "0b86b7a5de2f7ccb292500f5ac837d77ddb7c7e7bac0982f5dca166fe0261f41",
+      "currentBytes": 287030,
+      "candidateSha": "35241722976de68ac940b619880be87ad25f9c3615d797ece225e5a15d18d475",
+      "candidateBytes": 281296,
+      "saved": 5734,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.39972279494099,
+        "mae": 0.8480735596707819,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.459037285459736,
+        "mae": 0.8188888888888889,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gimcheon--muju.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.459037285459736,
+      "mae": 0.8188888888888889,
+      "alphaEqual": true,
+      "sourcePsnr": 43.39972279494099,
+      "sourceMae": 0.8480735596707819,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "gimcheon--yeongdong",
+      "source": "assets/ui/road-studies/atlas-v1/gimcheon--yeongdong.webp",
+      "sourceSha": "72c026ebc0561c63f3d4fd60dd4d4fafd4a293464518129a1ee7b9ef600472ff",
+      "current": "assets/ui/road-studies/atlas-v1-q88/gimcheon--yeongdong.webp",
+      "currentSha": "6b3cb1194924492b19c36c9bb89731cd99516d86e58ff6df206764254b7fc334",
+      "currentBytes": 244014,
+      "candidateSha": "84df6ca203d149658e6bc8d444cf59b766e473714aa449ed7be59e82fc6dca7a",
+      "candidateBytes": 238600,
+      "saved": 5414,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.93789357561985,
+        "mae": 0.7328650120027435,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.989961855847646,
+        "mae": 0.7123969050068587,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/gimcheon--yeongdong.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.989961855847646,
+      "mae": 0.7123969050068587,
+      "alphaEqual": true,
+      "sourcePsnr": 43.93789357561985,
+      "sourceMae": 0.7328650120027435,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "jinju--namwon",
+      "source": "assets/ui/road-studies/atlas-v1/jinju--namwon.webp",
+      "sourceSha": "0359ca20a08488b907808b7c0d44015e478711615b376375ce186baddbaf877a",
+      "current": "assets/ui/road-studies/atlas-v1-q88/jinju--namwon.webp",
+      "currentSha": "b59c1a0edfd90bb188a5e784a565cd7d41aae920ad8733798e013106eb978d1b",
+      "currentBytes": 253016,
+      "candidateSha": "23e73d462ed51b2e62ca71f39ae62e2fd83bf81994de92c83ab9bc006cf92f75",
+      "candidateBytes": 247608,
+      "saved": 5408,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.866200864135465,
+        "mae": 0.7775188614540467,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.78826690241,
+        "mae": 0.752403549382716,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/jinju--namwon.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.78826690241,
+      "mae": 0.752403549382716,
+      "alphaEqual": true,
+      "sourcePsnr": 43.866200864135465,
+      "sourceMae": 0.7775188614540467,
+      "sourceAlphaEqual": true
+    },
+    {
+      "id": "andong--danyang",
+      "source": "assets/ui/road-studies/atlas-v1/andong--danyang.webp",
+      "sourceSha": "f12c473afc90db7c09f21136597fced240733a44c4070dae6f59b846676a16a1",
+      "current": "assets/ui/road-studies/atlas-v1-q88/andong--danyang.webp",
+      "currentSha": "fb2a54e8a50a6b31263d12bd5028abd6af99728d3cf9bb1f282b201f143dea4d",
+      "currentBytes": 259290,
+      "candidateSha": "d2374115e737518c62eac962d9e092b4fe30f88777ad6e3a7e5a389cba2f12e7",
+      "candidateBytes": 254082,
+      "saved": 5208,
+      "geometry": [
+        2160,
+        720
+      ],
+      "sourceMetrics": {
+        "psnr": 43.932428385640215,
+        "mae": 0.7695786179698216,
+        "alphaEqual": true
+      },
+      "currentMetrics": {
+        "psnr": 43.90652495400751,
+        "mae": 0.7482548868312757,
+        "alphaEqual": true
+      },
+      "quality": 87,
+      "target": "assets/ui/road-studies/atlas-v1-q87/andong--danyang.webp",
+      "width": 2160,
+      "height": 720,
+      "psnr": 43.90652495400751,
+      "mae": 0.7482548868312757,
+      "alphaEqual": true,
+      "sourcePsnr": 43.932428385640215,
+      "sourceMae": 0.7695786179698216,
+      "sourceAlphaEqual": true
+    }
+  ]
+}

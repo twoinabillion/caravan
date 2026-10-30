@@ -1,0 +1,534 @@
+[
+  {
+    "file": "assets/scenes/story-bridge-watched-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 138444,
+      "sha256": "eaf10d3c4ede38c71bd519429d282c4a1d5d0e14c557a3c088976c01f01311ef"
+    },
+    "new": {
+      "bytes": 82052,
+      "sha256": "4d8e121c104e26747264e80e8ce66bb3e073c3d9ec75f43ef177c1a842f51219",
+      "saved": 56392
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/story-bridge-watched-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/comp-minji-closed-panel-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 112446,
+      "sha256": "48a6e748e1d336f692fd03fad574568df60981521ae3879c3c191cbb9e2a61ae"
+    },
+    "new": {
+      "bytes": 53592,
+      "sha256": "b57076b77f246fc834790be9f263b1ce6384fc438c7ee44c2913de6a14e57ebd",
+      "saved": 58854
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/comp-minji-closed-panel-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/recruit-parkss-tilted-bus-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 161272,
+      "sha256": "a5071d2a63afa8e30492aeec44d785b6c59efa19a20d47f9a603ee5afc78c80c"
+    },
+    "new": {
+      "bytes": 82732,
+      "sha256": "1b0f2ec0df89cd7b94cb99409360129033f62fd020fdba6622dd1f7525a1a389",
+      "saved": 78540
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/recruit-parkss-tilted-bus-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/recruit-parkss-tilted-bus-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 143672,
+      "sha256": "756ad3f3c7c320734fd491f46903b5009bf22178975680aa34db15bce5f581c6"
+    },
+    "new": {
+      "bytes": 75254,
+      "sha256": "bf09cdd2341a3ae0c849e79f8992348a8749d5a5f89adf1a804fe0a5fce7dfcf",
+      "saved": 68418
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/recruit-parkss-tilted-bus-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/recruit-kangwoo-join-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 109738,
+      "sha256": "4157de1d4e647d66aea9cf60b11dbd686a5244d574c4fc2e2720bbefa7aaf68d"
+    },
+    "new": {
+      "bytes": 66446,
+      "sha256": "38cf10a825b12436f53c4b511583584a289c5de04e539d674d443ef703e73431",
+      "saved": 43292
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/recruit-kangwoo-join-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/recruit-jaeyi-join-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 116402,
+      "sha256": "4b2955ddb4ed8be53c3ac37fad4b0b1b61daef937d6115a1066d9ccec1faec96"
+    },
+    "new": {
+      "bytes": 69622,
+      "sha256": "a1645b350ccdabf4821ba834ea6b10ea9e31c4a7a60279339968aa40f07a228b",
+      "saved": 46780
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/recruit-jaeyi-join-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/recruit-jaeyi-join-result-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 110314,
+      "sha256": "715991988c1a89a682dbe6771cc74b932e0e5884d623db62dbe834a78ff8ff47"
+    },
+    "new": {
+      "bytes": 65648,
+      "sha256": "4900f7a49e0492e9b4037580eafe521de8573dfffee206f5bb22412308c582ae",
+      "saved": 44666
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/recruit-jaeyi-join-result-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-fire-rescue-helicopter-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 175928,
+      "sha256": "5d1bea973afef30b6b116b6127335a03982fdce9a8cb8cacd813956602e98934"
+    },
+    "new": {
+      "bytes": 92150,
+      "sha256": "06b03e6062dafa43002e426dd746987154377cd3e762cf7a25d16eb22d4833ad",
+      "saved": 83778
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-fire-rescue-helicopter-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-fire-rescue-helicopter-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 124188,
+      "sha256": "47bd7994586073af038287d62f67e418d65485408e79e82d78b69ba6b8dd4056"
+    },
+    "new": {
+      "bytes": 58004,
+      "sha256": "c3974ce42724b41a17793fa218fadba3418e646b9195b5a0759d80cbc4dd29a3",
+      "saved": 66184
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-fire-rescue-helicopter-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-jjimjil-cold-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 133388,
+      "sha256": "cfe6e505be87424c8cf6bb4cbc33351016545f22e7eba0eaa6c5493882f0e4d7"
+    },
+    "new": {
+      "bytes": 65598,
+      "sha256": "f557fbf3ea2280cf615ba4ec261bfdc1cf54e3f863cd2f10d5b1a6af80e31d3b",
+      "saved": 67790
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-jjimjil-cold-v1.webp"
+  },
+  {
+    "file": "assets/scenes/comp-minji-underbody-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 111776,
+      "sha256": "ae870552187354e92558d12d4e1c501d6d776f75df32708f154297ac81919520"
+    },
+    "new": {
+      "bytes": 64486,
+      "sha256": "2471340891897b1819193db01e0a40cd007b435a25fbe1db037c9b8f115c0583",
+      "saved": 47290
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/comp-minji-underbody-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/comp-minji-underbody-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 87366,
+      "sha256": "739544aa5545d464969ffa520cc6f4170f557f974185ffa70b0bb349c2c5075a"
+    },
+    "new": {
+      "bytes": 48838,
+      "sha256": "46497a99205eb14e7a6c78cb2142190a6cb5f94e8d53b50a03995b86490bbf02",
+      "saved": 38528
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/comp-minji-underbody-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-collapsed-school-library-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 119268,
+      "sha256": "8d97d013bb7082f3602a55d1566c42c205209549debfdb9c31d99ab0346ba88c"
+    },
+    "new": {
+      "bytes": 74156,
+      "sha256": "67d645eb0210112abf8b1676eee8f1d5ba09a354ea395711c67e0fa79bf1699e",
+      "saved": 45112
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-collapsed-school-library-v1.webp"
+  },
+  {
+    "file": "assets/scenes/frequency-school-broadcast-room-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 95064,
+      "sha256": "a1696069186c72bd115e4b93762712702c0284108b971fdd9b47eae6af183631"
+    },
+    "new": {
+      "bytes": 53558,
+      "sha256": "02ca0be952d7c23bdab414a4a70624c9244ea4534bf768bd1777c472babf9ad5",
+      "saved": 41506
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/frequency-school-broadcast-room-v1.webp"
+  },
+  {
+    "file": "assets/scenes/frequency-dashboard-receiver-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 71100,
+      "sha256": "052054bac63df11bd56db01d511b2fce4f24b37f4c45c1c0c28508f005fa557e"
+    },
+    "new": {
+      "bytes": 40718,
+      "sha256": "5c1fa4de66ac5fd666341f4f3ba0d0c94f59b56c93a66d59d22c49aa567d4b36",
+      "saved": 30382
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/frequency-dashboard-receiver-v1.webp"
+  },
+  {
+    "file": "assets/scenes/frequency-water-tower-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 110320,
+      "sha256": "997a6f9b2d091ea309fe9a47dab9f4207e9cb6635e148a2eba320d87e9ddd5aa"
+    },
+    "new": {
+      "bytes": 55448,
+      "sha256": "8576fd8e8eb9ef69d9d5ea7c590e136ad64ddb3c523f6bb8b845affa56437f9e",
+      "saved": 54872
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/frequency-water-tower-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/frequency-water-tower-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 73436,
+      "sha256": "2057fc7fb76419e03aa2c2f9cd59a1a98f90e46b25c905dfadf44b4c5ce922b1"
+    },
+    "new": {
+      "bytes": 32450,
+      "sha256": "6f66c904086a52b7863cfacc43faee782eb5446ee52e77f618437bce5015f3d3",
+      "saved": 40986
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/frequency-water-tower-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/frequency-fire-watchtower-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 135298,
+      "sha256": "5444d47ce82a2ab3a478a81d44a21bef3163fc2f7257a27b2051cc54841352d3"
+    },
+    "new": {
+      "bytes": 68732,
+      "sha256": "8b0f370d761d570b9accbdcc69a0b8cd016b1f8e74d64e3a0cf62c0a0264cf8c",
+      "saved": 66566
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/frequency-fire-watchtower-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/frequency-fire-watchtower-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 78584,
+      "sha256": "4d5ba337340a59051010d7c591f0555eeaa2f51d88aa0d4932bfd2fd4ea9651d"
+    },
+    "new": {
+      "bytes": 33176,
+      "sha256": "a6a63b8188281a0360f6db5720b155a4bff54d500cc12fdf769d20d0f4aa3d26",
+      "saved": 45408
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/frequency-fire-watchtower-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/story-generation-route-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 158762,
+      "sha256": "4ff04f28fb016faa3c21e47185b142aec2bbd1668efc8e57062eec6f6d9b958b"
+    },
+    "new": {
+      "bytes": 103010,
+      "sha256": "0bb7284687b8b94247c8a5fb849698a0a408570bfaab13ae809637c857d061c5",
+      "saved": 55752
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/story-generation-route-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/story-generation-route-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 162526,
+      "sha256": "6fd569aee1a46cf0652177ab0a3b41e395757b73df0e9142aac91dca9e1f494b"
+    },
+    "new": {
+      "bytes": 104386,
+      "sha256": "d7895d315a515a614a7d03b7140cc5a33f9ad7cf68ca96c8b78e2a3ec4b57440",
+      "saved": 58140
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/story-generation-route-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/event-crisis-fuel-stopped-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 121756,
+      "sha256": "14f97beb1e2e0af1ce9b6900d5de07dc367937a576675e99645b352a27d4d5ab"
+    },
+    "new": {
+      "bytes": 76560,
+      "sha256": "c41d321f94121577bd174272929d3a30456770614ffe40ce48abe566f5253656",
+      "saved": 45196
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/event-crisis-fuel-stopped-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/event-crisis-fuel-stopped-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 82560,
+      "sha256": "5a490341ea2c65f4bc0d2f1bb4a582311a3fce7a4dea6ee6da2a8a604009fac2"
+    },
+    "new": {
+      "bytes": 48640,
+      "sha256": "eb9bf671c65c899e2701f78e87414d914e3de34fcdffc3e2791f517fdd5473af",
+      "saved": 33920
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/event-crisis-fuel-stopped-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/event-road-coffee-van-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 134134,
+      "sha256": "f2ef5c126053b0a0e4be596de46899cfaa86dd8e6f75a9b204248b1cd6a8b56c"
+    },
+    "new": {
+      "bytes": 78488,
+      "sha256": "1eaff955e92fa50a2e510c6565e8236bc72e6f9267e24cdcac481f88f198399e",
+      "saved": 55646
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/event-road-coffee-van-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/event-ai-checkpoint-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 126334,
+      "sha256": "3be1bc9ec63f64e05c46d85b4d0e07da431e5925533b8dc84e0ae1c334cad251"
+    },
+    "new": {
+      "bytes": 75364,
+      "sha256": "50745ed9af615b209f18113af19a9f2d42fc07f18ad963b3a817667610c2ce69",
+      "saved": 50970
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/event-ai-checkpoint-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/event-explore-pc-cafe-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 146708,
+      "sha256": "452c2a2b101b526572c85e84af5adf3d91d77361248069f2d625cba2cce42711"
+    },
+    "new": {
+      "bytes": 57574,
+      "sha256": "25e67edabaa8f3bba5506e1d4b984db9befc42bbb741aad48bfcd20ce035f712",
+      "saved": 89134
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/event-explore-pc-cafe-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-ev-charging-parking-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 145466,
+      "sha256": "6d437b63b66ecfb879fa863ae8f39d07474e6176c8828577cb6353f5e27a85ed"
+    },
+    "new": {
+      "bytes": 86898,
+      "sha256": "9f2e327c50318c3e9301596a0b62a9a342b5ea9a33a2692a5f1f89261525fa9d",
+      "saved": 58568
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-ev-charging-parking-v1.webp"
+  },
+  {
+    "file": "assets/scenes/seoul-ruins-green-day-v2.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 143932,
+      "sha256": "f15cbdbac22050253c7518e21fa97449fbb8bd5e8695ba17d80be5d59466b96f"
+    },
+    "new": {
+      "bytes": 89820,
+      "sha256": "02ea872e0a381ffe78a00e2eeca8f5f3bf586c212576f3557971e7421acf1119",
+      "saved": 54112
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/seoul-ruins-green-day-v2.webp"
+  },
+  {
+    "file": "assets/scenes/local-daegu-makchang-alley-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 129670,
+      "sha256": "e5a069a991df48abfeae37b9d7847cfa16220cca5265cc0ae6a4a006b6ba1ef8"
+    },
+    "new": {
+      "bytes": 78126,
+      "sha256": "4cc74b3c81b5206f0720dace124aa14233a1bb8eafec324fd9e4f65833e08081",
+      "saved": 51544
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/local-daegu-makchang-alley-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-rice-mill-paddy-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 128060,
+      "sha256": "4e0a7af48a9d44f8ab1d2ffc0b658a37652315b7a2959bdef31258f2f3979721"
+    },
+    "new": {
+      "bytes": 84582,
+      "sha256": "3e273e0b821e4aabc430a56bc62f14f4de5884641d9316f2bf07e46a60cfba45",
+      "saved": 43478
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-rice-mill-paddy-v1.webp"
+  },
+  {
+    "file": "assets/scenes/explore-noodleworks-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 127980,
+      "sha256": "f5f3f58e19127ae86a76da370b5b0d3018a2b4edcc2123b5c5eedd3ace99343c"
+    },
+    "new": {
+      "bytes": 51494,
+      "sha256": "86cfd21dcd31a24f14f9b0ba1aead051fbd881047b442ac7a9b27d0a1d3c9c76",
+      "saved": 76486
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/explore-noodleworks-v1.webp"
+  },
+  {
+    "file": "assets/scenes/event-vista-road-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 126240,
+      "sha256": "29eda797b0528805d88f2c5a538d4f64072a04ff912dc446396aedcfa89d6d5f"
+    },
+    "new": {
+      "bytes": 71466,
+      "sha256": "7b4af01f853dd13ebeaca086b6edf762c37246979471fbdafa3b644f2a5b8451",
+      "saved": 54774
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/event-vista-road-night-v1.webp"
+  },
+  {
+    "file": "assets/scenes/seoul-ruins-green-night-v2.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 125798,
+      "sha256": "d2f50b1be77c92eef1e818045e60eb7c012f8e43284314d6c51992e961994f9a"
+    },
+    "new": {
+      "bytes": 74812,
+      "sha256": "b248f6456a321d7e58b2f33277e4a6aa466bd6490365e2593bca2be15e7b1a92",
+      "saved": 50986
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/seoul-ruins-green-night-v2.webp"
+  },
+  {
+    "file": "assets/scenes/comp-talk-leo-camp-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 125412,
+      "sha256": "8dbdc0ea7b1146f966ae4ae19bb454847bebb662197780cf3d7957be331e1e85"
+    },
+    "new": {
+      "bytes": 77280,
+      "sha256": "7f1598a4b802577ba228ecbee442e99c8a26136d9aec096b74a3b64c243ee34d",
+      "saved": 48132
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/comp-talk-leo-camp-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/story-grandfather-envelope-detail-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 122330,
+      "sha256": "3d8dc1fe332540cf6036f791ec5d4e721f553dc4f3365173d20c40c46ce278d0"
+    },
+    "new": {
+      "bytes": 72960,
+      "sha256": "28aae62278a7c6a96a06d79d747dd7454abea9dc5499b82449175af138e77720",
+      "saved": 49370
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/story-grandfather-envelope-detail-v1.webp"
+  },
+  {
+    "file": "assets/scenes/recruit-eunsu-join-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 120732,
+      "sha256": "490b7fc27b608886c5af71e8351ce1d7075ccb485ecba0ba4fd94b84890c601b"
+    },
+    "new": {
+      "bytes": 67266,
+      "sha256": "882e1500c582ed01ec197f0be33ed9145eed0c28420170787dea4e2673d6a7bf",
+      "saved": 53466
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/recruit-eunsu-join-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/comp-kangwoo-north-stand-day-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 131022,
+      "sha256": "46a591c98056ed200004dff344b3f9519cb508c688ac05e6cc35d68f89cbfd1e"
+    },
+    "new": {
+      "bytes": 75760,
+      "sha256": "ce6751d3aa6343a9bb95339fac718af6a21e1a1603258dc7caac2a7245246b5a",
+      "saved": 55262
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/comp-kangwoo-north-stand-day-v1.webp"
+  },
+  {
+    "file": "assets/scenes/comp-kangwoo-north-stand-night-v1.webp",
+    "quality": 75,
+    "old": {
+      "bytes": 93790,
+      "sha256": "700d7fe87af31a9f66562ef69b8c33a79762ea92e32af04b182978ed3c8135cb"
+    },
+    "new": {
+      "bytes": 52566,
+      "sha256": "fac6729eca1cbe29c9246ff8ff8218ebda7908ff8208425271e3514e4fae9d75",
+      "saved": 41224
+    },
+    "originalPreserved": "qa-artifacts/qa-cycle-20261026/cycle43/explorer/budget/original/comp-kangwoo-north-stand-night-v1.webp"
+  }
+]

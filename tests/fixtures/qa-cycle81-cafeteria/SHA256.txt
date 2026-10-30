@@ -1,0 +1,3 @@
+b95b9c05dbe77bac167380d6062365a125090a7ccf084733689c0b8b4aed4e36  tests/fixtures/qa-cycle81-cafeteria/baseline.json
+1a90a238edd52998151870a946f55867d6f404639073bb9422d75bdad63b4c1d  tests/fixtures/qa-cycle81-cafeteria/synthetic-entry.json
+772faff29ce0f7dd7e21191bbac0461f8a84ca3feff07eb74da9e9d48aae75c1  tests/fixtures/qa-cycle81-cafeteria/synthetic-paid.json

@@ -1,0 +1,33 @@
+[
+  {
+    "kind": "narration",
+    "text": "주방 건조창고에서 우동사리와 통조림을 챙겼다."
+  },
+  {
+    "kind": "narration",
+    "text": "얇은 면을 두고 우동인지 소면인지 한참 실랑이했다. 결국 봉지의 「우동」 표기를 확인하고서야 끝났다."
+  },
+  {
+    "kind": "narration",
+    "text": "자판기도 몇 대 땄다."
+  },
+  {
+    "kind": "radio",
+    "who": "radio",
+    "name": "휴게소 안내 방송",
+    "text": "즐거운 여행 되시기 바랍니다."
+  },
+  {
+    "kind": "narration",
+    "text": "방송에 문득"
+  },
+  {
+    "kind": "dialogue",
+    "who": "me",
+    "text": "고맙습니다"
+  },
+  {
+    "kind": "narration",
+    "text": "라고 대답해봤다."
+  }
+]

@@ -27,6 +27,11 @@ test('authored text, probabilities, effects, gates and choices stay exactly equa
  const h=setup();for(const id of Object.keys(baseline)){
   const value=JSON.parse(h.run(`JSON.stringify(event('${id}'),(k,v)=>k==='turnSpeakers'?undefined:typeof v==='function'?v.toString():v)`));
   const old=JSON.parse(JSON.stringify(baseline[id],(k,v)=>k==='turnSpeakers'?undefined:v));
+  if(id==='gw_daegwallyeong'){
+   const original=old.choices[1].out[0].text;
+   assert.equal(value.choices[1].out[0].text,original.replace('산지기가 어깨너머로 보더니 "금. 쇠 금 자요." 하고 일러줬다.','산지기가 어깨너머로 보고 일러줬다. "금. 쇠 금 자요."'));
+   value.choices[1].out[0].text=original;
+  }
   if(id==='seoul_han'){
    assert.equal(value.text,old.text
     .replace('다리 한복판에서 라디오가 저 혼자 켜졌다. 잡음뿐이다.','다리 한복판, 난간에 매달린 라디오가 저 혼자 켜졌다. 잡음뿐이다.')

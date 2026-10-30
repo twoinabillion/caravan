@@ -4,6 +4,7 @@ const assert=require('node:assert/strict');
 function projectReviewedVoluntaryCosts(rows){
   // 2026-10-26: individually reproduced voluntary payments, never all negative FX.
   const costs={
+    seoul_square:[[2,{food:1}]],ev_parkss_past:[[2,{water:1}]],ev_heatwave:[[1,{water:2}]],
     loc_tower:[[1,{scrap:3}]],exp_temple:[[1,{scrap:1}]],meet_barber:[[1,{scrap:1}]],
     meet_paper_grandma:[[1,{scrap:3}]],lc_pohang_gwamegi:[[0,{scrap:2}]],lc_mokpo_hongeo:[[1,{scrap:2}]],
     ev_fake_checkpoint:[[2,{scrap:5}]],ev_water_seller:[[1,{scrap:4}]],ev_tunnel_warehouse:[[0,{scrap:5}],[1,{scrap:3}]],
@@ -19,7 +20,7 @@ function projectReviewedVoluntaryCosts(rows){
     // Net-positive barter still requires the can handed over before two are received.
     lc_damyang_juktong:[[0,{food:1}]],ev_hunter_meat:[[2,{food:1}]],meet_popper:[[0,{food:1}]]
   };
-  const prior={meet_barber:{dog:1},ev_water_seller:{comp:'parkss'},ev_caravan_traders:{comp:'kangwoo'},
+  const prior={seoul_square:{flag:'sotgot_word'},ev_heatwave:{comp:'parkss'},meet_barber:{dog:1},ev_water_seller:{comp:'parkss'},ev_caravan_traders:{comp:'kangwoo'},
     ev_beekeeper:{comp:'parkss'},ev_optician:{comp:'parkss'},comp_sick:{comp:'parkss'}};
   const exits={meet_barber:2,ev_tunnel_warehouse:2,circus_broke:3,kids_meet:2,lc_damyang_juktong:1,ev_hunter_meat:3};
   for(const row of rows){
@@ -78,6 +79,8 @@ function projectExpeditionStoryChanges(rows){
     departureEcho.scene='story-bridge-departure-echo-v1';
   }
   projectReviewedVoluntaryCosts(rows);
+  const squareNote=rows.find(r=>r.id==='seoul_square')?.choices[2]?.out[0]?.fx?.note;
+  if(squareNote && Object.hasOwn(squareNote,'links')){assert.deepEqual(Array.from(squareNote.links),['솥','정리자들']);squareNote.links=['솥','정리자들','남산행 편지'];}
   const envelope=rows.find(r=>r.id==='gp_envelope')?.choices[1]?.out[0];
   if(envelope&&Object.hasOwn(envelope,'text')){
     assert.equal(envelope.text,'봉투를 수첩 뒤에 도로 꽂았다. 남산 보고 열라면, 남산 보고 연다.\n\n수첩을 덮고도 시선이 다시 뒷표지로 갔다. 봉투를 꽂은 자리가 살짝 불룩했다.');
@@ -423,6 +426,11 @@ module.exports=function projectReviewedStoryChanges(rows){
     }
     if(row.id==='seed_return'){
       assert.deepEqual(row.choices[0].req,{food:1});delete row.choices[0].req;
+      assert.deepEqual(row.choices[0].out[0].fx.item,{'해바라기 씨앗':1});delete row.choices[0].out[0].fx.item;
+    }
+    if(row.id==='ev_seed_girl'){
+      assert.deepEqual(row.choices[1].req,{item:'해바라기 씨앗'});row.choices[1].req={flag:'seed_borrowed'};
+      assert.deepEqual(row.choices[1].out[0].fx.item,{'해바라기 씨앗':-1});delete row.choices[1].out[0].fx.item;
     }
     if(row.id==='vanowner_coffee'){
       assert.equal(row.needFlag2,'van_owner_done');delete row.needFlag2;

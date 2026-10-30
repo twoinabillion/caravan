@@ -202,6 +202,7 @@ G.resolveCampChoice = (eventId,choiceId)=>{
     home:data.home,road:data.road,pendingRoad:true,pendingBond:(previous.pendingBond||0)+(isGuest?2:0)};
   chips.push({t:isGuest?'함께 나눈 대화 · 합류하면 유대 +2':`${D.comps[record.cid].name} 유대 +2`,c:'item'});
   chips.push({t:record.voice==='minji-guest-v1'?'달구지의 소리를 함께 들었다':`${D.companionKeepsakes[record.cid].name} · 새 흔적`,c:'item'});
+  if(D.eventSceneTimeVariantFor?.(record.id)) record.resultSceneTime=G.presentationSceneTime({day:S.day,min:S.min});
   record.choiceId=choiceId; record.chips=chips; record.resolvedDay=S.day; record.resolvedMin=S.min;
   record.resultText=out.text;record.resultSpeakers=[...out.turnSpeakers];
   const plan=S._campPlan||(S._campPlan={}); plan.talk=record.cid; plan.last='talk';
@@ -273,7 +274,17 @@ G.prepareCamp = (kind,cid)=>{
         day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
         chapter:Math.min(3,(choiceVisits[previousChoiceId]||0)+1),previousChoiceId,choiceVisits,
         choiceId:null,chips:[],active:true};
-      if(cid==='minji'&&!S.party.includes(cid)) S.campConversation.voice='minji-guest-v1';
+      if(cid==='kangwoo'&&S.campConversation.chapter===2&&previousChoiceId==='rotate'&&choiceVisits.trust===1)
+        S.campConversation.replyContext='kangwoo-rotate-trust-v1';
+      else if(cid==='kangwoo'&&S.campConversation.chapter>=2&&['trust','rotate'].includes(previousChoiceId))
+        S.campConversation.replyContext='kangwoo-cross-choice-v2';
+      if(D.eventSceneTimeVariantFor?.(S.campConversation.id)) S.campConversation.entrySceneTime=G.presentationSceneTime({day:S.day,min:S.min});
+      if(cid==='minji'&&!S.party.includes(cid)) {
+        S.campConversation.voice='minji-guest-v1';
+        const visits=memory?.voice==='minji-guest-v1'&&Number.isFinite(memory.visits)
+          ?Math.max(0,Math.floor(memory.visits)):0;
+        S.campConversation.guestChapter=Math.min(3,visits+1);
+      }
     }
   } else return {ok:false,why:'알 수 없는 야영 준비다'};
   G.save();

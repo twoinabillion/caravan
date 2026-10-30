@@ -80,6 +80,13 @@ test('all four event mechanics, notes and words match frozen15 apart from four a
  const h=setup();for(const [id,old] of Object.entries(base)){
   const now=plain(h.json(`JSON.parse(JSON.stringify(G.presentationEvent('${id}'),(k,v)=>typeof v==='function'?v.toString():v))`));
   for(const d of copies.filter(d=>d.id===id)){let o=now;for(const k of d.path.slice(0,-1))o=o[k];assert.equal(o[d.path.at(-1)],d.new);o[d.path.at(-1)]=d.old;}
+  if(id==='comp_dialect'){
+   h.run("S.party=['parkss','eunsu']");
+   assert.equal(h.run("prose(G.presentationEvent('comp_dialect').choices[1].out[0].text)"),'"점수는요?" "안 매겨요." "왜요." "다 붙었어요. 어디 내려놔도 밥은 얻어먹겠더라고요."\n\n채점표는 끝내 안 나왔다.');
+   h.run("S.party=['eunsu','parkss']");
+   assert.equal(h.run("prose(G.presentationEvent('comp_dialect').choices[1].out[0].text)"),old.choices[1].out[0].text);
+   now.choices[1].out[0].text=old.choices[1].out[0].text;
+  }
   const clean=v=>JSON.parse(JSON.stringify(v,(k,v)=>['turnSpeakers','turns'].includes(k)?undefined:v));assert.deepEqual(clean(now),clean(old),id);
  }
 });

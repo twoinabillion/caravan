@@ -1,0 +1,1896 @@
+{
+  "version": 2,
+  "enabled": true,
+  "styleId": "caravan-grounded-cinematic-v1",
+  "width": 2160,
+  "height": 720,
+  "viewport": 1080,
+  "sourceBudget": "1080 source pixels per viewport; uniform scale, top sky crop only",
+  "geography": "Regional terrain interpretation; fictional stops/game distances retained, not surveyed road views.",
+  "sources": {
+    "atlas": {
+      "title": "국토지리정보원 · 국가지도집 지형",
+      "url": "https://nationalatlas.ngii.go.kr/pages/page_4057.php",
+      "supports": "한반도 산지축과 동해안·서남해안의 큰 지형 차이. 개별 도로 조망을 검증하지 않음."
+    },
+    "nakdong": {
+      "title": "낙동강유역환경청 · 지형 및 지질",
+      "url": "https://mcee.go.kr/ndg/web/index.do?menuId=3552",
+      "supports": "낙동강 유역의 분지·하천 평야, 김해 삼각주와 하류 협곡 구간."
+    },
+    "busan": {
+      "title": "부산시 · 강동 생활권",
+      "url": "https://www.busan.go.kr/living_space/gangdong",
+      "supports": "낙동강변 생활권과 남북 산림축."
+    },
+    "jeonju": {
+      "title": "전주시 · 행정구역과 지형",
+      "url": "https://jeonju.go.kr/index.9is?contentUid=ff8080818990c349018b041a9ed03a70",
+      "supports": "전주 분지와 전주천·삼천이 연결되는 지형."
+    },
+    "plain": {
+      "title": "평택시사 · 하천",
+      "url": "https://sisa.pyeongtaek.go.kr/bbs/board.php?bo_table=ca02&wr_id=9",
+      "supports": "안성천·진위천 수계의 평택평야와 수원에서 이어지는 황구지천."
+    },
+    "danyang": {
+      "title": "단양군 · 지역 특성",
+      "url": "https://www.danyang.go.kr/dy21/29",
+      "supports": "산지가 많은 단양과 남한강·충주호로 이어지는 수계."
+    },
+    "wetland": {
+      "title": "순천만습지 · 순천만 이야기",
+      "url": "https://scbay.suncheon.go.kr/wetland/story/0003/0001",
+      "supports": "동천·이사천과 연결된 순천만 하구·갈대 경관."
+    },
+    "coast": {
+      "title": "국토지리정보원 · 간척지",
+      "url": "https://nationalatlas.ngii.go.kr/pages/page_2275.php",
+      "supports": "서남해안 갯벌과 간척 저지대의 큰 지형 특징."
+    },
+    "pass": {
+      "title": "정책브리핑·산림청 · 대관령숲길",
+      "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148896342",
+      "supports": "대관령의 숲·소나무림과 고갯길. 특정 차량 도로의 조망 자료는 아님."
+    }
+  },
+  "cities": {
+    "jeonju": {
+      "route": "jeonju--nonsan",
+      "x": 0
+    },
+    "nonsan": {
+      "route": "jeonju--nonsan",
+      "x": 1080
+    },
+    "suwon": {
+      "route": "seoul--suwon",
+      "x": 0
+    },
+    "seoul": {
+      "route": "seoul--suwon",
+      "x": 1080
+    },
+    "wonju": {
+      "route": "daegwallyeong--wonju",
+      "x": 0
+    },
+    "daegwallyeong": {
+      "route": "daegwallyeong--wonju",
+      "x": 1080
+    },
+    "gangneung": {
+      "route": "daegwallyeong--gangneung",
+      "x": 1080
+    },
+    "sokcho": {
+      "route": "gangneung--sokcho",
+      "x": 1080
+    },
+    "busan": {
+      "route": "busan--yangsan",
+      "x": 0
+    },
+    "yangsan": {
+      "route": "busan--yangsan",
+      "x": 1080
+    },
+    "gimhae": {
+      "route": "busan--gimhae",
+      "x": 1080
+    },
+    "miryang": {
+      "route": "miryang--yangsan",
+      "x": 1080
+    },
+    "jinju": {
+      "route": "gimhae--jinju",
+      "x": 1080
+    },
+    "daegu": {
+      "route": "daegu--miryang",
+      "x": 1080
+    },
+    "hapcheon": {
+      "route": "hapcheon--miryang",
+      "x": 1080
+    },
+    "geochang": {
+      "route": "geochang--hapcheon",
+      "x": 1080
+    },
+    "muju": {
+      "route": "geochang--muju",
+      "x": 1080
+    },
+    "yeongdong": {
+      "route": "muju--yeongdong",
+      "x": 1080
+    },
+    "namwon": {
+      "route": "jinju--namwon",
+      "x": 1080
+    },
+    "gongju": {
+      "route": "gongju--nonsan",
+      "x": 1080
+    },
+    "cheonan": {
+      "route": "cheonan--gongju",
+      "x": 1080
+    },
+    "daejeon": {
+      "route": "daejeon--nonsan",
+      "x": 1080
+    },
+    "gumi": {
+      "route": "daegu--gumi",
+      "x": 1080
+    },
+    "gimcheon": {
+      "route": "gimcheon--gumi",
+      "x": 1080
+    },
+    "cheongju": {
+      "route": "cheongju--daejeon",
+      "x": 1080
+    },
+    "pyeongtaek": {
+      "route": "cheonan--pyeongtaek",
+      "x": 1080
+    },
+    "lake": {
+      "route": "lake--miryang",
+      "x": 0
+    },
+    "mall": {
+      "route": "gumi--mall",
+      "x": 0
+    },
+    "tower": {
+      "route": "geochang--tower",
+      "x": 0
+    },
+    "spring": {
+      "route": "spring--yeongdong",
+      "x": 0
+    },
+    "airfield": {
+      "route": "airfield--nonsan",
+      "x": 0
+    },
+    "solar": {
+      "route": "pyeongtaek--solar",
+      "x": 0
+    },
+    "reststop": {
+      "route": "gimcheon--reststop",
+      "x": 0
+    },
+    "tunnelbook": {
+      "route": "muju--tunnelbook",
+      "x": 0
+    },
+    "mingyu_ridge": {
+      "route": "mingyu_ridge--yeongdong",
+      "x": 0
+    },
+    "jaeyi_cache": {
+      "route": "gimcheon--jaeyi_cache",
+      "x": 0
+    },
+    "cablecar": {
+      "route": "cablecar--mungyeong",
+      "x": 0
+    },
+    "mungyeong": {
+      "route": "cablecar--mungyeong",
+      "x": 1080
+    },
+    "filmset": {
+      "route": "filmset--namwon",
+      "x": 0
+    },
+    "lighthouse": {
+      "route": "lighthouse--nonsan",
+      "x": 0
+    },
+    "drivein": {
+      "route": "cheonan--drivein",
+      "x": 0
+    },
+    "sunflower": {
+      "route": "hapcheon--sunflower",
+      "x": 0
+    },
+    "ulsan": {
+      "route": "ulsan--yangsan",
+      "x": 1080
+    },
+    "gyeongju": {
+      "route": "gyeongju--ulsan",
+      "x": 1080
+    },
+    "pohang": {
+      "route": "gyeongju--pohang",
+      "x": 1080
+    },
+    "sangju": {
+      "route": "gimcheon--sangju",
+      "x": 1080
+    },
+    "gunsan": {
+      "route": "gunsan--jeonju",
+      "x": 1080
+    },
+    "chungju": {
+      "route": "cheongju--chungju",
+      "x": 1080
+    },
+    "sejong": {
+      "route": "gongju--sejong",
+      "x": 1080
+    },
+    "yeosu": {
+      "route": "jinju--yeosu",
+      "x": 1080
+    },
+    "suncheon": {
+      "route": "suncheon--yeosu",
+      "x": 1080
+    },
+    "gwangju": {
+      "route": "gwangju--suncheon",
+      "x": 1080
+    },
+    "damyang": {
+      "route": "damyang--gwangju",
+      "x": 1080
+    },
+    "mokpo": {
+      "route": "gwangju--mokpo",
+      "x": 1080
+    },
+    "maehwa": {
+      "route": "maehwa--suncheon",
+      "x": 1080
+    },
+    "andong": {
+      "route": "andong--gumi",
+      "x": 1080
+    },
+    "danyang": {
+      "route": "andong--danyang",
+      "x": 1080
+    },
+    "icheon": {
+      "route": "icheon--suwon",
+      "x": 1080
+    }
+  },
+  "routes": [
+    {
+      "id": "busan--yangsan",
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "file": "assets/ui/road-studies/atlas-v1-q88/busan--yangsan.webp",
+      "flow": "항만 창고가 드문드문 줄고 강변 풀밭·산기슭 주거지가 섞인다. 강과 능선은 계속 남는다.",
+      "landform": [
+        "항만 창고와 낮은 시가지 뒤로 이어지는 산지",
+        "강변 평지와 산기슭 시가지, 같은 능선 아래 고가"
+      ],
+      "references": [
+        "nakdong",
+        "busan"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "507b27c2f92bd8f99d1f98bba5e8bf3425a4bd4b00f8d1cd895a0cbf28e08312"
+    },
+    {
+      "id": "busan--gimhae",
+      "from": "busan",
+      "to": "gimhae",
+      "km": 18,
+      "file": "assets/ui/road-studies/atlas-v1/busan--gimhae.webp",
+      "flow": "항만의 낮은 시설이 수로와 들판으로 이어진다. 평지가 넓어지되 산을 새로 크게 세우지 않는다.",
+      "landform": [
+        "항만 창고와 낮은 시가지 뒤로 이어지는 산지",
+        "넓고 낮은 삼각주 들판, 수로와 멀리 물러난 산"
+      ],
+      "references": [
+        "nakdong",
+        "busan"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "2e52d40e43cd400b5ce2093c78d6e228f540830729d506a106c2ff335eda355f"
+    },
+    {
+      "id": "miryang--yangsan",
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1-q88/miryang--yangsan.webp",
+      "flow": "강변 시가지가 농지와 낮은 취락으로 느슨해진다. 같은 하천 골짜기를 따라간다.",
+      "landform": [
+        "강변 평지와 산기슭 시가지, 같은 능선 아래 고가",
+        "하천 주변 농경지와 낮은 시장 지붕, 분지 가장자리"
+      ],
+      "references": [
+        "nakdong",
+        "busan"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "0553895985c83a8fc79882575ae150deaeb95c08519c2c607f06f53cec911dc5"
+    },
+    {
+      "id": "gimhae--jinju",
+      "from": "gimhae",
+      "to": "jinju",
+      "km": 55,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gimhae--jinju.webp",
+      "flow": "하류 평지에서 구릉 사이 농경지를 거쳐 강변 분지로 이어지는 긴 구간을 압축한다.",
+      "landform": [
+        "넓고 낮은 삼각주 들판, 수로와 멀리 물러난 산",
+        "남강 수변 평지, 강 건너 완만한 구릉과 시가지"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "2cf2af3e8cc05bdaa5ecd31692cf5e50922894a087d85d2e0fbe4c7bdca30f90"
+    },
+    {
+      "id": "daegu--miryang",
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "file": "assets/ui/road-studies/atlas-v1/daegu--miryang.webp",
+      "flow": "농경지와 창고가 차츰 촘촘해지고 분지 시가지로 이어진다. 산지 크기는 급히 바꾸지 않는다.",
+      "landform": [
+        "하천 주변 농경지와 낮은 시장 지붕, 분지 가장자리",
+        "넓은 분지와 낮은 공장 지붕, 멀리 둘러선 산"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "2a7229dde2350aefb7262d29f2cff1b539075ed1f9e9a40f9fad7475d5014c8f"
+    },
+    {
+      "id": "hapcheon--miryang",
+      "from": "miryang",
+      "to": "hapcheon",
+      "km": 40,
+      "file": "assets/ui/road-studies/atlas-v1-q88/hapcheon--miryang.webp",
+      "flow": "강변 농지에 과수원이 섞이며 낮은 취락이 바뀐다. 새로운 산악 세계로 전환하지 않는다.",
+      "landform": [
+        "하천 주변 농경지와 낮은 시장 지붕, 분지 가장자리",
+        "하천을 낀 농경지, 과수원과 주변 낮은 산지"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "8bb6ecc82ad79307492fc093f9bd0f6543fb35864ad937d270a1d058d58dcb56"
+    },
+    {
+      "id": "geochang--hapcheon",
+      "from": "hapcheon",
+      "to": "geochang",
+      "km": 33,
+      "file": "assets/ui/road-studies/atlas-v1-q88/geochang--hapcheon.webp",
+      "flow": "과수원 사이로 분지를 감싼 산이 조금씩 가까워진다. 산줄기는 연속된 층으로 남긴다.",
+      "landform": [
+        "하천을 낀 농경지, 과수원과 주변 낮은 산지",
+        "산에 둘러싸인 분지 바닥, 마을과 농지의 연속"
+      ],
+      "references": [
+        "nakdong",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "0aacc42f6c9bbd8c71cbee7f651c3dade3813391f1a22fef709590694efef058"
+    },
+    {
+      "id": "geochang--muju",
+      "from": "geochang",
+      "to": "muju",
+      "km": 42,
+      "file": "assets/ui/road-studies/atlas-v1-q88/geochang--muju.webp",
+      "flow": "분지 농지가 좁아지고 숲 골짜기가 깊어진다. 터널은 마지막의 작은 단서다.",
+      "landform": [
+        "산에 둘러싸인 분지 바닥, 마을과 농지의 연속",
+        "둥근 산들이 겹치는 숲 골짜기, 터널 입구는 작은 단서"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "fc886955d9e9344efe7c830b0f8d8065dfb51e7d1b9dced9918b6ad8b3f0bdea"
+    },
+    {
+      "id": "muju--yeongdong",
+      "from": "muju",
+      "to": "yeongdong",
+      "km": 32,
+      "file": "assets/ui/road-studies/atlas-v1-q88/muju--yeongdong.webp",
+      "flow": "숲 골짜기가 조금 열리며 과수원과 포도밭이 늘어난다. 같은 둥근 능선을 유지한다.",
+      "landform": [
+        "둥근 산들이 겹치는 숲 골짜기, 터널 입구는 작은 단서",
+        "숲 능선 사이 과수·포도 재배지와 작은 취락"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "cb4b3025309508eaedd3082d854fe55f170f95004873e93b2a19438ed09098d3"
+    },
+    {
+      "id": "jinju--namwon",
+      "from": "jinju",
+      "to": "namwon",
+      "km": 62,
+      "file": "assets/ui/road-studies/atlas-v1-q88/jinju--namwon.webp",
+      "flow": "강변 취락 뒤로 산간 농지가 이어지고 골짜기 안의 분지가 열린다. 수계는 미술적으로 압축한다.",
+      "landform": [
+        "남강 수변 평지, 강 건너 완만한 구릉과 시가지",
+        "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을"
+      ],
+      "references": [
+        "nakdong",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "b59c1a0edfd90bb188a5e784a565cd7d41aae920ad8733798e013106eb978d1b"
+    },
+    {
+      "id": "jeonju--namwon",
+      "from": "namwon",
+      "to": "jeonju",
+      "km": 48,
+      "file": "assets/ui/road-studies/atlas-v1/jeonju--namwon.webp",
+      "flow": "분지 농경지와 작은 마을이 이어지다가 도시 지붕의 밀도만 높아진다.",
+      "landform": [
+        "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을",
+        "구릉으로 감싼 분지, 하천을 따라 열리는 농경지"
+      ],
+      "references": [
+        "atlas",
+        "jeonju"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "8c8258ffed8ea3ad1973c42473d3330f47dc2ff002a6635d6f00a5a40ae07aee"
+    },
+    {
+      "id": "jeonju--nonsan",
+      "from": "jeonju",
+      "to": "nonsan",
+      "km": 52,
+      "file": "assets/ui/road-studies/atlas-v1-q88/jeonju--nonsan.webp",
+      "flow": "낮은 시장 지붕을 벗어나 수로·논밭이 넓어진다. 낮은 먼 구릉을 끝까지 유지한다.",
+      "landform": [
+        "구릉으로 감싼 분지, 하천을 따라 열리는 농경지",
+        "낮고 넓은 농경지, 배수로와 멀리 낮은 구릉"
+      ],
+      "references": [
+        "jeonju",
+        "atlas",
+        "coast"
+      ],
+      "origin": "landform-corrected-master",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "d9098a67b9c8645f4ced8163dcd19cd71d7b1114620fdfcc1a656394120ed1de"
+    },
+    {
+      "id": "gongju--nonsan",
+      "from": "nonsan",
+      "to": "gongju",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1/gongju--nonsan.webp",
+      "flow": "평야 사이 낮은 구릉이 가까워지고 강가 취락이 모인다. 산성은 원경을 덮지 않는다.",
+      "landform": [
+        "낮고 넓은 농경지, 배수로와 멀리 낮은 구릉",
+        "강가 저지대와 낮은 산성 능선, 과장하지 않은 언덕"
+      ],
+      "references": [
+        "atlas",
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "569dfd582cb5b7e858947ad98d74982363a09a603314f9cc62b555ee341d0f73"
+    },
+    {
+      "id": "cheonan--gongju",
+      "from": "gongju",
+      "to": "cheonan",
+      "km": 44,
+      "file": "assets/ui/road-studies/atlas-v1/cheonan--gongju.webp",
+      "flow": "강변 저지대에서 완만한 구릉 사이 농지·취락으로 이어진다. 도로망과 실측 거리는 축약이다.",
+      "landform": [
+        "강가 저지대와 낮은 산성 능선, 과장하지 않은 언덕",
+        "완만한 구릉 사이 시가지·물류지와 농경지"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "c85100b155a672e7815cdd5841d3595b5cf52510d46af9889da00d33a4edeaa3"
+    },
+    {
+      "id": "daejeon--nonsan",
+      "from": "nonsan",
+      "to": "daejeon",
+      "km": 40,
+      "file": "assets/ui/road-studies/atlas-v1/daejeon--nonsan.webp",
+      "flow": "논밭 사이 취락이 촘촘해져 분지 외곽의 시설로 이어진다. 시가지는 천천히 늘린다.",
+      "landform": [
+        "낮고 넓은 농경지, 배수로와 멀리 낮은 구릉",
+        "분지의 연구시설·주거지와 외곽 구릉"
+      ],
+      "references": [
+        "atlas",
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "5f4f25ef7f949655fb232cf4219f8a205da2b8e5978a4b8f0975294ba7d51ef2"
+    },
+    {
+      "id": "daegu--gumi",
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "file": "assets/ui/road-studies/atlas-v1-q88/daegu--gumi.webp",
+      "flow": "낮은 공장과 강변 저지대가 계속된다. 먼 산은 유지하고 공장 배치만 달라진다.",
+      "landform": [
+        "넓은 분지와 낮은 공장 지붕, 멀리 둘러선 산",
+        "강변 산업지와 평지, 공장 뒤로 물러난 구릉"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "e4ff37e6d1ac40eb2b40d14c6bee3c4ea88d8ee8319cf10df09eb1f508233b38"
+    },
+    {
+      "id": "gimcheon--gumi",
+      "from": "gumi",
+      "to": "gimcheon",
+      "km": 26,
+      "file": "assets/ui/road-studies/atlas-v1/gimcheon--gumi.webp",
+      "flow": "산업지 지붕이 줄고 내륙 농경지와 교통 시설이 늘어난다. 하천 골짜기의 폭을 점진적으로 좁힌다.",
+      "landform": [
+        "강변 산업지와 평지, 공장 뒤로 물러난 구릉",
+        "내륙 하천 골짜기의 농경지와 교통 거점"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "49c84fa974da448cde627cd7ead84f5f53bcbd95085db0e3f005d6c73d12ff4b"
+    },
+    {
+      "id": "gimcheon--yeongdong",
+      "from": "gimcheon",
+      "to": "yeongdong",
+      "km": 33,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gimcheon--yeongdong.webp",
+      "flow": "갈림길 주변 취락에서 낮은 산골 과수지로 이어진다. 능선의 결을 유지한다.",
+      "landform": [
+        "내륙 하천 골짜기의 농경지와 교통 거점",
+        "숲 능선 사이 과수·포도 재배지와 작은 취락"
+      ],
+      "references": [
+        "nakdong",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "6b3cb1194924492b19c36c9bb89731cd99516d86e58ff6df206764254b7fc334"
+    },
+    {
+      "id": "gimcheon--muju",
+      "from": "gimcheon",
+      "to": "muju",
+      "km": 38,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gimcheon--muju.webp",
+      "flow": "완만한 구릉이 숲 골짜기로 깊어진다. 여러 고개를 한 장면으로 순간 교체하지 않는다.",
+      "landform": [
+        "내륙 하천 골짜기의 농경지와 교통 거점",
+        "둥근 산들이 겹치는 숲 골짜기, 터널 입구는 작은 단서"
+      ],
+      "references": [
+        "nakdong",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "0b86b7a5de2f7ccb292500f5ac837d77ddb7c7e7bac0982f5dca166fe0261f41"
+    },
+    {
+      "id": "daejeon--yeongdong",
+      "from": "yeongdong",
+      "to": "daejeon",
+      "km": 44,
+      "file": "assets/ui/road-studies/atlas-v1-q88/daejeon--yeongdong.webp",
+      "flow": "과수원에서 강변 농지·분지 외곽으로 이어진다. 연구시설은 마지막에만 작은 군집으로 늘린다.",
+      "landform": [
+        "숲 능선 사이 과수·포도 재배지와 작은 취락",
+        "분지의 연구시설·주거지와 외곽 구릉"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "517b34344bd51fb414d7f6533b713fc66d093bcae0bf3e462f0a8f30bc6b20d0"
+    },
+    {
+      "id": "cheongju--daejeon",
+      "from": "daejeon",
+      "to": "cheongju",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1-q88/cheongju--daejeon.webp",
+      "flow": "분지와 하천 저지대가 이어지고 외곽 농지·주거지가 섞인다. 두 도시 사이에 새 산맥을 끼우지 않는다.",
+      "landform": [
+        "분지의 연구시설·주거지와 외곽 구릉",
+        "분지 평야와 하천, 낮은 시가지에서 외곽 농지로"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "eaf4a6e887ae8cd6294aad0ad37932f243327a1b3188e4c22697285207d63c63"
+    },
+    {
+      "id": "cheonan--cheongju",
+      "from": "cheongju",
+      "to": "cheonan",
+      "km": 38,
+      "file": "assets/ui/road-studies/atlas-v1-q88/cheonan--cheongju.webp",
+      "flow": "농지와 낮은 물류시설 사이로 완만한 구릉이 이어진다. 주거 밀도는 천천히 변한다.",
+      "landform": [
+        "분지 평야와 하천, 낮은 시가지에서 외곽 농지로",
+        "완만한 구릉 사이 시가지·물류지와 농경지"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "8adf7dd1b2af431b2c27746314ddaf2078cce8690d7ac4adb54d9e1845c15e32"
+    },
+    {
+      "id": "cheonan--pyeongtaek",
+      "from": "cheonan",
+      "to": "pyeongtaek",
+      "km": 28,
+      "file": "assets/ui/road-studies/atlas-v1/cheonan--pyeongtaek.webp",
+      "flow": "구릉 사이 들판이 넓은 평야로 열린다. 항만 명칭은 압축 설정이며 거대한 바다는 필수가 아니다.",
+      "landform": [
+        "완만한 구릉 사이 시가지·물류지와 농경지",
+        "넓은 하천 평야와 산업·항만 권역의 게임식 압축"
+      ],
+      "references": [
+        "atlas",
+        "plain"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "b88c4a4bcd772b162dc6c57a3cb3dba07e771a4f26bb3ad20cb6f28ac71782aa"
+    },
+    {
+      "id": "pyeongtaek--suwon",
+      "from": "pyeongtaek",
+      "to": "suwon",
+      "km": 30,
+      "file": "assets/ui/road-studies/atlas-v1-q88/pyeongtaek--suwon.webp",
+      "flow": "수로와 논밭 사이 산업시설·아파트가 점진적으로 늘어난다. 평지의 넓이를 보존한다.",
+      "landform": [
+        "넓은 하천 평야와 산업·항만 권역의 게임식 압축",
+        "저지대 시가지와 하천, 먼 구릉 아래 연속된 주거지"
+      ],
+      "references": [
+        "plain"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "0c5769a32ab29ea85ed81de6c816ec631a688346f45fbfb2b2111ef07ef6505e"
+    },
+    {
+      "id": "seoul--suwon",
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1-q88/seoul--suwon.webp",
+      "flow": "낮은 주거·작업장 사이에 아파트가 차츰 늘어난다. 같은 구릉과 수변 축을 길게 유지한다.",
+      "landform": [
+        "저지대 시가지와 하천, 먼 구릉 아래 연속된 주거지",
+        "수변·시가지와 낮은 산의 겹침, 남산은 끝부분의 단서"
+      ],
+      "references": [
+        "plain",
+        "atlas"
+      ],
+      "origin": "landform-corrected-master",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "e775b8703782f7a56d03d1e775e2f1e34cc9613782beb743bcd76ec649b1f17f"
+    },
+    {
+      "id": "geochang--namwon",
+      "from": "namwon",
+      "to": "geochang",
+      "km": 44,
+      "file": "assets/ui/road-studies/atlas-v1/geochang--namwon.webp",
+      "flow": "분지 사이 숲 고개를 지나 다시 농지가 열린다. 알프스형 암봉 대신 둥근 산을 겹친다.",
+      "landform": [
+        "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을",
+        "산에 둘러싸인 분지 바닥, 마을과 농지의 연속"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "e41867ace09b87a5ac025795173d4a6b019beb95e6a88a29cd1d64a72ee44c10"
+    },
+    {
+      "id": "jeonju--muju",
+      "from": "jeonju",
+      "to": "muju",
+      "km": 55,
+      "file": "assets/ui/road-studies/atlas-v1-q88/jeonju--muju.webp",
+      "flow": "도시 외곽 농지가 점차 산지 계곡으로 좁아진다. 고도 변화는 연속된 능선으로 보인다.",
+      "landform": [
+        "구릉으로 감싼 분지, 하천을 따라 열리는 농경지",
+        "둥근 산들이 겹치는 숲 골짜기, 터널 입구는 작은 단서"
+      ],
+      "references": [
+        "jeonju",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "63c24b35276469342bfddde4e9d0d10388190684b5691e190aedbe454975b093"
+    },
+    {
+      "id": "lake--miryang",
+      "from": "lake",
+      "to": "miryang",
+      "km": 14,
+      "file": "assets/ui/road-studies/atlas-v1/lake--miryang.webp",
+      "flow": "작은 호수의 물가가 마을 농지로 이어진다. 거대한 바다나 별도 항만을 만들지 않는다.",
+      "landform": [
+        "밀양 인근으로 설정된 작은 산간 호수, 바다로 오인하지 않게",
+        "하천 주변 농경지와 낮은 시장 지붕, 분지 가장자리"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "00c9b4412fad87d7ccc2ece826314e93dfd0f86f374aea1c289a77a8ef790923"
+    },
+    {
+      "id": "daegu--lake",
+      "from": "lake",
+      "to": "daegu",
+      "km": 20,
+      "file": "assets/ui/road-studies/atlas-v1/daegu--lake.webp",
+      "flow": "호숫가 숲이 낮은 농지와 분지 외곽으로 이어진다. 도시 실루엣은 조금씩 늘린다.",
+      "landform": [
+        "밀양 인근으로 설정된 작은 산간 호수, 바다로 오인하지 않게",
+        "넓은 분지와 낮은 공장 지붕, 멀리 둘러선 산"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "890d9af3d46f215478ef21dadc0173a807c4aa098354ce758b14fa284b2f61cd"
+    },
+    {
+      "id": "gumi--mall",
+      "from": "mall",
+      "to": "gumi",
+      "km": 8,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gumi--mall.webp",
+      "flow": "구미 산업지의 길을 유지한 채 빈 상업 건물만 가까워진다. 짧은 곁길에서 생태를 바꾸지 않는다.",
+      "landform": [
+        "구미 산업지의 빈 상업 건물, 주변 평지와 크기 유지",
+        "강변 산업지와 평지, 공장 뒤로 물러난 구릉"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "0fd8e23dacac136f846529c4981e25381fd193c6d619dfd7ba9546676c2d220e"
+    },
+    {
+      "id": "geochang--tower",
+      "from": "tower",
+      "to": "geochang",
+      "km": 11,
+      "file": "assets/ui/road-studies/atlas-v1/geochang--tower.webp",
+      "flow": "분지 옆 능선의 숲을 유지하며 작은 통신탑을 드러낸다. 짧은 우회로에 만년설은 없다.",
+      "landform": [
+        "거창 인근 능선 위 가상 통신탑, 알프스형 절벽 금지",
+        "산에 둘러싸인 분지 바닥, 마을과 농지의 연속"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "919303c4e265405bbb2c10ec7f6295d76dc767f2cd926814f5c5049ab1423a80"
+    },
+    {
+      "id": "spring--yeongdong",
+      "from": "spring",
+      "to": "yeongdong",
+      "km": 9,
+      "file": "assets/ui/road-studies/atlas-v1-q88/spring--yeongdong.webp",
+      "flow": "같은 산골 숲과 과수지 사이 작은 온천 건물이 나타난다. 독립적인 관광 풍경으로 점프하지 않는다.",
+      "landform": [
+        "영동 산골의 작은 가상 온천, 주변 숲과 계곡 유지",
+        "숲 능선 사이 과수·포도 재배지와 작은 취락"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "ba3c38b6faf694ef90b5195cf7ff6083c8567498818508156589ffde5b6ea0ea"
+    },
+    {
+      "id": "airfield--nonsan",
+      "from": "airfield",
+      "to": "nonsan",
+      "km": 12,
+      "file": "assets/ui/road-studies/atlas-v1/airfield--nonsan.webp",
+      "flow": "평야의 풀밭과 콘크리트 흔적이 논밭으로 이어진다. 활주로의 낮은 수평선을 유지한다.",
+      "landform": [
+        "논산 평야의 가상 비행장, 낮은 활주로·풀밭 수평선",
+        "낮고 넓은 농경지, 배수로와 멀리 낮은 구릉"
+      ],
+      "references": [
+        "atlas",
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "62eeb73357c94ea43f81b50486660fea72b5c10b0ed1fee7d5df2e8a84b842f3"
+    },
+    {
+      "id": "pyeongtaek--solar",
+      "from": "solar",
+      "to": "pyeongtaek",
+      "km": 10,
+      "file": "assets/ui/road-studies/atlas-v1-q88/pyeongtaek--solar.webp",
+      "flow": "평택 들판의 일부가 낮은 패널 밭으로 바뀐다. 산·날씨·빛은 변하지 않는다.",
+      "landform": [
+        "평택 저지대의 가상 태양광 밭, 과장된 산 배제",
+        "넓은 하천 평야와 산업·항만 권역의 게임식 압축"
+      ],
+      "references": [
+        "plain"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "c63ab9ec96bd5d8b20e68c9af68e82e4d938195f7647a6b6be37d90a6881b02d"
+    },
+    {
+      "id": "gimcheon--reststop",
+      "from": "reststop",
+      "to": "gimcheon",
+      "km": 7,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gimcheon--reststop.webp",
+      "flow": "갈림길 주변 낮은 구릉과 도로를 따라 휴게소 지붕이 보인다. 짧은 길의 변화량은 작게 둔다.",
+      "landform": [
+        "김천 구릉 사이 가상 휴게소, 도로 주변 숲과 연속",
+        "내륙 하천 골짜기의 농경지와 교통 거점"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "f6ccedd1ccfa817efe8509ba38b1b2d0cb2f57b15f3d2158847a95c4f851beb4"
+    },
+    {
+      "id": "muju--tunnelbook",
+      "from": "tunnelbook",
+      "to": "muju",
+      "km": 9,
+      "file": "assets/ui/road-studies/atlas-v1-q88/muju--tunnelbook.webp",
+      "flow": "무주와 같은 숲·바위 사이에 작은 터널 입구가 나타난다. 터널 하나가 지역 전체를 바꾸지 않는다.",
+      "landform": [
+        "무주 숲길의 가상 터널, 입구 주변 같은 바위·숲 유지",
+        "둥근 산들이 겹치는 숲 골짜기, 터널 입구는 작은 단서"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "f3603fa195e7d4259b36ae63d22f824a2e8bbf528a2865ce71a8e2d97622fcbe"
+    },
+    {
+      "id": "mingyu_ridge--yeongdong",
+      "from": "mingyu_ridge",
+      "to": "yeongdong",
+      "km": 13,
+      "file": "assets/ui/road-studies/atlas-v1-q88/mingyu_ridge--yeongdong.webp",
+      "flow": "인근 숲 능선에서 산골 과수원으로 시야가 열린다. 같은 산줄기를 다른 거리에서 본다.",
+      "landform": [
+        "영동 인근 가상 능선, 멀리 같은 산줄기 유지",
+        "숲 능선 사이 과수·포도 재배지와 작은 취락"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "139e81cc02cf467e32658c7c4da37c853dc35c58055f064fb1c58ae233e536fd"
+    },
+    {
+      "id": "gimcheon--jaeyi_cache",
+      "from": "jaeyi_cache",
+      "to": "gimcheon",
+      "km": 8,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gimcheon--jaeyi_cache.webp",
+      "flow": "김천 근교 구릉의 작은 창고와 공터가 마을 외곽으로 이어진다. 공단 도시로 확대하지 않는다.",
+      "landform": [
+        "김천 근교 가상 창고, 공터와 낮은 구릉 유지",
+        "내륙 하천 골짜기의 농경지와 교통 거점"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "9945372950d15a0035b556e70cb380b8675c24ee3b66f07ac8d04fb2ca9098b4"
+    },
+    {
+      "id": "cablecar--mungyeong",
+      "from": "cablecar",
+      "to": "mungyeong",
+      "km": 16,
+      "file": "assets/ui/road-studies/atlas-v1-q88/cablecar--mungyeong.webp",
+      "flow": "문경 산자락의 케이블 시설은 숲에 작게 묻힌다. 깊이와 빛은 같은 골짜기 안에서 유지한다.",
+      "landform": [
+        "문경 근교 가상 케이블카, 골짜기와 산비탈에 종속",
+        "골짜기를 따라 가까워지는 숲 능선과 고갯길"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "a80c1aac323663d342be2cc7bd053940c1c4eac18042d3707b02043a3805f8da"
+    },
+    {
+      "id": "filmset--namwon",
+      "from": "filmset",
+      "to": "namwon",
+      "km": 14,
+      "file": "assets/ui/road-studies/atlas-v1-q88/filmset--namwon.webp",
+      "flow": "분지 농지와 낮은 목조 지붕이 이어진다. 시대극 세트장을 실제 거대 성곽 도시로 바꾸지 않는다.",
+      "landform": [
+        "남원 근교 가상 세트장, 작은 목조 지붕과 분지 농지",
+        "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "cfb45ca199b46ebd215ea1b80685c81c94ebaa095227e1025e182f1da0926831"
+    },
+    {
+      "id": "lighthouse--nonsan",
+      "from": "lighthouse",
+      "to": "nonsan",
+      "km": 15,
+      "file": "assets/ui/road-studies/atlas-v1/lighthouse--nonsan.webp",
+      "flow": "서해 저지대와 논산 평야를 연결한 가상 압축 길이다. 실제 15km 도로 재현으로 취급하지 않는다.",
+      "landform": [
+        "서해안 가상 등대, 갯벌·낮은 구릉과 해안 풀밭",
+        "낮고 넓은 농경지, 배수로와 멀리 낮은 구릉"
+      ],
+      "references": [
+        "coast",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "3d9121cd1f5bd399c8edd2f14dfc4b322ef1cb61f4c6608041cde4b67c36cd9f"
+    },
+    {
+      "id": "cheonan--drivein",
+      "from": "drivein",
+      "to": "cheonan",
+      "km": 9,
+      "file": "assets/ui/road-studies/atlas-v1/cheonan--drivein.webp",
+      "flow": "천안 근교 농지에 작은 빈 상영판과 공터가 나타난다. 구릉은 그대로 유지한다.",
+      "landform": [
+        "천안 근교 가상 자동차극장, 농지와 작은 구릉 유지",
+        "완만한 구릉 사이 시가지·물류지와 농경지"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "61e2dc6b723f7927f1e9441a307a61301bae7e9f76a4e6c496ae6e61ccb952aa"
+    },
+    {
+      "id": "hapcheon--sunflower",
+      "from": "sunflower",
+      "to": "hapcheon",
+      "km": 8,
+      "file": "assets/ui/road-studies/atlas-v1-q88/hapcheon--sunflower.webp",
+      "flow": "같은 과수·농경지의 일부만 밭으로 달라진다. 개화기를 고정하지 않는다.",
+      "landform": [
+        "합천 근교 가상 밭, 계절 꽃보다 농지 형태를 유지",
+        "하천을 낀 농경지, 과수원과 주변 낮은 산지"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "56bda2a1407d66dca638a02dfe09ab81eb530eda695b46d885b8a8a560220a75"
+    },
+    {
+      "id": "ulsan--yangsan",
+      "from": "yangsan",
+      "to": "ulsan",
+      "km": 32,
+      "file": "assets/ui/road-studies/atlas-v1-q88/ulsan--yangsan.webp",
+      "flow": "산기슭 취락과 구릉 사이 산업시설이 점진적으로 늘어난다. 갑자기 바다 절벽으로 바뀌지 않는다.",
+      "landform": [
+        "강변 평지와 산기슭 시가지, 같은 능선 아래 고가",
+        "동해 쪽 산업 시가지와 낮은 해안 구릉"
+      ],
+      "references": [
+        "nakdong",
+        "busan",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "71b01279edeb29ea0825cd125047f9454bfd6ce6a0eb5d2e557d3b96349e8f5f"
+    },
+    {
+      "id": "gyeongju--ulsan",
+      "from": "ulsan",
+      "to": "gyeongju",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gyeongju--ulsan.webp",
+      "flow": "산업지 외곽이 농경지·분지 취락으로 느슨해진다. 왕릉은 낮은 둔덕 규모로 나타난다.",
+      "landform": [
+        "동해 쪽 산업 시가지와 낮은 해안 구릉",
+        "분지의 낮은 취락·농지, 둥근 왕릉과 산의 크기 구분"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "03297fc387ddc2a194ac763d7865053fb5eb2b0c0e3fd706d9d865defd921063"
+    },
+    {
+      "id": "daegu--gyeongju",
+      "from": "gyeongju",
+      "to": "daegu",
+      "km": 52,
+      "file": "assets/ui/road-studies/atlas-v1/daegu--gyeongju.webp",
+      "flow": "분지 농지에서 산지 연결부를 거쳐 도시 외곽으로 열린다. 두 분지 사이의 중간 지형을 남긴다.",
+      "landform": [
+        "분지의 낮은 취락·농지, 둥근 왕릉과 산의 크기 구분",
+        "넓은 분지와 낮은 공장 지붕, 멀리 둘러선 산"
+      ],
+      "references": [
+        "atlas",
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "b7511c993567403aff0459b254f5a8190c3ecf1664a2b475a591cd4ab6681626"
+    },
+    {
+      "id": "gyeongju--pohang",
+      "from": "gyeongju",
+      "to": "pohang",
+      "km": 30,
+      "file": "assets/ui/road-studies/atlas-v1/gyeongju--pohang.webp",
+      "flow": "내륙 농지와 낮은 구릉을 지나 해안 산업지가 늘어난다. 바다와 제철소가 한순간에 전경을 덮지 않는다.",
+      "landform": [
+        "분지의 낮은 취락·농지, 둥근 왕릉과 산의 크기 구분",
+        "해안 산업지의 낮은 구조물과 멀리 이어지는 구릉"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "3b71c79c9f26e3c00ad2ed1532409e929ebcd170d06c28966331afb3e0d6d7b1"
+    },
+    {
+      "id": "gimcheon--sangju",
+      "from": "gimcheon",
+      "to": "sangju",
+      "km": 26,
+      "file": "assets/ui/road-studies/atlas-v1/gimcheon--sangju.webp",
+      "flow": "내륙 농지·낮은 취락이 넓은 강변 골짜기로 이어진다. 산은 배후에 남는다.",
+      "landform": [
+        "내륙 하천 골짜기의 농경지와 교통 거점",
+        "강 주변 농경지와 넓은 골짜기, 자전거길은 작은 선"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "930db75249c6e6389889040f82d5f46ad47650f3a5861853f5ef42732554ca4b"
+    },
+    {
+      "id": "sangju--yeongdong",
+      "from": "sangju",
+      "to": "yeongdong",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1-q88/sangju--yeongdong.webp",
+      "flow": "강변 평지에서 숲 구릉 사이 과수농지로 이어진다. 반복되는 둥근 능선으로 연결한다.",
+      "landform": [
+        "강 주변 농경지와 넓은 골짜기, 자전거길은 작은 선",
+        "숲 능선 사이 과수·포도 재배지와 작은 취락"
+      ],
+      "references": [
+        "nakdong",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "8a72aa244beadb9c05de3ecf17b6b1c6c5e8d33ab48e8dab49468f75e1081851"
+    },
+    {
+      "id": "gunsan--jeonju",
+      "from": "jeonju",
+      "to": "gunsan",
+      "km": 32,
+      "file": "assets/ui/road-studies/atlas-v1/gunsan--jeonju.webp",
+      "flow": "내륙 분지 외곽에서 서쪽 저지대가 넓어진다. 항구는 도착 쪽의 낮은 구조물로 암시한다.",
+      "landform": [
+        "구릉으로 감싼 분지, 하천을 따라 열리는 농경지",
+        "낮은 하구·항만과 평야, 섬과 구릉은 먼 배경"
+      ],
+      "references": [
+        "jeonju",
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "f263b57a658c13ca87c62b2a271071b4af8d7cdbc4cd0f0be7d933472df86930"
+    },
+    {
+      "id": "gunsan--lighthouse",
+      "from": "gunsan",
+      "to": "lighthouse",
+      "km": 12,
+      "file": "assets/ui/road-studies/atlas-v1/gunsan--lighthouse.webp",
+      "flow": "하구 항만 시설이 줄고 갯벌·해안 풀밭이 늘어난다. 서해를 동해 절벽으로 바꾸지 않는다.",
+      "landform": [
+        "낮은 하구·항만과 평야, 섬과 구릉은 먼 배경",
+        "서해안 가상 등대, 갯벌·낮은 구릉과 해안 풀밭"
+      ],
+      "references": [
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "08949add01b7c420f1f66486431cf271dbe45e0c8ea5d19ed769be590eb58007"
+    },
+    {
+      "id": "cheongju--chungju",
+      "from": "cheongju",
+      "to": "chungju",
+      "km": 40,
+      "file": "assets/ui/road-studies/atlas-v1-q88/cheongju--chungju.webp",
+      "flow": "농지·구릉을 따라 내륙 분지와 수변으로 이어진다. 호수는 연속된 지형 안에서 드러난다.",
+      "landform": [
+        "분지 평야와 하천, 낮은 시가지에서 외곽 농지로",
+        "강과 호수로 이어지는 내륙 분지, 주변 산의 완만한 반복"
+      ],
+      "references": [
+        "atlas",
+        "danyang"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "9fc11985b2314594f1b2c549ae26c17209609351e452f091ad7d21f6ff652207"
+    },
+    {
+      "id": "gongju--sejong",
+      "from": "gongju",
+      "to": "sejong",
+      "km": 16,
+      "file": "assets/ui/road-studies/atlas-v1/gongju--sejong.webp",
+      "flow": "강 주변 저지대를 유지한 채 낮은 오래된 취락에서 계획도시 건물로 밀도가 달라진다.",
+      "landform": [
+        "강가 저지대와 낮은 산성 능선, 과장하지 않은 언덕",
+        "하천과 낮은 구릉 사이 새 시가지의 폐허"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "56df456dfcf06c239299e62cbd6078fd832fef6c7e1ccb89c70c3cba0b4b85f8"
+    },
+    {
+      "id": "daejeon--sejong",
+      "from": "sejong",
+      "to": "daejeon",
+      "km": 20,
+      "file": "assets/ui/road-studies/atlas-v1/daejeon--sejong.webp",
+      "flow": "하천과 구릉 사이 도시 외곽이 이어진다. 공주·청주 방향과도 같은 세종 지형 성격을 공유한다.",
+      "landform": [
+        "하천과 낮은 구릉 사이 새 시가지의 폐허",
+        "분지의 연구시설·주거지와 외곽 구릉"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "07a77d82ab1c66168d8d3501c3bb9db549e4d9c24e0919c584333d2af85e9ba8"
+    },
+    {
+      "id": "cheongju--sejong",
+      "from": "sejong",
+      "to": "cheongju",
+      "km": 24,
+      "file": "assets/ui/road-studies/atlas-v1/cheongju--sejong.webp",
+      "flow": "낮은 시가지에서 농경지·구릉을 거쳐 분지 외곽으로 이어진다. 한 가지 중부 내륙 색감을 유지한다.",
+      "landform": [
+        "하천과 낮은 구릉 사이 새 시가지의 폐허",
+        "분지 평야와 하천, 낮은 시가지에서 외곽 농지로"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "c5e4e2633d60795da4e71fd9adc96f6e66696c3955486589d3d054d44220589f"
+    },
+    {
+      "id": "jinju--yeosu",
+      "from": "jinju",
+      "to": "yeosu",
+      "km": 48,
+      "file": "assets/ui/road-studies/atlas-v1/jinju--yeosu.webp",
+      "flow": "내륙 강변과 구릉 사이 취락이 남해 만의 항만으로 열린다. 작은 반도·섬은 멀리 둔다.",
+      "landform": [
+        "남강 수변 평지, 강 건너 완만한 구릉과 시가지",
+        "잔잔한 만과 낮은 섬·반도, 항만과 구릉 시가지"
+      ],
+      "references": [
+        "nakdong",
+        "atlas",
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "d9f15e5aea936662765a56fa21489da8a45b5006d92a137fdf01c3f9d06be7a2"
+    },
+    {
+      "id": "suncheon--yeosu",
+      "from": "yeosu",
+      "to": "suncheon",
+      "km": 24,
+      "file": "assets/ui/road-studies/atlas-v1/suncheon--yeosu.webp",
+      "flow": "항만 주변 구릉에서 잔잔한 만과 하구 저지대로 이어진다. 동해의 직선 모래해안과 구별한다.",
+      "landform": [
+        "잔잔한 만과 낮은 섬·반도, 항만과 구릉 시가지",
+        "낮은 하구의 갈대와 갯벌, 농경지에서 물가로"
+      ],
+      "references": [
+        "atlas",
+        "coast",
+        "wetland"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "57c566938adc3f30418449e59b18dd5d344d7b2d51f9c9f2bb685c5220930edc"
+    },
+    {
+      "id": "namwon--suncheon",
+      "from": "suncheon",
+      "to": "namwon",
+      "km": 44,
+      "file": "assets/ui/road-studies/atlas-v1/namwon--suncheon.webp",
+      "flow": "하구 농지를 벗어나 숲 골짜기와 내륙 분지로 이어진다. 산이 가까워지는 시간을 충분히 둔다.",
+      "landform": [
+        "낮은 하구의 갈대와 갯벌, 농경지에서 물가로",
+        "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을"
+      ],
+      "references": [
+        "wetland",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "622f5422ef2eef8efd26bc1fba698b458e115b732db4879dc3bf0041e73ab38d"
+    },
+    {
+      "id": "gwangju--suncheon",
+      "from": "suncheon",
+      "to": "gwangju",
+      "km": 40,
+      "file": "assets/ui/road-studies/atlas-v1/gwangju--suncheon.webp",
+      "flow": "농경지·구릉이 반복되다가 분지 시가지 밀도가 늘어난다. 습지와 도시를 단번에 바꾸지 않는다.",
+      "landform": [
+        "낮은 하구의 갈대와 갯벌, 농경지에서 물가로",
+        "분지 시가지와 먼 산지, 시장은 낮은 지붕 규모"
+      ],
+      "references": [
+        "wetland",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "84ddb5ba2007c2953c77f47d0a6536778fcd4ee5a73f4761fee85fd7275328ce"
+    },
+    {
+      "id": "damyang--gwangju",
+      "from": "gwangju",
+      "to": "damyang",
+      "km": 14,
+      "file": "assets/ui/road-studies/atlas-v1-q88/damyang--gwangju.webp",
+      "flow": "도시 외곽 지붕이 줄고 밭·대숲이 늘어난다. 대숲을 거대한 별도 생물군계로 바꾸지 않는다.",
+      "landform": [
+        "분지 시가지와 먼 산지, 시장은 낮은 지붕 규모",
+        "내륙 농경지·대숲과 완만한 산지의 겹침"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "9d083c473e7761b2b49e5605864c4339325712e515020dee907a2af3d2ef6def"
+    },
+    {
+      "id": "damyang--namwon",
+      "from": "damyang",
+      "to": "namwon",
+      "km": 24,
+      "file": "assets/ui/road-studies/atlas-v1-q88/damyang--namwon.webp",
+      "flow": "농지와 낮은 취락에서 숲 고개를 거쳐 분지가 열린다. 산의 높이는 단계적으로 변한다.",
+      "landform": [
+        "내륙 농경지·대숲과 완만한 산지의 겹침",
+        "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "82a88d76d65f146069dc3550468fa2f3c65643eec8be70b9069aabfb8c665422"
+    },
+    {
+      "id": "gwangju--mokpo",
+      "from": "gwangju",
+      "to": "mokpo",
+      "km": 44,
+      "file": "assets/ui/road-studies/atlas-v1/gwangju--mokpo.webp",
+      "flow": "분지 외곽에서 넓은 서남부 저지대와 하구 쪽으로 이어진다. 물과 섬은 끝 쪽의 먼 층이다.",
+      "landform": [
+        "분지 시가지와 먼 산지, 시장은 낮은 지붕 규모",
+        "서남해 만과 낮은 섬, 물가의 항만 시설"
+      ],
+      "references": [
+        "atlas",
+        "coast"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "a857eef9bb98ee629d480ab7a565e374da44f88ef1f020783051a34c0ffeadfa"
+    },
+    {
+      "id": "gwangju--jeonju",
+      "from": "gwangju",
+      "to": "jeonju",
+      "km": 48,
+      "file": "assets/ui/road-studies/atlas-v1/gwangju--jeonju.webp",
+      "flow": "구릉 사이 논밭과 작은 도시 외곽이 반복된다. 긴 길에서도 채도·날씨를 일정하게 유지한다.",
+      "landform": [
+        "분지 시가지와 먼 산지, 시장은 낮은 지붕 규모",
+        "구릉으로 감싼 분지, 하천을 따라 열리는 농경지"
+      ],
+      "references": [
+        "atlas",
+        "jeonju"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "3bf94d0e755e00693ba9bd321be96945dc155030f608317e3fe8567cfc5ae58e"
+    },
+    {
+      "id": "maehwa--suncheon",
+      "from": "suncheon",
+      "to": "maehwa",
+      "km": 14,
+      "file": "assets/ui/road-studies/atlas-v1-q88/maehwa--suncheon.webp",
+      "flow": "하구 농지와 구릉 사이 과수원을 따라 강변으로 이어진다. 매화 만개는 계절 선택 없이는 고정하지 않는다.",
+      "landform": [
+        "낮은 하구의 갈대와 갯벌, 농경지에서 물가로",
+        "섬진강변 과수원과 산비탈, 상시 만개한 꽃은 피하기"
+      ],
+      "references": [
+        "wetland",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "83d19208b3455b915ae9edf0882502acf1bfd48602f94d24dd8bf27898aed03c"
+    },
+    {
+      "id": "andong--gumi",
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "file": "assets/ui/road-studies/atlas-v1-q88/andong--gumi.webp",
+      "flow": "강 주변 산업지에서 농경지와 상류 분지로 이어진다. 마을 지붕만 지역에 맞게 달라진다.",
+      "landform": [
+        "강변 산업지와 평지, 공장 뒤로 물러난 구릉",
+        "낙동강 상류 분지와 강 굽이, 마을 뒤의 산지"
+      ],
+      "references": [
+        "nakdong"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "ebedf9e5019c96ea688dd94c694bce9d8cbdf0c5f57ba88e5b7984cb14d55347"
+    },
+    {
+      "id": "andong--danyang",
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "file": "assets/ui/road-studies/atlas-v1-q88/andong--danyang.webp",
+      "flow": "강 골짜기와 숲 고개가 반복되고 산 사이 수변이 좁아진다. 강줄기를 모두 같은 강으로 단정하지 않는다.",
+      "landform": [
+        "낙동강 상류 분지와 강 굽이, 마을 뒤의 산지",
+        "산 사이 강과 계곡, 강변의 좁은 정주 공간"
+      ],
+      "references": [
+        "nakdong",
+        "danyang"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "fb2a54e8a50a6b31263d12bd5028abd6af99728d3cf9bb1f282b201f143dea4d"
+    },
+    {
+      "id": "mungyeong--sangju",
+      "from": "sangju",
+      "to": "mungyeong",
+      "km": 26,
+      "file": "assets/ui/road-studies/atlas-v1-q88/mungyeong--sangju.webp",
+      "flow": "넓은 농경지가 점차 숲 골짜기로 좁아진다. 고갯길이 배후에서 천천히 가까워진다.",
+      "landform": [
+        "강 주변 농경지와 넓은 골짜기, 자전거길은 작은 선",
+        "골짜기를 따라 가까워지는 숲 능선과 고갯길"
+      ],
+      "references": [
+        "nakdong",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "0204ca95b1e1516494e9c3180755b7e2d7e62aa9083448411d1bba6b5b4f46a8"
+    },
+    {
+      "id": "chungju--mungyeong",
+      "from": "mungyeong",
+      "to": "chungju",
+      "km": 38,
+      "file": "assets/ui/road-studies/atlas-v1-q88/chungju--mungyeong.webp",
+      "flow": "숲 고개를 벗어나 내륙 분지와 강변 농지가 열린다. 다음 도시로 그림을 교체하지 않는다.",
+      "landform": [
+        "골짜기를 따라 가까워지는 숲 능선과 고갯길",
+        "강과 호수로 이어지는 내륙 분지, 주변 산의 완만한 반복"
+      ],
+      "references": [
+        "atlas",
+        "danyang"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "a2f3f841db5036311c0703312055beff47a08030d30bfd7aab0bf519bc52ef01"
+    },
+    {
+      "id": "chungju--danyang",
+      "from": "danyang",
+      "to": "chungju",
+      "km": 30,
+      "file": "assets/ui/road-studies/atlas-v1-q88/chungju--danyang.webp",
+      "flow": "산 사이 강과 호수가 이어지는 긴 수변 경관을 유지한다. 건물은 물가의 작은 취락 규모다.",
+      "landform": [
+        "산 사이 강과 계곡, 강변의 좁은 정주 공간",
+        "강과 호수로 이어지는 내륙 분지, 주변 산의 완만한 반복"
+      ],
+      "references": [
+        "danyang"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "df3519cc6f3c553d171f8d593823cf468cec30389f295158ab2b5e414ce36587"
+    },
+    {
+      "id": "icheon--suwon",
+      "from": "suwon",
+      "to": "icheon",
+      "km": 34,
+      "file": "assets/ui/road-studies/atlas-v1/icheon--suwon.webp",
+      "flow": "연속된 시가지가 농경지·완만한 구릉·작은 작업장으로 느슨해진다. 가마 굴뚝은 작은 지역 단서다.",
+      "landform": [
+        "저지대 시가지와 하천, 먼 구릉 아래 연속된 주거지",
+        "완만한 구릉과 농경지·작은 작업장, 가마는 국소 단서"
+      ],
+      "references": [
+        "plain",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "a4696fd5465abe2d0bd2b575bab35319fcbe0fba95dc30d8784b70409e99fbc1"
+    },
+    {
+      "id": "chungju--icheon",
+      "from": "icheon",
+      "to": "chungju",
+      "km": 46,
+      "file": "assets/ui/road-studies/atlas-v1/chungju--icheon.webp",
+      "flow": "농지와 낮은 구릉을 지나 내륙 분지로 이어진다. 산을 급히 거대화하지 않는다.",
+      "landform": [
+        "완만한 구릉과 농경지·작은 작업장, 가마는 국소 단서",
+        "강과 호수로 이어지는 내륙 분지, 주변 산의 완만한 반복"
+      ],
+      "references": [
+        "atlas",
+        "danyang"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "76123331cad70e29e1166712b65ac41ab3bd15332385d59446d6ac69fa4180c9"
+    },
+    {
+      "id": "chungju--wonju",
+      "from": "chungju",
+      "to": "wonju",
+      "km": 36,
+      "file": "assets/ui/road-studies/atlas-v1/chungju--wonju.webp",
+      "flow": "내륙 수변과 농지를 지나 산자락 시가지가 늘어난다. 먼 둥근 능선이 전 구간 남는다.",
+      "landform": [
+        "강과 호수로 이어지는 내륙 분지, 주변 산의 완만한 반복",
+        "산자락 분지의 시가지, 둥근 능선의 반복"
+      ],
+      "references": [
+        "danyang",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "7fd14c2385d356b0532024815a40bb1a9a129bd13960044b323662a1eca30756"
+    },
+    {
+      "id": "danyang--wonju",
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "file": "assets/ui/road-studies/atlas-v1/danyang--wonju.webp",
+      "flow": "깊은 강 골짜기에서 숲 고개를 거쳐 산자락 분지로 열린다. 높이 변화는 여러 겹의 산으로 연결한다.",
+      "landform": [
+        "산 사이 강과 계곡, 강변의 좁은 정주 공간",
+        "산자락 분지의 시가지, 둥근 능선의 반복"
+      ],
+      "references": [
+        "danyang",
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "ee91c5b3a5674d8b77da13f27d6f07fc993264e0039b068b04166b61fc8dfba4"
+    },
+    {
+      "id": "daegwallyeong--wonju",
+      "from": "wonju",
+      "to": "daegwallyeong",
+      "km": 44,
+      "file": "assets/ui/road-studies/atlas-v1-q88/daegwallyeong--wonju.webp",
+      "flow": "산자락 취락에서 숲 능선과 작은 고지 개활지로 이어진다. 눈 덮인 암봉 대신 둥근 산줄기를 유지한다.",
+      "landform": [
+        "산자락 분지의 시가지, 둥근 능선의 반복",
+        "둥근 고지 능선·숲·작은 개활지, 만년설 산 금지"
+      ],
+      "references": [
+        "atlas",
+        "pass"
+      ],
+      "origin": "landform-corrected-master",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "7d9f4909ccc357964c8113047abbb78128df38b2e46b37525e094f23b136b487"
+    },
+    {
+      "id": "daegwallyeong--gangneung",
+      "from": "daegwallyeong",
+      "to": "gangneung",
+      "km": 22,
+      "file": "assets/ui/road-studies/atlas-v1-q88/daegwallyeong--gangneung.webp",
+      "flow": "숲 능선이 조금씩 낮아지며 먼 해안 저지대가 열린다. 바다는 끝 쪽에서만 좁게 보인다.",
+      "landform": [
+        "둥근 고지 능선·숲·작은 개활지, 만년설 산 금지",
+        "산록에서 열린 해안 저지대, 소나무·모래해안"
+      ],
+      "references": [
+        "pass",
+        "atlas"
+      ],
+      "origin": "landform-corrected-master",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "2e526f50875a2f07a17d585d665277b6cdb9600fdf7c69099682b015a5c0af60"
+    },
+    {
+      "id": "gangneung--sokcho",
+      "from": "gangneung",
+      "to": "sokcho",
+      "km": 40,
+      "file": "assets/ui/road-studies/atlas-v1-q88/gangneung--sokcho.webp",
+      "flow": "모래해안·해송·낮은 취락이 오래 이어진다. 같은 바다 수평선 안에서 마을 밀도만 바뀐다.",
+      "landform": [
+        "산록에서 열린 해안 저지대, 소나무·모래해안",
+        "동해 해안의 낮은 취락과 항만, 배후 산지는 먼 층"
+      ],
+      "references": [
+        "atlas",
+        "pass"
+      ],
+      "origin": "landform-corrected-master",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "436e354abadfe4adbfa5edf6a1f50b1d9dee5d9011339d9ced16187b84ca9434"
+    },
+    {
+      "id": "gangneung--pohang",
+      "from": "gangneung",
+      "to": "pohang",
+      "km": 82,
+      "file": "assets/ui/road-studies/atlas-v1/gangneung--pohang.webp",
+      "flow": "동해 해안의 긴 마을·낮은 곶·모래해안이 반복된다. 도착 직전에만 산업시설이 조금씩 늘어난다.",
+      "landform": [
+        "산록에서 열린 해안 저지대, 소나무·모래해안",
+        "해안 산업지의 낮은 구조물과 멀리 이어지는 구릉"
+      ],
+      "references": [
+        "atlas",
+        "pass"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "68a26e8fda05b3d4558e3b873ab2cf8793e20842f8f9cfd04423c79be7972c7c"
+    },
+    {
+      "id": "icheon--wonju",
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "file": "assets/ui/road-studies/atlas-v1/icheon--wonju.webp",
+      "flow": "산자락 시가지에서 완만한 구릉과 농지로 열린다. 먼 산의 색과 크기는 급히 바뀌지 않는다.",
+      "landform": [
+        "산자락 분지의 시가지, 둥근 능선의 반복",
+        "완만한 구릉과 농경지·작은 작업장, 가마는 국소 단서"
+      ],
+      "references": [
+        "atlas"
+      ],
+      "origin": "existing-full-panorama-reviewed",
+      "width": 2160,
+      "height": 720,
+      "viewport": 1080,
+      "sha256": "94f9262615db5742a3dc24e3d8cd4369b8679c72619f7398ecd1dd7bbd8dc5b3"
+    }
+  ]
+}

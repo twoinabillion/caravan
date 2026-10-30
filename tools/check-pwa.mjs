@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {compactScriptSource} from './compact-script-source.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=relative=>fs.readFileSync(path.join(root,relative),'utf8');
@@ -31,7 +32,8 @@ const html=read('서울까지400km.html');
 assert(html.includes('<link rel="manifest" href="manifest.webmanifest">'),'게임 HTML manifest 링크 누락');
 assert(html.includes('apple-mobile-web-app-capable'),'iPhone 전체 화면 meta 누락');
 assert(html.includes('id="bt-install"'),'게임 내 앱 설치 버튼 누락');
-assert(html.includes("register('./service-worker.js',{updateViaCache:'none'})"),'서비스 워커 갱신 등록 누락');
+const registration=compactScriptSource("serviceWorker.register('./service-worker.js',{updateViaCache:'none'});",'registration.js').replace(/;$/,'');
+assert(html.includes(registration),'서비스 워커 갱신 등록 누락');
 
 const worker=read('service-worker.js');
 assert(worker.includes("cache:'no-store'"),'온라인 최신 문서 우선 정책 누락');

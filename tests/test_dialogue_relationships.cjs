@@ -13,13 +13,20 @@ function setup(){
 const event=(D,id)=>permanentEvents(D).find(e=>e.id===id);
 test('1039 events retain branches, costs, effects and chains; only callsign recall gains a prerequisite',()=>{
  const {data:D}=setup(),omit=new Set(['text','body','title','label','turnSpeakers','turns','readingRecord','note','missionBrief']);
- const rows=permanentEvents(D).map(e=>{
+ const rows=require('../tools/reunion-contract.cjs')(permanentEvents(D)).map(e=>{
   const row=JSON.parse(JSON.stringify(e,(k,v)=>omit.has(k)?undefined:v));
   if(e.id==='talkr_es_2')delete row.needFlag;return row;
  }).sort((a,b)=>a.id.localeCompare(b.id));
  // Presentation-only missionBrief excluded against the pre-condensation baseline.
  // Costs, effects, prerequisites and chains remain in the contract.
  assert.equal(rows.length,1039);
+ const jaeyi=rows.find(row=>row.id==='jy_recruit');
+ assert.equal(jaeyi.choices.length,3);
+ assert.deepEqual(jaeyi.choices[1].req,{scrap:3,notFlag:'jaeyi_info_bought'});
+ assert.equal(jaeyi.choices[1].out[0].fx.flag,'jaeyi_info_bought');
+ assert.deepEqual(jaeyi.choices[2],{req:{flag:'jaeyi_info_bought'},out:[{p:1,fx:{}}]});
+ jaeyi.choices[1].req={scrap:3};delete jaeyi.choices[1].out[0].fx.flag;jaeyi.choices.pop();
+ const busRecord=rows.find(row=>row.id==='ev_bus_timetable');assert.equal(busRecord.parseRecords,true);delete busRecord.parseRecords;
  require('../tools/story-review-contract.cjs')(rows);
  assert.equal(hash(rows),'abf633951b873662bf81e42ac1fc75a1e47b0ec6450a11b98371970626543f38');
  assert.equal(event(D,'talkr_es_2').needFlag,'eunsu_callsign_held');

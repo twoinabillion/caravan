@@ -1,0 +1,11 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const {setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
+const dir=path.join(__dirname,'fixtures/qa-cycle26-story');
+const cases=[['story_bridge_parent_route',1],['comp_radio_war',1]];
+function init(id){let h=setup();h.run(`S.party=['kangwoo','parkss'];S.flags.parent_key_found=true;S.flags.parents_split_known=true;S.items['부모님의 검증키']=1;globalThis.e=event('${id}');`);return h}
+const state=h=>h.run('JSON.stringify([S.food,S.water,S.fuel,S.scrap,S.min,S.flags,S.items,S.notes,S.comps])');
+for(const [id,i] of cases){
+ for(const view of [true,false])test(`${id}: prechange ${view?'reader':'text-only'} receipt is frozen without repayment`,()=>{const h=init(id),save=JSON.parse(fs.readFileSync(path.join(dir,`${id}-${view?'reader':'text'}.json`),'utf8')),old=JSON.parse(fs.readFileSync(path.join(dir,`${id}-turns.json`),'utf8'));assert(h.run('G.load('+JSON.stringify(JSON.stringify(save))+')'));let before=state(h);h.run(`globalThis.r=G.resolvePresentedChoice(e,e.choices[${i}])`);assert.equal(h.run('r.applied'),false);assert.equal(state(h),before);assert.equal(h.run('r.out.text'),save.pendingPresentation.text);if(view)assert.deepEqual(h.json('r.out.turns'),old);else assert(h.run('r.out.frozenTextOnly'))});
+ test(`${id}: new result is legible and paid replay is frozen`,()=>{const h=init(id);if(id==='story_bridge_parent_route')assert.match(h.run('e.choices[1].label'),/검증키와 별도 봉투/);h.run(`G.beginPresentation(e);globalThis.r=G.resolvePresentedChoice(e,e.choices[${i}]);globalThis.turns=buildStoryTurns(r.out.text,e,{turnSpeakers:D.finaleSpeakers(e.id,${i},S)||r.out.turnSpeakers});`);assert(h.run('r.ok&&r.applied'));const turns=h.json('turns');if(id==='comp_radio_war'){assert(turns.some(t=>t.text.includes('모두 반가운 탄성')));assert(!turns.some(t=>t.kind==='dialogue'||t.text.startsWith('했다.')))}else assert.match(h.run('r.out.text'),/검증키와 다른 봉투/);h.run('S.pendingPresentation.view={turns,index:1};G.save();G.load()');let before=state(h);h.run(`r=G.resolvePresentedChoice(e,e.choices[${i}])`);assert.equal(h.run('r.applied'),false);assert.equal(state(h),before);assert.deepEqual(h.json('r.out.turns'),turns)});
+}

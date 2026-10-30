@@ -21,6 +21,7 @@ for(const [id,d] of Object.entries(delta))test(id+' actual reader roles, all out
    let expected=d.choices?.[`${i}.${j}`];
    if(id==='comp_van_name'&&i===0)expected=['me','party_first','me','party_second','party_first'];
    if(id==='exp_arcade'&&i===1)expected=['me'];
+   if(id==='comp_radio_war'&&i===1)expected=[];
    assert(expected,`${id}:${i}.${j} requires its own expected route`);
    assert.deepEqual(roles(turns),route(expected,party),`${id}:${i}.${j}:${party}`);
    assert(plain(turns).every(t=>t.name!=='???'&&!t.speakerUncertain));
@@ -61,6 +62,10 @@ test('all eleven definitions retain words, notes, costs, gates, probability, onc
    assert.equal(h.run("G.presentationEvent('comp_snore').choices[0].out[0].text({party:['eunsu','parkss']})"),old.choices[0].out[0].text);
    assert.equal(h.run("G.presentationEvent('comp_snore').choices[0].out[0].text({party:['parkss','eunsu']})"),old.choices[0].out[0].text.replace('네 콧구멍에서 난 소리야.','선생님 코에서 난 소리인데요.'));
    now.choices[0].out[0].text=old.choices[0].out[0].text;
+  }
+  if(id==='comp_radio_war'){
+   assert.equal(now.choices[1].out[0].text, '전주가 나오자 모두 반가운 탄성을 질렀다. 아는 노래는 힘이 세다.\n\n한 곡이 끝날 때까지 아무도 말하지 않고 다 같이 흥얼거렸다. 뉴스는 다음에 듣기로 했다.');
+   now.choices[1].out[0].text=old.choices[1].out[0].text;
   }
   if(id==='comp_water_fight'){
    assert.equal(now.choices[1].out[0].text,old.choices[1].out[0].text.replace('결국 반 통이 남았다.','남은 물은 나눠 마시기로 했다.'));

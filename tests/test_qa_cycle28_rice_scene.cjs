@@ -1,0 +1,7 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),{setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
+const ui=fs.readFileSync(path.join(root,'src/07-ui.js'),'utf8');
+const scene=ui.slice(ui.indexOf('  function eventSceneKeys('),ui.indexOf('  function sceneFormat('))+';globalThis.qaSceneKeys=eventSceneKeys;';
+test('rice mill uses paddy machine still at entry and all three results, without borrowing workshop actors',()=>{const h=setup();h.run(scene);h.run("globalThis.e=event('ev_rice_mill')");assert.deepEqual(h.json('qaSceneKeys(e)'),['explore-rice-mill-paddy-v1']);for(let i=0;i<3;i++)assert.deepEqual(h.json(`qaSceneKeys(e,[e.choices[${i}].out[0].scenes,e.choices[${i}].out[0].scene,e.choices[${i}].scenes,e.choices[${i}].scene,D.eventChoiceScenes?.[e.id]?.[${i}]])`),['explore-rice-mill-paddy-v1']);assert.equal(h.run("D.scenes['explore-rice-mill-paddy-v1']"),'assets/scenes/explore-rice-mill-paddy-v1.webp');assert(h.run("D.sceneAssetMeta['explore-rice-mill-paddy-v1'].companions.length===0"));assert(fs.existsSync(path.join(root,h.run("D.scenes['explore-rice-mill-paddy-v1']"))));});
+
+test('mushroom growhouse uses indoor racks rather than an outdoor farm',()=>{const h=setup();h.run(scene);h.run("globalThis.e=event('exp_mushroom')");assert.deepEqual(h.json('qaSceneKeys(e)'),['explore-mushroom-growhouse-v1']);assert.equal(h.run("D.scenes['explore-mushroom-growhouse-v1']"),'assets/scenes/explore-mushroom-growhouse-v1.webp');});

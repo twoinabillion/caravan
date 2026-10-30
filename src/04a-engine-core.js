@@ -1171,6 +1171,9 @@ G.startRecruitQuest = (id)=>{
 G.openRecruitMeet = (id)=>{
   const def=D.recruitQuests&&D.recruitQuests[id];
   if(!def||G.hasComp(id)||S.recruitQ) return false;
+  if(S.recruitFarewells?.[id]&&D.events.some(event=>event.id==='recruit_reunion_'+id)){
+    G.openEventById('recruit_reunion_'+id); return true;
+  }
   if(id==='minji'&&S.flags.minji_request_heard){
     G.openEventById('rq_minji_request'); return true;
   }
