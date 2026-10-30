@@ -34,7 +34,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm ci
+      # This repository has no npm lockfile; match the verified gate install.
+      - run: npm ci || npm install
       - uses: actions/setup-python@v5
         if: github.event_name == 'workflow_dispatch'
         with:
