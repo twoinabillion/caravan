@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import {execFileSync} from 'node:child_process';
+import {runImageMagick} from './imagemagick.cjs';
 import {connectedJourney as plan, cameraPosition, frame, sampleTimeline} from './connected-journey-plan.mjs';
 const root=path.resolve(import.meta.dirname,'..');
 const read=f=>fs.readFileSync(path.join(root,f),'utf8');
@@ -61,7 +61,7 @@ test('isolated native controls, shared geometry and local links',()=>{
   assert.doesNotMatch(read('tools/connected-journey-plan.mjs'),/localStorage|sessionStorage/);
 });
 test('candidate geometry and required references exist, not falsely marked opaque or approved',()=>{
-  const size=execFileSync('magick',[path.join(root,plan.asset),'-format','%w %h %[channels]','info:'],{encoding:'utf8'});
+  const size=runImageMagick([path.join(root,plan.asset),'-format','%w %h %[channels]','info:'],{encoding:'utf8'});
   assert.match(size,/^2160 720 srgba/);assert(fs.statSync(path.join(root,plan.asset)).size<850000);
   const prompt=JSON.parse(read('tools/design-drafts/connected-journey-prompt.json'));
   assert.equal(prompt.references.length,5);for(const ref of prompt.references)assert(fs.existsSync(path.join(root,ref)));

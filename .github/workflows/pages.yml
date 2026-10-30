@@ -35,6 +35,16 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci
+      - uses: actions/setup-python@v5
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          python-version: '3.12'
+      - name: Install image-test dependencies for manual releases
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          python -m pip install -r tools/requirements-qa.txt
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Build web release
@@ -43,10 +53,12 @@ jobs:
         run: ./build.sh --html-only
       - name: Verify installable app shell
         run: node tools/check-pwa.mjs
-      - name: Verify source and embedded assets
-        run: |
-          npm run verify:quick
-          npm run test:source
+      - name: Verify embedded assets
+        run: npm run verify:quick
+      - name: Source regression suite for manual releases
+        # Automatic releases already passed this suite in gate at the exact SHA.
+        if: github.event_name == 'workflow_dispatch'
+        run: npm run test:source
       - name: Prepare site
         run: |
           mkdir -p _site/assets

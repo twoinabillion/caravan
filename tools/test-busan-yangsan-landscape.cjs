@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {execFileSync} = require('node:child_process');
+const {runImageMagick} = require('./imagemagick.cjs');
 const root = path.resolve(__dirname, '..');
 const dir = path.join(__dirname, 'design-drafts');
 const html = fs.readFileSync(path.join(dir, 'busan-yangsan-landscape.html'), 'utf8');
@@ -40,7 +40,7 @@ test('provenance distinguishes inferred geography and unapproved city endpoints'
 });
 test('draft delivery has required geometry, near-transparent sky and near-opaque ground', () => {
   const imagePath = path.join(root,'assets/ui/road-studies/busan-yangsan-continuous-v1.webp');
-  const values = execFileSync('magick',[imagePath,'-format','%w %h %[fx:p{0,0}.a] %[fx:p{1000,719}.a]','info:'],{encoding:'utf8'}).trim().split(' ').map(Number);
+  const values = runImageMagick([imagePath,'-format','%w %h %[fx:p{0,0}.a] %[fx:p{1000,719}.a]','info:'],{encoding:'utf8'}).trim().split(' ').map(Number);
   assert.deepEqual(values.slice(0,2),[2160,720]);
   // Generated alpha is not binary; preserve it in this unapproved study.
   assert(values[2] < .01);

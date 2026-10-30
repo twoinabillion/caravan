@@ -1,4 +1,5 @@
-const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),cp=require('node:child_process');
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const {runImageMagick}=require('../tools/imagemagick.cjs');
 const read=f=>fs.readFileSync('src/'+f,'utf8'),saved=new Map();
 const env=vm.createContext({console,Date,Math,URLSearchParams,location:{search:''},
   localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},
@@ -53,7 +54,7 @@ run(kitSource+'\nglobalThis.kit=VEHICLE_KIT;');
 const kit=env.kit;
 check(d.upgrades.every(u=>kit.parts[u.id]||kit.bodies[u.id]),'all 28 have owned visual representation');
 for(const [id,file] of Object.entries(manifest.images)){
-  const info=cp.execFileSync('magick',['identify','-format','%w %h %[opaque]',file],{encoding:'utf8'}).split(' ');
+  const info=runImageMagick(['identify','-format','%w %h %[opaque]',file],{encoding:'utf8'}).split(' ');
   const size=['equipment','living'].includes(id)?manifest.atlasDelivery:manifest.bodyDelivery;
   check(+info[0]===size[0]&&+info[1]===size[1],id+' delivery dimensions');check(info[2]==='False',id+' genuine alpha');
 }

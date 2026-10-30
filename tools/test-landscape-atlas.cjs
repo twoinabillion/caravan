@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
-const {execFileSync}=require('node:child_process');
+const {runImageMagick}=require('./imagemagick.cjs');
 const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const atlas=JSON.parse(read('tools/design-drafts/landscape-atlas/manifest.json'));
@@ -60,7 +60,7 @@ test('all masters and deliveries preserve hashes, native resolution and alpha; n
   for(const r of atlas.routes){
     for(const [file,hash] of [[r.master,r.masterSha256],[r.delivery,r.sha256]])assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),hash);
     assert(r.masterSize[0]>=2160);assert(r.masterSize[1]>=720);
-    const values=execFileSync('magick',[path.join(root,r.delivery),'-format','%w %h %[channels]','info:'],{encoding:'utf8'}).split(' ');
+    const values=runImageMagick([path.join(root,r.delivery),'-format','%w %h %[channels]','info:'],{encoding:'utf8'}).split(' ');
     assert.deepEqual(values.slice(0,2),['2160','720']);assert.match(values[2],/a/);
     assert(fs.statSync(path.join(root,r.delivery)).size<850000);
   }
