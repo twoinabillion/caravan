@@ -27,7 +27,7 @@ with sync_playwright() as playwright:
     page.click('#bt-new')
     if page.locator('#scr-mode').is_visible():
         page.click('#mode-on')
-    page.fill('#inp-name', '검증')
+    page.locator('[data-pack]').first.click()
     page.click('#bt-name')
     page.wait_for_timeout(100)
     page.evaluate('UI.skipIntro()')
@@ -61,7 +61,9 @@ with sync_playwright() as playwright:
       const night=()=>{
         document.querySelectorAll('.wrap.on,.sheet-wrap.on,.ovl.on').forEach(w=>w.classList.remove('on'));
         S.wx='clear'; S.wxNext='clear'; S.min=20*60;
-        S.thirst=0; S.hunger=0;
+        S.thirst=0; S.hunger=0; S.water=10; S.food=10;
+        // 앞 날짜 probe와 무관하게 20:00까지 식사를 마친 동일 조건에서 잔다.
+        S._breakfastDay=S.day; S._lunchDay=S.day;
         const before={scrap:S.scrap, water:S.water, food:S.food};
         G.camp();
         S.wx='clear'; S.wxNext='clear';
@@ -98,7 +100,7 @@ with sync_playwright() as playwright:
       return {seen, count:S._rescues.nofuel};
     }""")
     check('nofuel 3회 = 서로 다른 3개 이벤트', ladder['count'] == 3 and len(set(ladder['seen'])) == 3, str(ladder))
-    check('3회차 제목에 세 번째 명시', '세 번째' in (ladder['seen'][2] or ''), ladder['seen'][2])
+    check('3회차는 반복된 연료 부족 제목을 표시', ladder['seen'][2] == '익숙해진 빈 탱크', ladder['seen'][2])
 
     print('― 페이싱 감독 (peak가 무거운 사건을 밀어붙임)')
     director = page.evaluate("""() => {
