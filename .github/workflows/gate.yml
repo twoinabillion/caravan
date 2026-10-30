@@ -28,6 +28,8 @@ jobs:
           sudo apt-get install -y imagemagick
           python -m pip install -r tools/requirements-qa.txt playwright
           python -m playwright install --with-deps chromium
+      - name: Image tool compatibility
+        run: node --test tests/test_vehicle_upgrades.cjs tools/test-imagemagick.cjs
       - name: Build
         # AIT 패키징은 로컬 Toss 빌드 산출물이므로 러너에서는 HTML만 만든다 (pages.yml과 동일 이유)
         run: npm run build:html

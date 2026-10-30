@@ -54,9 +54,9 @@ run(kitSource+'\nglobalThis.kit=VEHICLE_KIT;');
 const kit=env.kit;
 check(d.upgrades.every(u=>kit.parts[u.id]||kit.bodies[u.id]),'all 28 have owned visual representation');
 for(const [id,file] of Object.entries(manifest.images)){
-  const info=runImageMagick(['identify','-format','%w %h %[opaque]',file],{encoding:'utf8'}).split(' ');
+  const info=runImageMagick(['identify','+ping','-format','%w %h %[opaque]',file],{encoding:'utf8'}).split(' ');
   const size=['equipment','living'].includes(id)?manifest.atlasDelivery:manifest.bodyDelivery;
-  check(+info[0]===size[0]&&+info[1]===size[1],id+' delivery dimensions');check(info[2]==='False',id+' genuine alpha');
+  check(+info[0]===size[0]&&+info[1]===size[1],id+' delivery dimensions');check(/^false$/i.test(info[2].trim()),id+' genuine alpha: '+info[2]);
 }
 let layouts=0;
 const roofIds=['garden','collector','solar','antenna','beehive','scope'];
