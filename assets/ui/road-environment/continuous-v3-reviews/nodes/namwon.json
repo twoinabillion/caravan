@@ -1,0 +1,23 @@
+{
+  "node": "namwon",
+  "sha256": "11b4542d10c5853b31a198796d7a8d4e49e5ebb2f3292f9c286fe1773510c5b5",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/namwon-master-v1.png",
+  "sourceSha256": "740909429021da86a6e29518ba2f51540eadbad1e2b3e77043b4db747a238602",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

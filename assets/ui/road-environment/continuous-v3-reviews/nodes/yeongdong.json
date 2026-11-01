@@ -1,0 +1,23 @@
+{
+  "node": "yeongdong",
+  "sha256": "daf8394b4c8c5a067373a843dd24a957fd2e4dccc593da7243f693d2c83f0257",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/yeongdong-master-v1.png",
+  "sourceSha256": "719c26409b620670e8808baef3778493b3948226e1cdeab68c08f28bd9411845",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

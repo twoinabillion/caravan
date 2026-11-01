@@ -1,0 +1,23 @@
+{
+  "node": "suncheon",
+  "sha256": "4b5b111e67a94bdd362865c377b0300551257feafb4be7a43799640bd6a2a237",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/suncheon-master-v1.png",
+  "sourceSha256": "fc42ac1f0e55f22d4f973ccc0527dfbcb77b94310b2db81a3583de7493d84c60",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

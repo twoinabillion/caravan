@@ -1,0 +1,23 @@
+{
+  "node": "damyang",
+  "sha256": "21a2cdb025fe3c5c4346d1ef950a4d03fd7da7b02f64c86524df2000323ca1db",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/damyang-master-v2.png",
+  "sourceSha256": "981dd053d42cc75317db060f50e7c0bd1b5736c2adb81b0d5dff0346c3fd0e71",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "gunsan--lighthouse",
+  "sha256": "63faeaceb3adc2c4b185e1745df0d6f303f6e208b60a53a42790c9ce4892b04d",
+  "fromSha256": "13d88af6f8d0bed49e928a19eb8b2d61fe9a241d7ead318785135fd45827813d",
+  "toSha256": "4e28cc029853150b8103466a54e5dff5ff32dbb8a8a67a79dd0848fe6ba5aaab",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "gunsan--lighthouse",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/gunsan--lighthouse-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/gunsan--lighthouse-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

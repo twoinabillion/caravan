@@ -1,0 +1,23 @@
+{
+  "node": "icheon",
+  "sha256": "12f73ecaeecce274fe754c797a92212af1ddc6b171ebfe0bf19840fd13025e50",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/icheon-master-v1.png",
+  "sourceSha256": "02565369862dbbfbd079d9fbdc2ac15215d1bdfd12c70239fd106f1c9474e23a",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

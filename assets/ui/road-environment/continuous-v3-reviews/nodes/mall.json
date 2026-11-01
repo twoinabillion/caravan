@@ -1,0 +1,23 @@
+{
+  "node": "mall",
+  "sha256": "9ecfed21b069b09ac7b1d3070c10c5fea74caa448ba3a5f7955ab5c0b9bcc0d7",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/mall-master-v1.png",
+  "sourceSha256": "7b950ff0b1161a2fcdec839fa95dec004f0bb47acc934c306a50528bcf61945d",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

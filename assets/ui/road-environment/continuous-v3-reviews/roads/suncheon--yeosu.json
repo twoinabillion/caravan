@@ -1,0 +1,26 @@
+{
+  "id": "suncheon--yeosu",
+  "sha256": "e9579d43803781a96fd6f59800e64d4c8879911becc9cf5a6b91475b9ff5d155",
+  "fromSha256": "410c7c48238e456c3c6c4b980710c8c4807bdca13654062d9182ea5036fdfde4",
+  "toSha256": "4b5b111e67a94bdd362865c377b0300551257feafb4be7a43799640bd6a2a237",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "suncheon--yeosu",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/suncheon--yeosu-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/suncheon--yeosu-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

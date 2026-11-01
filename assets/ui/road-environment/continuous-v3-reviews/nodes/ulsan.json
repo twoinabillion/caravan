@@ -1,0 +1,23 @@
+{
+  "node": "ulsan",
+  "sha256": "3057bd2461cee078340db7410e6576adbc9a7abbb95285bd380eddf9e56e9268",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/ulsan-master-v1.png",
+  "sourceSha256": "aedd8d4bb4d71cf783c9bedc687a8bbd1384aa4275ffbe8307af6afe1f9b5372",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

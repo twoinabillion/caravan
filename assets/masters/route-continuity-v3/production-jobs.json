@@ -1,0 +1,524 @@
+[
+  {
+    "id": "busan",
+    "name": "부산 감천 부두",
+    "terrain": "항만 창고와 낮은 시가지 뒤로 이어지는 산지",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/busan-guide.png",
+    "hasMaster": true
+  },
+  {
+    "id": "gimhae",
+    "name": "김해 들판",
+    "terrain": "넓고 낮은 삼각주 들판, 수로와 멀리 물러난 산",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gimhae-guide.png",
+    "hasMaster": true
+  },
+  {
+    "id": "yangsan",
+    "name": "양산 고가차도",
+    "terrain": "강변 평지와 산기슭 시가지, 같은 능선 아래 고가",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/yangsan-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "miryang",
+    "name": "밀양 장터",
+    "terrain": "하천 주변 농경지와 낮은 시장 지붕, 분지 가장자리",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/miryang-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "jinju",
+    "name": "진주 남강변",
+    "terrain": "남강 수변 평지, 강 건너 완만한 구릉과 시가지",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/jinju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "hapcheon",
+    "name": "합천 과수원",
+    "terrain": "하천을 낀 농경지, 과수원과 주변 낮은 산지",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/hapcheon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "geochang",
+    "name": "거창 분지",
+    "terrain": "산에 둘러싸인 분지 바닥, 마을과 농지의 연속",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/geochang-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "daegu",
+    "name": "대구 돔 시장",
+    "terrain": "넓은 분지와 낮은 공장 지붕, 멀리 둘러선 산",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/daegu-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "gumi",
+    "name": "구미 공단 폐허",
+    "terrain": "강변 산업지와 평지, 공장 뒤로 물러난 구릉",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gumi-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "gimcheon",
+    "name": "김천 갈림길",
+    "terrain": "내륙 하천 골짜기의 농경지와 교통 거점",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gimcheon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "muju",
+    "name": "무주 터널",
+    "terrain": "둥근 산들이 겹치는 숲 골짜기, 터널 입구는 작은 단서",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/muju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "namwon",
+    "name": "남원 광한루",
+    "terrain": "산간 분지의 들판과 하천, 낮은 지붕이 모이는 마을",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/namwon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "jeonju",
+    "name": "전주 서문 시장",
+    "terrain": "구릉으로 감싼 분지, 하천을 따라 열리는 농경지",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/jeonju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "yeongdong",
+    "name": "영동 포도밭",
+    "terrain": "숲 능선 사이 과수·포도 재배지와 작은 취락",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/yeongdong-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "daejeon",
+    "name": "대전 연구단지",
+    "terrain": "분지의 연구시설·주거지와 외곽 구릉",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/daejeon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "nonsan",
+    "name": "논산 평야",
+    "terrain": "낮고 넓은 농경지, 배수로와 멀리 낮은 구릉",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/nonsan-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "gongju",
+    "name": "공주 산성",
+    "terrain": "강가 저지대와 낮은 산성 능선, 과장하지 않은 언덕",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gongju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "cheongju",
+    "name": "청주 방송국",
+    "terrain": "분지 평야와 하천, 낮은 시가지에서 외곽 농지로",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/cheongju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "cheonan",
+    "name": "천안 삼거리",
+    "terrain": "완만한 구릉 사이 시가지·물류지와 농경지",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/cheonan-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "pyeongtaek",
+    "name": "평택 항구도로",
+    "terrain": "넓은 하천 평야와 산업·항만 권역의 게임식 압축",
+    "group": "metro",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/pyeongtaek-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "suwon",
+    "name": "수원 성곽 공동체",
+    "terrain": "저지대 시가지와 하천, 먼 구릉 아래 연속된 주거지",
+    "group": "metro",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/suwon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "seoul",
+    "name": "서울 — 남산",
+    "terrain": "수변·시가지와 낮은 산의 겹침, 남산은 끝부분의 단서",
+    "group": "metro",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/seoul-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "lake",
+    "name": "낚시꾼의 호수",
+    "terrain": "밀양 인근으로 설정된 작은 산간 호수, 바다로 오인하지 않게",
+    "group": "southeast",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/lake-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "mall",
+    "name": "유령 백화점",
+    "terrain": "구미 산업지의 빈 상업 건물, 주변 평지와 크기 유지",
+    "group": "southeast",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/mall-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "tower",
+    "name": "송전 통신탑",
+    "terrain": "거창 인근 능선 위 가상 통신탑, 알프스형 절벽 금지",
+    "group": "southeast",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/tower-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "spring",
+    "name": "달빛 온천",
+    "terrain": "영동 산골의 작은 가상 온천, 주변 숲과 계곡 유지",
+    "group": "central",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/spring-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "airfield",
+    "name": "폐 군 비행장",
+    "terrain": "논산 평야의 가상 비행장, 낮은 활주로·풀밭 수평선",
+    "group": "central",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/airfield-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "solar",
+    "name": "태양광 농장",
+    "terrain": "평택 저지대의 가상 태양광 밭, 과장된 산 배제",
+    "group": "metro",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/solar-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "reststop",
+    "name": "잠든 휴게소",
+    "terrain": "김천 구릉 사이 가상 휴게소, 도로 주변 숲과 연속",
+    "group": "southeast",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/reststop-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "tunnelbook",
+    "name": "책의 터널",
+    "terrain": "무주 숲길의 가상 터널, 입구 주변 같은 바위·숲 유지",
+    "group": "central",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/tunnelbook-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "ulsan",
+    "name": "울산 공업탑",
+    "terrain": "동해 쪽 산업 시가지와 낮은 해안 구릉",
+    "group": "east",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/ulsan-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "yeosu",
+    "name": "여수 밤바다",
+    "terrain": "잔잔한 만과 낮은 섬·반도, 항만과 구릉 시가지",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/yeosu-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "suncheon",
+    "name": "순천만 갈대밭",
+    "terrain": "낮은 하구의 갈대와 갯벌, 농경지에서 물가로",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/suncheon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "gwangju",
+    "name": "광주 대인시장",
+    "terrain": "분지 시가지와 먼 산지, 시장은 낮은 지붕 규모",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gwangju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "damyang",
+    "name": "담양 대숲",
+    "terrain": "내륙 농경지·대숲과 완만한 산지의 겹침",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/damyang-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "mokpo",
+    "name": "목포 여객터미널",
+    "terrain": "서남해 만과 낮은 섬, 물가의 항만 시설",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/mokpo-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "andong",
+    "name": "안동 하회마을",
+    "terrain": "낙동강 상류 분지와 강 굽이, 마을 뒤의 산지",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/andong-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "mungyeong",
+    "name": "문경새재",
+    "terrain": "골짜기를 따라 가까워지는 숲 능선과 고갯길",
+    "group": "highland",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/mungyeong-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "danyang",
+    "name": "단양 강변",
+    "terrain": "산 사이 강과 계곡, 강변의 좁은 정주 공간",
+    "group": "highland",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/danyang-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "wonju",
+    "name": "원주 치악산 아래",
+    "terrain": "산자락 분지의 시가지, 둥근 능선의 반복",
+    "group": "highland",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/wonju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "daegwallyeong",
+    "name": "대관령 고갯마루",
+    "terrain": "둥근 고지 능선·숲·작은 개활지, 만년설 산 금지",
+    "group": "highland",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/daegwallyeong-guide.png",
+    "hasMaster": true
+  },
+  {
+    "id": "gangneung",
+    "name": "강릉 경포",
+    "terrain": "산록에서 열린 해안 저지대, 소나무·모래해안",
+    "group": "east",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gangneung-guide.png",
+    "hasMaster": true
+  },
+  {
+    "id": "sokcho",
+    "name": "속초 항",
+    "terrain": "동해 해안의 낮은 취락과 항만, 배후 산지는 먼 층",
+    "group": "east",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/sokcho-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "icheon",
+    "name": "이천 가마터",
+    "terrain": "완만한 구릉과 농경지·작은 작업장, 가마는 국소 단서",
+    "group": "metro",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/icheon-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "gyeongju",
+    "name": "경주 왕릉",
+    "terrain": "분지의 낮은 취락·농지, 둥근 왕릉과 산의 크기 구분",
+    "group": "east",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gyeongju-guide.png",
+    "hasMaster": true
+  },
+  {
+    "id": "pohang",
+    "name": "포항 제철소",
+    "terrain": "해안 산업지의 낮은 구조물과 멀리 이어지는 구릉",
+    "group": "east",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/pohang-guide.png",
+    "hasMaster": true
+  },
+  {
+    "id": "sangju",
+    "name": "상주 자전거길",
+    "terrain": "강 주변 농경지와 넓은 골짜기, 자전거길은 작은 선",
+    "group": "southeast",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/sangju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "gunsan",
+    "name": "군산 내항",
+    "terrain": "낮은 하구·항만과 평야, 섬과 구릉은 먼 배경",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/gunsan-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "chungju",
+    "name": "충주호",
+    "terrain": "강과 호수로 이어지는 내륙 분지, 주변 산의 완만한 반복",
+    "group": "highland",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/chungju-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "sejong",
+    "name": "세종 신도시",
+    "terrain": "하천과 낮은 구릉 사이 새 시가지의 폐허",
+    "group": "central",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/sejong-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "lighthouse",
+    "name": "서해 등대",
+    "terrain": "서해안 가상 등대, 갯벌·낮은 구릉과 해안 풀밭",
+    "group": "southwest",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/lighthouse-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "drivein",
+    "name": "달빛 자동차극장",
+    "terrain": "천안 근교 가상 자동차극장, 농지와 작은 구릉 유지",
+    "group": "central",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/drivein-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "sunflower",
+    "name": "해바라기 밭",
+    "terrain": "합천 근교 가상 밭, 계절 꽃보다 농지 형태를 유지",
+    "group": "southeast",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/sunflower-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "maehwa",
+    "name": "섬진강 매화마을",
+    "terrain": "섬진강변 과수원과 산비탈, 상시 만개한 꽃은 피하기",
+    "group": "southwest",
+    "fictional": false,
+    "guide": "assets/masters/route-continuity-v3/nodes/maehwa-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "mingyu_ridge",
+    "name": "민규의 능선",
+    "terrain": "영동 인근 가상 능선, 멀리 같은 산줄기 유지",
+    "group": "central",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/mingyu_ridge-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "jaeyi_cache",
+    "name": "재이의 창고",
+    "terrain": "김천 근교 가상 창고, 공터와 낮은 구릉 유지",
+    "group": "southeast",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/jaeyi_cache-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "cablecar",
+    "name": "멈춘 케이블카",
+    "terrain": "문경 근교 가상 케이블카, 골짜기와 산비탈에 종속",
+    "group": "highland",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/cablecar-guide.png",
+    "hasMaster": false
+  },
+  {
+    "id": "filmset",
+    "name": "시대극 세트장",
+    "terrain": "남원 근교 가상 세트장, 작은 목조 지붕과 분지 농지",
+    "group": "southwest",
+    "fictional": true,
+    "guide": "assets/masters/route-continuity-v3/nodes/filmset-guide.png",
+    "hasMaster": false
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "node": "sejong",
+  "sha256": "41c7f1257b66156557c5bf25d261332b54dc0becc4dee61e1cab6417c2b01768",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/sejong-master-v1.png",
+  "sourceSha256": "514428f4cfc4b7d274bb850a5f946f7d5f42153d88fc6e205d2348543dbd9c44",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

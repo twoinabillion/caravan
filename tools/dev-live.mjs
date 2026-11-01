@@ -453,7 +453,8 @@ server.listen(PORT,HOST,()=>{
   watchFile('tools/build-html.mjs');
   watchFile('tools/build-budget.json');
   for(const helper of ['inline-style-assets.mjs','compact-style-source.mjs','compact-script-source.mjs',
-    'pool-embedded-assets.mjs','encode-embedded-assets.mjs','road-route-readiness.cjs'])
+    'pool-embedded-assets.mjs','encode-embedded-assets.mjs','road-route-readiness.cjs',
+    'runtime-continuous-terrain.mjs','continuous-route-contract.cjs','continuous-route-join.cjs'])
     watchFile('tools/'+helper);
   process.stdout.write(`\n서울까지 400km LIVE\n`);
   process.stdout.write(`게임       http://localhost:${PORT}/\n`);

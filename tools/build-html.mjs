@@ -10,6 +10,8 @@ import {compactScriptSource} from './compact-script-source.mjs';
 import {poolEmbeddedAssets} from './pool-embedded-assets.mjs';
 import {encodeEmbeddedAssets} from './encode-embedded-assets.mjs';
 import routeReadiness from './road-route-readiness.cjs';
+import {runtimeContinuous} from './runtime-continuous-terrain.mjs';
+import continuousJoin from './continuous-route-join.cjs';
 
 /*
  * 이미지·오디오를 포함한 단일 HTML 빌더.
@@ -40,7 +42,7 @@ const after = [
   'src/03i-story-expansion.js', 'src/03j-camp-conversations.js', 'src/03k-main-evidence.js', 'src/03l-main-recovery.js', 'src/03m-finale-reading.js',
   'src/04a-engine-core.js', 'src/04b-engine-crew.js', 'src/04c-engine-travel.js',
   'src/04d-engine-director.js', 'src/04e-engine-world.js', 'src/04f-engine-quests.js', 'src/04g-engine-evidence.js', 'src/04h-engine-presentation.js',
-  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05c-road-cue-kit.js', 'src/05d-route-panorama.js', 'src/05e-road-continuity.js', 'src/05-scene.js', 'src/06-mapgraph.js',
+  'src/05a-road-environment.js', 'src/05b-vehicle-kit.js', 'src/05c-road-cue-kit.js', 'src/05d-route-panorama.js', 'src/05e-road-continuity.js', 'src/05f-continuous-terrain.js', 'src/05-scene.js', 'src/06-mapgraph.js',
   'src/07g-ui-home.js', 'src/07h-story-pages.js', 'src/07-ui.js', 'src/07d-ui-quests.js', 'src/07e-ui-audio.js', 'src/07f-ui-road-thoughts.js',
   'src/08-offroad.js', 'src/09-close.html'
 ];
@@ -206,6 +208,12 @@ const continuity=continuitySource.replace('/*__ROAD_CONTINUITY__*/{enabled:false
   atlas:{cities:landscapeAtlas.cities,routes:landscapeAtlas.routes.map(r=>({id:r.id,from:r.from,to:r.to,km:r.km,
    source:dataUri(r.file,'image/webp')}))}}));
 if(continuity===continuitySource)throw Error('HD continuity registry placeholder missing');
+const continuousManifest=JSON.parse(read('assets/ui/road-environment/continuous-v3.json'));
+const continuousRegistry=runtimeContinuous(root,continuousManifest,file=>dataUri(file,'image/webp'));
+const continuousTerrain=read('src/05f-continuous-terrain.js')
+  .replace('/*__CONTINUOUS_TERRAIN__*/{enabled:false,nodes:{},corridors:{},routes:[]}',JSON.stringify(continuousRegistry))
+  .replace('/*__CONTINUOUS_JOIN__*/null','('+continuousJoin.joinTilePixels.toString()+')');
+if(continuousTerrain.includes('/*__CONTINUOUS_TERRAIN__*/')||continuousTerrain.includes('/*__CONTINUOUS_JOIN__*/'))throw Error('Continuous terrain placeholder missing');
 const approvedRoutes=routeReadiness.approvedRoutes(routeManifest,routeGraph);
 const routeSources=approvedRoutes.map(r=>({id:r.id,from:r.from,to:r.to,km:r.km,source:dataUri(`assets/ui/road-routes/${r.file}`,'image/webp')}));
 const routeSource=read('src/05d-route-panorama.js');
@@ -307,6 +315,7 @@ const chunks = [
     :relative==='src/05c-road-cue-kit.js'?cueKit
     :relative==='src/05d-route-panorama.js'?routePanorama
     :relative==='src/05e-road-continuity.js'?continuity
+    :relative==='src/05f-continuous-terrain.js'?continuousTerrain
     :relative==='src/07f-ui-road-thoughts.js'?roadCues.result
     :relative==='src/03i-story-expansion.js'?inlineSceneAssetPaths(read(relative))
     :read(relative);

@@ -1,0 +1,23 @@
+{
+  "node": "gimhae",
+  "sha256": "ff532cea1cc2caaa5e9165e98a618ddfc070cebca924d7d995cc2480400bd7ef",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/gimhae-master-v1.png",
+  "sourceSha256": "b31607983bd57c566fd968fd8b32df784ba0358a7a1551440f94b312f1ed5a3f",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

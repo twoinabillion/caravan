@@ -1,0 +1,26 @@
+{
+  "id": "geochang--tower",
+  "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+  "fromSha256": "457caf9f96237aba76fb0040abb385f8ab68794c449ff38631445e707b3560c0",
+  "toSha256": "53451fe237e9f7b74ad371ee95a1aab5788d86f1510dd0887574ed186d61a014",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "geochang--tower",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/geochang--tower-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/geochang--tower-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

@@ -1,0 +1,23 @@
+{
+  "node": "nonsan",
+  "sha256": "8a2345f05d2ff2d6e4e3e2f8dce1fc6481e110e6fdc7223ccbe4d6178a84886a",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/nonsan-master-v1.png",
+  "sourceSha256": "165ef72c1c7559a8ac48d60fdad978a93510b2e05c49aa3f7a5c7bdf319dd5ea",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

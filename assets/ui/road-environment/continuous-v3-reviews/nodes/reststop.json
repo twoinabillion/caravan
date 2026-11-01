@@ -1,0 +1,23 @@
+{
+  "node": "reststop",
+  "sha256": "89291d2bc0d34cd0377c8dd3bce34b7625a7f97b7b01e9a1f534a466fafac104",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/reststop-master-v1.png",
+  "sourceSha256": "e3ff5f282e401ca50446ab80fa09ebdf4d0ea6284dacdd76e6670768de91e028",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "airfield--nonsan",
+  "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+  "fromSha256": "af913400ed8465764418e9e86b07889a6bdda0e14e1786abce78e4ec261e328b",
+  "toSha256": "8a2345f05d2ff2d6e4e3e2f8dce1fc6481e110e6fdc7223ccbe4d6178a84886a",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "airfield--nonsan",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/airfield--nonsan-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/airfield--nonsan-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

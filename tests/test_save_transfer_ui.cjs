@@ -26,7 +26,7 @@ function fixture(){
  for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),context);
  for(const file of fs.readdirSync('src').filter(f=>/^04.*\.js$/.test(f)).sort())vm.runInContext(fs.readFileSync('src/'+file,'utf8'),context);
  const run=code=>vm.runInContext(code,context);
- vm.runInContext(helpers+entry,context);
+ vm.runInContext(ui.slice(ui.indexOf('  function withImportedTerrain('),ui.indexOf('  function continueSavedJourney('))+helpers+entry,context);
  run("G.newGame('onroad','현재 여정','skip','keeper','fuel');S.flags.main_mission_started=true;G.save()");calls.length=0;
  context.wireSaveImport(input);
  const restore=raw=>{input.files=[{text:async()=>raw}];return input.onchange();};

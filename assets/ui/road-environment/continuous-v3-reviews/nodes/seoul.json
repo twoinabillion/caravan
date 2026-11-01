@@ -1,0 +1,23 @@
+{
+  "node": "seoul",
+  "sha256": "274966ddf9f87ca4bcf3b492a720de1d4fa9a8088dde83995b192e862a9f1552",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/seoul-master-v2.png",
+  "sourceSha256": "bc30b6ad64902f6ba8fe6c051e42ed14cfad48d9a15b5f428aa1c1aa187564a7",
+  "notes": "Main tower intact; tight right framing, secondary small antenna beyond central crop."
+}

@@ -1,0 +1,2384 @@
+{
+  "version": 3,
+  "enabled": true,
+  "styleId": "caravan-grounded-cinematic-v1",
+  "viewport": 1024,
+  "height": 576,
+  "cityPolicy": "Fixed shared city views. Sang allows redesign of outskirts on2026-11-01; canonical landmarks/identity retained. Current node files are identity references, not automatically approved new outskirts.",
+  "nodes": {
+    "jeonju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/jeonju.webp",
+      "sha256": "03311a1d16db333b178aa6583a2bf9f0b4e892760fd0f74f14b9dfe544dc4d68",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/jeonju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/jeonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "nonsan": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/nonsan.webp",
+      "sha256": "8a2345f05d2ff2d6e4e3e2f8dce1fc6481e110e6fdc7223ccbe4d6178a84886a",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/nonsan.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/nonsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "suwon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/suwon.webp",
+      "sha256": "4d9295e25f71b8653850cc5d1df7e83e13791b5ffb10bc2599052cd50e2c2ef7",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/suwon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/suwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "seoul": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/seoul.webp",
+      "sha256": "274966ddf9f87ca4bcf3b492a720de1d4fa9a8088dde83995b192e862a9f1552",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/seoul.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/seoul.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "wonju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/wonju.webp",
+      "sha256": "5eedd9e55a5109fd95691eb674508dc2b4992f558ef81e1005dd662079b606ab",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/wonju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/wonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "daegwallyeong": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/daegwallyeong.webp",
+      "sha256": "323f7dba0e208edfd9cc6c08f5296dbb0c5326d7946eb00d94bca0f2d341a2d4",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/daegwallyeong.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/daegwallyeong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gangneung": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gangneung.webp",
+      "sha256": "aa03d3b21df1c601951de4ccbfac72496833977f042983e092d5142f8871ab8f",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gangneung.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gangneung.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "sokcho": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/sokcho.webp",
+      "sha256": "475508363afc2e898fde6d8aaf24321186153a8153ef1092f37065f790644b47",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/sokcho.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/sokcho.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "busan": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/busan.webp",
+      "sha256": "87a081b1faee6014f036aaac56b2f0ea9ce88c85dc0852875cbe8a70b6c29abd",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/busan.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/busan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "yangsan": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/yangsan.webp",
+      "sha256": "eabb387fcec832f59f56ae829439cc8e44b7bcfcda0d68da6e35d81fabb3ca34",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/yangsan.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/yangsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gimhae": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gimhae.webp",
+      "sha256": "ff532cea1cc2caaa5e9165e98a618ddfc070cebca924d7d995cc2480400bd7ef",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gimhae.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gimhae.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "miryang": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/miryang.webp",
+      "sha256": "afb973ab13d38110d3aef2d84d157a31a3ccb2c89f2b9b49b3c6e626bab51313",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/miryang.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/miryang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "jinju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/jinju.webp",
+      "sha256": "3ce796b37b1389f922be1b4049dba3f955e55edae65dd8ceb8bdb3553a7d6347",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/jinju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/jinju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "daegu": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/daegu.webp",
+      "sha256": "345440c230dc4e58734f5680e4e9eba375a6a133a289e1e658c98b618491157b",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/daegu.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/daegu.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "hapcheon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/hapcheon.webp",
+      "sha256": "e273858538b916d5b20f6f4d3dcbc565c565a2a03eb470b10d3ae78320a13972",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/hapcheon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/hapcheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "geochang": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/geochang.webp",
+      "sha256": "53451fe237e9f7b74ad371ee95a1aab5788d86f1510dd0887574ed186d61a014",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/geochang.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/geochang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "muju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/muju.webp",
+      "sha256": "0731e6ebadd9fa44ac71aa161c23e497fc586ddd70e72afdfb6d76b8871da918",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/muju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/muju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "yeongdong": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/yeongdong.webp",
+      "sha256": "daf8394b4c8c5a067373a843dd24a957fd2e4dccc593da7243f693d2c83f0257",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/yeongdong.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "namwon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/namwon.webp",
+      "sha256": "11b4542d10c5853b31a198796d7a8d4e49e5ebb2f3292f9c286fe1773510c5b5",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/namwon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/namwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gongju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gongju.webp",
+      "sha256": "d7b3409848185755a0c07ebb8ab5a9967386dee7cb054e8a485471ca6f814348",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gongju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gongju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "cheonan": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/cheonan.webp",
+      "sha256": "51946e2c61a90ca599dccacb62651335f3b8caca09fa157b145f5c37d03ddcad",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/cheonan.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/cheonan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "daejeon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/daejeon.webp",
+      "sha256": "8e39f7069382024c53b23f9cad22b5317b9997b72273b54c985f22de50995e99",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/daejeon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/daejeon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gumi": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gumi.webp",
+      "sha256": "36186383e3ee7971f1535de96bb8a66a57b6d34021cb55b13db91a4569fcab93",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gumi.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gumi.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gimcheon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gimcheon.webp",
+      "sha256": "08c558d12143264f221bab51e7091a345d87f6686d4fb604123b587a73cf7efa",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gimcheon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gimcheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "cheongju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/cheongju.webp",
+      "sha256": "768020c64378ffe3f79d5c1c3e1a0e994c2f67421cd6beb32502f9f3fa04e597",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/cheongju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/cheongju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "pyeongtaek": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/pyeongtaek.webp",
+      "sha256": "8b953b4f8e3899e4186a3a92eb169a77a994fe0de02a1fcef2569fef3e864a34",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/pyeongtaek.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/pyeongtaek.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "lake": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/lake.webp",
+      "sha256": "c21a767c3c493aa4973dfe4d3b43ab32b085a27a1bd896fbb92d02968bdbb44d",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/lake.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/lake.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "mall": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/mall.webp",
+      "sha256": "9ecfed21b069b09ac7b1d3070c10c5fea74caa448ba3a5f7955ab5c0b9bcc0d7",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/mall.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/mall.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "tower": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/tower.webp",
+      "sha256": "457caf9f96237aba76fb0040abb385f8ab68794c449ff38631445e707b3560c0",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/tower.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/tower.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "spring": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/spring.webp",
+      "sha256": "81c4df9c77be0fb2c1484031dc644d03caaab599446d3374abcf1234cff6476e",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/spring.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/spring.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "airfield": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/airfield.webp",
+      "sha256": "af913400ed8465764418e9e86b07889a6bdda0e14e1786abce78e4ec261e328b",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/airfield.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/airfield.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "solar": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/solar.webp",
+      "sha256": "dd84d0c9a764cb310a1ea255dbc03a864441a7b35ddfd376a8d7617ad7b3f2c4",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/solar.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/solar.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "reststop": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/reststop.webp",
+      "sha256": "89291d2bc0d34cd0377c8dd3bce34b7625a7f97b7b01e9a1f534a466fafac104",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/reststop.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/reststop.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "tunnelbook": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/tunnelbook.webp",
+      "sha256": "1a50cef0c534da328783cbfc326cd85e449c30bd4827cbd1b4fb45146d419009",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/tunnelbook.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/tunnelbook.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "mingyu_ridge": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/mingyu_ridge.webp",
+      "sha256": "ed704c66497838e27b22a7932bf35d7fc4421c3468a25ebb5ab168e2efb7459d",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/mingyu_ridge.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/mingyu_ridge.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "jaeyi_cache": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/jaeyi_cache.webp",
+      "sha256": "aadbb99ec4d3886c4d40eb506293fd4cea20f85cef4d479b54f72329150230cc",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/jaeyi_cache.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/jaeyi_cache.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "cablecar": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/cablecar.webp",
+      "sha256": "8a504954b48e9ce7d030fb2956b4f6167b3800bb634467b55bc128ef90544908",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/cablecar.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/cablecar.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "mungyeong": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/mungyeong.webp",
+      "sha256": "db27b98a239c35f3b9729d2193bc79be8e7ceaadd37f1d99e97902cc779c5c98",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/mungyeong.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/mungyeong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "filmset": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/filmset.webp",
+      "sha256": "8f2ac47806d5ea3900867ec573fe313a304d7df3d697d060a5599a8b9c02acc6",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/filmset.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/filmset.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "lighthouse": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/lighthouse.webp",
+      "sha256": "4e28cc029853150b8103466a54e5dff5ff32dbb8a8a67a79dd0848fe6ba5aaab",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/lighthouse.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/lighthouse.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "drivein": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/drivein.webp",
+      "sha256": "bc946e9d0f48e79782e450992d8124f74faff24d0258f61ae7b73a93407df8b8",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/drivein.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/drivein.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "sunflower": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/sunflower.webp",
+      "sha256": "911d2606f393b4e07da16c57f3b13c629aec81b0a0a37697d98ac29aee9d4c4c",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/sunflower.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/sunflower.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "ulsan": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/ulsan.webp",
+      "sha256": "3057bd2461cee078340db7410e6576adbc9a7abbb95285bd380eddf9e56e9268",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/ulsan.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/ulsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gyeongju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gyeongju.webp",
+      "sha256": "37f4664164c35d403d502e82a2166ef971dc7f0763dc55b7b4d7219b4872b92c",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gyeongju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gyeongju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "pohang": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/pohang.webp",
+      "sha256": "41b77bc54b7e37f990e73790577c04ecf34c23e01988239d588cfb75298311d1",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/pohang.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/pohang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "sangju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/sangju.webp",
+      "sha256": "5b768af0e03bd12ef8d1e7b2112213c0950ea7fb47dd59eb275ccf4aed837053",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/sangju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/sangju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gunsan": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gunsan.webp",
+      "sha256": "13d88af6f8d0bed49e928a19eb8b2d61fe9a241d7ead318785135fd45827813d",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gunsan.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gunsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "chungju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/chungju.webp",
+      "sha256": "50daaa46c5b142fb3fd617cb1a174e2dd062c374dc0fa08ecee028360fb191af",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/chungju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/chungju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "sejong": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/sejong.webp",
+      "sha256": "41c7f1257b66156557c5bf25d261332b54dc0becc4dee61e1cab6417c2b01768",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/sejong.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/sejong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "yeosu": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/yeosu.webp",
+      "sha256": "410c7c48238e456c3c6c4b980710c8c4807bdca13654062d9182ea5036fdfde4",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/yeosu.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/yeosu.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "suncheon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/suncheon.webp",
+      "sha256": "4b5b111e67a94bdd362865c377b0300551257feafb4be7a43799640bd6a2a237",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/suncheon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/suncheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "gwangju": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/gwangju.webp",
+      "sha256": "0b8246d7d3e1a72f933e982248e6356ebee4057461707e314835fff7c6c35872",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/gwangju.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/gwangju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "damyang": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/damyang.webp",
+      "sha256": "21a2cdb025fe3c5c4346d1ef950a4d03fd7da7b02f64c86524df2000323ca1db",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/damyang.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/damyang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "mokpo": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/mokpo.webp",
+      "sha256": "cc4e65f8bf369a9ec457f1bc6575bb41316333302d1071132fab23c423d258f6",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/mokpo.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/mokpo.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "maehwa": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/maehwa.webp",
+      "sha256": "28051d03ada3fc9393a3d94f46183ff1477f2cf5151aebb56b2de5f2ef64b446",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/maehwa.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/maehwa.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "andong": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/andong.webp",
+      "sha256": "097282fed37379b51b65848adf952fcdd65231ee0aacd3a357f84783238a9083",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/andong.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/andong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "danyang": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/danyang.webp",
+      "sha256": "7513b256a8a1e1c19f644cd584c7302c3a98f17edc213b3c131e820a31696dcd",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/danyang.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/danyang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    "icheon": {
+      "file": "assets/ui/road-studies/continuous-v3/nodes/icheon.webp",
+      "sha256": "12f73ecaeecce274fe754c797a92212af1ddc6b171ebfe0bf19840fd13025e50",
+      "width": 2048,
+      "height": 576,
+      "x": 512,
+      "identityReference": false,
+      "identityReferenceFile": "assets/reference/route-nodes-v3/icheon.png",
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/nodes/icheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    }
+  },
+  "routes": [
+    {
+      "id": "busan--yangsan",
+      "from": "busan",
+      "to": "yangsan",
+      "km": 20,
+      "status": "accepted",
+      "flow": "항만 창고가 드문드문 줄고 강변 풀밭·산기슭 주거지가 섞인다. 강과 능선은 계속 남는다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/busan--yangsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "busan--gimhae",
+      "from": "busan",
+      "to": "gimhae",
+      "km": 18,
+      "status": "accepted",
+      "flow": "항만의 낮은 시설이 수로와 들판으로 이어진다. 평지가 넓어지되 산을 새로 크게 세우지 않는다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/busan--gimhae.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "miryang--yangsan",
+      "from": "yangsan",
+      "to": "miryang",
+      "km": 34,
+      "status": "accepted",
+      "flow": "강변 시가지가 농지와 낮은 취락으로 느슨해진다. 같은 하천 골짜기를 따라간다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/miryang--yangsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimhae--jinju",
+      "from": "gimhae",
+      "to": "jinju",
+      "km": 55,
+      "status": "accepted",
+      "flow": "하류 평지에서 구릉 사이 농경지를 거쳐 강변 분지로 이어지는 긴 구간을 압축한다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimhae--jinju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daegu--miryang",
+      "from": "miryang",
+      "to": "daegu",
+      "km": 52,
+      "status": "accepted",
+      "flow": "농경지와 창고가 차츰 촘촘해지고 분지 시가지로 이어진다. 산지 크기는 급히 바꾸지 않는다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daegu--miryang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "hapcheon--miryang",
+      "from": "miryang",
+      "to": "hapcheon",
+      "km": 40,
+      "status": "accepted",
+      "flow": "강변 농지에 과수원이 섞이며 낮은 취락이 바뀐다. 새로운 산악 세계로 전환하지 않는다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/hapcheon--miryang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "geochang--hapcheon",
+      "from": "hapcheon",
+      "to": "geochang",
+      "km": 33,
+      "status": "accepted",
+      "flow": "과수원 사이로 분지를 감싼 산이 조금씩 가까워진다. 산줄기는 연속된 층으로 남긴다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/geochang--hapcheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "geochang--muju",
+      "from": "geochang",
+      "to": "muju",
+      "km": 42,
+      "status": "accepted",
+      "flow": "분지 농지가 좁아지고 숲 골짜기가 깊어진다. 터널은 마지막의 작은 단서다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/geochang--muju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "muju--yeongdong",
+      "from": "muju",
+      "to": "yeongdong",
+      "km": 32,
+      "status": "accepted",
+      "flow": "숲 골짜기가 조금 열리며 과수원과 포도밭이 늘어난다. 같은 둥근 능선을 유지한다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/muju--yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "jinju--namwon",
+      "from": "jinju",
+      "to": "namwon",
+      "km": 62,
+      "status": "accepted",
+      "flow": "강변 취락 뒤로 산간 농지가 이어지고 골짜기 안의 분지가 열린다. 수계는 미술적으로 압축한다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/jinju--namwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "jeonju--namwon",
+      "from": "namwon",
+      "to": "jeonju",
+      "km": 48,
+      "status": "accepted",
+      "flow": "분지 농경지와 작은 마을이 이어지다가 도시 지붕의 밀도만 높아진다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/jeonju--namwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "jeonju--nonsan",
+      "from": "jeonju",
+      "to": "nonsan",
+      "km": 52,
+      "status": "accepted",
+      "flow": "낮은 시장 지붕을 벗어나 수로·논밭이 넓어진다. 낮은 먼 구릉을 끝까지 유지한다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/jeonju--nonsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gongju--nonsan",
+      "from": "nonsan",
+      "to": "gongju",
+      "km": 34,
+      "status": "accepted",
+      "flow": "평야 사이 낮은 구릉이 가까워지고 강가 취락이 모인다. 산성은 원경을 덮지 않는다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gongju--nonsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheonan--gongju",
+      "from": "gongju",
+      "to": "cheonan",
+      "km": 44,
+      "status": "accepted",
+      "flow": "강변 저지대에서 완만한 구릉 사이 농지·취락으로 이어진다. 도로망과 실측 거리는 축약이다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheonan--gongju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daejeon--nonsan",
+      "from": "nonsan",
+      "to": "daejeon",
+      "km": 40,
+      "status": "accepted",
+      "flow": "논밭 사이 취락이 촘촘해져 분지 외곽의 시설로 이어진다. 시가지는 천천히 늘린다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daejeon--nonsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daegu--gumi",
+      "from": "daegu",
+      "to": "gumi",
+      "km": 38,
+      "status": "accepted",
+      "flow": "낮은 공장과 강변 저지대가 계속된다. 먼 산은 유지하고 공장 배치만 달라진다.",
+      "kind": "industrial",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/industrial.webp",
+        "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daegu--gumi.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimcheon--gumi",
+      "from": "gumi",
+      "to": "gimcheon",
+      "km": 26,
+      "status": "accepted",
+      "flow": "산업지 지붕이 줄고 내륙 농경지와 교통 시설이 늘어난다. 하천 골짜기의 폭을 점진적으로 좁힌다.",
+      "kind": "industrial",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/industrial.webp",
+        "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimcheon--gumi.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimcheon--yeongdong",
+      "from": "gimcheon",
+      "to": "yeongdong",
+      "km": 33,
+      "status": "accepted",
+      "flow": "갈림길 주변 취락에서 낮은 산골 과수지로 이어진다. 능선의 결을 유지한다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimcheon--yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimcheon--muju",
+      "from": "gimcheon",
+      "to": "muju",
+      "km": 38,
+      "status": "accepted",
+      "flow": "완만한 구릉이 숲 골짜기로 깊어진다. 여러 고개를 한 장면으로 순간 교체하지 않는다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimcheon--muju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daejeon--yeongdong",
+      "from": "yeongdong",
+      "to": "daejeon",
+      "km": 44,
+      "status": "accepted",
+      "flow": "과수원에서 강변 농지·분지 외곽으로 이어진다. 연구시설은 마지막에만 작은 군집으로 늘린다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daejeon--yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheongju--daejeon",
+      "from": "daejeon",
+      "to": "cheongju",
+      "km": 34,
+      "status": "accepted",
+      "flow": "분지와 하천 저지대가 이어지고 외곽 농지·주거지가 섞인다. 두 도시 사이에 새 산맥을 끼우지 않는다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheongju--daejeon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheonan--cheongju",
+      "from": "cheongju",
+      "to": "cheonan",
+      "km": 38,
+      "status": "accepted",
+      "flow": "농지와 낮은 물류시설 사이로 완만한 구릉이 이어진다. 주거 밀도는 천천히 변한다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheonan--cheongju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheonan--pyeongtaek",
+      "from": "cheonan",
+      "to": "pyeongtaek",
+      "km": 28,
+      "status": "accepted",
+      "flow": "구릉 사이 들판이 넓은 평야로 열린다. 항만 명칭은 압축 설정이며 거대한 바다는 필수가 아니다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheonan--pyeongtaek.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "pyeongtaek--suwon",
+      "from": "pyeongtaek",
+      "to": "suwon",
+      "km": 30,
+      "status": "accepted",
+      "flow": "수로와 논밭 사이 산업시설·아파트가 점진적으로 늘어난다. 평지의 넓이를 보존한다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/pyeongtaek--suwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "seoul--suwon",
+      "from": "suwon",
+      "to": "seoul",
+      "km": 34,
+      "status": "accepted",
+      "flow": "낮은 주거·작업장 사이에 아파트가 차츰 늘어난다. 같은 구릉과 수변 축을 길게 유지한다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/seoul--suwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "geochang--namwon",
+      "from": "namwon",
+      "to": "geochang",
+      "km": 44,
+      "status": "accepted",
+      "flow": "분지 사이 숲 고개를 지나 다시 농지가 열린다. 알프스형 암봉 대신 둥근 산을 겹친다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/geochang--namwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "jeonju--muju",
+      "from": "jeonju",
+      "to": "muju",
+      "km": 55,
+      "status": "accepted",
+      "flow": "도시 외곽 농지가 점차 산지 계곡으로 좁아진다. 고도 변화는 연속된 능선으로 보인다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/jeonju--muju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "lake--miryang",
+      "from": "lake",
+      "to": "miryang",
+      "km": 14,
+      "status": "accepted",
+      "flow": "작은 호수의 물가가 마을 농지로 이어진다. 거대한 바다나 별도 항만을 만들지 않는다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/lake--miryang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daegu--lake",
+      "from": "lake",
+      "to": "daegu",
+      "km": 20,
+      "status": "accepted",
+      "flow": "호숫가 숲이 낮은 농지와 분지 외곽으로 이어진다. 도시 실루엣은 조금씩 늘린다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daegu--lake.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gumi--mall",
+      "from": "mall",
+      "to": "gumi",
+      "km": 8,
+      "status": "accepted",
+      "flow": "구미 산업지의 길을 유지한 채 빈 상업 건물만 가까워진다. 짧은 곁길에서 생태를 바꾸지 않는다.",
+      "kind": "industrial",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/industrial.webp",
+        "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gumi--mall.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "geochang--tower",
+      "from": "tower",
+      "to": "geochang",
+      "km": 11,
+      "status": "accepted",
+      "flow": "분지 옆 능선의 숲을 유지하며 작은 통신탑을 드러낸다. 짧은 우회로에 만년설은 없다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/geochang--tower.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "spring--yeongdong",
+      "from": "spring",
+      "to": "yeongdong",
+      "km": 9,
+      "status": "accepted",
+      "flow": "같은 산골 숲과 과수지 사이 작은 온천 건물이 나타난다. 독립적인 관광 풍경으로 점프하지 않는다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/spring--yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "airfield--nonsan",
+      "from": "airfield",
+      "to": "nonsan",
+      "km": 12,
+      "status": "accepted",
+      "flow": "평야의 풀밭과 콘크리트 흔적이 논밭으로 이어진다. 활주로의 낮은 수평선을 유지한다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/airfield--nonsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "pyeongtaek--solar",
+      "from": "solar",
+      "to": "pyeongtaek",
+      "km": 10,
+      "status": "accepted",
+      "flow": "평택 들판의 일부가 낮은 패널 밭으로 바뀐다. 산·날씨·빛은 변하지 않는다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/pyeongtaek--solar.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimcheon--reststop",
+      "from": "reststop",
+      "to": "gimcheon",
+      "km": 7,
+      "status": "accepted",
+      "flow": "갈림길 주변 낮은 구릉과 도로를 따라 휴게소 지붕이 보인다. 짧은 길의 변화량은 작게 둔다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimcheon--reststop.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "muju--tunnelbook",
+      "from": "tunnelbook",
+      "to": "muju",
+      "km": 9,
+      "status": "accepted",
+      "flow": "무주와 같은 숲·바위 사이에 작은 터널 입구가 나타난다. 터널 하나가 지역 전체를 바꾸지 않는다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/muju--tunnelbook.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "mingyu_ridge--yeongdong",
+      "from": "mingyu_ridge",
+      "to": "yeongdong",
+      "km": 13,
+      "status": "accepted",
+      "flow": "인근 숲 능선에서 산골 과수원으로 시야가 열린다. 같은 산줄기를 다른 거리에서 본다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/mingyu_ridge--yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimcheon--jaeyi_cache",
+      "from": "jaeyi_cache",
+      "to": "gimcheon",
+      "km": 8,
+      "status": "accepted",
+      "flow": "김천 근교 구릉의 작은 창고와 공터가 마을 외곽으로 이어진다. 공단 도시로 확대하지 않는다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimcheon--jaeyi_cache.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cablecar--mungyeong",
+      "from": "cablecar",
+      "to": "mungyeong",
+      "km": 16,
+      "status": "accepted",
+      "flow": "문경 산자락의 케이블 시설은 숲에 작게 묻힌다. 깊이와 빛은 같은 골짜기 안에서 유지한다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cablecar--mungyeong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "filmset--namwon",
+      "from": "filmset",
+      "to": "namwon",
+      "km": 14,
+      "status": "accepted",
+      "flow": "분지 농지와 낮은 목조 지붕이 이어진다. 시대극 세트장을 실제 거대 성곽 도시로 바꾸지 않는다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/filmset--namwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "lighthouse--nonsan",
+      "from": "lighthouse",
+      "to": "nonsan",
+      "km": 15,
+      "status": "accepted",
+      "flow": "서해 저지대와 논산 평야를 연결한 가상 압축 길이다. 실제 15km 도로 재현으로 취급하지 않는다.",
+      "kind": "wetland",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/wetland.webp",
+        "sha256": "63faeaceb3adc2c4b185e1745df0d6f303f6e208b60a53a42790c9ce4892b04d",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/lighthouse--nonsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheonan--drivein",
+      "from": "drivein",
+      "to": "cheonan",
+      "km": 9,
+      "status": "accepted",
+      "flow": "천안 근교 농지에 작은 빈 상영판과 공터가 나타난다. 구릉은 그대로 유지한다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheonan--drivein.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "hapcheon--sunflower",
+      "from": "sunflower",
+      "to": "hapcheon",
+      "km": 8,
+      "status": "accepted",
+      "flow": "같은 과수·농경지의 일부만 밭으로 달라진다. 개화기를 고정하지 않는다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/hapcheon--sunflower.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "ulsan--yangsan",
+      "from": "yangsan",
+      "to": "ulsan",
+      "km": 32,
+      "status": "accepted",
+      "flow": "산기슭 취락과 구릉 사이 산업시설이 점진적으로 늘어난다. 갑자기 바다 절벽으로 바뀌지 않는다.",
+      "kind": "industrial",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/industrial.webp",
+        "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/ulsan--yangsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gyeongju--ulsan",
+      "from": "ulsan",
+      "to": "gyeongju",
+      "km": 34,
+      "status": "accepted",
+      "flow": "산업지 외곽이 농경지·분지 취락으로 느슨해진다. 왕릉은 낮은 둔덕 규모로 나타난다.",
+      "kind": "industrial",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/industrial.webp",
+        "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gyeongju--ulsan.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daegu--gyeongju",
+      "from": "gyeongju",
+      "to": "daegu",
+      "km": 52,
+      "status": "accepted",
+      "flow": "분지 농지에서 산지 연결부를 거쳐 도시 외곽으로 열린다. 두 분지 사이의 중간 지형을 남긴다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daegu--gyeongju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gyeongju--pohang",
+      "from": "gyeongju",
+      "to": "pohang",
+      "km": 30,
+      "status": "accepted",
+      "flow": "내륙 농지와 낮은 구릉을 지나 해안 산업지가 늘어난다. 바다와 제철소가 한순간에 전경을 덮지 않는다.",
+      "kind": "industrial",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/industrial.webp",
+        "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gyeongju--pohang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gimcheon--sangju",
+      "from": "gimcheon",
+      "to": "sangju",
+      "km": 26,
+      "status": "accepted",
+      "flow": "내륙 농지·낮은 취락이 넓은 강변 골짜기로 이어진다. 산은 배후에 남는다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gimcheon--sangju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "sangju--yeongdong",
+      "from": "sangju",
+      "to": "yeongdong",
+      "km": 34,
+      "status": "accepted",
+      "flow": "강변 평지에서 숲 구릉 사이 과수농지로 이어진다. 반복되는 둥근 능선으로 연결한다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/sangju--yeongdong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gunsan--jeonju",
+      "from": "jeonju",
+      "to": "gunsan",
+      "km": 32,
+      "status": "accepted",
+      "flow": "내륙 분지 외곽에서 서쪽 저지대가 넓어진다. 항구는 도착 쪽의 낮은 구조물로 암시한다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gunsan--jeonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gunsan--lighthouse",
+      "from": "gunsan",
+      "to": "lighthouse",
+      "km": 12,
+      "status": "accepted",
+      "flow": "하구 항만 시설이 줄고 갯벌·해안 풀밭이 늘어난다. 서해를 동해 절벽으로 바꾸지 않는다.",
+      "kind": "wetland",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/wetland.webp",
+        "sha256": "63faeaceb3adc2c4b185e1745df0d6f303f6e208b60a53a42790c9ce4892b04d",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gunsan--lighthouse.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheongju--chungju",
+      "from": "cheongju",
+      "to": "chungju",
+      "km": 40,
+      "status": "accepted",
+      "flow": "농지·구릉을 따라 내륙 분지와 수변으로 이어진다. 호수는 연속된 지형 안에서 드러난다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheongju--chungju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gongju--sejong",
+      "from": "gongju",
+      "to": "sejong",
+      "km": 16,
+      "status": "accepted",
+      "flow": "강 주변 저지대를 유지한 채 낮은 오래된 취락에서 계획도시 건물로 밀도가 달라진다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gongju--sejong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daejeon--sejong",
+      "from": "sejong",
+      "to": "daejeon",
+      "km": 20,
+      "status": "accepted",
+      "flow": "하천과 구릉 사이 도시 외곽이 이어진다. 공주·청주 방향과도 같은 세종 지형 성격을 공유한다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daejeon--sejong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "cheongju--sejong",
+      "from": "sejong",
+      "to": "cheongju",
+      "km": 24,
+      "status": "accepted",
+      "flow": "낮은 시가지에서 농경지·구릉을 거쳐 분지 외곽으로 이어진다. 한 가지 중부 내륙 색감을 유지한다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/cheongju--sejong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "jinju--yeosu",
+      "from": "jinju",
+      "to": "yeosu",
+      "km": 48,
+      "status": "accepted",
+      "flow": "내륙 강변과 구릉 사이 취락이 남해 만의 항만으로 열린다. 작은 반도·섬은 멀리 둔다.",
+      "kind": "southbay",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/southbay.webp",
+        "sha256": "e9579d43803781a96fd6f59800e64d4c8879911becc9cf5a6b91475b9ff5d155",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/jinju--yeosu.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "suncheon--yeosu",
+      "from": "yeosu",
+      "to": "suncheon",
+      "km": 24,
+      "status": "accepted",
+      "flow": "항만 주변 구릉에서 잔잔한 만과 하구 저지대로 이어진다. 동해의 직선 모래해안과 구별한다.",
+      "kind": "southbay",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/southbay.webp",
+        "sha256": "e9579d43803781a96fd6f59800e64d4c8879911becc9cf5a6b91475b9ff5d155",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/suncheon--yeosu.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "namwon--suncheon",
+      "from": "suncheon",
+      "to": "namwon",
+      "km": 44,
+      "status": "accepted",
+      "flow": "하구 농지를 벗어나 숲 골짜기와 내륙 분지로 이어진다. 산이 가까워지는 시간을 충분히 둔다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/namwon--suncheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gwangju--suncheon",
+      "from": "suncheon",
+      "to": "gwangju",
+      "km": 40,
+      "status": "accepted",
+      "flow": "농경지·구릉이 반복되다가 분지 시가지 밀도가 늘어난다. 습지와 도시를 단번에 바꾸지 않는다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gwangju--suncheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "damyang--gwangju",
+      "from": "gwangju",
+      "to": "damyang",
+      "km": 14,
+      "status": "accepted",
+      "flow": "도시 외곽 지붕이 줄고 밭·대숲이 늘어난다. 대숲을 거대한 별도 생물군계로 바꾸지 않는다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/damyang--gwangju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "damyang--namwon",
+      "from": "damyang",
+      "to": "namwon",
+      "km": 24,
+      "status": "accepted",
+      "flow": "농지와 낮은 취락에서 숲 고개를 거쳐 분지가 열린다. 산의 높이는 단계적으로 변한다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/damyang--namwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gwangju--mokpo",
+      "from": "gwangju",
+      "to": "mokpo",
+      "km": 44,
+      "status": "accepted",
+      "flow": "분지 외곽에서 넓은 서남부 저지대와 하구 쪽으로 이어진다. 물과 섬은 끝 쪽의 먼 층이다.",
+      "kind": "fields",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/fields.webp",
+        "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gwangju--mokpo.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gwangju--jeonju",
+      "from": "gwangju",
+      "to": "jeonju",
+      "km": 48,
+      "status": "accepted",
+      "flow": "구릉 사이 논밭과 작은 도시 외곽이 반복된다. 긴 길에서도 채도·날씨를 일정하게 유지한다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gwangju--jeonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "maehwa--suncheon",
+      "from": "suncheon",
+      "to": "maehwa",
+      "km": 14,
+      "status": "accepted",
+      "flow": "하구 농지와 구릉 사이 과수원을 따라 강변으로 이어진다. 매화 만개는 계절 선택 없이는 고정하지 않는다.",
+      "kind": "orchard",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/orchard.webp",
+        "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/maehwa--suncheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "andong--gumi",
+      "from": "gumi",
+      "to": "andong",
+      "km": 52,
+      "status": "accepted",
+      "flow": "강 주변 산업지에서 농경지와 상류 분지로 이어진다. 마을 지붕만 지역에 맞게 달라진다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/andong--gumi.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "andong--danyang",
+      "from": "andong",
+      "to": "danyang",
+      "km": 56,
+      "status": "accepted",
+      "flow": "강 골짜기와 숲 고개가 반복되고 산 사이 수변이 좁아진다. 강줄기를 모두 같은 강으로 단정하지 않는다.",
+      "kind": "gorge",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/gorge.webp",
+        "sha256": "09b70b5565770d8eb4e1db00a80435a773db00e12e493726ef729523318a3885",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/andong--danyang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "mungyeong--sangju",
+      "from": "sangju",
+      "to": "mungyeong",
+      "km": 26,
+      "status": "accepted",
+      "flow": "넓은 농경지가 점차 숲 골짜기로 좁아진다. 고갯길이 배후에서 천천히 가까워진다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/mungyeong--sangju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "chungju--mungyeong",
+      "from": "mungyeong",
+      "to": "chungju",
+      "km": 38,
+      "status": "accepted",
+      "flow": "숲 고개를 벗어나 내륙 분지와 강변 농지가 열린다. 다음 도시로 그림을 교체하지 않는다.",
+      "kind": "forest",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/forest.webp",
+        "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/chungju--mungyeong.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "chungju--danyang",
+      "from": "danyang",
+      "to": "chungju",
+      "km": 30,
+      "status": "accepted",
+      "flow": "산 사이 강과 호수가 이어지는 긴 수변 경관을 유지한다. 건물은 물가의 작은 취락 규모다.",
+      "kind": "gorge",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/gorge.webp",
+        "sha256": "09b70b5565770d8eb4e1db00a80435a773db00e12e493726ef729523318a3885",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/chungju--danyang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "icheon--suwon",
+      "from": "suwon",
+      "to": "icheon",
+      "km": 34,
+      "status": "accepted",
+      "flow": "연속된 시가지가 농경지·완만한 구릉·작은 작업장으로 느슨해진다. 가마 굴뚝은 작은 지역 단서다.",
+      "kind": "suburban",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/suburban.webp",
+        "sha256": "e155effe55de68880b1f5b63e53abefb13d4306ffc2e95dfab82e855ce8e00f9",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/icheon--suwon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "chungju--icheon",
+      "from": "icheon",
+      "to": "chungju",
+      "km": 46,
+      "status": "accepted",
+      "flow": "농지와 낮은 구릉을 지나 내륙 분지로 이어진다. 산을 급히 거대화하지 않는다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/chungju--icheon.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "chungju--wonju",
+      "from": "chungju",
+      "to": "wonju",
+      "km": 36,
+      "status": "accepted",
+      "flow": "내륙 수변과 농지를 지나 산자락 시가지가 늘어난다. 먼 둥근 능선이 전 구간 남는다.",
+      "kind": "river",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/river.webp",
+        "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/chungju--wonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "danyang--wonju",
+      "from": "danyang",
+      "to": "wonju",
+      "km": 30,
+      "status": "accepted",
+      "flow": "깊은 강 골짜기에서 숲 고개를 거쳐 산자락 분지로 열린다. 높이 변화는 여러 겹의 산으로 연결한다.",
+      "kind": "gorge",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/gorge.webp",
+        "sha256": "09b70b5565770d8eb4e1db00a80435a773db00e12e493726ef729523318a3885",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/danyang--wonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daegwallyeong--wonju",
+      "from": "wonju",
+      "to": "daegwallyeong",
+      "km": 44,
+      "status": "accepted",
+      "flow": "산자락 취락에서 숲 능선과 작은 고지 개활지로 이어진다. 눈 덮인 암봉 대신 둥근 산줄기를 유지한다.",
+      "kind": "highland",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/highland.webp",
+        "sha256": "93f0da79a104e05f9b088da771eb169b1b4796511fdb8bec95c7442772e4903c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daegwallyeong--wonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "daegwallyeong--gangneung",
+      "from": "daegwallyeong",
+      "to": "gangneung",
+      "km": 22,
+      "status": "accepted",
+      "flow": "숲 능선이 조금씩 낮아지며 먼 해안 저지대가 열린다. 바다는 끝 쪽에서만 좁게 보인다.",
+      "kind": "highland",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/highland.webp",
+        "sha256": "93f0da79a104e05f9b088da771eb169b1b4796511fdb8bec95c7442772e4903c",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/daegwallyeong--gangneung.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gangneung--sokcho",
+      "from": "gangneung",
+      "to": "sokcho",
+      "km": 40,
+      "status": "accepted",
+      "flow": "모래해안·해송·낮은 취락이 오래 이어진다. 같은 바다 수평선 안에서 마을 밀도만 바뀐다.",
+      "kind": "coast",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/coast.webp",
+        "sha256": "66828cd7a56364d6cf217c3fbcb6933c8878dc55e0bde748bf368d8a95a7e80d",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gangneung--sokcho.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "gangneung--pohang",
+      "from": "gangneung",
+      "to": "pohang",
+      "km": 82,
+      "status": "accepted",
+      "flow": "동해 해안의 긴 마을·낮은 곶·모래해안이 반복된다. 도착 직전에만 산업시설이 조금씩 늘어난다.",
+      "kind": "coast",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/coast.webp",
+        "sha256": "66828cd7a56364d6cf217c3fbcb6933c8878dc55e0bde748bf368d8a95a7e80d",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/gangneung--pohang.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    },
+    {
+      "id": "icheon--wonju",
+      "from": "wonju",
+      "to": "icheon",
+      "km": 40,
+      "status": "accepted",
+      "flow": "산자락 시가지에서 완만한 구릉과 농지로 열린다. 먼 산의 색과 크기는 급히 바뀌지 않는다.",
+      "kind": "basin",
+      "connector": {
+        "file": "assets/ui/road-studies/continuous-v3/corridors/basin.webp",
+        "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+        "width": 2048,
+        "height": 576
+      },
+      "review": {
+        "file": "assets/ui/road-environment/continuous-v3-reviews/roads/icheon--wonju.json",
+        "accepted": true,
+        "reviewedAt": "2026-11-01"
+      }
+    }
+  ]
+}

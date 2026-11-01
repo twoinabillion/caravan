@@ -1,0 +1,26 @@
+{
+  "id": "filmset--namwon",
+  "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+  "fromSha256": "8f2ac47806d5ea3900867ec573fe313a304d7df3d697d060a5599a8b9c02acc6",
+  "toSha256": "11b4542d10c5853b31a198796d7a8d4e49e5ebb2f3292f9c286fe1773510c5b5",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "filmset--namwon",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/filmset--namwon-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/filmset--namwon-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

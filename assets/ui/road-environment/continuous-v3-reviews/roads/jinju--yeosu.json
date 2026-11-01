@@ -1,0 +1,26 @@
+{
+  "id": "jinju--yeosu",
+  "sha256": "e9579d43803781a96fd6f59800e64d4c8879911becc9cf5a6b91475b9ff5d155",
+  "fromSha256": "3ce796b37b1389f922be1b4049dba3f955e55edae65dd8ceb8bdb3553a7d6347",
+  "toSha256": "410c7c48238e456c3c6c4b980710c8c4807bdca13654062d9182ea5036fdfde4",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "jinju--yeosu",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/jinju--yeosu-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/jinju--yeosu-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

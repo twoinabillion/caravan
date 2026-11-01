@@ -1,0 +1,23 @@
+{
+  "node": "wonju",
+  "sha256": "5eedd9e55a5109fd95691eb674508dc2b4992f558ef81e1005dd662079b606ab",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/wonju-master-v1.png",
+  "sourceSha256": "a0e90ab48fd26d0896ac18f61ad38f51207f999ef302668033e0127e8c358245",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

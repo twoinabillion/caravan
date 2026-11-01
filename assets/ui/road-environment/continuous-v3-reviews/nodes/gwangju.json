@@ -1,0 +1,23 @@
+{
+  "node": "gwangju",
+  "sha256": "0b8246d7d3e1a72f933e982248e6356ebee4057461707e314835fff7c6c35872",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/gwangju-master-v1.png",
+  "sourceSha256": "8dd8b17d8142f227cb3ddbdaa2bdd4f61d33bcf068b1de6505af8ed5f5e86015",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

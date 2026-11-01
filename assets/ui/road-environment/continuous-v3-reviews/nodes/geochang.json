@@ -1,0 +1,23 @@
+{
+  "node": "geochang",
+  "sha256": "53451fe237e9f7b74ad371ee95a1aab5788d86f1510dd0887574ed186d61a014",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/geochang-master-v1.png",
+  "sourceSha256": "0387182bcebad87b74c925d0173342723ad9f5f0480e80f188d46671a8ba2f06",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

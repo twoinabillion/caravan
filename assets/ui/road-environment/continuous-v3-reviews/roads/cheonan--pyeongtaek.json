@@ -1,0 +1,26 @@
+{
+  "id": "cheonan--pyeongtaek",
+  "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+  "fromSha256": "51946e2c61a90ca599dccacb62651335f3b8caca09fa157b145f5c37d03ddcad",
+  "toSha256": "8b953b4f8e3899e4186a3a92eb169a77a994fe0de02a1fcef2569fef3e864a34",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "cheonan--pyeongtaek",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cheonan--pyeongtaek-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/cheonan--pyeongtaek-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

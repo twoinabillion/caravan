@@ -1,0 +1,23 @@
+{
+  "node": "filmset",
+  "sha256": "8f2ac47806d5ea3900867ec573fe313a304d7df3d697d060a5599a8b9c02acc6",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/filmset-master-v1.png",
+  "sourceSha256": "adc46d0f61c357bc0bcebbe32c3bee93cda3141255ecaa56863d9f2d50791040",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

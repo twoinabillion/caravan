@@ -1,0 +1,23 @@
+{
+  "node": "sunflower",
+  "sha256": "911d2606f393b4e07da16c57f3b13c629aec81b0a0a37697d98ac29aee9d4c4c",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/sunflower-master-v1.png",
+  "sourceSha256": "b17fb7bd92158484f46caf27fdb3aa2c329f81fa51923de159b70a6017fed8fb",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

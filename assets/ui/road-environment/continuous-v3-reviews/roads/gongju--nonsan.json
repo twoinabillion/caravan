@@ -1,0 +1,26 @@
+{
+  "id": "gongju--nonsan",
+  "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+  "fromSha256": "8a2345f05d2ff2d6e4e3e2f8dce1fc6481e110e6fdc7223ccbe4d6178a84886a",
+  "toSha256": "d7b3409848185755a0c07ebb8ab5a9967386dee7cb054e8a485471ca6f814348",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "gongju--nonsan",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/gongju--nonsan-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/gongju--nonsan-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "geochang--muju",
+  "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+  "fromSha256": "53451fe237e9f7b74ad371ee95a1aab5788d86f1510dd0887574ed186d61a014",
+  "toSha256": "0731e6ebadd9fa44ac71aa161c23e497fc586ddd70e72afdfb6d76b8871da918",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "geochang--muju",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/geochang--muju-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/geochang--muju-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

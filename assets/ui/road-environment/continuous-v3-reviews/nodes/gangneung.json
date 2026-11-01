@@ -1,0 +1,23 @@
+{
+  "node": "gangneung",
+  "sha256": "aa03d3b21df1c601951de4ccbfac72496833977f042983e092d5142f8871ab8f",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/gangneung-master-v1.png",
+  "sourceSha256": "c242fa2fde802708a665a2ab02cd3a3766fe3a6c5be60bb9dcc87d17ad1e4843",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

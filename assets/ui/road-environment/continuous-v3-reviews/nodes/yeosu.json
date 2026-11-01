@@ -1,0 +1,23 @@
+{
+  "node": "yeosu",
+  "sha256": "410c7c48238e456c3c6c4b980710c8c4807bdca13654062d9182ea5036fdfde4",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/yeosu-master-v1.png",
+  "sourceSha256": "be9e3e12e63c0c2a2482210967cd0e050c29fe1f53e2aa4f2c6c317f65dfa896",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

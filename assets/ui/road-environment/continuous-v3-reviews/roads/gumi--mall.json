@@ -1,0 +1,26 @@
+{
+  "id": "gumi--mall",
+  "sha256": "de7b0e6ff4dd7c146a9f43093b1586ca95788c383cc450c86c27f875236c07dc",
+  "fromSha256": "9ecfed21b069b09ac7b1d3070c10c5fea74caa448ba3a5f7955ab5c0b9bcc0d7",
+  "toSha256": "36186383e3ee7971f1535de96bb8a66a57b6d34021cb55b13db91a4569fcab93",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "gumi--mall",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/gumi--mall-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/gumi--mall-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

@@ -1,0 +1,23 @@
+{
+  "node": "cheonan",
+  "sha256": "51946e2c61a90ca599dccacb62651335f3b8caca09fa157b145f5c37d03ddcad",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/cheonan-master-v1.png",
+  "sourceSha256": "837d4fe49df46613c41dba2b0f386d3c3bf7de03ec486980af96578ed030e46e",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

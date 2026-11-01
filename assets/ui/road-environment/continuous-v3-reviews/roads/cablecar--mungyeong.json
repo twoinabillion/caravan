@@ -1,0 +1,26 @@
+{
+  "id": "cablecar--mungyeong",
+  "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+  "fromSha256": "8a504954b48e9ce7d030fb2956b4f6167b3800bb634467b55bc128ef90544908",
+  "toSha256": "db27b98a239c35f3b9729d2193bc79be8e7ceaadd37f1d99e97902cc779c5c98",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "cablecar--mungyeong",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cablecar--mungyeong-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/cablecar--mungyeong-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

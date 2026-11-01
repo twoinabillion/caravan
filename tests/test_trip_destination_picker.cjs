@@ -38,6 +38,7 @@ const context=vm.createContext({console,Math,JSON,Number,String,
   models
 });
 vm.runInContext([
+  section('  function withPreparedTerrain(','  function continueSavedJourney('),
   section('  function rememberJourneyView(){','  let questRouteFocus='),
   section('  function routeConsoleModel(','  function routeThumbnail('),
   section('  function destinationPreview(','  function journeyDetailHtml('),

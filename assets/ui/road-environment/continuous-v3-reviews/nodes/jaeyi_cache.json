@@ -1,0 +1,23 @@
+{
+  "node": "jaeyi_cache",
+  "sha256": "aadbb99ec4d3886c4d40eb506293fd4cea20f85cef4d479b54f72329150230cc",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/jaeyi_cache-master-v1.png",
+  "sourceSha256": "26986fcc19d010cac9bc0de73c2e2de9f3782bbb34a41d745452a71be392cc60",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "daegwallyeong--wonju",
+  "sha256": "93f0da79a104e05f9b088da771eb169b1b4796511fdb8bec95c7442772e4903c",
+  "fromSha256": "5eedd9e55a5109fd95691eb674508dc2b4992f558ef81e1005dd662079b606ab",
+  "toSha256": "323f7dba0e208edfd9cc6c08f5296dbb0c5326d7946eb00d94bca0f2d341a2d4",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "daegwallyeong--wonju",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/daegwallyeong--wonju-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/daegwallyeong--wonju-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

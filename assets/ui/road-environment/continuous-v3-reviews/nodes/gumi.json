@@ -1,0 +1,23 @@
+{
+  "node": "gumi",
+  "sha256": "36186383e3ee7971f1535de96bb8a66a57b6d34021cb55b13db91a4569fcab93",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/gumi-master-v1.png",
+  "sourceSha256": "5df47e2f192c2f5e4dfec0be201388377e805ba80f171e9145e919574212db93",
+  "notes": "Smoke remains baked into city painting; no join clipping."
+}

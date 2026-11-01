@@ -1,0 +1,23 @@
+{
+  "node": "gimcheon",
+  "sha256": "08c558d12143264f221bab51e7091a345d87f6686d4fb604123b587a73cf7efa",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/gimcheon-master-v1.png",
+  "sourceSha256": "1edd41de7f0c268c2e4037cd93f7a930efc656870de85f6e1616bfef89331f84",
+  "notes": "Bridge end is intentionally broken in original source."
+}

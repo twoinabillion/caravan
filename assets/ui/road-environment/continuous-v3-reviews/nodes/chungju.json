@@ -1,0 +1,23 @@
+{
+  "node": "chungju",
+  "sha256": "50daaa46c5b142fb3fd617cb1a174e2dd062c374dc0fa08ecee028360fb191af",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/chungju-master-v1.png",
+  "sourceSha256": "c0b874a03a7b59a8ab7166735a0a4c0fbfbb5f23af7d0ed3177c4ea744f96fd4",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "gangneung--sokcho",
+  "sha256": "66828cd7a56364d6cf217c3fbcb6933c8878dc55e0bde748bf368d8a95a7e80d",
+  "fromSha256": "aa03d3b21df1c601951de4ccbfac72496833977f042983e092d5142f8871ab8f",
+  "toSha256": "475508363afc2e898fde6d8aaf24321186153a8153ef1092f37065f790644b47",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "gangneung--sokcho",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/gangneung--sokcho-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/gangneung--sokcho-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

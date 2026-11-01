@@ -1,0 +1,23 @@
+{
+  "node": "drivein",
+  "sha256": "bc946e9d0f48e79782e450992d8124f74faff24d0258f61ae7b73a93407df8b8",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/drivein-master-v1.png",
+  "sourceSha256": "103f5ad947ad400205d2d666f9cab0e4a76f46034edb44bc6fb4e0a4221aaf5a",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

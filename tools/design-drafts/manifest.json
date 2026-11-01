@@ -2,6 +2,14 @@
   "version": 1,
   "drafts": [
     {
+      "id": "route-continuity-v3",
+      "file": "route-continuity-v3.html",
+      "title": "도시와 길 · 한 공간으로 이어지는 배경",
+      "revision": "1",
+      "recommended": true,
+      "description": "2026-11-01 전수 검사 후 새 외곽을 가진 공통 도시 그림과 길을 연결하는3구간 시안. 사용자 승인: 내장 도구 사용·도시 외곽 변경 허용, 별도 API 금지. 도시 중심은 진입/정차/다음 출발이 공유하고512px 외곽에서 길과 공간적으로 이어집니다. 배경 전용 독립 시안이며 세이브·게임·빌드는 미변경. 전체78개 노선 반영이나 실제 HUD/주행 감각 검증은 아직 완료가 아닙니다. 선택은 요청만 준비하고 자동 적용하지 않습니다."
+    },
+    {
       "id": "written-sources-v1",
       "file": "written-sources.html",
       "title": "편지·메모·기록 · 제목 한 줄",

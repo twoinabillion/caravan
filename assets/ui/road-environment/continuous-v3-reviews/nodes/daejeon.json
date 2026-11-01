@@ -1,0 +1,23 @@
+{
+  "node": "daejeon",
+  "sha256": "8e39f7069382024c53b23f9cad22b5317b9997b72273b54c985f22de50995e99",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/daejeon-master-v1.png",
+  "sourceSha256": "ec44cbeb8c8f3448329f7e702dba225ea5539e25f6dd68ef5549aa4c2eb2569d",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

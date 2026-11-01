@@ -1,0 +1,26 @@
+{
+  "id": "busan--yangsan",
+  "sha256": "f950a8e8c567bb2684a506ce6b1997829e7eb93b1256824cc2994ef3359daea8",
+  "fromSha256": "87a081b1faee6014f036aaac56b2f0ea9ce88c85dc0852875cbe8a70b6c29abd",
+  "toSha256": "eabb387fcec832f59f56ae829439cc8e44b7bcfcda0d68da6e35d81fabb3ca34",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "busan--yangsan",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/busan--yangsan-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/busan--yangsan-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

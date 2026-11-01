@@ -1,0 +1,23 @@
+{
+  "node": "pyeongtaek",
+  "sha256": "8b953b4f8e3899e4186a3a92eb169a77a994fe0de02a1fcef2569fef3e864a34",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/pyeongtaek-master-v1.png",
+  "sourceSha256": "9a9ebc5cd3ee362fd19f058a7ff3641e715e37fb3719c8a536fa8faafae152a5",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

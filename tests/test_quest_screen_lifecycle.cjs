@@ -22,6 +22,9 @@ function fixture(){
  q.root={querySelector:s=>s==='#quest-ledger'?ledger:s==='.quest-ledger-list'?list:{focus(){calls.push('focus');}}};
  q.setDock=()=>{};q.clearUpdateNotice=()=>{};q.render=()=>q.syncAvailability();
  q.returnFocus={isConnected:true,focus(){calls.push('old focus');}};
+ // show() also cancels a pending terrain preparation. Include its actual
+ // closure state, just as the complete UI module does in production.
+ vm.runInContext(ui.match(/  let terrainEpoch=0,terrainContinueWaiting=false;/)[0],ctx);
  vm.runInContext(ui.slice(ui.indexOf('  function show(id){'),ui.indexOf('  /* ── boot ── */')),ctx);
  vm.runInContext(ui.slice(ui.indexOf('  function startIntroRestart(){'),ui.indexOf('  function nextIntro(){')),ctx);
  return {ctx,q,nodes,tasks,calls,storage};

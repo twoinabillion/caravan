@@ -1,0 +1,23 @@
+{
+  "node": "miryang",
+  "sha256": "afb973ab13d38110d3aef2d84d157a31a3ccb2c89f2b9b49b3c6e626bab51313",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/miryang-master-v1.png",
+  "sourceSha256": "e53990ee372fe57877c00362b0ff4cbe67ceae9f379536e8dce060dab38727e1",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

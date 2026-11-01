@@ -1,0 +1,23 @@
+{
+  "node": "pohang",
+  "sha256": "41b77bc54b7e37f990e73790577c04ecf34c23e01988239d588cfb75298311d1",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/pohang-master-v1.png",
+  "sourceSha256": "29655aa4f354e571b613e8f331cc84c7521ed3f19caf5028ffb88222be025aef",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

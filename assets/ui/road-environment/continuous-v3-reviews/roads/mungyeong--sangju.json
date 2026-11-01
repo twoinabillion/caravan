@@ -1,0 +1,26 @@
+{
+  "id": "mungyeong--sangju",
+  "sha256": "bad52518443594fab2d4a1d9d324e0eda6adbc8ae9c7aca03ab808367cb06525",
+  "fromSha256": "5b768af0e03bd12ef8d1e7b2112213c0950ea7fb47dd59eb275ccf4aed837053",
+  "toSha256": "db27b98a239c35f3b9729d2193bc79be8e7ceaadd37f1d99e97902cc779c5c98",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "mungyeong--sangju",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/mungyeong--sangju-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/mungyeong--sangju-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

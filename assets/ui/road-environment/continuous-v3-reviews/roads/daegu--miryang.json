@@ -1,0 +1,26 @@
+{
+  "id": "daegu--miryang",
+  "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+  "fromSha256": "afb973ab13d38110d3aef2d84d157a31a3ccb2c89f2b9b49b3c6e626bab51313",
+  "toSha256": "345440c230dc4e58734f5680e4e9eba375a6a133a289e1e658c98b618491157b",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "daegu--miryang",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/daegu--miryang-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/daegu--miryang-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

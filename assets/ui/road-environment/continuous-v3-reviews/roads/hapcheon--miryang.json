@@ -1,0 +1,26 @@
+{
+  "id": "hapcheon--miryang",
+  "sha256": "9c4d71b6ce0fbe71319989eed42cdf8b5d942696368f7b05fc56e226a905d86c",
+  "fromSha256": "afb973ab13d38110d3aef2d84d157a31a3ccb2c89f2b9b49b3c6e626bab51313",
+  "toSha256": "e273858538b916d5b20f6f4d3dcbc565c565a2a03eb470b10d3ae78320a13972",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "hapcheon--miryang",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/hapcheon--miryang-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/hapcheon--miryang-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

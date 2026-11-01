@@ -1,0 +1,26 @@
+{
+  "id": "chungju--danyang",
+  "sha256": "09b70b5565770d8eb4e1db00a80435a773db00e12e493726ef729523318a3885",
+  "fromSha256": "7513b256a8a1e1c19f644cd584c7302c3a98f17edc213b3c131e820a31696dcd",
+  "toSha256": "50daaa46c5b142fb3fd617cb1a174e2dd062c374dc0fa08ecee028360fb191af",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "chungju--danyang",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/chungju--danyang-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/chungju--danyang-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

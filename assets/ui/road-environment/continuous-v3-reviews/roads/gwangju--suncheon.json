@@ -1,0 +1,26 @@
+{
+  "id": "gwangju--suncheon",
+  "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+  "fromSha256": "4b5b111e67a94bdd362865c377b0300551257feafb4be7a43799640bd6a2a237",
+  "toSha256": "0b8246d7d3e1a72f933e982248e6356ebee4057461707e314835fff7c6c35872",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "gwangju--suncheon",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/gwangju--suncheon-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/gwangju--suncheon-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

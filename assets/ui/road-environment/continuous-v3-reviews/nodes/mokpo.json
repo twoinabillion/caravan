@@ -1,0 +1,23 @@
+{
+  "node": "mokpo",
+  "sha256": "cc4e65f8bf369a9ec457f1bc6575bb41316333302d1071132fab23c423d258f6",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/mokpo-master-v1.png",
+  "sourceSha256": "2424c1aa4411a2667007c179716c849fa6dd55d72b5b22c2c31bb0f0bcd026c3",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

@@ -1,0 +1,23 @@
+{
+  "node": "hapcheon",
+  "sha256": "e273858538b916d5b20f6f4d3dcbc565c565a2a03eb470b10d3ae78320a13972",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/hapcheon-master-v1.png",
+  "sourceSha256": "c8ee0c15cde7787a2ee5a5ad03389f9c2c8e2441aa0c16b002f3f1df1321e83b",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}

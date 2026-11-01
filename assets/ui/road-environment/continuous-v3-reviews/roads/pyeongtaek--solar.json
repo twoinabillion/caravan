@@ -1,0 +1,26 @@
+{
+  "id": "pyeongtaek--solar",
+  "sha256": "a9780924f6b7e4392df18d5c039f539418a5ef24ce58d55536b5b6f2a63feb72",
+  "fromSha256": "dd84d0c9a764cb310a1ea255dbc03a864441a7b35ddfd376a8d7617ad7b3f2c4",
+  "toSha256": "8b953b4f8e3899e4186a3a92eb169a77a994fe0de02a1fcef2569fef3e864a34",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "pyeongtaek--solar",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/pyeongtaek--solar-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/pyeongtaek--solar-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

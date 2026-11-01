@@ -35,6 +35,7 @@ queueMicrotask(()=>{
 
 const UI = (()=>{
   let screen='title';          // title|mode|name|intro|game|end
+  let terrainEpoch=0,terrainContinueWaiting=false;
   const heldStoryAdvanceKeys=new Set();
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper', introRestart=false;
@@ -236,13 +237,16 @@ const UI = (()=>{
         const raw=await file.text();
         // A closed/rebuilt panel or a newer request cannot replace another run.
         if(!active()) return;
-        const result=G.importSave(raw);
-        if(!result.ok){ toast(`⚠ ${result.why}`); return; }
-        closeModal('#ovl-status',false); closeModal('#ovl-menu',false);
-        setDockTab('dk-road');
-        if(S.ended) showEnding(S.endKind||'stranded');
-        else enterGame(); // Continue owns opening/result/arrival restoration.
-        toast('백업을 복원했다');
+        withImportedTerrain(raw,()=>{
+          if(!active())return;
+          const result=G.importSave(raw);
+          if(!result.ok){ toast(`⚠ ${result.why}`); return; }
+          closeModal('#ovl-status',false); closeModal('#ovl-menu',false);
+          setDockTab('dk-road');
+          if(S.ended) showEnding(S.endKind||'stranded');
+          else enterGame(); // Continue owns opening/result/arrival restoration.
+          toast('백업을 복원했다');
+        },active);
       }catch(e){ if(active()) toast('백업 파일을 읽지 못했다'); }
       finally{ if(request===current) input.value=''; }
     };
@@ -325,12 +329,16 @@ const UI = (()=>{
   }
   function confirmSaveTransfer(){
     const session=saveTransfer;if(!session?.pending||!saveTransferActive(session))return;
-    const result=G.importSave(session.pending.raw);
-    if(!result.ok){session.error=`${result.why}. 현재 여정은 그대로입니다.`;renderSaveTransfer();$('#save-transfer-cancel').focus({preventScroll:true});return;}
-    closeSaveTransfer(false);closeModal('#ovl-status',false);closeModal('#ovl-menu',false);
-    setDockTab('dk-road');
-    if(S.ended)showEnding(S.endKind||'stranded');else enterGame();
-    toast('백업을 복원했다');
+    const pending=session.pending;
+    withImportedTerrain(pending.raw,()=>{
+      if(!saveTransferActive(session)||session.pending!==pending)return;
+      const result=G.importSave(pending.raw);
+      if(!result.ok){session.error=`${result.why}. 현재 여정은 그대로입니다.`;renderSaveTransfer();$('#save-transfer-cancel').focus({preventScroll:true});return;}
+      closeSaveTransfer(false);closeModal('#ovl-status',false);closeModal('#ovl-menu',false);
+      setDockTab('dk-road');
+      if(S.ended)showEnding(S.endKind||'stranded');else enterGame();
+      toast('백업을 복원했다');
+    },()=>saveTransferActive(session)&&session.pending===pending);
   }
   function wireSaveTransfer(){
     const dialog=$('#save-transfer-dialog');if(!dialog)return;
@@ -487,6 +495,8 @@ const UI = (()=>{
   /* ── screens ── */
   function show(id){
     closePursuitHelp();
+    terrainEpoch++;terrainContinueWaiting=false;
+    const continueButton=$('#bt-continue');if(continueButton)continueButton.disabled=false;
     if(saveTransfer)closeSaveTransfer(false);
     if(pursuitUi) pursuitUi.level=null; // Loading/restarting a run is not a risk increase.
     document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
@@ -590,6 +600,8 @@ const UI = (()=>{
       try{ const inspected=G.inspectSave(localStorage.getItem(SAVE_KEY));
         if(inspected.ok){
           const s=inspected.summary;
+          if(!s.ended&&typeof CONTINUOUS_TERRAIN!=='undefined'&&CONTINUOUS_TERRAIN.active())
+            CONTINUOUS_TERRAIN.prepare(s.from&&s.to?{from:s.from,to:s.to}:{at:s.at});
           canContinue=true;
           $('#cont-info').textContent=`DAY ${s.day} · ${Math.round(s.km)}km 주행 · ${s.mode==='offroad'?'오프로드':'온로드'}`;
         }
@@ -610,8 +622,47 @@ const UI = (()=>{
       if(last) lastBox.innerHTML=previousJourneyHtml(last,true);
     }
   }
+  function withPreparedTerrain(view,action,failed=()=>{},intent=null){
+    if(typeof CONTINUOUS_TERRAIN==='undefined'||!CONTINUOUS_TERRAIN.active()||CONTINUOUS_TERRAIN.ready(view))return action();
+    const epoch=terrainEpoch,origin=screen,state=S,at=S?.at,driving=S?.driving;
+    let cancelled=false;
+    const clear=()=>{if(intent){document.removeEventListener('click',cancel,true);document.removeEventListener('keydown',cancel,true);}};
+    const cancel=()=>{if(cancelled)return;cancelled=true;clear();intent?.cancelled();};
+    const current=()=>!cancelled&&epoch===terrainEpoch&&screen===origin&&S===state&&S?.at===at&&S?.driving===driving&&(!intent||intent.current());
+    // A later interaction supersedes a departure request, including opening
+    // and then closing a modal before decoding completes. Continue has no intent.
+    if(intent){document.addEventListener('click',cancel,true);document.addEventListener('keydown',cancel,true);}
+    const finish=ok=>{clear();if(!current()){cancel();return;}if(ok)action();else failed();};
+    CONTINUOUS_TERRAIN.prepare(view).then(finish,()=>finish(false));
+    return false;
+  }
+  function withImportedTerrain(raw,action,valid=()=>true){
+    if(typeof CONTINUOUS_TERRAIN==='undefined'||!CONTINUOUS_TERRAIN.active())return action();
+    const inspected=G.inspectSave(raw);
+    if(!inspected.ok||inspected.summary.ended)return action();
+    const s=inspected.summary,view=s.from&&s.to?{from:s.from,to:s.to}:{at:s.at};
+    return withPreparedTerrain(view,()=>{if(valid())action();},()=>{if(valid()){CONTINUOUS_TERRAIN.disable();action();}});
+  }
   function continueSavedJourney(enableSound=true){
     if(screen!=='title')return false;
+    if(typeof CONTINUOUS_TERRAIN!=='undefined'&&CONTINUOUS_TERRAIN.active()){
+      if(terrainContinueWaiting)return false;
+      const raw=localStorage.getItem(SAVE_KEY),inspected=G.inspectSave(raw);
+      if(inspected.ok&&!inspected.summary.ended){
+        const s=inspected.summary,view=s.from&&s.to?{from:s.from,to:s.to}:{at:s.at};
+        if(!CONTINUOUS_TERRAIN.ready(view)){
+          terrainContinueWaiting=true;const button=$('#bt-continue');if(button)button.disabled=true;
+          if(enableSound)SND.enable(); // Keep audio unlock on the original user gesture.
+          const resume=()=>{
+            terrainContinueWaiting=false;if(button)button.disabled=false;
+            if(localStorage.getItem(SAVE_KEY)!==raw){refreshTitle();return;}
+            continueSavedJourney(false);
+          };
+          withPreparedTerrain(view,resume,()=>{CONTINUOUS_TERRAIN.disable();resume();});
+          return false;
+        }
+      }
+    }
     if(!G.load()){
       refreshTitle();toast('저장된 여정을 불러오지 못했습니다. 백업 파일로 복원할 수 있습니다.','warn');
       return false;
@@ -2527,13 +2578,19 @@ function dialogueSide(turn,lanes,opt={}){
       else $('#dk-objectives').click();
     };
     const depart=panel.querySelector('[data-nav-depart]');
+    if(depart&&S&&!S.driving&&typeof CONTINUOUS_TERRAIN!=='undefined'&&CONTINUOUS_TERRAIN.active())
+      CONTINUOUS_TERRAIN.prepare({from:S.at,to:depart.dataset.navDepart});
     if(depart) depart.onclick=event=>{
       event.preventDefault();event.stopPropagation();
       const id=depart.dataset.navDepart;depart.disabled=true;
-      if(G.startTravel(id)) return;
-      depart.disabled=false;
-      const check=G.canTravelTo(id);
-      toast(check.why||'지금은 이 길로 출발할 수 없다.');renderPanel();
+      const commit=()=>{
+        if(G.startTravel(id))return;
+        depart.disabled=false;
+        const check=G.canTravelTo(id);
+        toast(check.why||'지금은 이 길로 출발할 수 없다.');renderPanel();
+      };
+      withPreparedTerrain({from:S.at,to:id},commit,()=>{CONTINUOUS_TERRAIN.disable();commit();},
+        {current:()=>depart.isConnected&&navChoiceId===id&&!modalOpen(),cancelled:()=>{depart.disabled=false;}});
     };
     syncRouteMap(routeModels);
   }
@@ -2998,7 +3055,12 @@ function dialogueSide(turn,lanes,opt={}){
     wireJourneyMode(p,routeModels);
     wireRouteConsole(p,routeModels);
     wireJourneyDetails(p);
-    p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{ G.startTravel(b.dataset.go); });
+    p.querySelectorAll('[data-go]:not([data-route-select])').forEach(b=>b.onclick=()=>{
+      b.disabled=true;
+      const commit=()=>{b.disabled=false;G.startTravel(b.dataset.go);};
+      withPreparedTerrain({from:S.at,to:b.dataset.go},commit,()=>{CONTINUOUS_TERRAIN.disable();commit();},
+        {current:()=>b.isConnected&&!modalOpen(),cancelled:()=>{b.disabled=false;}});
+    });
     scheduleStoppedStageFit();
   }
   function renderTravelbar(){

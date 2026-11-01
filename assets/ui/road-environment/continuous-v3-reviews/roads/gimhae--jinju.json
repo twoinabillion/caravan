@@ -1,0 +1,26 @@
+{
+  "id": "gimhae--jinju",
+  "sha256": "f4d34a9e23c25552227682f22c6948ccc0336d50efc50f85b9b607c53725b0da",
+  "fromSha256": "ff532cea1cc2caaa5e9165e98a618ddfc070cebca924d7d995cc2480400bd7ef",
+  "toSha256": "3ce796b37b1389f922be1b4049dba3f955e55edae65dd8ceb8bdb3553a7d6347",
+  "joinSha256": "be2489d31ce854fe6a55c28c2d114f6cb8f395b12216dad19d4fe5a6541c9a6b",
+  "route": "gimhae--jinju",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "checks": {
+    "geometry": true,
+    "style": true,
+    "joins": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true,
+    "forward": true,
+    "reverse": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/gimhae--jinju-world.png",
+    "qa-artifacts/route-continuity-v3/full-graph/gimhae--jinju-joins.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "notes": "Static full-strip and native-overlap inspection; actual renderer endpoint/reverse checks. Shared geographic middles are intentionally reused. Actual control QA recorded separately."
+}

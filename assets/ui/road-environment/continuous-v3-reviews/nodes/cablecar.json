@@ -1,0 +1,23 @@
+{
+  "node": "cablecar",
+  "sha256": "8a504954b48e9ce7d030fb2956b4f6167b3800bb634467b55bc128ef90544908",
+  "accepted": true,
+  "reviewedAt": "2026-11-01",
+  "reviewer": "root visual review; continuity_design_review independent joins review",
+  "checks": {
+    "identity": true,
+    "style": true,
+    "outskirts": true,
+    "crop320": true,
+    "crop360": true,
+    "crop480": true
+  },
+  "evidence": [
+    "qa-artifacts/route-continuity-v3/full-graph/cities-*.png",
+    "qa-artifacts/route-continuity-v3/full-graph/sheet-*.png",
+    "qa-artifacts/route-continuity-v3/browser-graph/results.json"
+  ],
+  "source": "assets/masters/route-continuity-v3/nodes/cablecar-master-v1.png",
+  "sourceSha256": "010e0b42db56a622024be60434cfebf4e07984642883613800bee5ab99e49b52",
+  "notes": "Landmark and quiet-outskirts review passed; three initial blockers revised as v2."
+}
