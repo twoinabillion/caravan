@@ -1,0 +1,21 @@
+{
+  "sourceTests": {
+    "tests": 8570,
+    "pass": 8570,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 243732.81675
+  },
+  "build": {
+    "checkedAt": "2026-11-01T04:18:11.392Z",
+    "bytes": 147474598,
+    "sha256": "ec39575d0247a91c3d1d8f3ed3dec1a391443801a5e419baef8e24e9b98bf4b7"
+  },
+  "sceneKeys": 723,
+  "uniqueImages": 716,
+  "newImages": 0,
+  "newImageBytes": 0,
+  "runtimeCropInputAudio": "unverified: browser host unavailable; user work tab left untouched",
+  "deployed": "QA83 unchanged"
+}

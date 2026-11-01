@@ -1,0 +1,4484 @@
+[
+  {
+    "n": 64,
+    "action": "work",
+    "observation": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 1,
+      "min": 1152,
+      "km": 54,
+      "driving": null,
+      "fuel": 53.68399999999981,
+      "water": 12,
+      "food": 12,
+      "scrap": 38,
+      "van": 82,
+      "fatigue": 46.63599999999997,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 0,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "miryang",
+        "to": "jeonju",
+        "due": 100,
+        "noExpiry": true,
+        "need": null,
+        "ready": false,
+        "navigation": {
+          "key": "story_relay_1",
+          "kind": "local",
+          "target": "jeonju",
+          "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "action": "전주 서문 시장까지 이동한다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "act": "1장",
+        "chapterId": "parents-diversion",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "phase": "남쪽 환승소의 오래된 운행표",
+        "why": "부모님이 함께 부산에 오지 못한 이유를 확인해야, 가족을 갈라놓은 명령이 사람을 어떻게 다뤘는지 알 수 있다.",
+        "next": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.",
+        "eyebrow": "메인 스토리 · 1장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다",
+            "state": "upcoming"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 4,
+          "need": 13,
+          "label": "4/13"
+        }
+      },
+      "navigation": {
+        "key": "main_parents-diversion",
+        "kind": "main",
+        "target": "gimcheon",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "action": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)"
+      },
+      "capacity": {
+        "fuel": 70,
+        "water": 28,
+        "food": 24
+      },
+      "publicMapRoutes": {
+        "busan": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan"
+          ],
+          "km": 54,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두"
+          ]
+        },
+        "gimhae": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan",
+            "gimhae"
+          ],
+          "km": 72,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두",
+            "김해 들판"
+          ]
+        },
+        "yangsan": {
+          "nodes": [
+            "miryang",
+            "yangsan"
+          ],
+          "km": 34,
+          "segments": 1,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도"
+          ]
+        },
+        "miryang": {
+          "nodes": [
+            "miryang"
+          ],
+          "km": 0,
+          "segments": 0,
+          "names": [
+            "밀양 장터"
+          ]
+        },
+        "jinju": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan",
+            "gimhae",
+            "jinju"
+          ],
+          "km": 127,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두",
+            "김해 들판",
+            "진주 남강변"
+          ]
+        },
+        "hapcheon": {
+          "nodes": [
+            "miryang",
+            "hapcheon"
+          ],
+          "km": 40,
+          "segments": 1,
+          "names": [
+            "밀양 장터",
+            "합천 과수원"
+          ]
+        },
+        "geochang": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang"
+          ],
+          "km": 73,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지"
+          ]
+        },
+        "daegu": {
+          "nodes": [
+            "miryang",
+            "daegu"
+          ],
+          "km": 52,
+          "segments": 1,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장"
+          ]
+        },
+        "gumi": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi"
+          ],
+          "km": 90,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허"
+          ]
+        },
+        "gimcheon": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon"
+          ],
+          "km": 116,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길"
+          ]
+        },
+        "muju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju"
+          ],
+          "km": 115,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널"
+          ]
+        },
+        "namwon": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon"
+          ],
+          "km": 117,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루"
+          ]
+        },
+        "jeonju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "jeonju"
+          ],
+          "km": 165,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "전주 서문 시장"
+          ]
+        },
+        "yeongdong": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong"
+          ],
+          "km": 147,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭"
+          ]
+        },
+        "daejeon": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon"
+          ],
+          "km": 191,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지"
+          ]
+        },
+        "nonsan": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "jeonju",
+            "nonsan"
+          ],
+          "km": 217,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "전주 서문 시장",
+            "논산 평야"
+          ]
+        },
+        "gongju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "sejong",
+            "gongju"
+          ],
+          "km": 227,
+          "segments": 7,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "세종 신도시",
+            "공주 산성"
+          ]
+        },
+        "cheongju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "cheongju"
+          ],
+          "km": 225,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "청주 방송국"
+          ]
+        },
+        "cheonan": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "cheongju",
+            "cheonan"
+          ],
+          "km": 263,
+          "segments": 7,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "청주 방송국",
+            "천안 삼거리"
+          ]
+        },
+        "pyeongtaek": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "cheongju",
+            "cheonan",
+            "pyeongtaek"
+          ],
+          "km": 291,
+          "segments": 8,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "청주 방송국",
+            "천안 삼거리",
+            "평택 항구도로"
+          ]
+        },
+        "suwon": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju",
+            "icheon",
+            "suwon"
+          ],
+          "km": 286,
+          "segments": 8,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호",
+            "이천 가마터",
+            "수원 성곽 공동체"
+          ]
+        },
+        "seoul": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju",
+            "icheon",
+            "suwon",
+            "seoul"
+          ],
+          "km": 320,
+          "segments": 9,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호",
+            "이천 가마터",
+            "수원 성곽 공동체",
+            "서울 — 남산"
+          ]
+        },
+        "ulsan": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan"
+          ],
+          "km": 66,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑"
+          ]
+        },
+        "yeosu": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan",
+            "gimhae",
+            "jinju",
+            "yeosu"
+          ],
+          "km": 175,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두",
+            "김해 들판",
+            "진주 남강변",
+            "여수 밤바다"
+          ]
+        },
+        "suncheon": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "suncheon"
+          ],
+          "km": 161,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "순천만 갈대밭"
+          ]
+        },
+        "gwangju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "damyang",
+            "gwangju"
+          ],
+          "km": 155,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "담양 대숲",
+            "광주 대인시장"
+          ]
+        },
+        "damyang": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "damyang"
+          ],
+          "km": 141,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "담양 대숲"
+          ]
+        },
+        "mokpo": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "damyang",
+            "gwangju",
+            "mokpo"
+          ],
+          "km": 199,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "담양 대숲",
+            "광주 대인시장",
+            "목포 여객터미널"
+          ]
+        },
+        "andong": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "andong"
+          ],
+          "km": 142,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "안동 하회마을"
+          ]
+        },
+        "mungyeong": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong"
+          ],
+          "km": 168,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재"
+          ]
+        },
+        "danyang": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "andong",
+            "danyang"
+          ],
+          "km": 198,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "안동 하회마을",
+            "단양 강변"
+          ]
+        },
+        "wonju": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "andong",
+            "danyang",
+            "wonju"
+          ],
+          "km": 228,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "안동 하회마을",
+            "단양 강변",
+            "원주 치악산 아래"
+          ]
+        },
+        "daegwallyeong": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang",
+            "gangneung",
+            "daegwallyeong"
+          ],
+          "km": 234,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소",
+            "강릉 경포",
+            "대관령 고갯마루"
+          ]
+        },
+        "gangneung": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang",
+            "gangneung"
+          ],
+          "km": 212,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소",
+            "강릉 경포"
+          ]
+        },
+        "sokcho": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang",
+            "gangneung",
+            "sokcho"
+          ],
+          "km": 252,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소",
+            "강릉 경포",
+            "속초 항"
+          ]
+        },
+        "icheon": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju",
+            "icheon"
+          ],
+          "km": 252,
+          "segments": 7,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호",
+            "이천 가마터"
+          ]
+        },
+        "gyeongju": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju"
+          ],
+          "km": 100,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉"
+          ]
+        },
+        "pohang": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang"
+          ],
+          "km": 130,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소"
+          ]
+        },
+        "sangju": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju"
+          ],
+          "km": 142,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길"
+          ]
+        },
+        "gunsan": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "jeonju",
+            "gunsan"
+          ],
+          "km": 197,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "전주 서문 시장",
+            "군산 내항"
+          ]
+        },
+        "chungju": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju"
+          ],
+          "km": 206,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호"
+          ]
+        },
+        "sejong": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "sejong"
+          ],
+          "km": 211,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "세종 신도시"
+          ]
+        }
+      },
+      "recipes": [
+        {
+          "id": "pipe",
+          "name": "쇠파이프",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 6
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "xbow",
+          "name": "사제 석궁",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 12,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "bolt",
+          "name": "볼트 ×3",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 3
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "molotov",
+          "name": "화염병 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 2,
+              "fuel": 2
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "ammo",
+          "name": "소총탄 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 8,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "known": [
+        "busan",
+        "gimhae",
+        "yangsan",
+        "miryang",
+        "jinju",
+        "hapcheon",
+        "geochang",
+        "daegu",
+        "gumi",
+        "gimcheon",
+        "muju",
+        "namwon",
+        "jeonju",
+        "yeongdong",
+        "daejeon",
+        "nonsan",
+        "gongju",
+        "cheongju",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul",
+        "ulsan",
+        "yeosu",
+        "suncheon",
+        "gwangju",
+        "damyang",
+        "mokpo",
+        "andong",
+        "mungyeong",
+        "danyang",
+        "wonju",
+        "daegwallyeong",
+        "gangneung",
+        "sokcho",
+        "icheon",
+        "gyeongju",
+        "pohang",
+        "sangju",
+        "gunsan",
+        "chungju",
+        "sejong"
+      ],
+      "npcControls": [
+        {
+          "id": "sundeok",
+          "name": "순덕",
+          "rumorAvailable": true
+        },
+        {
+          "id": "byungchul",
+          "name": "병철",
+          "rumorAvailable": true
+        },
+        {
+          "id": "yeongok",
+          "name": "영옥",
+          "rumorAvailable": true
+        }
+      ],
+      "localControls": [],
+      "notifications": [
+        "🍚 점심 식사 · 식량 -1",
+        "📦 연속 의뢰를 맡았다 — 세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부"
+      ],
+      "night": false,
+      "explore": {
+        "ok": true,
+        "tries": 0,
+        "repeat": false,
+        "fresh": true,
+        "mins": 120,
+        "fatigue": 0,
+        "miss": 0.15
+      },
+      "routes": [
+        {
+          "id": "yangsan",
+          "name": "양산 고가차도",
+          "km": 34,
+          "check": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 6,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 6,
+            "minutes": 157,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 47,
+            "supplyMargin": 12,
+            "foodMargin": 12,
+            "waterMargin": 12,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -34,
+            "progressScore": 1,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 34km 멀어짐"
+          },
+          "distanceToGoal": 150,
+          "distanceToStops": {
+            "miryang": 34,
+            "jeonju": 199
+          },
+          "distanceToSideQuest": 199,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "daegu",
+          "name": "대구 돔 시장",
+          "km": 52,
+          "check": {
+            "ok": true,
+            "km": 52,
+            "road": "high",
+            "fuel": 8,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 52,
+            "road": "high",
+            "fuel": 8,
+            "minutes": 240,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 45,
+            "supplyMargin": 12,
+            "foodMargin": 12,
+            "waterMargin": 12,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": 34,
+            "progressScore": 82,
+            "supplyScore": 82,
+            "directionLabel": "서울 방향 34km 전진"
+          },
+          "distanceToGoal": 64,
+          "distanceToStops": {
+            "miryang": 52,
+            "jeonju": 157
+          },
+          "distanceToSideQuest": 157,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "hapcheon",
+          "name": "합천 과수원",
+          "km": 40,
+          "check": {
+            "ok": true,
+            "km": 40,
+            "road": "normal",
+            "fuel": 7,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 40,
+            "road": "normal",
+            "fuel": 7,
+            "minutes": 185,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 46,
+            "supplyMargin": 12,
+            "foodMargin": 12,
+            "waterMargin": 12,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -13,
+            "progressScore": 22,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 13km 멀어짐"
+          },
+          "distanceToGoal": 113,
+          "distanceToStops": {
+            "miryang": 40,
+            "jeonju": 125
+          },
+          "distanceToSideQuest": 125,
+          "distanceToRecruit": null
+        }
+      ],
+      "stl": {
+        "id": "miryang",
+        "name": "밀양 장터",
+        "recruit": {
+          "id": "minji",
+          "name": "민지"
+        },
+        "trade": [
+          {
+            "index": 0,
+            "label": "연료 10L",
+            "key": "fuel",
+            "qty": 10,
+            "price": 6
+          },
+          {
+            "index": 1,
+            "label": "물 5통",
+            "key": "water",
+            "qty": 5,
+            "price": 1
+          },
+          {
+            "index": 2,
+            "label": "식량 1묶음",
+            "key": "food",
+            "qty": 1,
+            "price": 1
+          },
+          {
+            "index": 3,
+            "label": "부품",
+            "key": "item부품",
+            "qty": 1,
+            "price": 9
+          }
+        ],
+        "actions": [
+          {
+            "id": "noodles",
+            "label": "순덕의 국수 좌판",
+            "time": 20,
+            "description": "김 오르는 솥 앞에 앉아 장꾼들 이야기를 듣는다.",
+            "cost": "고철 2",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": false,
+              "changedOn": null,
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 2,
+              "dayKey": "1:miryang:noodles",
+              "onceKey": "miryang:noodles"
+            }
+          },
+          {
+            "id": "parts",
+            "label": "부품 천막",
+            "time": 50,
+            "description": "경운기와 자전거 부품이 한 상자에 뒤섞여 있다.",
+            "cost": "",
+            "status": {
+              "ok": false,
+              "done": true,
+              "changed": true,
+              "changedOn": {
+                "day": 1,
+                "min": 1076.6
+              },
+              "hiddenLocked": false,
+              "reason": "이미 마친 일",
+              "doneToday": 2,
+              "dayKey": "1:miryang:parts",
+              "onceKey": "miryang:parts"
+            }
+          },
+          {
+            "id": "pump",
+            "label": "공동 펌프 골목",
+            "time": 25,
+            "description": "아이들이 물통을 줄 세웠지만 손잡이가 자꾸 걸린다.",
+            "cost": "",
+            "status": {
+              "ok": false,
+              "done": true,
+              "changed": true,
+              "changedOn": {
+                "day": 1,
+                "min": 1126.6
+              },
+              "hiddenLocked": false,
+              "reason": "오늘은 이미 들렀다",
+              "doneToday": 2,
+              "dayKey": "1:miryang:pump",
+              "onceKey": "miryang:pump"
+            }
+          },
+          {
+            "id": "oldcard",
+            "label": "천막 뒤 번호표",
+            "time": 15,
+            "description": "두 곳을 거들고 나니 순덕이 천막 뒤 작은 상자를 보여 준다.",
+            "cost": "",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": false,
+              "changedOn": null,
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 2,
+              "dayKey": "1:miryang:oldcard",
+              "onceKey": "miryang:oldcard"
+            }
+          }
+        ]
+      },
+      "upgrades": [
+        {
+          "id": "tank1",
+          "name": "보조 연료탱크",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "tank2",
+          "name": "대형 연료탱크",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "보조 연료탱크 + 서스펜션 강화 필요",
+            "missing": [
+              "tank1",
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "bench",
+          "name": "후미 레일 좌석칸",
+          "cost": {
+            "scrap": 12,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "cabin",
+          "name": "거주구 2차 증축",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "후미 레일 좌석칸 + 서스펜션 강화 필요",
+            "missing": [
+              "bench",
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "susp",
+          "name": "서스펜션 강화",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "armor",
+          "name": "장갑판",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "서스펜션 강화 필요",
+            "missing": [
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "garden",
+          "name": "지붕 텃밭",
+          "cost": {
+            "scrap": 18
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "collector",
+          "name": "빗물 집수기",
+          "cost": {
+            "scrap": 15
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "solar",
+          "name": "태양광 패널",
+          "cost": {
+            "scrap": 35,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "antenna",
+          "name": "장거리 안테나",
+          "cost": {
+            "scrap": 17,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "winch",
+          "name": "전면 윈치",
+          "cost": {
+            "scrap": 26,
+            "parts": 2
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "전면 가드 필요",
+            "missing": [
+              "bullbar"
+            ]
+          }
+        },
+        {
+          "id": "bullbar",
+          "name": "전면 가드",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "snorkel",
+          "name": "스노클",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "mudtires",
+          "name": "험로 타이어",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "lightbar",
+          "name": "라이트바",
+          "cost": {
+            "scrap": 20,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "awning",
+          "name": "차양(어닝)",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "stove",
+          "name": "장작 난로",
+          "cost": {
+            "scrap": 20,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "sidebox",
+          "name": "사이드 공구함",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "beehive",
+          "name": "이동 벌통",
+          "cost": {
+            "scrap": 28,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "garden2",
+          "name": "지붕 온실",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "지붕 텃밭 필요",
+            "missing": [
+              "garden"
+            ]
+          }
+        },
+        {
+          "id": "kitchen",
+          "name": "간이 주방",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "장작 난로 필요",
+            "missing": [
+              "stove"
+            ]
+          }
+        },
+        {
+          "id": "bunk",
+          "name": "상부 2층 침상",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "거주구 2차 증축 필요",
+            "missing": [
+              "cabin"
+            ]
+          }
+        },
+        {
+          "id": "jumpseat",
+          "name": "후미 서비스칸",
+          "cost": {
+            "scrap": 16,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "상부 2층 침상 필요",
+            "missing": [
+              "bunk"
+            ]
+          }
+        },
+        {
+          "id": "fridge",
+          "name": "냉장 박스",
+          "cost": {
+            "scrap": 26,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "태양광 패널 필요",
+            "missing": [
+              "solar"
+            ]
+          }
+        },
+        {
+          "id": "armory",
+          "name": "무기 선반",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "사이드 공구함 필요",
+            "missing": [
+              "sidebox"
+            ]
+          }
+        },
+        {
+          "id": "scope",
+          "name": "지붕 망원대",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "horn",
+          "name": "왕경적",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "curtain",
+          "name": "암막 커튼",
+          "cost": {
+            "scrap": 14,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "seatCapacity": 2,
+      "exploredHere": 0,
+      "visits": {
+        "busan": 1,
+        "yangsan": 1,
+        "miryang": 1
+      },
+      "recruitQuest": null
+    },
+    "id": "oldcard",
+    "result": {
+      "ok": true,
+      "action": {
+        "id": "oldcard",
+        "label": "천막 뒤 번호표",
+        "npc": "sundeok",
+        "once": 1,
+        "time": 15,
+        "needDone": 2,
+        "hidden": 1,
+        "desc": "두 곳을 거들고 나니 순덕이 천막 뒤 작은 상자를 보여 준다.",
+        "action": "143년 동안 쓰인 번호표를 살핀다",
+        "change": {
+          "visual": "record",
+          "after": "낡은 교통카드 번호표가 국수 솥 옆 작은 고리에 다시 걸렸다."
+        },
+        "result": "상자 안에는 모서리가 닳은 교통카드 한 장이 들어 있다. 앞면의 날짜는 2026년. 순덕은 이 장터에서 적어도 세 세대 동안 국수 대기 번호표로 썼다고 한다. 한때 사람을 개찰구 너머로 보내던 물건이, 지금은 한 그릇의 차례를 지킨다.",
+        "fx": {
+          "flag": "miryang_oldcard",
+          "note": {
+            "type": "세대의 흔적",
+            "title": "2026년 교통카드 번호표",
+            "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+            "links": [
+              "밀양 장터",
+              "2026년"
+            ]
+          }
+        }
+      },
+      "chips": [
+        {
+          "t": "고철 +14",
+          "c": "plus"
+        },
+        {
+          "t": "15분 경과",
+          "c": ""
+        },
+        {
+          "t": "새 기록 · 2026년 교통카드 번호표",
+          "c": "item"
+        },
+        {
+          "t": "이곳에 우리 손길이 남았다",
+          "c": "item"
+        }
+      ],
+      "compId": null,
+      "hiddenOpen": false,
+      "firstImpact": true,
+      "impactBefore": {
+        "count": 2,
+        "total": 4,
+        "stage": 2,
+        "changed": [
+          {
+            "id": "parts",
+            "label": "부품 천막",
+            "npc": "passer_worker",
+            "once": 1,
+            "time": 50,
+            "desc": "경운기와 자전거 부품이 한 상자에 뒤섞여 있다.",
+            "action": "일꾼과 함께 쓸 만한 것을 분류한다",
+            "change": {
+              "visual": "order",
+              "after": "뒤섞였던 상자마다 볼트·베어링·호스 표지가 붙었다."
+            },
+            "result": "나사산이 살아 있는 볼트, 금이 간 베어링, 아직 쓸 수 있는 호스가 차례로 갈린다. 일꾼은 가장 멀쩡한 체결 부품을 달구지 몫으로 밀어 놓는다. 공짜가 아니라 한 시간 가까이 함께 기름때를 뒤집어쓴 품삯이다.",
+            "fx": {
+              "fatigue": 3,
+              "item": {
+                "부품": 1
+              },
+              "note": {
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ]
+              }
+            }
+          },
+          {
+            "id": "pump",
+            "label": "공동 펌프 골목",
+            "npc": "passer_child",
+            "daily": 1,
+            "time": 25,
+            "desc": "아이들이 물통을 줄 세웠지만 손잡이가 자꾸 걸린다.",
+            "action": "펌프 손잡이와 물통 나르기를 돕는다",
+            "change": {
+              "visual": "water",
+              "after": "공동 펌프가 일정한 박자로 움직이고 물통 줄도 막히지 않는다."
+            },
+            "result": "고착된 손잡이에 물을 조금 붓고 천천히 움직이자 펌프가 다시 리듬을 찾는다. 아이들은 채운 물통을 집집마다 나르고, 가장 작은 아이가 달구지 물통에도 두 바가지를 부어 준다.",
+            "fx": {
+              "water": 2,
+              "fatigue": 2,
+              "moodAll": 1
+            }
+          }
+        ],
+        "last": {
+          "id": "pump",
+          "label": "공동 펌프 골목",
+          "npc": "passer_child",
+          "daily": 1,
+          "time": 25,
+          "desc": "아이들이 물통을 줄 세웠지만 손잡이가 자꾸 걸린다.",
+          "action": "펌프 손잡이와 물통 나르기를 돕는다",
+          "change": {
+            "visual": "water",
+            "after": "공동 펌프가 일정한 박자로 움직이고 물통 줄도 막히지 않는다."
+          },
+          "result": "고착된 손잡이에 물을 조금 붓고 천천히 움직이자 펌프가 다시 리듬을 찾는다. 아이들은 채운 물통을 집집마다 나르고, 가장 작은 아이가 달구지 물통에도 두 바가지를 부어 준다.",
+          "fx": {
+            "water": 2,
+            "fatigue": 2,
+            "moodAll": 1
+          }
+        },
+        "discount": 0.9
+      },
+      "impactAfter": {
+        "count": 3,
+        "total": 4,
+        "stage": 2,
+        "changed": [
+          {
+            "id": "parts",
+            "label": "부품 천막",
+            "npc": "passer_worker",
+            "once": 1,
+            "time": 50,
+            "desc": "경운기와 자전거 부품이 한 상자에 뒤섞여 있다.",
+            "action": "일꾼과 함께 쓸 만한 것을 분류한다",
+            "change": {
+              "visual": "order",
+              "after": "뒤섞였던 상자마다 볼트·베어링·호스 표지가 붙었다."
+            },
+            "result": "나사산이 살아 있는 볼트, 금이 간 베어링, 아직 쓸 수 있는 호스가 차례로 갈린다. 일꾼은 가장 멀쩡한 체결 부품을 달구지 몫으로 밀어 놓는다. 공짜가 아니라 한 시간 가까이 함께 기름때를 뒤집어쓴 품삯이다.",
+            "fx": {
+              "fatigue": 3,
+              "item": {
+                "부품": 1
+              },
+              "note": {
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ]
+              }
+            }
+          },
+          {
+            "id": "pump",
+            "label": "공동 펌프 골목",
+            "npc": "passer_child",
+            "daily": 1,
+            "time": 25,
+            "desc": "아이들이 물통을 줄 세웠지만 손잡이가 자꾸 걸린다.",
+            "action": "펌프 손잡이와 물통 나르기를 돕는다",
+            "change": {
+              "visual": "water",
+              "after": "공동 펌프가 일정한 박자로 움직이고 물통 줄도 막히지 않는다."
+            },
+            "result": "고착된 손잡이에 물을 조금 붓고 천천히 움직이자 펌프가 다시 리듬을 찾는다. 아이들은 채운 물통을 집집마다 나르고, 가장 작은 아이가 달구지 물통에도 두 바가지를 부어 준다.",
+            "fx": {
+              "water": 2,
+              "fatigue": 2,
+              "moodAll": 1
+            }
+          },
+          {
+            "id": "oldcard",
+            "label": "천막 뒤 번호표",
+            "npc": "sundeok",
+            "once": 1,
+            "time": 15,
+            "needDone": 2,
+            "hidden": 1,
+            "desc": "두 곳을 거들고 나니 순덕이 천막 뒤 작은 상자를 보여 준다.",
+            "action": "143년 동안 쓰인 번호표를 살핀다",
+            "change": {
+              "visual": "record",
+              "after": "낡은 교통카드 번호표가 국수 솥 옆 작은 고리에 다시 걸렸다."
+            },
+            "result": "상자 안에는 모서리가 닳은 교통카드 한 장이 들어 있다. 앞면의 날짜는 2026년. 순덕은 이 장터에서 적어도 세 세대 동안 국수 대기 번호표로 썼다고 한다. 한때 사람을 개찰구 너머로 보내던 물건이, 지금은 한 그릇의 차례를 지킨다.",
+            "fx": {
+              "flag": "miryang_oldcard",
+              "note": {
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ]
+              }
+            }
+          }
+        ],
+        "last": {
+          "id": "oldcard",
+          "label": "천막 뒤 번호표",
+          "npc": "sundeok",
+          "once": 1,
+          "time": 15,
+          "needDone": 2,
+          "hidden": 1,
+          "desc": "두 곳을 거들고 나니 순덕이 천막 뒤 작은 상자를 보여 준다.",
+          "action": "143년 동안 쓰인 번호표를 살핀다",
+          "change": {
+            "visual": "record",
+            "after": "낡은 교통카드 번호표가 국수 솥 옆 작은 고리에 다시 걸렸다."
+          },
+          "result": "상자 안에는 모서리가 닳은 교통카드 한 장이 들어 있다. 앞면의 날짜는 2026년. 순덕은 이 장터에서 적어도 세 세대 동안 국수 대기 번호표로 썼다고 한다. 한때 사람을 개찰구 너머로 보내던 물건이, 지금은 한 그릇의 차례를 지킨다.",
+          "fx": {
+            "flag": "miryang_oldcard",
+            "note": {
+              "type": "세대의 흔적",
+              "title": "2026년 교통카드 번호표",
+              "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+              "links": [
+                "밀양 장터",
+                "2026년"
+              ]
+            }
+          }
+        },
+        "discount": 0.9
+      }
+    },
+    "before": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 1,
+      "min": 1152,
+      "km": 54,
+      "driving": null,
+      "fuel": 53.68399999999981,
+      "water": 12,
+      "food": 12,
+      "scrap": 38,
+      "van": 82,
+      "fatigue": 46.63599999999997,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 0,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "miryang",
+        "to": "jeonju",
+        "due": 100,
+        "noExpiry": true,
+        "need": null,
+        "ready": false,
+        "navigation": {
+          "key": "story_relay_1",
+          "kind": "local",
+          "target": "jeonju",
+          "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "action": "전주 서문 시장까지 이동한다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "act": "1장",
+        "chapterId": "parents-diversion",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "phase": "남쪽 환승소의 오래된 운행표",
+        "why": "부모님이 함께 부산에 오지 못한 이유를 확인해야, 가족을 갈라놓은 명령이 사람을 어떻게 다뤘는지 알 수 있다.",
+        "next": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.",
+        "eyebrow": "메인 스토리 · 1장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다",
+            "state": "upcoming"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 4,
+          "need": 13,
+          "label": "4/13"
+        }
+      },
+      "navigation": {
+        "key": "main_parents-diversion",
+        "kind": "main",
+        "target": "gimcheon",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "action": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "after": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 1,
+      "min": 1167,
+      "km": 54,
+      "driving": null,
+      "fuel": 53.68399999999981,
+      "water": 12,
+      "food": 12,
+      "scrap": 52,
+      "van": 82,
+      "fatigue": 47.310999999999964,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 0,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "miryang",
+        "to": "jeonju",
+        "due": 100,
+        "noExpiry": true,
+        "need": null,
+        "ready": false,
+        "navigation": {
+          "key": "story_relay_1",
+          "kind": "local",
+          "target": "jeonju",
+          "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "action": "전주 서문 시장까지 이동한다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "act": "1장",
+        "chapterId": "parents-diversion",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "phase": "남쪽 환승소의 오래된 운행표",
+        "why": "부모님이 함께 부산에 오지 못한 이유를 확인해야, 가족을 갈라놓은 명령이 사람을 어떻게 다뤘는지 알 수 있다.",
+        "next": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "아빠와 엄마가 서로 다른 이송선으로 보내졌는지 확인한다.",
+        "eyebrow": "메인 스토리 · 1장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "서로 다른 이송선에 갇힌 뒤 부모님이 남긴 기록을 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "계기판에서 검증키를 떼려면 빠진 설명서 두 장이 필요하다",
+            "state": "upcoming"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 4,
+          "need": 13,
+          "label": "4/13"
+        }
+      },
+      "navigation": {
+        "key": "main_parents-diversion",
+        "kind": "main",
+        "target": "gimcheon",
+        "title": "오지 않은 부모님의 다음 차를 찾는다",
+        "action": "김천 갈림길에서 ‘주변 탐색’을 눌러 「오지 않은 다음 차」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "messages": [],
+    "speech": []
+  },
+  {
+    "n": 178,
+    "action": "npc-rumor",
+    "id": "sundeok",
+    "observation": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 4,
+      "min": 650,
+      "km": 502,
+      "driving": null,
+      "fuel": 51.053999999999846,
+      "water": 12,
+      "food": 7,
+      "scrap": 73,
+      "van": 80.91999999999926,
+      "fatigue": 14.516000000000002,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 3,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "비지 않는 약장 1/3 · 밀봉 약품 상자",
+          "description": "\"냉장하지 않아도 되는 약만 따로 담았어요. 상자에 적힌 진료소로 가져가 주세요. 물에 젖거나 햇볕을 받지 않게 짐 안쪽에 실어 주세요.\"",
+          "from": "miryang",
+          "to": "muju",
+          "due": 103,
+          "noExpiry": true,
+          "kind": "express",
+          "need": null,
+          "reward": 16
+        },
+        {
+          "index": 1,
+          "label": "라디오 진공관",
+          "description": "\"라디오 진공관, 대전 연구단지까지 부탁드려도 될까요? 사례는 고철 12.\"",
+          "from": "miryang",
+          "to": "daejeon",
+          "due": 8,
+          "kind": "deliver",
+          "need": null,
+          "reward": 12
+        }
+      ],
+      "boardAt": "miryang",
+      "boardDay": 4,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "act": "2장",
+        "chapterId": "verification-key",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "phase": "계기판의 장치를 꺼낼 방법을 찾는 중",
+        "why": "엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.",
+        "next": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.",
+        "eyebrow": "메인 스토리 · 2장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 6,
+          "need": 13,
+          "label": "6/13"
+        }
+      },
+      "navigation": {
+        "key": "main_verification-key",
+        "kind": "main",
+        "target": "cheongju",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "action": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)"
+      },
+      "capacity": {
+        "fuel": 70,
+        "water": 28,
+        "food": 24
+      },
+      "publicMapRoutes": {
+        "busan": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan"
+          ],
+          "km": 54,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두"
+          ]
+        },
+        "gimhae": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan",
+            "gimhae"
+          ],
+          "km": 72,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두",
+            "김해 들판"
+          ]
+        },
+        "yangsan": {
+          "nodes": [
+            "miryang",
+            "yangsan"
+          ],
+          "km": 34,
+          "segments": 1,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도"
+          ]
+        },
+        "miryang": {
+          "nodes": [
+            "miryang"
+          ],
+          "km": 0,
+          "segments": 0,
+          "names": [
+            "밀양 장터"
+          ]
+        },
+        "jinju": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan",
+            "gimhae",
+            "jinju"
+          ],
+          "km": 127,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두",
+            "김해 들판",
+            "진주 남강변"
+          ]
+        },
+        "hapcheon": {
+          "nodes": [
+            "miryang",
+            "hapcheon"
+          ],
+          "km": 40,
+          "segments": 1,
+          "names": [
+            "밀양 장터",
+            "합천 과수원"
+          ]
+        },
+        "geochang": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang"
+          ],
+          "km": 73,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지"
+          ]
+        },
+        "daegu": {
+          "nodes": [
+            "miryang",
+            "daegu"
+          ],
+          "km": 52,
+          "segments": 1,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장"
+          ]
+        },
+        "gumi": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi"
+          ],
+          "km": 90,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허"
+          ]
+        },
+        "gimcheon": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon"
+          ],
+          "km": 116,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길"
+          ]
+        },
+        "muju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju"
+          ],
+          "km": 115,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널"
+          ]
+        },
+        "namwon": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon"
+          ],
+          "km": 117,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루"
+          ]
+        },
+        "jeonju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "jeonju"
+          ],
+          "km": 165,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "전주 서문 시장"
+          ]
+        },
+        "yeongdong": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong"
+          ],
+          "km": 147,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭"
+          ]
+        },
+        "daejeon": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon"
+          ],
+          "km": 191,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지"
+          ]
+        },
+        "nonsan": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "jeonju",
+            "nonsan"
+          ],
+          "km": 217,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "전주 서문 시장",
+            "논산 평야"
+          ]
+        },
+        "gongju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "sejong",
+            "gongju"
+          ],
+          "km": 227,
+          "segments": 7,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "세종 신도시",
+            "공주 산성"
+          ]
+        },
+        "cheongju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "cheongju"
+          ],
+          "km": 225,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "청주 방송국"
+          ]
+        },
+        "cheonan": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "cheongju",
+            "cheonan"
+          ],
+          "km": 263,
+          "segments": 7,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "청주 방송국",
+            "천안 삼거리"
+          ]
+        },
+        "pyeongtaek": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "cheongju",
+            "cheonan",
+            "pyeongtaek"
+          ],
+          "km": 291,
+          "segments": 8,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "청주 방송국",
+            "천안 삼거리",
+            "평택 항구도로"
+          ]
+        },
+        "suwon": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju",
+            "icheon",
+            "suwon"
+          ],
+          "km": 286,
+          "segments": 8,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호",
+            "이천 가마터",
+            "수원 성곽 공동체"
+          ]
+        },
+        "seoul": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju",
+            "icheon",
+            "suwon",
+            "seoul"
+          ],
+          "km": 320,
+          "segments": 9,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호",
+            "이천 가마터",
+            "수원 성곽 공동체",
+            "서울 — 남산"
+          ]
+        },
+        "ulsan": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan"
+          ],
+          "km": 66,
+          "segments": 2,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑"
+          ]
+        },
+        "yeosu": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "busan",
+            "gimhae",
+            "jinju",
+            "yeosu"
+          ],
+          "km": 175,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "부산 감천 부두",
+            "김해 들판",
+            "진주 남강변",
+            "여수 밤바다"
+          ]
+        },
+        "suncheon": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "suncheon"
+          ],
+          "km": 161,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "순천만 갈대밭"
+          ]
+        },
+        "gwangju": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "damyang",
+            "gwangju"
+          ],
+          "km": 155,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "담양 대숲",
+            "광주 대인시장"
+          ]
+        },
+        "damyang": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "damyang"
+          ],
+          "km": 141,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "담양 대숲"
+          ]
+        },
+        "mokpo": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "damyang",
+            "gwangju",
+            "mokpo"
+          ],
+          "km": 199,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "담양 대숲",
+            "광주 대인시장",
+            "목포 여객터미널"
+          ]
+        },
+        "andong": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "andong"
+          ],
+          "km": 142,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "안동 하회마을"
+          ]
+        },
+        "mungyeong": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong"
+          ],
+          "km": 168,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재"
+          ]
+        },
+        "danyang": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "andong",
+            "danyang"
+          ],
+          "km": 198,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "안동 하회마을",
+            "단양 강변"
+          ]
+        },
+        "wonju": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "andong",
+            "danyang",
+            "wonju"
+          ],
+          "km": 228,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "안동 하회마을",
+            "단양 강변",
+            "원주 치악산 아래"
+          ]
+        },
+        "daegwallyeong": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang",
+            "gangneung",
+            "daegwallyeong"
+          ],
+          "km": 234,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소",
+            "강릉 경포",
+            "대관령 고갯마루"
+          ]
+        },
+        "gangneung": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang",
+            "gangneung"
+          ],
+          "km": 212,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소",
+            "강릉 경포"
+          ]
+        },
+        "sokcho": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang",
+            "gangneung",
+            "sokcho"
+          ],
+          "km": 252,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소",
+            "강릉 경포",
+            "속초 항"
+          ]
+        },
+        "icheon": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju",
+            "icheon"
+          ],
+          "km": 252,
+          "segments": 7,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호",
+            "이천 가마터"
+          ]
+        },
+        "gyeongju": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju"
+          ],
+          "km": 100,
+          "segments": 3,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉"
+          ]
+        },
+        "pohang": {
+          "nodes": [
+            "miryang",
+            "yangsan",
+            "ulsan",
+            "gyeongju",
+            "pohang"
+          ],
+          "km": 130,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "양산 고가차도",
+            "울산 공업탑",
+            "경주 왕릉",
+            "포항 제철소"
+          ]
+        },
+        "sangju": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju"
+          ],
+          "km": 142,
+          "segments": 4,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길"
+          ]
+        },
+        "gunsan": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "namwon",
+            "jeonju",
+            "gunsan"
+          ],
+          "km": 197,
+          "segments": 5,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "남원 광한루",
+            "전주 서문 시장",
+            "군산 내항"
+          ]
+        },
+        "chungju": {
+          "nodes": [
+            "miryang",
+            "daegu",
+            "gumi",
+            "gimcheon",
+            "sangju",
+            "mungyeong",
+            "chungju"
+          ],
+          "km": 206,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "대구 돔 시장",
+            "구미 공단 폐허",
+            "김천 갈림길",
+            "상주 자전거길",
+            "문경새재",
+            "충주호"
+          ]
+        },
+        "sejong": {
+          "nodes": [
+            "miryang",
+            "hapcheon",
+            "geochang",
+            "muju",
+            "yeongdong",
+            "daejeon",
+            "sejong"
+          ],
+          "km": 211,
+          "segments": 6,
+          "names": [
+            "밀양 장터",
+            "합천 과수원",
+            "거창 분지",
+            "무주 터널",
+            "영동 포도밭",
+            "대전 연구단지",
+            "세종 신도시"
+          ]
+        }
+      },
+      "recipes": [
+        {
+          "id": "pipe",
+          "name": "쇠파이프",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 6
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "xbow",
+          "name": "사제 석궁",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 12,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "bolt",
+          "name": "볼트 ×3",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 3
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "molotov",
+          "name": "화염병 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 2,
+              "fuel": 2
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "ammo",
+          "name": "소총탄 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 8,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "known": [
+        "busan",
+        "gimhae",
+        "yangsan",
+        "miryang",
+        "jinju",
+        "hapcheon",
+        "geochang",
+        "daegu",
+        "gumi",
+        "gimcheon",
+        "muju",
+        "namwon",
+        "jeonju",
+        "yeongdong",
+        "daejeon",
+        "nonsan",
+        "gongju",
+        "cheongju",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul",
+        "ulsan",
+        "yeosu",
+        "suncheon",
+        "gwangju",
+        "damyang",
+        "mokpo",
+        "andong",
+        "mungyeong",
+        "danyang",
+        "wonju",
+        "daegwallyeong",
+        "gangneung",
+        "sokcho",
+        "icheon",
+        "gyeongju",
+        "pohang",
+        "sangju",
+        "gunsan",
+        "chungju",
+        "sejong"
+      ],
+      "npcControls": [
+        {
+          "id": "sundeok",
+          "name": "순덕",
+          "rumorAvailable": true
+        },
+        {
+          "id": "byungchul",
+          "name": "병철",
+          "rumorAvailable": true
+        },
+        {
+          "id": "yeongok",
+          "name": "영옥",
+          "rumorAvailable": true
+        }
+      ],
+      "localControls": [],
+      "notifications": [
+        "↳ 세 마을의 무전 2/3 — 전주 서문 시장에서 후속 의뢰를 확인할 수 있다",
+        "⚡ 연속 의뢰를 맡았다 — 세 마을의 무전 2/3 · 확인된 주파수표",
+        "🍙 아침 식사 · 식량 -1 · 물 -1",
+        "🔥 야영으로 하루를 마쳤다",
+        "<span class=\"skill-toast-kicker\">운전 숙련 상승</span><strong>Lv.3 · 길의 장인</strong><span class=\"skill-toast-effect\">연료 소모 -6% · 주행 피로 -18%</span><span class=\"skill-toast-next\">다음 숙련 301/440km</span>",
+        "↳ 세 마을의 무전 3/3 — 대전 연구단지에서 후속 의뢰를 확인할 수 있다",
+        "📦 연속 의뢰를 맡았다 — 세 마을의 무전 3/3 · 세 마을의 교대 장부",
+        "🍚 점심 식사 · 식량 -1",
+        "<span class=\"skill-toast-kicker\">운전 숙련 상승</span><strong>Lv.4 · 로드마스터</strong><span class=\"skill-toast-effect\">연료 소모 -8% · 주행 피로 -24%</span><span class=\"skill-toast-next\">최고 숙련에 도달했다</span>",
+        "🍙 아침 식사 · 식량 -1 · 물 -1",
+        "🔥 야영으로 하루를 마쳤다",
+        "✦ 세 마을의 무전 완료 — 떨어져 있던 세 마을이 아침과 저녁에 같은 주파수를 듣기 시작했다."
+      ],
+      "night": false,
+      "explore": {
+        "ok": true,
+        "tries": 0,
+        "repeat": false,
+        "fresh": true,
+        "mins": 120,
+        "fatigue": 0,
+        "miss": 0.15
+      },
+      "routes": [
+        {
+          "id": "yangsan",
+          "name": "양산 고가차도",
+          "km": 34,
+          "check": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 5,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 5,
+            "minutes": 157,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 46,
+            "supplyMargin": 6,
+            "foodMargin": 6,
+            "waterMargin": 12,
+            "supplyNeed": 1,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 1,
+              "food": 1,
+              "water": 0
+            },
+            "rationCompact": "점심1 · 식량-1",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -34,
+            "progressScore": 1,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 34km 멀어짐"
+          },
+          "distanceToGoal": 259,
+          "distanceToStops": {
+            "miryang": 34,
+            "jeonju": 199,
+            "daejeon": 225,
+            "muju": 149
+          },
+          "distanceToSideQuest": null,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "daegu",
+          "name": "대구 돔 시장",
+          "km": 52,
+          "check": {
+            "ok": true,
+            "km": 52,
+            "road": "high",
+            "fuel": 8,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 52,
+            "road": "high",
+            "fuel": 8,
+            "minutes": 240,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 43,
+            "supplyMargin": 6,
+            "foodMargin": 6,
+            "waterMargin": 12,
+            "supplyNeed": 1,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 1,
+              "food": 1,
+              "water": 0
+            },
+            "rationCompact": "점심1 · 식량-1",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": 34,
+            "progressScore": 82,
+            "supplyScore": 82,
+            "directionLabel": "서울 방향 34km 전진"
+          },
+          "distanceToGoal": 175,
+          "distanceToStops": {
+            "miryang": 52,
+            "jeonju": 157,
+            "daejeon": 141,
+            "muju": 102
+          },
+          "distanceToSideQuest": null,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "hapcheon",
+          "name": "합천 과수원",
+          "km": 40,
+          "check": {
+            "ok": true,
+            "km": 40,
+            "road": "normal",
+            "fuel": 7,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 40,
+            "road": "normal",
+            "fuel": 7,
+            "minutes": 185,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 44,
+            "supplyMargin": 6,
+            "foodMargin": 6,
+            "waterMargin": 12,
+            "supplyNeed": 1,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 1,
+              "food": 1,
+              "water": 0
+            },
+            "rationCompact": "점심1 · 식량-1",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -13,
+            "progressScore": 22,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 13km 멀어짐"
+          },
+          "distanceToGoal": 185,
+          "distanceToStops": {
+            "miryang": 40,
+            "jeonju": 125,
+            "daejeon": 151,
+            "muju": 75
+          },
+          "distanceToSideQuest": null,
+          "distanceToRecruit": null
+        }
+      ],
+      "stl": {
+        "id": "miryang",
+        "name": "밀양 장터",
+        "recruit": {
+          "id": "minji",
+          "name": "민지"
+        },
+        "trade": [
+          {
+            "index": 0,
+            "label": "연료 10L",
+            "key": "fuel",
+            "qty": 10,
+            "price": 6
+          },
+          {
+            "index": 1,
+            "label": "물 5통",
+            "key": "water",
+            "qty": 5,
+            "price": 1
+          },
+          {
+            "index": 2,
+            "label": "식량 1묶음",
+            "key": "food",
+            "qty": 1,
+            "price": 1
+          },
+          {
+            "index": 3,
+            "label": "부품",
+            "key": "item부품",
+            "qty": 1,
+            "price": 9
+          }
+        ],
+        "actions": [
+          {
+            "id": "noodles",
+            "label": "순덕의 국수 좌판",
+            "time": 20,
+            "description": "김 오르는 솥 앞에 앉아 장꾼들 이야기를 듣는다.",
+            "cost": "고철 2",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": false,
+              "changedOn": null,
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 0,
+              "dayKey": "4:miryang:noodles",
+              "onceKey": "miryang:noodles"
+            }
+          },
+          {
+            "id": "parts",
+            "label": "부품 천막",
+            "time": 50,
+            "description": "경운기와 자전거 부품이 한 상자에 뒤섞여 있다.",
+            "cost": "",
+            "status": {
+              "ok": false,
+              "done": true,
+              "changed": true,
+              "changedOn": {
+                "day": 1,
+                "min": 1076.6
+              },
+              "hiddenLocked": false,
+              "reason": "이미 마친 일",
+              "doneToday": 0,
+              "dayKey": "4:miryang:parts",
+              "onceKey": "miryang:parts"
+            }
+          },
+          {
+            "id": "pump",
+            "label": "공동 펌프 골목",
+            "time": 25,
+            "description": "아이들이 물통을 줄 세웠지만 손잡이가 자꾸 걸린다.",
+            "cost": "",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": true,
+              "changedOn": {
+                "day": 1,
+                "min": 1126.6
+              },
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 0,
+              "dayKey": "4:miryang:pump",
+              "onceKey": "miryang:pump"
+            }
+          }
+        ]
+      },
+      "upgrades": [
+        {
+          "id": "tank1",
+          "name": "보조 연료탱크",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "tank2",
+          "name": "대형 연료탱크",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "보조 연료탱크 + 서스펜션 강화 필요",
+            "missing": [
+              "tank1",
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "bench",
+          "name": "후미 레일 좌석칸",
+          "cost": {
+            "scrap": 12,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "cabin",
+          "name": "거주구 2차 증축",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "후미 레일 좌석칸 + 서스펜션 강화 필요",
+            "missing": [
+              "bench",
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "susp",
+          "name": "서스펜션 강화",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "armor",
+          "name": "장갑판",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "서스펜션 강화 필요",
+            "missing": [
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "garden",
+          "name": "지붕 텃밭",
+          "cost": {
+            "scrap": 18
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "collector",
+          "name": "빗물 집수기",
+          "cost": {
+            "scrap": 15
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "solar",
+          "name": "태양광 패널",
+          "cost": {
+            "scrap": 35,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "antenna",
+          "name": "장거리 안테나",
+          "cost": {
+            "scrap": 17,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "winch",
+          "name": "전면 윈치",
+          "cost": {
+            "scrap": 26,
+            "parts": 2
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "전면 가드 필요",
+            "missing": [
+              "bullbar"
+            ]
+          }
+        },
+        {
+          "id": "bullbar",
+          "name": "전면 가드",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "snorkel",
+          "name": "스노클",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "mudtires",
+          "name": "험로 타이어",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "lightbar",
+          "name": "라이트바",
+          "cost": {
+            "scrap": 20,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "awning",
+          "name": "차양(어닝)",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "stove",
+          "name": "장작 난로",
+          "cost": {
+            "scrap": 20,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "sidebox",
+          "name": "사이드 공구함",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "beehive",
+          "name": "이동 벌통",
+          "cost": {
+            "scrap": 28,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "garden2",
+          "name": "지붕 온실",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "지붕 텃밭 필요",
+            "missing": [
+              "garden"
+            ]
+          }
+        },
+        {
+          "id": "kitchen",
+          "name": "간이 주방",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "장작 난로 필요",
+            "missing": [
+              "stove"
+            ]
+          }
+        },
+        {
+          "id": "bunk",
+          "name": "상부 2층 침상",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "거주구 2차 증축 필요",
+            "missing": [
+              "cabin"
+            ]
+          }
+        },
+        {
+          "id": "jumpseat",
+          "name": "후미 서비스칸",
+          "cost": {
+            "scrap": 16,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "상부 2층 침상 필요",
+            "missing": [
+              "bunk"
+            ]
+          }
+        },
+        {
+          "id": "fridge",
+          "name": "냉장 박스",
+          "cost": {
+            "scrap": 26,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "태양광 패널 필요",
+            "missing": [
+              "solar"
+            ]
+          }
+        },
+        {
+          "id": "armory",
+          "name": "무기 선반",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "사이드 공구함 필요",
+            "missing": [
+              "sidebox"
+            ]
+          }
+        },
+        {
+          "id": "scope",
+          "name": "지붕 망원대",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "horn",
+          "name": "왕경적",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "curtain",
+          "name": "암막 커튼",
+          "cost": {
+            "scrap": 14,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "seatCapacity": 2,
+      "exploredHere": 0,
+      "visits": {
+        "busan": 1,
+        "yangsan": 1,
+        "miryang": 2,
+        "hapcheon": 2,
+        "geochang": 2,
+        "namwon": 1,
+        "jeonju": 1,
+        "nonsan": 1,
+        "daejeon": 1,
+        "yeongdong": 1,
+        "muju": 1
+      },
+      "recruitQuest": null
+    },
+    "result": {
+      "npc": "sundeok",
+      "shown": [
+        {
+          "nid": "sundeok",
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "sundeok",
+              "name": "순덕",
+              "text": "처음 보는 얼굴이네. 차 몰고 다니는 젊은이라… 요즘 세상에 귀하지. 뭐 필요한 거 있으면 말해."
+            }
+          ],
+          "actions": [
+            "요즘 소문 들은 거 없어요?",
+            "이런저런 얘기를 나눈다",
+            "그만 일어난다"
+          ]
+        },
+        {
+          "nid": "sundeok",
+          "turns": [
+            {
+              "kind": "dialogue",
+              "who": "sundeok",
+              "name": "순덕",
+              "text": "북쪽 호수에 낚시꾼 영감이 혼자 사는데, 지나가는 사람한테 민물고기를 나눠준다더군. 밀양서 산길로 조금만 올라가면 돼."
+            }
+          ],
+          "actions": [
+            "고맙습니다"
+          ]
+        }
+      ],
+      "text": [
+        {
+          "kind": "dialogue",
+          "who": "sundeok",
+          "name": "순덕",
+          "text": "북쪽 호수에 낚시꾼 영감이 혼자 사는데, 지나가는 사람한테 민물고기를 나눠준다더군. 밀양서 산길로 조금만 올라가면 돼."
+        }
+      ],
+      "actions": [
+        "고맙습니다"
+      ]
+    },
+    "before": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 4,
+      "min": 650,
+      "km": 502,
+      "driving": null,
+      "fuel": 51.053999999999846,
+      "water": 12,
+      "food": 7,
+      "scrap": 73,
+      "van": 80.91999999999926,
+      "fatigue": 14.516000000000002,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 3,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "비지 않는 약장 1/3 · 밀봉 약품 상자",
+          "description": "\"냉장하지 않아도 되는 약만 따로 담았어요. 상자에 적힌 진료소로 가져가 주세요. 물에 젖거나 햇볕을 받지 않게 짐 안쪽에 실어 주세요.\"",
+          "from": "miryang",
+          "to": "muju",
+          "due": 103,
+          "noExpiry": true,
+          "kind": "express",
+          "need": null,
+          "reward": 16
+        },
+        {
+          "index": 1,
+          "label": "라디오 진공관",
+          "description": "\"라디오 진공관, 대전 연구단지까지 부탁드려도 될까요? 사례는 고철 12.\"",
+          "from": "miryang",
+          "to": "daejeon",
+          "due": 8,
+          "kind": "deliver",
+          "need": null,
+          "reward": 12
+        }
+      ],
+      "boardAt": "miryang",
+      "boardDay": 4,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "act": "2장",
+        "chapterId": "verification-key",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "phase": "계기판의 장치를 꺼낼 방법을 찾는 중",
+        "why": "엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.",
+        "next": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.",
+        "eyebrow": "메인 스토리 · 2장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 6,
+          "need": 13,
+          "label": "6/13"
+        }
+      },
+      "navigation": {
+        "key": "main_verification-key",
+        "kind": "main",
+        "target": "cheongju",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "action": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "after": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 4,
+      "min": 650,
+      "km": 502,
+      "driving": null,
+      "fuel": 51.053999999999846,
+      "water": 12,
+      "food": 7,
+      "scrap": 73,
+      "van": 80.91999999999926,
+      "fatigue": 14.516000000000002,
+      "party": [],
+      "items": {
+        "부품": 3,
+        "의약품": 1,
+        "탄약": 0
+      },
+      "weather": "clear",
+      "campNight": 3,
+      "campPlan": {},
+      "campParticipants": [],
+      "campConversation": null,
+      "crew": {},
+      "up": {},
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "비지 않는 약장 1/3 · 밀봉 약품 상자",
+          "description": "\"냉장하지 않아도 되는 약만 따로 담았어요. 상자에 적힌 진료소로 가져가 주세요. 물에 젖거나 햇볕을 받지 않게 짐 안쪽에 실어 주세요.\"",
+          "from": "miryang",
+          "to": "muju",
+          "due": 103,
+          "noExpiry": true,
+          "kind": "express",
+          "need": null,
+          "reward": 16
+        },
+        {
+          "index": 1,
+          "label": "라디오 진공관",
+          "description": "\"라디오 진공관, 대전 연구단지까지 부탁드려도 될까요? 사례는 고철 12.\"",
+          "from": "miryang",
+          "to": "daejeon",
+          "due": 8,
+          "kind": "deliver",
+          "need": null,
+          "reward": 12
+        }
+      ],
+      "boardAt": "miryang",
+      "boardDay": 4,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "act": "2장",
+        "chapterId": "verification-key",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "phase": "계기판의 장치를 꺼낼 방법을 찾는 중",
+        "why": "엄마가 절차를 설계하고 아빠가 만든 검증키는 달구지 계기판에 연결돼 있다. 순서를 모르고 떼면 장치와 달구지 배선이 모두 망가진다.",
+        "next": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "설명서 두 장을 찾으면 검증키를 안전하게 떼어 남산으로 가져갈 수 있다.",
+        "eyebrow": "메인 스토리 · 2장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "같은 이송표를 받은 사람들의 이야기를 모은다 · 0/3",
+            "state": "upcoming"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "실패한 남산 진입에서 끝난 정비 번호의 뒤를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "북부 기록망에서 엄마의 이름이 남은 기록을 찾는다",
+            "state": "upcoming"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "upcoming"
+          }
+        ],
+        "progress": {
+          "have": 6,
+          "need": 13,
+          "label": "6/13"
+        }
+      },
+      "navigation": {
+        "key": "main_verification-key",
+        "kind": "main",
+        "target": "cheongju",
+        "title": "부모님의 인간 확인 검증키를 꺼낸다",
+        "action": "청주 방송국에서 ‘주변 탐색’을 눌러 「달구지 안의 검증키」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "messages": [
+      "<span class=\"ic\">🗺</span>새 장소 발견 — 낚시꾼의 호수"
+    ],
+    "speech": []
+  }
+]

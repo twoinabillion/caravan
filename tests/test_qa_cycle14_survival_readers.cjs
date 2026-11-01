@@ -17,5 +17,11 @@ test('only reader metadata changes across all54 event definitions',()=>{const h=
  const after='답에 따라 물 한 잔을 권하거나 스트레칭을 알려줬다.\n\n"오늘은 일찍 자."\n\n그 말도 처방이었다.';
  assert.equal(now.choices[0].out[0].text,baseline[id].choices[0].out[0].text.replace(before,after));
  now.choices[0].out[0].text=baseline[id].choices[0].out[0].text;
+ }if(id==='talk_pss_15'){
+ const old=baseline[id].choices[0].out[0],out=now.choices[0].out[0];
+ assert.equal(out.text,old.text.replace('나는 식은 밥을 마저 먹었다.','나는 등받이에 몸을 기댔다.'));
+ assert.equal(out.fx.note.title,'조금 편해진 얼굴');
+ assert.equal(out.fx.note.body,'박 선생은 처음보다 어깨에 힘이 덜 들어간다고 했다. 밤에 지나다닐 때도 조심하겠다고.');
+ out.text=old.text;out.fx.note.title=old.fx.note.title;out.fx.note.body=old.fx.note.body;
  }assert.deepEqual(JSON.parse(JSON.stringify(require(path.join(dir,'copy-project.cjs'))(id,now),clean)),JSON.parse(JSON.stringify(baseline[id],clean)),id);}});
 for(const party of [['parkss','kangwoo'],['minji','eunsu'],['leo','jaeyi','parkss'],['kangwoo','parkss']])test('birthday keeps same actual crew speaker in entry/decline '+party.join(','),()=>{const h=fixture('comp_birthday',false,party);verify(h.json('entryTurns'),[{kind:'dialogue',who:party[0]}],party,'comp_birthday');h.run('globalThis.r=G.resolvePresentedChoice(e,e.choices[1]);');assert(h.run('r.ok&&r.applied'));verify(reader(h,1),[{kind:'dialogue',who:party[0]}],party,'comp_birthday');});

@@ -1,0 +1,15 @@
+{
+  "baseline.json": "455e383eb8c1c73b89e782da1e3872a777bf3ca7b02f77cf1817a013db576449",
+  "controlled-1098-entry.json": "d4e3251ca4fe7b8aa25b2b82de383530ecdb316a03bae887961617faadfcbf65",
+  "controlled-1098-paid.json": "f20aed10a557431641369a5a7e2282551136827eccf19e8a5fed3f91d0719922",
+  "controlled-1170-entry.json": "080dfd73897f6ea69def166f3cb0969eb1bfe79d72e4c1749a4542a6d2f590e3",
+  "controlled-1170-paid.json": "8fbe217e3528f901a30f5cb44cd066730b7ca9455861fbfddc5cf3976270d533",
+  "controlled-60-entry.json": "d013253c2b79ebea27729aa9ee76f5690d1d426f30d7447f2afb0b5db9c66854",
+  "controlled-60-paid.json": "dd9c2892abc9a7d50b0426b352f7ae0ebef18ef0935c010d24b2c7b9b7b7183a",
+  "controlled-600-entry.json": "2d2aa6082332a057c85217af558aae33ead9a71fdb4c721552875c5efc65faa5",
+  "controlled-600-paid.json": "a38fb052b0226a393cccc9437ee803f8abb1339489aed5911643400b3148d599",
+  "entry-after-view-306-exp_station.json": "c7d75ce0f5f118e9f48ba69d113e57ebd7dca149c7978ff80b39bf628f42affe",
+  "normal-unpaid-306-exp_station.json": "c5db54ee37129092e9ff798bd6f748579bb3c4336ae77b3aa019de13ed5ee94b",
+  "scene-exp_station-entry-307.json": "c7d75ce0f5f118e9f48ba69d113e57ebd7dca149c7978ff80b39bf628f42affe",
+  "scene-exp_station-result-307.json": "0b0ced21cc71e4a5dd8c1bd74e45cdf3c6d2f4bcfe61637a1c7669f7f481af5c"
+}

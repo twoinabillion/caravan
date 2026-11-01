@@ -1,0 +1,2775 @@
+[
+  {
+    "n": 495,
+    "action": "accept-quest",
+    "index": 0,
+    "observation": {
+      "at": "suwon",
+      "location": "수원 성곽 공동체",
+      "day": 8,
+      "min": 974,
+      "km": 661,
+      "driving": null,
+      "fuel": 52.770687466667006,
+      "water": 27,
+      "food": 20,
+      "scrap": 61,
+      "van": 100,
+      "fatigue": 30.23336000000001,
+      "party": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 5,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 7,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 99,
+          "bond": 31,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 99,
+          "bond": 25,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 99,
+          "bond": 17,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+          "from": "suwon",
+          "to": "miryang",
+          "due": 107,
+          "noExpiry": true,
+          "kind": "deliver",
+          "need": null,
+          "reward": 16
+        },
+        {
+          "index": 1,
+          "label": "부품 2개 조달",
+          "description": "\"부품 2개를 구해다 주세요. 여기로 다시 오시면 돼요. 사례는 고철 16.\"",
+          "from": "suwon",
+          "to": "suwon",
+          "due": 14,
+          "kind": "procure",
+          "need": {
+            "name": "부품",
+            "qty": 2
+          },
+          "reward": 16
+        }
+      ],
+      "boardAt": "suwon",
+      "boardDay": 8,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      },
+      "recipes": [
+        {
+          "id": "pipe",
+          "name": "쇠파이프",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 6
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "xbow",
+          "name": "사제 석궁",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 12,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "bolt",
+          "name": "볼트 ×3",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 3
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "molotov",
+          "name": "화염병 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 2,
+              "fuel": 2
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "ammo",
+          "name": "소총탄 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 8,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "known": [
+        "busan",
+        "gimhae",
+        "yangsan",
+        "miryang",
+        "jinju",
+        "hapcheon",
+        "geochang",
+        "daegu",
+        "gumi",
+        "gimcheon",
+        "muju",
+        "namwon",
+        "jeonju",
+        "yeongdong",
+        "daejeon",
+        "nonsan",
+        "gongju",
+        "cheongju",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul",
+        "ulsan",
+        "yeosu",
+        "suncheon",
+        "gwangju",
+        "damyang",
+        "mokpo",
+        "andong",
+        "mungyeong",
+        "danyang",
+        "wonju",
+        "daegwallyeong",
+        "gangneung",
+        "sokcho",
+        "icheon",
+        "gyeongju",
+        "pohang",
+        "sangju",
+        "gunsan",
+        "chungju",
+        "sejong",
+        "mall",
+        "reststop",
+        "drivein",
+        "tunnelbook",
+        "filmset",
+        "airfield",
+        "lighthouse",
+        "mingyu_ridge",
+        "spring"
+      ],
+      "npcControls": [
+        {
+          "id": "deokgu",
+          "name": "덕구",
+          "rumorAvailable": true
+        },
+        {
+          "id": "hwasun",
+          "name": "화순",
+          "rumorAvailable": true
+        },
+        {
+          "id": "gitae",
+          "name": "기태",
+          "rumorAvailable": true
+        }
+      ],
+      "localControls": [],
+      "notifications": [
+        "🏮 서쪽 장터길 완주 — 두 길이 청주에서 다시 만났다",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "☀ 맑음",
+        "<span class=\"ic\">✦</span>재이와 나눌 이야기가 남아 있다 — 야영이나 정차 중 말을 건다",
+        "🍙 아침 식사 · 식량 -4 · 물 -4",
+        "🔥 야영으로 하루를 마쳤다",
+        "<span class=\"ic\">★</span>강우 — 「그날의 진실」",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🍚 점심 식사 · 식량 -2"
+      ],
+      "night": false,
+      "explore": {
+        "ok": true,
+        "mainEvidence": {
+          "id": "mother",
+          "done": false,
+          "target": "suwon",
+          "event": "history_parents_network",
+          "sourceEvent": "history_parents_network",
+          "cost": "열람 준비 30분",
+          "hint": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+        },
+        "mins": 30,
+        "fatigue": 0,
+        "tries": 0
+      },
+      "routes": [
+        {
+          "id": "pyeongtaek",
+          "name": "평택 항구도로",
+          "km": 30,
+          "check": {
+            "ok": true,
+            "km": 30,
+            "road": "high",
+            "fuel": 4,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 30,
+            "road": "high",
+            "fuel": 4,
+            "minutes": 139,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 48,
+            "supplyMargin": 20,
+            "foodMargin": 20,
+            "waterMargin": 27,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -30,
+            "progressScore": 5,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 30km 멀어짐"
+          },
+          "distanceToGoal": 30,
+          "distanceToStops": {},
+          "distanceToSideQuest": null,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "seoul",
+          "name": "서울 — 남산",
+          "km": 34,
+          "check": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 5,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 5,
+            "minutes": 157,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 47,
+            "supplyMargin": 20,
+            "foodMargin": 20,
+            "waterMargin": 27,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": 34,
+            "progressScore": 82,
+            "supplyScore": 38,
+            "directionLabel": "서울 방향 34km 전진"
+          },
+          "distanceToGoal": 34,
+          "distanceToStops": {},
+          "distanceToSideQuest": null,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "icheon",
+          "name": "이천 가마터",
+          "km": 34,
+          "check": {
+            "ok": true,
+            "km": 34,
+            "road": "normal",
+            "fuel": 5,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 34,
+            "road": "normal",
+            "fuel": 5,
+            "minutes": 157,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 47,
+            "supplyMargin": 20,
+            "foodMargin": 20,
+            "waterMargin": 27,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -34,
+            "progressScore": 1,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 34km 멀어짐"
+          },
+          "distanceToGoal": 34,
+          "distanceToStops": {},
+          "distanceToSideQuest": null,
+          "distanceToRecruit": null
+        }
+      ],
+      "stl": {
+        "id": "suwon",
+        "name": "수원 성곽 공동체",
+        "recruit": null,
+        "trade": [
+          {
+            "index": 0,
+            "label": "연료 10L",
+            "key": "fuel",
+            "qty": 10,
+            "price": 10
+          },
+          {
+            "index": 1,
+            "label": "물 5통",
+            "key": "water",
+            "qty": 5,
+            "price": 1
+          },
+          {
+            "index": 2,
+            "label": "식량 1묶음",
+            "key": "food",
+            "qty": 1,
+            "price": 4
+          },
+          {
+            "index": 3,
+            "label": "탄약",
+            "key": "item탄약",
+            "qty": 1,
+            "price": 5
+          },
+          {
+            "index": 4,
+            "label": "부품",
+            "key": "item부품",
+            "qty": 1,
+            "price": 10
+          }
+        ],
+        "actions": [
+          {
+            "id": "wall_watch",
+            "label": "북문 망루 교대",
+            "time": 45,
+            "description": "망원경 없이 도로의 빛과 먼지를 구분하는 법을 배운다.",
+            "cost": "",
+            "status": {
+              "ok": false,
+              "done": true,
+              "changed": true,
+              "changedOn": {
+                "day": 8,
+                "min": 928.6
+              },
+              "hiddenLocked": false,
+              "reason": "오늘은 이미 들렀다",
+              "doneToday": 1,
+              "dayKey": "8:suwon:wall_watch",
+              "onceKey": "suwon:wall_watch"
+            }
+          },
+          {
+            "id": "gate_counterweight",
+            "label": "성문 평형추",
+            "time": 65,
+            "description": "낡은 도르래가 걸려 북문을 닫는 데 사람이 여섯이나 붙는다.",
+            "cost": "",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": false,
+              "changedOn": null,
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 1,
+              "dayKey": "8:suwon:gate_counterweight",
+              "onceKey": "suwon:gate_counterweight"
+            }
+          }
+        ]
+      },
+      "upgrades": [
+        {
+          "id": "tank1",
+          "name": "보조 연료탱크",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "tank2",
+          "name": "대형 연료탱크",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "보조 연료탱크 + 서스펜션 강화 필요",
+            "missing": [
+              "tank1",
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "bench",
+          "name": "후미 레일 좌석칸",
+          "cost": {
+            "scrap": 12,
+            "parts": 1
+          },
+          "owned": true,
+          "status": {
+            "ok": false,
+            "why": "장착됨"
+          }
+        },
+        {
+          "id": "cabin",
+          "name": "거주구 2차 증축",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "서스펜션 강화 필요",
+            "missing": [
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "susp",
+          "name": "서스펜션 강화",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "armor",
+          "name": "장갑판",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "서스펜션 강화 필요",
+            "missing": [
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "garden",
+          "name": "지붕 텃밭",
+          "cost": {
+            "scrap": 18
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "collector",
+          "name": "빗물 집수기",
+          "cost": {
+            "scrap": 15
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "solar",
+          "name": "태양광 패널",
+          "cost": {
+            "scrap": 35,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "antenna",
+          "name": "장거리 안테나",
+          "cost": {
+            "scrap": 17,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "winch",
+          "name": "전면 윈치",
+          "cost": {
+            "scrap": 26,
+            "parts": 2
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "전면 가드 필요",
+            "missing": [
+              "bullbar"
+            ]
+          }
+        },
+        {
+          "id": "bullbar",
+          "name": "전면 가드",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "snorkel",
+          "name": "스노클",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "mudtires",
+          "name": "험로 타이어",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "lightbar",
+          "name": "라이트바",
+          "cost": {
+            "scrap": 20,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "awning",
+          "name": "차양(어닝)",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "stove",
+          "name": "장작 난로",
+          "cost": {
+            "scrap": 20,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "sidebox",
+          "name": "사이드 공구함",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "beehive",
+          "name": "이동 벌통",
+          "cost": {
+            "scrap": 28,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "garden2",
+          "name": "지붕 온실",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "지붕 텃밭 필요",
+            "missing": [
+              "garden"
+            ]
+          }
+        },
+        {
+          "id": "kitchen",
+          "name": "간이 주방",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "장작 난로 필요",
+            "missing": [
+              "stove"
+            ]
+          }
+        },
+        {
+          "id": "bunk",
+          "name": "상부 2층 침상",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "거주구 2차 증축 필요",
+            "missing": [
+              "cabin"
+            ]
+          }
+        },
+        {
+          "id": "jumpseat",
+          "name": "후미 서비스칸",
+          "cost": {
+            "scrap": 16,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "상부 2층 침상 필요",
+            "missing": [
+              "bunk"
+            ]
+          }
+        },
+        {
+          "id": "fridge",
+          "name": "냉장 박스",
+          "cost": {
+            "scrap": 26,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "태양광 패널 필요",
+            "missing": [
+              "solar"
+            ]
+          }
+        },
+        {
+          "id": "armory",
+          "name": "무기 선반",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "사이드 공구함 필요",
+            "missing": [
+              "sidebox"
+            ]
+          }
+        },
+        {
+          "id": "scope",
+          "name": "지붕 망원대",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "horn",
+          "name": "왕경적",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "curtain",
+          "name": "암막 커튼",
+          "cost": {
+            "scrap": 14,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "seatCapacity": 3,
+      "exploredHere": 0,
+      "visits": {
+        "busan": 1,
+        "yangsan": 2,
+        "miryang": 1,
+        "ulsan": 1,
+        "gyeongju": 1,
+        "daegu": 1,
+        "gumi": 1,
+        "gimcheon": 2,
+        "muju": 2,
+        "jeonju": 1,
+        "nonsan": 1,
+        "daejeon": 1,
+        "cheongju": 1,
+        "cheonan": 1,
+        "pyeongtaek": 1,
+        "suwon": 1
+      },
+      "recruitQuest": null
+    },
+    "result": true,
+    "before": {
+      "at": "suwon",
+      "location": "수원 성곽 공동체",
+      "day": 8,
+      "min": 974,
+      "km": 661,
+      "driving": null,
+      "fuel": 52.770687466667006,
+      "water": 27,
+      "food": 20,
+      "scrap": 61,
+      "van": 100,
+      "fatigue": 30.23336000000001,
+      "party": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 5,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 7,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 99,
+          "bond": 31,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 99,
+          "bond": 25,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 99,
+          "bond": 17,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [
+        {
+          "index": 0,
+          "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+          "from": "suwon",
+          "to": "miryang",
+          "due": 107,
+          "noExpiry": true,
+          "kind": "deliver",
+          "need": null,
+          "reward": 16
+        },
+        {
+          "index": 1,
+          "label": "부품 2개 조달",
+          "description": "\"부품 2개를 구해다 주세요. 여기로 다시 오시면 돼요. 사례는 고철 16.\"",
+          "from": "suwon",
+          "to": "suwon",
+          "due": 14,
+          "kind": "procure",
+          "need": {
+            "name": "부품",
+            "qty": 2
+          },
+          "reward": 16
+        }
+      ],
+      "boardAt": "suwon",
+      "boardDay": 8,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "after": {
+      "at": "suwon",
+      "location": "수원 성곽 공동체",
+      "day": 8,
+      "min": 974,
+      "km": 661,
+      "driving": null,
+      "fuel": 52.770687466667006,
+      "water": 27,
+      "food": 20,
+      "scrap": 61,
+      "van": 100,
+      "fatigue": 30.23336000000001,
+      "party": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 5,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 7,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 99,
+          "bond": 31,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 99,
+          "bond": 25,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 99,
+          "bond": 17,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "suwon",
+        "to": "miryang",
+        "due": 107,
+        "noExpiry": true,
+        "need": null,
+        "ready": false,
+        "navigation": {
+          "key": "story_relay_1",
+          "kind": "local",
+          "target": "miryang",
+          "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "action": "밀양 장터까지 이동한다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "messages": [
+      "📦 연속 의뢰를 맡았다 — 세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부"
+    ],
+    "speech": []
+  },
+  {
+    "n": 595,
+    "action": "quest-turnin",
+    "observation": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 11,
+      "min": 390,
+      "km": 1092,
+      "driving": null,
+      "fuel": 15.156382466667393,
+      "water": 24,
+      "food": 17,
+      "scrap": 62,
+      "van": 100,
+      "fatigue": 0,
+      "party": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 4,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 10,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 37,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 30,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 100,
+          "bond": 20,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "suwon",
+        "to": "miryang",
+        "due": 107,
+        "noExpiry": true,
+        "need": null,
+        "ready": true,
+        "navigation": {
+          "key": "story_relay_1",
+          "kind": "local",
+          "target": "miryang",
+          "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "action": "이곳의 의뢰인에게 말을 건다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      },
+      "recipes": [
+        {
+          "id": "pipe",
+          "name": "쇠파이프",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 6
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "xbow",
+          "name": "사제 석궁",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 12,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "bolt",
+          "name": "볼트 ×3",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 3
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "molotov",
+          "name": "화염병 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 2,
+              "fuel": 2
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "ammo",
+          "name": "소총탄 ×2",
+          "owned": 0,
+          "quote": {
+            "need": {
+              "scrap": 8,
+              "parts": 1
+            },
+            "minutes": 40
+          },
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "known": [
+        "busan",
+        "gimhae",
+        "yangsan",
+        "miryang",
+        "jinju",
+        "hapcheon",
+        "geochang",
+        "daegu",
+        "gumi",
+        "gimcheon",
+        "muju",
+        "namwon",
+        "jeonju",
+        "yeongdong",
+        "daejeon",
+        "nonsan",
+        "gongju",
+        "cheongju",
+        "cheonan",
+        "pyeongtaek",
+        "suwon",
+        "seoul",
+        "ulsan",
+        "yeosu",
+        "suncheon",
+        "gwangju",
+        "damyang",
+        "mokpo",
+        "andong",
+        "mungyeong",
+        "danyang",
+        "wonju",
+        "daegwallyeong",
+        "gangneung",
+        "sokcho",
+        "icheon",
+        "gyeongju",
+        "pohang",
+        "sangju",
+        "gunsan",
+        "chungju",
+        "sejong",
+        "mall",
+        "reststop",
+        "drivein",
+        "tunnelbook",
+        "filmset",
+        "airfield",
+        "lighthouse",
+        "mingyu_ridge",
+        "spring"
+      ],
+      "npcControls": [
+        {
+          "id": "sundeok",
+          "name": "순덕",
+          "rumorAvailable": true
+        },
+        {
+          "id": "byungchul",
+          "name": "병철",
+          "rumorAvailable": true
+        },
+        {
+          "id": "yeongok",
+          "name": "영옥",
+          "rumorAvailable": true
+        }
+      ],
+      "localControls": [],
+      "notifications": [
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🍚 점심 식사 · 식량 -2",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "🎒 재이가 길에서 쓸 만한 고철을 낚아챘다 +1",
+        "☀ 맑음",
+        "📡 표식이 낡았다 — 관측 -1",
+        "🍙 아침 식사 · 식량 -4 · 물 -4",
+        "🏘 마을 한켠에서 물과 묽은 죽을 얻어 하루를 묵었다"
+      ],
+      "night": false,
+      "explore": {
+        "ok": true,
+        "tries": 0,
+        "repeat": false,
+        "fresh": true,
+        "mins": 120,
+        "fatigue": 0,
+        "miss": 0.15
+      },
+      "routes": [
+        {
+          "id": "yangsan",
+          "name": "양산 고가차도",
+          "km": 34,
+          "check": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 5,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 34,
+            "road": "high",
+            "fuel": 5,
+            "minutes": 157,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 10,
+            "supplyMargin": 17,
+            "foodMargin": 17,
+            "waterMargin": 24,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -34,
+            "progressScore": 1,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 34km 멀어짐"
+          },
+          "distanceToGoal": 302,
+          "distanceToStops": {},
+          "distanceToSideQuest": 34,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "daegu",
+          "name": "대구 돔 시장",
+          "km": 52,
+          "check": {
+            "ok": true,
+            "km": 52,
+            "road": "high",
+            "fuel": 7,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 52,
+            "road": "high",
+            "fuel": 7,
+            "minutes": 240,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 8,
+            "supplyMargin": 17,
+            "foodMargin": 17,
+            "waterMargin": 24,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": 34,
+            "progressScore": 82,
+            "supplyScore": 82,
+            "directionLabel": "서울 방향 34km 전진"
+          },
+          "distanceToGoal": 234,
+          "distanceToStops": {},
+          "distanceToSideQuest": 34,
+          "distanceToRecruit": null
+        },
+        {
+          "id": "hapcheon",
+          "name": "합천 과수원",
+          "km": 40,
+          "check": {
+            "ok": true,
+            "km": 40,
+            "road": "normal",
+            "fuel": 6,
+            "engineOk": true
+          },
+          "forecast": {
+            "ok": true,
+            "km": 40,
+            "road": "normal",
+            "fuel": 6,
+            "minutes": 185,
+            "shortage": false,
+            "risk": "보통 도로",
+            "gear": [],
+            "gearLabel": "",
+            "fuelMargin": 9,
+            "supplyMargin": 17,
+            "foodMargin": 17,
+            "waterMargin": 24,
+            "supplyNeed": 0,
+            "rationForecast": {
+              "breakfasts": 0,
+              "lunches": 0,
+              "food": 0,
+              "water": 0
+            },
+            "rationCompact": "식사 없음",
+            "dehydration": null,
+            "survivalWarning": "",
+            "readinessScore": 100,
+            "readinessLabel": "여유",
+            "readinessClass": "ready",
+            "readinessReason": "자원과 차체 상태가 안정적이다",
+            "safetyScore": 100,
+            "progressKm": -13,
+            "progressScore": 22,
+            "supplyScore": 38,
+            "directionLabel": "서울에서 13km 멀어짐"
+          },
+          "distanceToGoal": 281,
+          "distanceToStops": {},
+          "distanceToSideQuest": 40,
+          "distanceToRecruit": null
+        }
+      ],
+      "stl": {
+        "id": "miryang",
+        "name": "밀양 장터",
+        "recruit": null,
+        "trade": [
+          {
+            "index": 0,
+            "label": "연료 10L",
+            "key": "fuel",
+            "qty": 10,
+            "price": 6
+          },
+          {
+            "index": 1,
+            "label": "물 5통",
+            "key": "water",
+            "qty": 5,
+            "price": 1
+          },
+          {
+            "index": 2,
+            "label": "식량 1묶음",
+            "key": "food",
+            "qty": 1,
+            "price": 1
+          },
+          {
+            "index": 3,
+            "label": "부품",
+            "key": "item부품",
+            "qty": 1,
+            "price": 9
+          }
+        ],
+        "actions": [
+          {
+            "id": "noodles",
+            "label": "순덕의 국수 좌판",
+            "time": 20,
+            "description": "김 오르는 솥 앞에 앉아 장꾼들 이야기를 듣는다.",
+            "cost": "고철 2",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": false,
+              "changedOn": null,
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 0,
+              "dayKey": "11:miryang:noodles",
+              "onceKey": "miryang:noodles"
+            }
+          },
+          {
+            "id": "parts",
+            "label": "부품 천막",
+            "time": 50,
+            "description": "경운기와 자전거 부품이 한 상자에 뒤섞여 있다.",
+            "cost": "",
+            "status": {
+              "ok": false,
+              "done": true,
+              "changed": true,
+              "changedOn": {
+                "day": 1,
+                "min": 1076.6
+              },
+              "hiddenLocked": false,
+              "reason": "이미 마친 일",
+              "doneToday": 0,
+              "dayKey": "11:miryang:parts",
+              "onceKey": "miryang:parts"
+            }
+          },
+          {
+            "id": "pump",
+            "label": "공동 펌프 골목",
+            "time": 25,
+            "description": "아이들이 물통을 줄 세웠지만 손잡이가 자꾸 걸린다.",
+            "cost": "",
+            "status": {
+              "ok": true,
+              "done": false,
+              "changed": true,
+              "changedOn": {
+                "day": 1,
+                "min": 1126.6
+              },
+              "hiddenLocked": false,
+              "reason": "",
+              "doneToday": 0,
+              "dayKey": "11:miryang:pump",
+              "onceKey": "miryang:pump"
+            }
+          }
+        ]
+      },
+      "upgrades": [
+        {
+          "id": "tank1",
+          "name": "보조 연료탱크",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "tank2",
+          "name": "대형 연료탱크",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "보조 연료탱크 + 서스펜션 강화 필요",
+            "missing": [
+              "tank1",
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "bench",
+          "name": "후미 레일 좌석칸",
+          "cost": {
+            "scrap": 12,
+            "parts": 1
+          },
+          "owned": true,
+          "status": {
+            "ok": false,
+            "why": "장착됨"
+          }
+        },
+        {
+          "id": "cabin",
+          "name": "거주구 2차 증축",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "서스펜션 강화 필요",
+            "missing": [
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "susp",
+          "name": "서스펜션 강화",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "armor",
+          "name": "장갑판",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "서스펜션 강화 필요",
+            "missing": [
+              "susp"
+            ]
+          }
+        },
+        {
+          "id": "garden",
+          "name": "지붕 텃밭",
+          "cost": {
+            "scrap": 18
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "collector",
+          "name": "빗물 집수기",
+          "cost": {
+            "scrap": 15
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "solar",
+          "name": "태양광 패널",
+          "cost": {
+            "scrap": 35,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "antenna",
+          "name": "장거리 안테나",
+          "cost": {
+            "scrap": 17,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "winch",
+          "name": "전면 윈치",
+          "cost": {
+            "scrap": 26,
+            "parts": 2
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "전면 가드 필요",
+            "missing": [
+              "bullbar"
+            ]
+          }
+        },
+        {
+          "id": "bullbar",
+          "name": "전면 가드",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "snorkel",
+          "name": "스노클",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "mudtires",
+          "name": "험로 타이어",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "lightbar",
+          "name": "라이트바",
+          "cost": {
+            "scrap": 20,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "awning",
+          "name": "차양(어닝)",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "stove",
+          "name": "장작 난로",
+          "cost": {
+            "scrap": 20,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "sidebox",
+          "name": "사이드 공구함",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "beehive",
+          "name": "이동 벌통",
+          "cost": {
+            "scrap": 28,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "garden2",
+          "name": "지붕 온실",
+          "cost": {
+            "scrap": 30,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "지붕 텃밭 필요",
+            "missing": [
+              "garden"
+            ]
+          }
+        },
+        {
+          "id": "kitchen",
+          "name": "간이 주방",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "장작 난로 필요",
+            "missing": [
+              "stove"
+            ]
+          }
+        },
+        {
+          "id": "bunk",
+          "name": "상부 2층 침상",
+          "cost": {
+            "scrap": 18,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "거주구 2차 증축 필요",
+            "missing": [
+              "cabin"
+            ]
+          }
+        },
+        {
+          "id": "jumpseat",
+          "name": "후미 서비스칸",
+          "cost": {
+            "scrap": 16,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "상부 2층 침상 필요",
+            "missing": [
+              "bunk"
+            ]
+          }
+        },
+        {
+          "id": "fridge",
+          "name": "냉장 박스",
+          "cost": {
+            "scrap": 26,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "태양광 패널 필요",
+            "missing": [
+              "solar"
+            ]
+          }
+        },
+        {
+          "id": "armory",
+          "name": "무기 선반",
+          "cost": {
+            "scrap": 24,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": false,
+            "why": "사이드 공구함 필요",
+            "missing": [
+              "sidebox"
+            ]
+          }
+        },
+        {
+          "id": "scope",
+          "name": "지붕 망원대",
+          "cost": {
+            "scrap": 22,
+            "parts": 1
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "horn",
+          "name": "왕경적",
+          "cost": {
+            "scrap": 16,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        },
+        {
+          "id": "curtain",
+          "name": "암막 커튼",
+          "cost": {
+            "scrap": 14,
+            "parts": 0
+          },
+          "owned": false,
+          "status": {
+            "ok": true
+          }
+        }
+      ],
+      "seatCapacity": 3,
+      "exploredHere": 0,
+      "visits": {
+        "busan": 1,
+        "yangsan": 2,
+        "miryang": 2,
+        "ulsan": 1,
+        "gyeongju": 1,
+        "daegu": 2,
+        "gumi": 2,
+        "gimcheon": 3,
+        "muju": 3,
+        "jeonju": 2,
+        "nonsan": 2,
+        "daejeon": 2,
+        "cheongju": 2,
+        "cheonan": 2,
+        "pyeongtaek": 2,
+        "suwon": 1
+      },
+      "recruitQuest": null
+    },
+    "result": true,
+    "before": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 11,
+      "min": 390,
+      "km": 1092,
+      "driving": null,
+      "fuel": 15.156382466667393,
+      "water": 24,
+      "food": 17,
+      "scrap": 62,
+      "van": 100,
+      "fatigue": 0,
+      "party": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 4,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 10,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 37,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 30,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 100,
+          "bond": 20,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": {
+        "kind": "deliver",
+        "label": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+        "description": "\"이 장부에 적힌 중계소가 사흘째 대답이 없어요. 장부를 건네고, 어느 시간대에 무전을 듣는지만 확인해 주세요.\"",
+        "from": "suwon",
+        "to": "miryang",
+        "due": 107,
+        "noExpiry": true,
+        "need": null,
+        "ready": true,
+        "navigation": {
+          "key": "story_relay_1",
+          "kind": "local",
+          "target": "miryang",
+          "title": "세 마을의 무전 1/3 · 끊긴 중계소의 호출 장부",
+          "action": "이곳의 의뢰인에게 말을 건다"
+        }
+      },
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "after": {
+      "at": "miryang",
+      "location": "밀양 장터",
+      "day": 11,
+      "min": 390,
+      "km": 1092,
+      "driving": null,
+      "fuel": 15.156382466667393,
+      "water": 24,
+      "food": 17,
+      "scrap": 82,
+      "van": 100,
+      "fatigue": 0,
+      "party": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "items": {
+        "부품": 4,
+        "의약품": 1,
+        "탄약": 0,
+        "할아버지의 봉투": 1,
+        "부모님의 검증키": 1
+      },
+      "weather": "clear",
+      "campNight": 10,
+      "campPlan": {},
+      "campParticipants": [
+        "minji",
+        "kangwoo",
+        "jaeyi"
+      ],
+      "campConversation": null,
+      "crew": {
+        "minji": {
+          "name": "민지",
+          "mood": 100,
+          "bond": 37,
+          "injury": null
+        },
+        "kangwoo": {
+          "name": "강우",
+          "mood": 100,
+          "bond": 30,
+          "injury": null
+        },
+        "jaeyi": {
+          "name": "재이",
+          "mood": 100,
+          "bond": 20,
+          "injury": null
+        }
+      },
+      "up": {
+        "bench": true
+      },
+      "sideQuest": null,
+      "boardOffers": [],
+      "boardAt": null,
+      "boardDay": null,
+      "ended": false,
+      "main": {
+        "id": "main_namsan",
+        "kind": "main",
+        "status": "active",
+        "tracked": true,
+        "recovery": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "act": "5장",
+        "chapterId": "mother-reunion",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "phase": "수원 외곽 무전 중계소",
+        "why": "엄마가 기록 정리소를 떠난 뒤 어디로 갔는지 아직 모른다. 북부 기록망에 남은 이름부터 확인한다.",
+        "next": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+        "expected": "엄마의 현재 행방과 남산 작전에서 맡을 역할을 확인한다.",
+        "eyebrow": "메인 스토리 · 5장",
+        "steps": [
+          {
+            "id": "family",
+            "label": "도윤 가족의 이송표를 확인한다",
+            "detail": "버스 난방을 고치며 지금도 가족을 갈라놓는 이송표가 나온다는 사실을 보았다",
+            "state": "done"
+          },
+          {
+            "id": "appeal",
+            "label": "부산에서 이송 명령에 이의를 제기한다",
+            "detail": "부산의 원격 절차로는 멈출 수 없고 남산 현장 확인이 필요하다는 답을 받았다",
+            "state": "done"
+          },
+          {
+            "id": "module",
+            "label": "엄마가 남긴 장치를 확인한다",
+            "detail": "엄마의 회로도와 달구지 계기판 안쪽의 배선이 일치했다",
+            "state": "done"
+          },
+          {
+            "id": "trace",
+            "label": "이송 명령의 첫 발신 기록을 찾는다",
+            "detail": "부모님의 이송표와 지금의 표가 같은 곳에서 왔다는 사실을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_split",
+            "label": "부모님의 다음 차가 갈라진 경로를 확인한다",
+            "detail": "아빠는 남산 유지선, 엄마는 중부 기록 정리소로 보내졌음을 확인했다",
+            "state": "done"
+          },
+          {
+            "id": "parents_work",
+            "label": "두 곳에서 이어진 부모님의 작업을 확인한다",
+            "detail": "아빠의 분리 절차와 엄마의 증언 묶음이 같은 번호로 오갔다",
+            "state": "done"
+          },
+          {
+            "id": "key",
+            "label": "부모님의 인간 확인 검증키를 꺼낸다",
+            "detail": "빠진 설명서 두 장을 찾아 검증키를 안전하게 꺼냈다",
+            "state": "done"
+          },
+          {
+            "id": "witness",
+            "label": "같은 이송표를 받은 사람들의 이야기를 모은다",
+            "detail": "이송을 겪은 사람들이 확인한 증언을 보관했다",
+            "state": "done"
+          },
+          {
+            "id": "command",
+            "label": "증언과 명령 원본을 대조한다",
+            "detail": "발신 번호·사람의 확인 누락·상위 명령선을 기록 원본과 대조한다",
+            "state": "done"
+          },
+          {
+            "id": "father",
+            "label": "아빠의 마지막 남산 기록을 확인한다",
+            "detail": "아빠는 의료와 급수 회선을 지키다 남산에서 사망했다",
+            "state": "done"
+          },
+          {
+            "id": "mother",
+            "label": "엄마의 행방을 찾는다",
+            "detail": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)",
+            "state": "current"
+          },
+          {
+            "id": "relay",
+            "label": "남산 진입과 연락을 맡을 거점의 응답을 받는다",
+            "detail": "수원 외곽 무전 중계소에서 진입로와 송신 순서를 확인한다",
+            "state": "upcoming"
+          },
+          {
+            "id": "records",
+            "label": "남산에 가져갈 실물 기록을 보관한다",
+            "detail": "검증키와 당사자의 증언 사본, 또는 길에서 맡은 기록을 챙긴다",
+            "state": "done"
+          }
+        ],
+        "progress": {
+          "have": 11,
+          "need": 13,
+          "label": "11/13"
+        }
+      },
+      "navigation": {
+        "key": "main_mother-reunion",
+        "kind": "main",
+        "target": "suwon",
+        "title": "북부 기록망에서 엄마의 행방을 찾는다",
+        "action": "수원 성곽 공동체에서 ‘주변 탐색’을 눌러 「연대망에 남은 부모님의 기록」 기록을 확인한다 (열람 준비 30분)"
+      }
+    },
+    "messages": [
+      "⚡ 빠른 처리 보너스 — 고철 +4",
+      "↳ 세 마을의 무전 2/3 — 밀양 장터에서 후속 의뢰를 확인할 수 있다"
+    ],
+    "speech": []
+  }
+]

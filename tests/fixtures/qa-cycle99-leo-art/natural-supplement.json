@@ -1,0 +1,38 @@
+[
+  {
+    "file": "scene-talk_leo_03-entry-358.json",
+    "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle98/survival/agent98/attempt01/scene-talk_leo_03-entry-358.json",
+    "sha256": "21044a161be9ada2e8a57db60895926ed4c9085f2a94665a09c77e5e228d9f66",
+    "kind": "natural98 actual entry/paid; supplement to first six pre/post entry saves"
+  },
+  {
+    "file": "scene-talk_leo_03-result-358.json",
+    "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle98/survival/agent98/attempt01/scene-talk_leo_03-result-358.json",
+    "sha256": "89cf8f297c74d4d9e85f378791dcc2bb3608b6deb66e747d0c18ed713d82c3c1",
+    "kind": "natural98 actual entry/paid; supplement to first six pre/post entry saves"
+  },
+  {
+    "file": "scene-talk_leo_17-entry-475.json",
+    "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle98/survival/agent98/attempt01/scene-talk_leo_17-entry-475.json",
+    "sha256": "4fc6adada1c916dcc1cf30ee8111e2e425743e05884b4cd7b759f59fa1c3074a",
+    "kind": "natural98 actual entry/paid; supplement to first six pre/post entry saves"
+  },
+  {
+    "file": "scene-talk_leo_17-result-475.json",
+    "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle98/survival/agent98/attempt01/scene-talk_leo_17-result-475.json",
+    "sha256": "82246820e5e6567697b9dd7148ee8a693276b142c03b323e1bd8a51565fc9691",
+    "kind": "natural98 actual entry/paid; supplement to first six pre/post entry saves"
+  },
+  {
+    "file": "scene-talk_leo_19-entry-417.json",
+    "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle98/survival/agent98/attempt01/scene-talk_leo_19-entry-417.json",
+    "sha256": "bfaa49df8a8c289323a63f87c67155ed1d967113190cac02149ddd81494cf56f",
+    "kind": "natural98 actual entry/paid; supplement to first six pre/post entry saves"
+  },
+  {
+    "file": "scene-talk_leo_19-result-417.json",
+    "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle98/survival/agent98/attempt01/scene-talk_leo_19-result-417.json",
+    "sha256": "88c95bee9059630396ee060100eb10f074ff55d36e438bc9970511085cabf7ca",
+    "kind": "natural98 actual entry/paid; supplement to first six pre/post entry saves"
+  }
+]

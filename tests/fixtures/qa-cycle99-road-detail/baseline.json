@@ -1,0 +1,1192 @@
+{
+  "source": "source97 while98 frozen; controlled fixtures, no fresh journeys",
+  "events": [
+    {
+      "id": "cleaners_recall",
+      "definition": {
+        "id": "cleaners_recall",
+        "type": "추적",
+        "w": 8,
+        "once": true,
+        "region": [
+          "north"
+        ],
+        "night": false,
+        "title": "회수조",
+        "turnSpeakers": [
+          {
+            "who": "passer_man",
+            "name": "회수조 선두"
+          },
+          {
+            "who": "passer_man",
+            "name": "회수조 선두"
+          },
+          {
+            "who": "passer_woman",
+            "name": "붙잡힌 여자"
+          },
+          {
+            "who": "passer_man",
+            "name": "회수조 선두"
+          }
+        ],
+        "text": "갓길에 흰 옷 넷이 서 있다. 정리자들. 그 앞에 낡은 승합차 한 대와, 차에서 내리지 않으려는 여자 하나.\n\n\"이탈자 회수 중입니다.\" 선두의 남자가 우리 차에 손바닥을 들어 보였다. 지나가라는 뜻이다.\n\n\"동생분이 그분 곁을 그리워하십니다.\" 남자의 목소리는 부드러웠다. 여자의 얼굴은 그렇지 않았다.\n\n\"저는 안 그리워요.\" 여자가 말했다. 남자는 미소를 지우지 않았다. \"돌아가면 기억나실 겁니다.\"\n\n협박도 무기도 없다. 다만 넷이 한 사람을 둘러싸고, 부드럽게, 계속, 서 있을 뿐이다.",
+        "choices": [
+          {
+            "label": "차에서 내려 여자 옆에 선다",
+            "out": [
+              {
+                "p": 2,
+                "text": "말없이 여자와 회수조 사이에 섰다. 여자가 내 뒤로 한 걸음 물러났다.\n\n비키지 않고 바라보자 남자의 미소가 눈에 띄게 얇아졌다.\n\n\"…강요는 저희 방식이 아닙니다.\" 넷은 고개를 숙이고 길을 따라 걸어서 물러났다. 물러나면서도 남자는 우리 차 번호를 오래 봤다.\n\n여자는 흰 옷들이 사라질 때까지만 옆에 서 있어 달라고 했다. 그러고는 승합차 문을 안에서 잠갔다. 떠날 때 창문 너머로 손만 한 번 들었다.",
+                "fx": {
+                  "time": 40,
+                  "moodAll": 3,
+                  "pursuit": 1,
+                  "flag": "recall_blocked",
+                  "note": {
+                    "type": "사건",
+                    "title": "회수조 앞에서",
+                    "body": "정리자 회수조와 이탈자 사이에 섰다. 여자 옆을 지키자 회수조가 물러났다. 흰 옷들은 우리 차 번호를 오래 봤다.",
+                    "links": [
+                      "정리자들",
+                      "천리안"
+                    ]
+                  }
+                }
+              },
+              {
+                "p": 1,
+                "text": "내려서 서긴 했는데, 회수조는 물러나는 대신 기도를 시작했다. 넷이 무릎을 꿇고, 우리와 여자를 향해, 낮고 길게.\n\n그 소리가 제일 무서웠다. 여자가 귀를 막았다.\n\n달구지 문을 열어 여자를 안으로 들이고 문을 닫았다. 넷은 한동안 차 옆에서 기도하다가 물러났다.\n\n발소리가 멀어진 뒤 여자가 내려 주변을 살폈다. 돌아가지는 않겠다며 들길로 걸어갔다. 나는 차 옆에 서서 흰 옷들이 다시 오지 않는지 지켜봤다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+                "fx": {
+                  "time": 30,
+                  "moodAll": -4,
+                  "pursuit": 1,
+                  "flag": "recall_blocked",
+                  "note": {
+                    "type": "사건",
+                    "title": "기도하는 포위",
+                    "body": "회수조는 기도하다 물러났고, 여자는 차에서 내려 혼자 들길로 갔다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+                    "links": [
+                      "정리자들"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "\"본인이 싫다잖아요\" — 창문만 내리고 말한다",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"본인 의사는 확인하셨습니까.\" 남자가 대답했다. \"저희는 매일 확인합니다. 답이 바뀔 때까지.\"\n\n그 말이 이 무리의 전부였다. 매일 묻는 것. 지치게 하는 것. 그것을 정성이라 부르는 것.\n\n우리가 창문을 올리지 않고 버티자, 회수조 선두가 말했다.\n\n\"오늘은 여기까지.\"\n\n회수조는 물러났다. 내일 또 올 것이다. 여자는 우리 차를 오래 봤지만, 타겠다고는 하지 않았다.",
+                "fx": {
+                  "time": 15,
+                  "moodAll": -5,
+                  "note": {
+                    "type": "사건",
+                    "title": "매일 묻는 사람들",
+                    "body": "회수조는 답이 바뀔 때까지 매일 묻는다고 했다. 오늘은 물러났다. 내일이 문제다.",
+                    "links": [
+                      "정리자들"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  "me",
+                  {
+                    "who": "passer_man",
+                    "name": "회수조 선두"
+                  },
+                  {
+                    "who": "passer_man",
+                    "name": "회수조 선두"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "지나간다",
+            "out": [
+              {
+                "p": 1,
+                "text": "속도를 줄이지 않았다.\n\n백미러 속에서 흰 옷 넷이 여자를 향해 반걸음씩 좁혀 들었다. 부드럽게. 계속.\n\n그 여자는 결국 끌려갔을까. 백미러에서 승합차가 사라진 뒤에도 자꾸 돌아보게 됐다.",
+                "fx": {
+                  "moodAll": -7,
+                  "flag": "recall_passed",
+                  "note": {
+                    "type": "사건",
+                    "title": "지나친 회수조",
+                    "body": "흰 옷 넷과 내리지 않으려던 여자. 우리는 속도를 줄이지 않았다.",
+                    "links": [
+                      "정리자들"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "variant": null,
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "갓길에 흰 옷 넷이 서 있다. 정리자들. 그 앞에 낡은 승합차 한 대와, 차에서 내리지 않으려는 여자 하나."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_man",
+            "name": "회수조 선두",
+            "text": "이탈자 회수 중입니다."
+          },
+          {
+            "kind": "narration",
+            "text": "선두의 남자가 우리 차에 손바닥을 들어 보였다. 지나가라는 뜻이다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_man",
+            "name": "회수조 선두",
+            "text": "동생분이 그분 곁을 그리워하십니다."
+          },
+          {
+            "kind": "narration",
+            "text": "남자의 목소리는 부드러웠다. 여자의 얼굴은 그렇지 않았다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_woman",
+            "name": "붙잡힌 여자",
+            "text": "저는 안 그리워요."
+          },
+          {
+            "kind": "narration",
+            "text": "여자가 말했다. 남자는 미소를 지우지 않았다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_man",
+            "name": "회수조 선두",
+            "text": "돌아가면 기억나실 겁니다."
+          },
+          {
+            "kind": "narration",
+            "text": "협박도 무기도 없다. 다만 넷이 한 사람을 둘러싸고, 부드럽게, 계속, 서 있을 뿐이다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "event-human-retrieval-team-v1"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "cleaners_recall-0-0-paid.json",
+          "result": {
+            "text": "말없이 여자와 회수조 사이에 섰다. 여자가 내 뒤로 한 걸음 물러났다.\n\n비키지 않고 바라보자 남자의 미소가 눈에 띄게 얇아졌다.\n\n\"…강요는 저희 방식이 아닙니다.\" 넷은 고개를 숙이고 길을 따라 걸어서 물러났다. 물러나면서도 남자는 우리 차 번호를 오래 봤다.\n\n여자는 흰 옷들이 사라질 때까지만 옆에 서 있어 달라고 했다. 그러고는 승합차 문을 안에서 잠갔다. 떠날 때 창문 너머로 손만 한 번 들었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "말없이 여자와 회수조 사이에 섰다. 여자가 내 뒤로 한 걸음 물러났다."
+              },
+              {
+                "kind": "narration",
+                "text": "비키지 않고 바라보자 남자의 미소가 눈에 띄게 얇아졌다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "…강요는 저희 방식이 아닙니다.",
+                "who": "passer_man",
+                "name": "회수조 선두"
+              },
+              {
+                "kind": "narration",
+                "text": "넷은 고개를 숙이고 길을 따라 걸어서 물러났다. 물러나면서도 남자는 우리 차 번호를 오래 봤다."
+              },
+              {
+                "kind": "narration",
+                "text": "여자는 흰 옷들이 사라질 때까지만 옆에 서 있어 달라고 했다. 그러고는 승합차 문을 안에서 잠갔다. 떠날 때 창문 너머로 손만 한 번 들었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "40분 경과",
+                "c": ""
+              },
+              {
+                "t": "관측 +1",
+                "c": "minus"
+              },
+              {
+                "t": "새 기록 · 회수조 앞에서",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-human-retrieval-team-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 640,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 11.8,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "recall_blocked": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "회수조 앞에서",
+                "body": "정리자 회수조와 이탈자 사이에 섰다. 여자 옆을 지키자 회수조가 물러났다. 흰 옷들은 우리 차 번호를 오래 봤다.",
+                "links": [
+                  "정리자들",
+                  "천리안"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 1,
+          "file": "cleaners_recall-0-1-paid.json",
+          "result": {
+            "text": "내려서 서긴 했는데, 회수조는 물러나는 대신 기도를 시작했다. 넷이 무릎을 꿇고, 우리와 여자를 향해, 낮고 길게.\n\n그 소리가 제일 무서웠다. 여자가 귀를 막았다.\n\n달구지 문을 열어 여자를 안으로 들이고 문을 닫았다. 넷은 한동안 차 옆에서 기도하다가 물러났다.\n\n발소리가 멀어진 뒤 여자가 내려 주변을 살폈다. 돌아가지는 않겠다며 들길로 걸어갔다. 나는 차 옆에 서서 흰 옷들이 다시 오지 않는지 지켜봤다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "내려서 서긴 했는데, 회수조는 물러나는 대신 기도를 시작했다. 넷이 무릎을 꿇고, 우리와 여자를 향해, 낮고 길게."
+              },
+              {
+                "kind": "narration",
+                "text": "그 소리가 제일 무서웠다. 여자가 귀를 막았다."
+              },
+              {
+                "kind": "narration",
+                "text": "달구지 문을 열어 여자를 안으로 들이고 문을 닫았다. 넷은 한동안 차 옆에서 기도하다가 물러났다."
+              },
+              {
+                "kind": "narration",
+                "text": "발소리가 멀어진 뒤 여자가 내려 주변을 살폈다. 돌아가지는 않겠다며 들길로 걸어갔다. 나는 차 옆에 서서 흰 옷들이 다시 오지 않는지 지켜봤다. 차로 돌아와도 기도 소리가 귓가에 남았다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "30분 경과",
+                "c": ""
+              },
+              {
+                "t": "관측 +1",
+                "c": "minus"
+              },
+              {
+                "t": "새 기록 · 기도하는 포위",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-human-retrieval-team-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 630,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 11.35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "recall_blocked": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "기도하는 포위",
+                "body": "회수조는 기도하다 물러났고, 여자는 차에서 내려 혼자 들길로 갔다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+                "links": [
+                  "정리자들"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "cleaners_recall-1-0-paid.json",
+          "result": {
+            "text": "\"본인 의사는 확인하셨습니까.\" 남자가 대답했다. \"저희는 매일 확인합니다. 답이 바뀔 때까지.\"\n\n그 말이 이 무리의 전부였다. 매일 묻는 것. 지치게 하는 것. 그것을 정성이라 부르는 것.\n\n우리가 창문을 올리지 않고 버티자, 회수조 선두가 말했다.\n\n\"오늘은 여기까지.\"\n\n회수조는 물러났다. 내일 또 올 것이다. 여자는 우리 차를 오래 봤지만, 타겠다고는 하지 않았다.",
+            "turns": [
+              {
+                "kind": "dialogue",
+                "text": "본인 의사는 확인하셨습니까.",
+                "who": "me"
+              },
+              {
+                "kind": "narration",
+                "text": "남자가 대답했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "저희는 매일 확인합니다. 답이 바뀔 때까지.",
+                "who": "passer_man",
+                "name": "회수조 선두"
+              },
+              {
+                "kind": "narration",
+                "text": "그 말이 이 무리의 전부였다. 매일 묻는 것. 지치게 하는 것. 그것을 정성이라 부르는 것."
+              },
+              {
+                "kind": "narration",
+                "text": "우리가 창문을 올리지 않고 버티자, 회수조 선두가 말했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "오늘은 여기까지.",
+                "who": "passer_man",
+                "name": "회수조 선두"
+              },
+              {
+                "kind": "narration",
+                "text": "회수조는 물러났다. 내일 또 올 것이다. 여자는 우리 차를 오래 봤지만, 타겠다고는 하지 않았다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "15분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 매일 묻는 사람들",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-human-retrieval-team-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 615,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 10.675,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "매일 묻는 사람들",
+                "body": "회수조는 답이 바뀔 때까지 매일 묻는다고 했다. 오늘은 물러났다. 내일이 문제다.",
+                "links": [
+                  "정리자들"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 2,
+          "oi": 0,
+          "file": "cleaners_recall-2-0-paid.json",
+          "result": {
+            "text": "속도를 줄이지 않았다.\n\n백미러 속에서 흰 옷 넷이 여자를 향해 반걸음씩 좁혀 들었다. 부드럽게. 계속.\n\n그 여자는 결국 끌려갔을까. 백미러에서 승합차가 사라진 뒤에도 자꾸 돌아보게 됐다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "속도를 줄이지 않았다."
+              },
+              {
+                "kind": "narration",
+                "text": "백미러 속에서 흰 옷 넷이 여자를 향해 반걸음씩 좁혀 들었다. 부드럽게. 계속."
+              },
+              {
+                "kind": "narration",
+                "text": "그 여자는 결국 끌려갔을까. 백미러에서 승합차가 사라진 뒤에도 자꾸 돌아보게 됐다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "새 기록 · 지나친 회수조",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-human-retrieval-team-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 10,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "recall_passed": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "지나친 회수조",
+                "body": "흰 옷 넷과 내리지 않으려던 여자. 우리는 속도를 줄이지 않았다.",
+                "links": [
+                  "정리자들"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "find_filmset",
+      "definition": {
+        "id": "find_filmset",
+        "type": "발견",
+        "w": 7,
+        "once": true,
+        "region": [
+          "mid"
+        ],
+        "hiddenTarget": "filmset",
+        "title": "벽에 붙은 포스터",
+        "text": "버스정류장 벽에 사극 포스터가 붙어 있다. 여러 해 넘게 비를 맞았는데 장군의 눈매만은 살아 있다.\n\n「대하사극 — 촬영지: 남원 오픈세트장」\n\n포스터 귀퉁이에 누가 볼펜으로 화살표를 그리고 적어놨다.\n\n「세트장 사람 살고 있음. 기와 밑 따뜻함.」",
+        "choices": [
+          {
+            "label": "화살표를 믿는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"기와 밑 따뜻함\"이라는 다섯 글자엔 거짓말이 섞일 자리가 없다.\n\n지도에 표시했다.",
+                "fx": {
+                  "reveal": "filmset",
+                  "note": {
+                    "type": "소문",
+                    "title": "세트장 사람 살고 있음",
+                    "body": "포스터 귀퉁이의 볼펜 글씨. 기와 밑 따뜻함.",
+                    "links": [
+                      "시대극 세트장"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "variant": null,
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "버스정류장 벽에 사극 포스터가 붙어 있다. 여러 해 넘게 비를 맞았는데 장군의 눈매만은 살아 있다."
+          },
+          {
+            "kind": "narration",
+            "text": "「대하사극 — 촬영지: 남원 오픈세트장」"
+          },
+          {
+            "kind": "narration",
+            "text": "포스터 귀퉁이에 누가 볼펜으로 화살표를 그리고 적어놨다."
+          },
+          {
+            "kind": "narration",
+            "text": "「세트장 사람 살고 있음. 기와 밑 따뜻함.」"
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "event-find-document"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "find_filmset-0-0-paid.json",
+          "result": {
+            "text": "\"기와 밑 따뜻함\"이라는 다섯 글자엔 거짓말이 섞일 자리가 없다.\n\n지도에 표시했다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "\"기와 밑 따뜻함\"이라는 다섯 글자엔 거짓말이 섞일 자리가 없다."
+              },
+              {
+                "kind": "narration",
+                "text": "지도에 표시했다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "🗺 시대극 세트장 발견",
+                "c": "item"
+              },
+              {
+                "t": "새 소문 · 세트장 사람 살고 있음",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-find-document"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 10,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "소문",
+                "title": "세트장 사람 살고 있음",
+                "body": "포스터 귀퉁이의 볼펜 글씨. 기와 밑 따뜻함.",
+                "links": [
+                  "시대극 세트장"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "file": "cleaners_recall-natural-entry.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle98/explorer/agent98/attempt01/entry-after-view-186-cleaners_recall.json",
+      "sha256": "db41a61c8a4f640cdf7ca025aa3ee2e2bb86d915673d02b122b27a982364da48"
+    },
+    {
+      "file": "cleaners_recall-natural-paid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle98/explorer/agent98/attempt01/scene-cleaners_recall-result-187.json",
+      "sha256": "6861f2a329966fdd49924d75a1d052a8ad5a120ad43a944ff7f417d34ca623c7"
+    },
+    {
+      "file": "find_filmset-natural-entry.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle98/explorer/agent98/attempt01/entry-after-view-332-find_filmset.json",
+      "sha256": "984469c16aae174ac35eaae4bfc3e1758d8bed499dd47ce7f6bc7846254e3679"
+    },
+    {
+      "file": "find_filmset-natural-paid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle98/explorer/agent98/attempt01/scene-find_filmset-result-333.json",
+      "sha256": "7c8e0a8145f392b562fff602bd2367f88ac37ea6e302142ef2016ca8fef6fcd6"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "revision": "qa99",
+  "legacy": "exact baseline row.variant or null",
+  "rows": [
+    {
+      "id": "talk_leo_01",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 0,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "레오가 내 손가락을 지판에 하나씩 얹어줬다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_02",
+      "entry": "comp-leo-interior-quiet-v1",
+      "day": "comp-leo-interior-quiet-v1",
+      "night": "comp-leo-interior-quiet-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 4,
+          "scene": "comp-leo-interior-guitar-v1",
+          "anchor": "옆에서 작게 키잡이를 불러 봤다."
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "turn": 1,
+          "scene": "comp-leo-interior-guitar-v1",
+          "anchor": "레오가 손가락으로 후보를 세다가 기타 줄을 튕겼다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_03",
+      "entry": "comp-leo-harmonica-v1",
+      "day": "comp-leo-harmonica-v1",
+      "night": "comp-leo-harmonica-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 4,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "레오는 하모니카를 도로 주머니에 넣었다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_04",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_05",
+      "entry": "comp-leo-bori-sleep-v1",
+      "day": "comp-leo-bori-sleep-v1",
+      "night": "comp-leo-bori-sleep-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_06",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_07",
+      "entry": "comp-leo-notebook-v1",
+      "day": "comp-leo-notebook-v1",
+      "night": "comp-leo-notebook-v1",
+      "stages": [
+        {
+          "ci": 1,
+          "oi": 0,
+          "turn": 1,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "레오가 수첩을 덮었다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_08",
+      "entry": "comp-leo-harmonica-v1",
+      "day": "comp-leo-harmonica-v1",
+      "night": "comp-leo-harmonica-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 2,
+          "scene": "comp-leo-interior-guitar-v1",
+          "anchor": "레오가 기타 줄을 골랐다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_09",
+      "entry": "comp-leo-interior-quiet-v1",
+      "day": "comp-leo-interior-quiet-v1",
+      "night": "comp-leo-interior-quiet-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_10",
+      "entry": "comp-leo-interior-quiet-v1",
+      "day": "comp-leo-interior-quiet-v1",
+      "night": "comp-leo-interior-quiet-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_11",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_12",
+      "entry": "comp-leo-notebook-v1",
+      "day": "comp-leo-notebook-v1",
+      "night": "comp-leo-notebook-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_13",
+      "entry": "comp-leo-letter-v1",
+      "day": "comp-leo-letter-v1",
+      "night": "comp-leo-letter-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 6,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "관객 세 명 시절의 훈장은 사탕 두 개와 이 편지였다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_14",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_15",
+      "entry": "comp-leo-interior-quiet-v1",
+      "day": "comp-leo-interior-quiet-v1",
+      "night": "comp-leo-interior-quiet-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_16",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 0,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "손가락이 줄에 눌려 아우성쳤지만"
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_17",
+      "entry": "comp-leo-bori-sleep-v1",
+      "day": "comp-leo-bori-sleep-v1",
+      "night": "comp-leo-bori-sleep-v1",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_18",
+      "entry": "comp-leo-notebook-v1",
+      "day": "comp-leo-notebook-v1",
+      "night": "comp-leo-notebook-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 0,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "레오가 수첩을 뒤로 숨겼다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_19",
+      "entry": "comp-leo-camp-song-day-v2",
+      "day": "comp-leo-camp-song-day-v2",
+      "night": "comp-leo-camp-song-night-v2",
+      "stages": []
+    },
+    {
+      "id": "talk_leo_20",
+      "entry": "comp-leo-notebook-v1",
+      "day": "comp-leo-notebook-v1",
+      "night": "comp-leo-notebook-v1",
+      "stages": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "turn": 2,
+          "scene": "comp-leo-interior-quiet-v1",
+          "anchor": "레오가 화들짝 수첩을 덮었다."
+        }
+      ]
+    },
+    {
+      "id": "talk_leo_21",
+      "entry": "comp-leo-guitar-back-v1",
+      "day": "comp-leo-guitar-back-v1",
+      "night": "comp-leo-guitar-back-v1",
+      "stages": []
+    },
+    {
+      "id": "talkr_leo_1",
+      "entry": "comp-leo-interior-guitar-v1",
+      "day": "comp-leo-interior-guitar-v1",
+      "night": "comp-leo-interior-guitar-v1",
+      "stages": []
+    },
+    {
+      "id": "talkr_leo_2",
+      "entry": "camp-leo-rest-day-v1",
+      "day": "camp-leo-rest-day-v1",
+      "night": "camp-leo-rest-night-v1",
+      "stages": []
+    },
+    {
+      "id": "talkr_leo_3",
+      "entry": "comp-leo-notebook-v1",
+      "day": "comp-leo-notebook-v1",
+      "night": "comp-leo-notebook-v1",
+      "stages": []
+    }
+  ],
+  "notes": [
+    "All interior keys are deliberately clock neutral.",
+    "All stages are at existing narration; words, speaker, choice gates and effects unchanged.",
+    "01/16 hands and lower guitar are cropped to avoid assigning instrument playing to Leo while protagonist learns.",
+    "17 sleeping Bori paws below crop; not a waking-dog scene.",
+    "10 closed notebook and 15 covered guitar remain outside frame."
+  ]
+}

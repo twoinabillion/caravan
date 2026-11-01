@@ -1,0 +1,79 @@
+{
+  "reviewer": "explorer_review",
+  "at": "2026-11-01T02:57:42.519Z",
+  "key": "recruit-eunsu-join-result-night-v2",
+  "verdict": "approve",
+  "viewed": [
+    "original night decision JPG",
+    "existing day result WebP",
+    "official Eunsu and me portraits",
+    "lossless target/portrait reference sheet",
+    "new native master",
+    "new delivery WebP",
+    "new360",
+    "new480",
+    "mandatory canonical4 previously directly inspected this same review session"
+  ],
+  "files": [
+    {
+      "file": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/eunsu-waiting-night-master-v2.png",
+      "sha256": "249da4f0597807d65a422cbdcc5b463017302e8a4ae71957f52a137ee39de308",
+      "bytes": 2266067,
+      "width": 1672,
+      "height": 941,
+      "format": "png"
+    },
+    {
+      "file": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/eunsu-waiting-night-candidate-v2.webp",
+      "sha256": "d13d034d473d2e010040d8157b177b2206cccda144e6e21af6c7b70a47c24836",
+      "bytes": 107926,
+      "width": 1024,
+      "height": 576,
+      "format": "webp"
+    },
+    {
+      "file": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/eunsu-waiting-night-360-v2.png",
+      "sha256": "7fc27e14c600e347b549a5afec7f04f8b53fa0cf597076fcdeb185ea265ca25b",
+      "bytes": 120152,
+      "width": 360,
+      "height": 202,
+      "format": "png"
+    },
+    {
+      "file": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/eunsu-waiting-night-480-v2.png",
+      "sha256": "1f4496aa17fc85b310b74de0d326bad37f92cfb5c6999ef26844c6b1e90a1d04",
+      "bytes": 210991,
+      "width": 480,
+      "height": 270,
+      "format": "png"
+    }
+  ],
+  "referencePixelAudit": [
+    {
+      "file": "assets/scenes/recruit-eunsu-join-decision.jpg",
+      "pixelEqual": true,
+      "sourceSHA": "bab9bc836bbcf560024a7242c107bdb1a29e48b8aab595949bb74121a1bd68df"
+    },
+    {
+      "file": "assets/portraits/eunsu.png",
+      "pixelEqual": true,
+      "sourceSHA": "f73b10300e61e29c34b431f3ccded983fc1c503b9e3e852049bbbeca6540e537"
+    },
+    {
+      "file": "assets/portraits/me.png",
+      "pixelEqual": true,
+      "sourceSHA": "72dce350b96ce902ca2355e2ff9e34ef55c64900c860983629b453b697e12e53"
+    }
+  ],
+  "requestProvenance": "Exact canonical4 plus lossless target/portrait sheet as fifth image; pixel equality independently recalculated from decoded source images. No transformed target or recoloring before generation.",
+  "findings": {
+    "identity": "Eunsu short black hair, face proportions, dark practical jacket remain within official identity; me cap/back-left silhouette and weathered clothing agree. No extra people.",
+    "state": "Headphones visibly lowered around neck, ears clear. One hand holds carry handles of closed equipment bag; other relaxed outside pocket. Receiver not visible and can remain switched off inside closed bag.",
+    "waiting": "Both feet/body remain outside beside open side door; no boarding, installation, visible receiver or premature consent implied.",
+    "continuity": "Canonical one-ton cab/box camper and roof cargo retained, open warm interior and wet night setting preserved. Same two-person waiting composition as oldnight. Night city illumination already present in originaltarget, not new plot evidence.",
+    "readability": "At360/480 headphones visibly neck-level and lowered hand/bag silhouette readable. Large master resolves closed zipper and clear ears. No readable text/UI/watermark.",
+    "comparison": "Oldnight ears-on/pocketed hands contradicted removed-headphone/closedbagwaiting prose. Newcandidate fixes both. Existingday has neckheadphones and outsidewaiting; newnight aligns this state."
+  },
+  "runtimeCropReviewed": false,
+  "scope": "Art-only independent approval. Preserve oldpaid/entry aliases; source selects new night result only at actual matching narrated result. No production/cafe-review/frozen-input edits."
+}

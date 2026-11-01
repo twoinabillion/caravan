@@ -1,0 +1,4 @@
+const {setup,pay,state,root}=require('../qa-cycle97-family-postman/setup.cjs');
+const ids=Array.from({length:21},(_,i)=>'talk_es_'+String(i+1).padStart(2,'0')).concat(['talkr_es_1','talkr_es_2','talkr_es_3']);
+function fresh(id,min=600,capture=true){const h=setup();h.run(`S.pendingPresentation=null;S.at='cheonan';S.driving=null;S.day=13;S.min=${min};S.food=12;S.water=20;S.fuel=40;S.scrap=30;S.fatigue=35;S.hunger=0;S.van=90;S.party=['eunsu','leo'];S.dog=true;S.flags.eunsu_callsign_held=true;S.flags.es_truth=true;globalThis.e=event(${JSON.stringify(id)});G.beginPresentation(e);globalThis.entry=qaEntry(e),info=qaInfo(e,'event',[],entry);`);if(capture)h.run("G.capturePresentationView({eventId:e.id,phase:'event',turns:entry,...info,index:0})");return h;}
+module.exports={setup,pay,state,root,ids,fresh};

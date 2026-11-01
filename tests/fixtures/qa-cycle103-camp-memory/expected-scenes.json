@@ -1,0 +1,87 @@
+{
+  "camp_thief": {
+    "entry": "camp-thief-roof-night-v2",
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "anchor": "그림자가 화들짝 뛰어 어둠으로 사라졌다",
+        "key": "camp-thief-after-night-v1"
+      },
+      {
+        "ci": 0,
+        "oi": 1,
+        "anchor": "도둑이 놀라 훔친 자루를 통째로 떨어뜨리고 도망쳤다",
+        "key": "camp-thief-after-night-v1"
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "anchor": "도둑은 훔치려던 것을 내려놓고",
+        "key": "camp-thief-after-night-v1"
+      },
+      {
+        "ci": 2,
+        "oi": 0,
+        "anchor": "아침에 지붕의 짐끈이 풀려 있었다",
+        "key": "camp-thief-after-day-v1",
+        "stages": [
+          {
+            "anchor": "부스럭 소리가 한참 이어지다 멀어졌다",
+            "key": "camp-thief-after-night-v1"
+          },
+          {
+            "anchor": "아침에 지붕의 짐끈이 풀려 있었다",
+            "key": "camp-thief-after-day-v1"
+          }
+        ]
+      }
+    ]
+  },
+  "camp_scan": {
+    "entry": "camp-field-searchlight-v1",
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "anchor": "빛기둥이 차 지붕을 스윽— 지나갔다",
+        "key": "camp-scan-cleared-night-v1"
+      },
+      {
+        "ci": 0,
+        "oi": 1,
+        "anchor": "드론은 그냥 갔지만",
+        "key": "camp-scan-cleared-night-v1"
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "anchor": "드론이 차를",
+        "key": "camp-scan-cleared-night-v1"
+      }
+    ]
+  },
+  "camp_visitor": {
+    "entry": "camp-visitor-night-v1",
+    "outcomes": [
+      {
+        "ci": 0,
+        "oi": 0,
+        "anchor": null,
+        "key": "camp-visitor-night-v1"
+      },
+      {
+        "ci": 0,
+        "oi": 1,
+        "anchor": "아침에 노인은 먼저 떠나며",
+        "key": "camp-visitor-empty-day-v1"
+      },
+      {
+        "ci": 1,
+        "oi": 0,
+        "anchor": "노인은 화내지 않고 어둠 속으로 사라졌다",
+        "key": "camp-visitor-empty-night-v1"
+      }
+    ]
+  }
+}

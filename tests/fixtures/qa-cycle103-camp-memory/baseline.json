@@ -1,0 +1,2118 @@
+{
+  "capturedAt": "2026-11-01T00:13:59.721Z",
+  "events": [
+    {
+      "id": "camp_thief",
+      "definition": {
+        "id": "camp_thief",
+        "type": "위기",
+        "w": 0,
+        "fixed": true,
+        "storyOrigin": {
+          "kind": "memory",
+          "label": "지난밤",
+          "title": "야영지",
+          "timeLabel": "지난밤 · 야영지"
+        },
+        "title": "밤손님",
+        "text": "새벽, 차 밖에서 부스럭거리는 소리에 눈을 떴다.\n\n몸을 일으키지 않고 창틈으로 내다봤다. 그림자 하나가 지붕 짐끈을 풀고 있다. 도둑이다.",
+        "choices": [
+          {
+            "label": "소리치며 뛰쳐나간다",
+            "out": [
+              {
+                "p": 2,
+                "text": "\"야!!\"\n\n그림자가 화들짝 뛰어 어둠으로 사라졌다. 짐끈이 풀려 있었다. 고철을 넣어 두는 자리까지 뒤진 흔적이 났다. 남은 짐부터 다시 묶었다.",
+                "fx": {
+                  "scrap": -4,
+                  "moodAll": -2
+                },
+                "turnSpeakers": [
+                  "me"
+                ]
+              },
+              {
+                "p": 1,
+                "text": "\"야!!\"\n\n도둑이 놀라 훔친 자루를 통째로 떨어뜨리고 도망쳤다. 자루엔 우리 것— 그리고 다른 데서 훔친 것까지 들어 있었다.",
+                "fx": {
+                  "scrap": 5,
+                  "moodAll": 2
+                },
+                "turnSpeakers": [
+                  "me"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "쇠파이프를 들고 나간다",
+            "req": {
+              "item": "쇠파이프"
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "쇠파이프가 달빛에 번쩍이는 것만으로 상황이 종료됐다.\n\n도둑은 훔치려던 것을 내려놓고, 정중히 사과하고(진짜로 꾸벅 인사를 했다), 어둠으로 사라졌다.\n\n\"…예의 바른 도둑이네.\" 다시 잠들긴 글렀다.",
+                "fx": {
+                  "fatigue": 8,
+                  "moodAll": 1
+                },
+                "turnSpeakers": [
+                  "me"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "숨죽이고 보낸다",
+            "out": [
+              {
+                "p": 1,
+                "text": "부스럭 소리가 한참 이어지다 멀어졌다.\n\n아침에 지붕의 짐끈이 풀려 있었다. 식량 상자까지 열려 있어 남은 짐을 하나씩 확인했다. 쫓아가지 않은 걸 후회하진 않기로 했다.",
+                "fx": {
+                  "scrap": -3,
+                  "food": -1,
+                  "moodAll": -3
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "새벽, 차 밖에서 부스럭거리는 소리에 눈을 떴다.",
+            "timeKind": "memory",
+            "timeLabel": "지난밤 · 야영지"
+          },
+          {
+            "kind": "narration",
+            "text": "몸을 일으키지 않고 창틈으로 내다봤다. 그림자 하나가 지붕 짐끈을 풀고 있다. 도둑이다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "camp-roof-thief-v1"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "camp_thief-0-0-paid.json",
+          "result": {
+            "text": "\"야!!\"\n\n그림자가 화들짝 뛰어 어둠으로 사라졌다. 짐끈이 풀려 있었다. 고철을 넣어 두는 자리까지 뒤진 흔적이 났다. 남은 짐부터 다시 묶었다.",
+            "turns": [
+              {
+                "kind": "dialogue",
+                "text": "야!!",
+                "who": "me",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "그림자가 화들짝 뛰어 어둠으로 사라졌다. 짐끈이 풀려 있었다. 고철을 넣어 두는 자리까지 뒤진 흔적이 났다. 남은 짐부터 다시 묶었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "고철 -4",
+                "c": "minus"
+              },
+              {
+                "t": "사기 -2",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-roof-thief-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 26,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 63,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 1,
+          "file": "camp_thief-0-1-paid.json",
+          "result": {
+            "text": "\"야!!\"\n\n도둑이 놀라 훔친 자루를 통째로 떨어뜨리고 도망쳤다. 자루엔 우리 것— 그리고 다른 데서 훔친 것까지 들어 있었다.",
+            "turns": [
+              {
+                "kind": "dialogue",
+                "text": "야!!",
+                "who": "me",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "도둑이 놀라 훔친 자루를 통째로 떨어뜨리고 도망쳤다. 자루엔 우리 것— 그리고 다른 데서 훔친 것까지 들어 있었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "고철 +5",
+                "c": "plus"
+              },
+              {
+                "t": "사기 +2",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-roof-thief-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 35,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 67,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "camp_thief-1-0-paid.json",
+          "result": {
+            "text": "쇠파이프가 달빛에 번쩍이는 것만으로 상황이 종료됐다.\n\n도둑은 훔치려던 것을 내려놓고, 정중히 사과하고(진짜로 꾸벅 인사를 했다), 어둠으로 사라졌다.\n\n\"…예의 바른 도둑이네.\" 다시 잠들긴 글렀다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "쇠파이프가 달빛에 번쩍이는 것만으로 상황이 종료됐다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "도둑은 훔치려던 것을 내려놓고, 정중히 사과하고(진짜로 꾸벅 인사를 했다), 어둠으로 사라졌다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "…예의 바른 도둑이네.",
+                "who": "me"
+              },
+              {
+                "kind": "narration",
+                "text": "다시 잠들긴 글렀다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "피로 +8",
+                "c": "minus"
+              },
+              {
+                "t": "사기 +1",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-roof-thief-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 43,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 66,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 2,
+          "oi": 0,
+          "file": "camp_thief-2-0-paid.json",
+          "result": {
+            "text": "부스럭 소리가 한참 이어지다 멀어졌다.\n\n아침에 지붕의 짐끈이 풀려 있었다. 식량 상자까지 열려 있어 남은 짐을 하나씩 확인했다. 쫓아가지 않은 걸 후회하진 않기로 했다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "부스럭 소리가 한참 이어지다 멀어졌다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "아침에 지붕의 짐끈이 풀려 있었다. 식량 상자까지 열려 있어 남은 짐을 하나씩 확인했다. 쫓아가지 않은 걸 후회하진 않기로 했다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "식량 -1",
+                "c": "minus"
+              },
+              {
+                "t": "고철 -3",
+                "c": "minus"
+              },
+              {
+                "t": "사기 -3",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-roof-thief-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 19,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 27,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 62,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "camp_scan",
+      "definition": {
+        "id": "camp_scan",
+        "type": "위기",
+        "w": 0,
+        "fixed": true,
+        "ai": 1,
+        "storyOrigin": {
+          "kind": "memory",
+          "label": "지난밤",
+          "title": "야영지",
+          "timeLabel": "지난밤 · 야영지"
+        },
+        "title": "새벽의 탐조등",
+        "text": "차를 세우고 쉬던 중, 하늘에서 흰 빛기둥이 내려와 들판을 훑는다.\n\n야간 초계 드론의 탐조등. 빛이 차 쪽으로 천천히 다가온다.",
+        "choices": [
+          {
+            "label": "불을 끄고 숨죽인다",
+            "out": [
+              {
+                "p": 2,
+                "text": "모닥불에 흙을 덮고 바닥에 납작 엎드렸다.\n\n빛기둥이 차 지붕을 스윽— 지나갔다. 폐차로 판정한 모양이다. 달구지의 낡음이 처음으로 고마웠다.",
+                "fx": {
+                  "fatigue": 8,
+                  "moodAll": -2
+                }
+              },
+              {
+                "p": 1,
+                "text": "빛기둥이 차 위에서 3초간 멈췄다.\n\n<span class=\"ai\">\"…차량 1. 열원 감지. 기록.\"</span>\n\n드론은 그냥 갔지만, 기록이 남았다.",
+                "fx": {
+                  "pursuit": 1,
+                  "moodAll": -3
+                }
+              }
+            ]
+          },
+          {
+            "label": "은수가 위장 신호를 쏜다",
+            "req": {
+              "comp": "eunsu"
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "은수가 수신기로 폐기 차량 트랜스폰더 신호를 흉내 냈다.\n\n드론이 차를 \"오래전 폐기 처리된 렌터카\"로 분류하고 지나갔다.\n\n\"우리 이제 서류상 폐차예요.\" 은수가 하품하며 말했다. 듣던 중 안심되는 소리였다.",
+                "fx": {
+                  "mood": {
+                    "eunsu": 3
+                  }
+                },
+                "speakers": [
+                  "eunsu"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "차를 세우고 쉬던 중, 하늘에서 흰 빛기둥이 내려와 들판을 훑는다.",
+            "timeKind": "memory",
+            "timeLabel": "지난밤 · 야영지"
+          },
+          {
+            "kind": "narration",
+            "text": "야간 초계 드론의 탐조등. 빛이 차 쪽으로 천천히 다가온다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "camp-field-searchlight-v1"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "camp_scan-0-0-paid.json",
+          "result": {
+            "text": "모닥불에 흙을 덮고 바닥에 납작 엎드렸다.\n\n빛기둥이 차 지붕을 스윽— 지나갔다. 폐차로 판정한 모양이다. 달구지의 낡음이 처음으로 고마웠다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "모닥불에 흙을 덮고 바닥에 납작 엎드렸다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "빛기둥이 차 지붕을 스윽— 지나갔다. 폐차로 판정한 모양이다. 달구지의 낡음이 처음으로 고마웠다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "피로 +8",
+                "c": "minus"
+              },
+              {
+                "t": "사기 -2",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-field-searchlight-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 43,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 63,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 1,
+          "file": "camp_scan-0-1-paid.json",
+          "result": {
+            "text": "빛기둥이 차 위에서 3초간 멈췄다.\n\n<span class=\"ai\">\"…차량 1. 열원 감지. 기록.\"</span>\n\n드론은 그냥 갔지만, 기록이 남았다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "빛기둥이 차 위에서 3초간 멈췄다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "ai",
+                "text": "\"…차량 1. 열원 감지. 기록.\"",
+                "who": "cheollian",
+                "name": "천리안 방송"
+              },
+              {
+                "kind": "narration",
+                "text": "드론은 그냥 갔지만, 기록이 남았다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "사기 -3",
+                "c": "minus"
+              },
+              {
+                "t": "관측 +1",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-field-searchlight-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 62,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "camp_scan-1-0-paid.json",
+          "result": {
+            "text": "은수가 수신기로 폐기 차량 트랜스폰더 신호를 흉내 냈다.\n\n드론이 차를 \"오래전 폐기 처리된 렌터카\"로 분류하고 지나갔다.\n\n\"우리 이제 서류상 폐차예요.\" 은수가 하품하며 말했다. 듣던 중 안심되는 소리였다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "은수가 수신기로 폐기 차량 트랜스폰더 신호를 흉내 냈다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "드론이 차를 \"오래전 폐기 처리된 렌터카\"로 분류하고 지나갔다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "우리 이제 서류상 폐차예요.",
+                "who": "eunsu"
+              },
+              {
+                "kind": "narration",
+                "text": "은수가 하품하며 말했다. 듣던 중 안심되는 소리였다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "은수 사기 +3",
+                "c": "plus"
+              },
+              {
+                "t": "✦ 은수 유대 +2",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-field-searchlight-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 68,
+                "bond": 2,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "camp_visitor",
+      "definition": {
+        "id": "camp_visitor",
+        "type": "조우",
+        "w": 0,
+        "fixed": true,
+        "storyOrigin": {
+          "kind": "memory",
+          "label": "지난밤",
+          "title": "야영지",
+          "timeLabel": "지난밤 · 야영지"
+        },
+        "turnSpeakers": [
+          "me",
+          {
+            "who": "passer_elder",
+            "name": "걷는 노인"
+          },
+          {
+            "who": "passer_elder",
+            "name": "걷는 노인"
+          }
+        ],
+        "title": "모닥불의 손님",
+        "text": "불가에 인기척. 배낭을 멘 노인이 조심스레 서 있다.\n\n\"…언제부터 거기 계셨어요?\"\n\n\"글쎄. 불이 보여서 왔는데 부르기가 뭣해서.\" 노인이 배낭끈을 고쳐 멨다. \"불 좀 쬐어도 될까요? 밤길이 생각보다 춥구먼.\"",
+        "choices": [
+          {
+            "label": "자리를 내어준다",
+            "out": [
+              {
+                "p": 2,
+                "turnSpeakers": [
+                  {
+                    "who": "passer_elder",
+                    "name": "걷는 노인"
+                  },
+                  "me",
+                  {
+                    "who": "passer_elder",
+                    "name": "걷는 노인"
+                  },
+                  {
+                    "who": "passer_elder",
+                    "name": "걷는 노인"
+                  }
+                ],
+                "text": "노인은 오랫동안 걸어서 전국을 돌고 있다고 했다.\n\n\"차가 있으면 빠르지. 근데 걸으면 다 보여.\" 노인의 지도엔 우리가 모르는 표시가 가득했다.\n\n\"이 세모는 뭐예요?\"\n\n\"그거는.\" 노인이 지도를 돌려 봤다가 다시 돌렸다. \"적어놓고 까먹었네. 아마 물일 거요. 아마.\"\n\n떠나기 전, 확실하다는 표시 하나를 우리 지도에 옮겨줬다.",
+                "fx": {
+                  "revealNear": 1,
+                  "moodAll": 3,
+                  "note": {
+                    "type": "인물",
+                    "title": "걷는 노인",
+                    "body": "오랫동안 걸어서 전국을 도는 사람. \"걸으면 다 보여.\""
+                  }
+                }
+              },
+              {
+                "p": 1,
+                "turnSpeakers": [],
+                "text": "노인과 새벽까지 이야기를 나눴다. 대가는 없었고, 필요도 없었다.\n\n아침에 노인은 먼저 떠나며 불씨를 정리해두고 갔다. 좋은 손님이었다.",
+                "fx": {
+                  "moodAll": 4,
+                  "fatigue": 6
+                }
+              }
+            ]
+          },
+          {
+            "label": "경계하며 거절한다",
+            "out": [
+              {
+                "p": 1,
+                "turnSpeakers": [
+                  {
+                    "who": "passer_elder",
+                    "name": "걷는 노인"
+                  }
+                ],
+                "text": "\"…그러세요. 요즘 세상에 당연하지.\"\n\n노인은 화내지 않고 어둠 속으로 사라졌다. 모닥불이 괜히 머쓱하게 탔다.",
+                "fx": {
+                  "moodAll": -2
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "불가에 인기척. 배낭을 멘 노인이 조심스레 서 있다.",
+            "timeKind": "memory",
+            "timeLabel": "지난밤 · 야영지"
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "…언제부터 거기 계셨어요?"
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_elder",
+            "name": "걷는 노인",
+            "text": "글쎄. 불이 보여서 왔는데 부르기가 뭣해서."
+          },
+          {
+            "kind": "narration",
+            "text": "노인이 배낭끈을 고쳐 멨다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_elder",
+            "name": "걷는 노인",
+            "text": "불 좀 쬐어도 될까요? 밤길이 생각보다 춥구먼."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "camp-visitor-night-v1"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "camp_visitor-0-0-paid.json",
+          "result": {
+            "text": "노인은 오랫동안 걸어서 전국을 돌고 있다고 했다.\n\n\"차가 있으면 빠르지. 근데 걸으면 다 보여.\" 노인의 지도엔 우리가 모르는 표시가 가득했다.\n\n\"이 세모는 뭐예요?\"\n\n\"그거는.\" 노인이 지도를 돌려 봤다가 다시 돌렸다. \"적어놓고 까먹었네. 아마 물일 거요. 아마.\"\n\n떠나기 전, 확실하다는 표시 하나를 우리 지도에 옮겨줬다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "노인은 오랫동안 걸어서 전국을 돌고 있다고 했다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "dialogue",
+                "text": "차가 있으면 빠르지. 근데 걸으면 다 보여.",
+                "who": "passer_elder",
+                "name": "걷는 노인"
+              },
+              {
+                "kind": "narration",
+                "text": "노인의 지도엔 우리가 모르는 표시가 가득했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이 세모는 뭐예요?",
+                "who": "me"
+              },
+              {
+                "kind": "dialogue",
+                "text": "그거는.",
+                "who": "passer_elder",
+                "name": "걷는 노인"
+              },
+              {
+                "kind": "narration",
+                "text": "노인이 지도를 돌려 봤다가 다시 돌렸다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "적어놓고 까먹었네. 아마 물일 거요. 아마.",
+                "who": "passer_elder",
+                "name": "걷는 노인"
+              },
+              {
+                "kind": "narration",
+                "text": "떠나기 전, 확실하다는 표시 하나를 우리 지도에 옮겨줬다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "사기 +3",
+                "c": "plus"
+              },
+              {
+                "t": "🗺 달빛 자동차극장 발견",
+                "c": "item"
+              },
+              {
+                "t": "새 기록 · 걷는 노인",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-visitor-night-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 68,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "인물",
+                "title": "걷는 노인",
+                "body": "오랫동안 걸어서 전국을 도는 사람. \"걸으면 다 보여.\"",
+                "links": [],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 1,
+          "file": "camp_visitor-0-1-paid.json",
+          "result": {
+            "text": "노인과 새벽까지 이야기를 나눴다. 대가는 없었고, 필요도 없었다.\n\n아침에 노인은 먼저 떠나며 불씨를 정리해두고 갔다. 좋은 손님이었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "노인과 새벽까지 이야기를 나눴다. 대가는 없었고, 필요도 없었다.",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "아침에 노인은 먼저 떠나며 불씨를 정리해두고 갔다. 좋은 손님이었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "피로 +6",
+                "c": "minus"
+              },
+              {
+                "t": "사기 +4",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-visitor-night-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 41,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 69,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "camp_visitor-1-0-paid.json",
+          "result": {
+            "text": "\"…그러세요. 요즘 세상에 당연하지.\"\n\n노인은 화내지 않고 어둠 속으로 사라졌다. 모닥불이 괜히 머쓱하게 탔다.",
+            "turns": [
+              {
+                "kind": "dialogue",
+                "text": "…그러세요. 요즘 세상에 당연하지.",
+                "who": "passer_elder",
+                "name": "걷는 노인",
+                "timeKind": "memory",
+                "timeLabel": "지난밤 · 야영지"
+              },
+              {
+                "kind": "narration",
+                "text": "노인은 화내지 않고 어둠 속으로 사라졌다. 모닥불이 괜히 머쓱하게 탔다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "사기 -2",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "camp-visitor-night-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 390,
+            "food": 20,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [
+              "eunsu"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 63,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "쇠파이프": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "file": "natural102-story-scene-camp_scan-entry-174.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/story/agent101/attempt01/scene-camp_scan-entry-174.json",
+      "sha256": "1297df8ac199d41747a6d1536d989d7673eb8994753a1624e34c1f5d13093ea7"
+    },
+    {
+      "file": "natural102-story-scene-camp_scan-result-174.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/story/agent101/attempt01/scene-camp_scan-result-174.json",
+      "sha256": "082ea18cd6d451680932accec0db86a58985ccfa44484217180defdb0e943671"
+    },
+    {
+      "file": "natural102-story-scene-camp_visitor-entry-322.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/story/agent101/attempt01/scene-camp_visitor-entry-322.json",
+      "sha256": "5f8819c1e0cc2fe7b4bc4e08929d4c00f62061b1b100d306b084ad1b47c05a08"
+    },
+    {
+      "file": "natural102-story-scene-camp_visitor-result-322.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/story/agent101/attempt01/scene-camp_visitor-result-322.json",
+      "sha256": "350ed9ccbd44752a7e92dc65bd8d48277159a9601212b404ff5d262efac3cdef"
+    },
+    {
+      "file": "natural102-survival-scene-camp_scan-entry-429.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/survival/agent102/attempt01/scene-camp_scan-entry-429.json",
+      "sha256": "7a788f848dd1afebda4c102d168c3437fbe8e3c6e52950da5fce7d3d88bb45f9"
+    },
+    {
+      "file": "natural102-survival-scene-camp_scan-result-429.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/survival/agent102/attempt01/scene-camp_scan-result-429.json",
+      "sha256": "57a0e259b39d99c1098e3e7b6cbd72c54301a46865252da3d35fdd12ae34d87a"
+    },
+    {
+      "file": "natural102-survival-scene-camp_thief-entry-197.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/survival/agent102/attempt01/scene-camp_thief-entry-197.json",
+      "sha256": "9f31160bb551740af9ddf8e93ac6ae1c8023f37141a15877a217a8e6eb4145a8"
+    },
+    {
+      "file": "natural102-survival-scene-camp_thief-entry-68.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/survival/agent102/attempt01/scene-camp_thief-entry-68.json",
+      "sha256": "3be543e975e38508125cb853d48a70fbf5da5b55edd693b3498597fbfccf2c3c"
+    },
+    {
+      "file": "natural102-survival-scene-camp_thief-result-197.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/survival/agent102/attempt01/scene-camp_thief-result-197.json",
+      "sha256": "1e3e970139ff8c7da1039db5ea8148bdebc13e78320b580877d486e8e198334e"
+    },
+    {
+      "file": "natural102-survival-scene-camp_thief-result-68.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/survival/agent102/attempt01/scene-camp_thief-result-68.json",
+      "sha256": "cc1ec16e7d10d91e1b4b41fc06d6e182db2aa0c8d5c37f19f1eee734f268297e"
+    },
+    {
+      "file": "natural102-explorer-scene-camp_thief-entry-180.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/explorer/agent103/attempt01/scene-camp_thief-entry-180.json",
+      "sha256": "fe05bea2d37d899f466c01258c58979f82612282bda143a3430990f9f930f01a"
+    },
+    {
+      "file": "natural102-explorer-scene-camp_thief-result-180.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/explorer/agent103/attempt01/scene-camp_thief-result-180.json",
+      "sha256": "48a91912db064bd1d1051d56c3d27d7135b58430d8c5b8dcdd3187d5a73e2e9a"
+    },
+    {
+      "file": "natural102-explorer-scene-camp_visitor-entry-278.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/explorer/agent103/attempt01/scene-camp_visitor-entry-278.json",
+      "sha256": "5263886fb3e3a57b09a51a45525bb3fe760f36209ef9ee13cc876e8b557d409d"
+    },
+    {
+      "file": "natural102-explorer-scene-camp_visitor-result-278.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle102/explorer/agent103/attempt01/scene-camp_visitor-result-278.json",
+      "sha256": "d7af99656411e3d912c4af39ce23905f1a99ebf60e9d381bfb33e2bad532ecda"
+    }
+  ]
+}

@@ -1522,6 +1522,8 @@ for(const [id,base,day,night] of [
  ['story_generation_route','story-generation-route','story-generation-route-day-v1','story-generation-route-night-v1']
 ])D.eventSceneTimeVariants[id]={base,day,night};
 
+
+
 // The hospital can be left untouched; its plate must not preselect scavenging.
 D.scenes['event-hospital-pharmacy-v1']='assets/scenes/event-hospital-pharmacy-v1.webp';
 D.sceneDescriptions['event-hospital-pharmacy-v1']='폐병원 로비의 뒤집힌 휠체어와 반쯤 내려온 약국 셔터, 대부분 비어 있는 약장.';
@@ -1892,3 +1894,661 @@ D.sceneAssetMeta['explore-train-depot-v1']={...D.sceneAssetMeta['explore-rice-mi
  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
  provenance:'qa-artifacts/qa-cycle-20261026/cycle83/README.md',description:D.sceneDescriptions['explore-train-depot-v1']};
 D.eventSceneTimeVariants.ev_train_depot={base:'event-explore-transit',day:'explore-train-depot-v1',night:'explore-train-depot-v1'};
+
+// Cycle 85: current night journeys keep their actual time; historical readers keep their plates.
+for(const [key,file,format,description] of [
+ ['arrival-gyeongju-night-v1','assets/scenes/arrival-gyeongju-night-v1.webp','place','심야 경주의 고분 능선과 작은 거처의 등불, 젖은 길에 멈춘 달구지.'],
+ ['route-mid-fork-night-v1','assets/scenes/route-mid-fork-night-v1.webp','place','심야 산길 갈림길에 정차한 달구지와 지도를 확인하는 주인공, 아래 장터의 등불.'],
+ ['story-generation-form-night-v1','assets/scenes/story-generation-form-night-v1.webp','detail','밤 면사무소의 등불 아래 옛 동의문을 대조하는 사람들, 어두운 바깥 마당.'],
+ ['recruit-minji-task-night-v1','assets/scenes/recruit-minji-task-night-v1.webp','character','심야 고철 더미 곁에서 통신 부품을 떼어 내는 민지와 정차한 달구지.'],
+ ['recruit-minji-task-signal-night-v1','assets/scenes/recruit-minji-task-signal-night-v1.webp','character','심야 작업등 아래 회수한 통신 부품과 신호를 확인하는 민지.'],
+ ['recruit-minji-task-collapse-night-v1','assets/scenes/recruit-minji-task-collapse-night-v1.webp','action','심야에 무너지는 고철 더미에서 몸을 피하는 민지와 바닥의 부품 상자.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle85/README.md',description};
+}
+for(const [id,base,night] of [
+ ['loc_gyeongju','arrival-gyeongju','arrival-gyeongju-night-v1'],
+ ['route_mid_fork','route-mid-fork','route-mid-fork-night-v1'],
+ ['story_generation_form','story-generation-form','story-generation-form-night-v1']
+])D.eventSceneTimeVariants[id]={base,day:base,night};
+D.eventSceneTimeVariants.rq_minji_task={byBase:{
+ 'recruit-minji-task':{day:'recruit-minji-recovery-entry-day-v1',night:'recruit-minji-recovery-entry-night-v1'},
+ 'recruit-minji-task-signal':{day:'recruit-minji-recovery-entry-day-v1',night:'recruit-minji-recovery-entry-night-v1'},
+ 'recruit-minji-task-collapse':{day:'recruit-minji-recovery-result-day-v1',night:'recruit-minji-recovery-result-night-v1'}
+}};
+
+// Entry remains before recovery for every reading turn. Results show the recovered box.
+// Keep the earlier plates registered so saved timed readers still have their original keys.
+for(const [key,file,format,description] of [
+ ['recruit-minji-recovery-entry-day-v1','assets/scenes/recruit-minji-recovery-entry-day-v1.webp','action','낮, 접힌 승용차 아래 끼인 빨간 천 공구함에 견인선이 걸려 있고 민지가 손신호를 보낸다.'],
+ ['recruit-minji-recovery-entry-night-v1','assets/scenes/recruit-minji-recovery-entry-night-v1.webp','action','밤, 접힌 승용차 아래 아직 끼인 공구함과 견인선, 국소 조명 아래 손신호하는 민지.'],
+ ['recruit-minji-recovery-result-day-v1','assets/scenes/recruit-minji-recovery-result-day-v1.webp','character','낮, 내려앉은 폐차 더미에서 회수한 닫힌 공구함을 안전한 바닥에서 품은 민지.'],
+ ['recruit-minji-recovery-result-night-v1','assets/scenes/recruit-minji-recovery-result-night-v1.webp','character','밤, 느슨해진 견인선과 폐차 더미 앞에서 회수한 공구함의 걸쇠에 손을 얹은 민지.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle85/README.md',description};
+}
+for(const key of ['recruit-minji-task-night-v1','recruit-minji-task-signal-night-v1','recruit-minji-task-collapse-night-v1'])
+ D.sceneAssetMeta[key].status='legacy-plate-retained; action-superseded; runtime-crop-pending';
+
+// Cycle 87: the first reunion, conversation and later return have separate actions.
+for(const [key,file,description] of [
+ ['parents-mother-reunion-current-day-v1','assets/scenes/parents-mother-reunion-current-day-v1.webp','낮 수원 외곽 중계소, 의자 하나를 사이에 두고 마주한 엄마와 주인공, 밖에 정차한 달구지.'],
+ ['parents-mother-reunion-current-night-v1','assets/scenes/parents-mother-reunion-current-night-v1.webp','밤 수원 외곽 중계소의 국소 조명 아래, 열쇠고리 반쪽을 쥔 엄마와 마주한 주인공.'],
+ ['parents-mother-truth-conversation-day-v1','assets/scenes/parents-mother-truth-conversation-day-v1.webp','낮 중계소에서 두 컵과 메모장을 사이에 놓고 마주 앉은 엄마와 주인공.'],
+ ['parents-mother-truth-conversation-night-v1','assets/scenes/parents-mother-truth-conversation-night-v1.webp','밤 중계소의 등불 아래 두 컵과 메모장을 두고 이어지는 엄마와 주인공의 대화.'],
+ ['parents-mother-return-interior-v1','assets/scenes/parents-mother-return-interior-v1.webp','그 뒤 중계소 실내, 돌아온 주인공의 이야기를 듣는 엄마와 주전자, 두 사람 앞의 컵.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'character',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle87/README.md',description};
+}
+for(const [id,base,prefix] of [
+ ['parents_mother_reunion','parents-mother-reunion-v1','parents-mother-reunion-current'],
+ ['parents_mother_truth','parents-mother-broadcast-v1','parents-mother-truth-conversation']
+])D.eventSceneTimeVariants[id]={base,day:prefix+'-day-v1',night:prefix+'-night-v1'};
+// The return is an authored epilogue, not a clock-derived travel arrival.
+D.eventSceneFixedVariants.seoul_session_reset={base:'parents-mother-reunion-v1',scene:'parents-mother-return-interior-v1'};
+
+// Current discoveries use their own place and light without revealing a choice's reward.
+for(const [key,file,format,description] of [
+ ['explore-pharmacy-interior-day-v1','assets/scenes/explore-pharmacy-interior-day-v1.webp','place','낮 아파트 상가의 반쯤 내린 셔터 안, 빈 약장과 조제대, 닫힌 냉장고.'],
+ ['explore-pharmacy-interior-night-v1','assets/scenes/explore-pharmacy-interior-night-v1.webp','place','밤 상가 약국의 국소 등불과 빈 진열장, 조제대 너머의 닫힌 서랍과 냉장고.'],
+ ['story-personal-cache-day-v2','assets/scenes/story-personal-cache-day-v2.webp','detail','낮 작업대에 모아 둔 철제 문서 상자, 오래된 발신 릴, 뜯긴 수첩과 묶은 증언 카드.'],
+ ['story-personal-cache-night-v2','assets/scenes/story-personal-cache-night-v2.webp','detail','밤 작업등 아래 함께 보관한 철제 상자와 발신 릴, 수첩, 증언 카드 묶음.'],
+ ['arrival-lake-night-v1','assets/scenes/arrival-lake-night-v1.webp','place','밤의 잔잔한 호수, 등불 켠 좌대에 앉아 낚시하는 노인과 물가에 정차한 달구지.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle87/README.md',description};
+}
+for(const [id,base,day,night] of [
+ ['exp_pharmacy','event-explore-civic','explore-pharmacy-interior-day-v1','explore-pharmacy-interior-night-v1'],
+ ['story_personal_cache','story-personal-cache-v1','story-personal-cache-day-v2','story-personal-cache-night-v2'],
+ ['loc_lake','arrival-lake','arrival-lake','arrival-lake-night-v1']
+])D.eventSceneTimeVariants[id]={base,day,night};
+
+
+// Cycle 89: consent remains pending, recovery results stay branch-neutral,
+// and the greenhouse discovery takes place inside the cafe.
+for(const [key,file,format,description] of [
+ ['recruit-parkss-join-waiting-day-v1','assets/scenes/recruit-parkss-join-waiting-day-v1.webp','character','낮 달구지 앞, 발치에 가방을 놓고 두 발을 땅에 딛은 채 답을 기다리는 박 선생.'],
+ ['recruit-parkss-join-waiting-night-v1','assets/scenes/recruit-parkss-join-waiting-night-v1.webp','character','밤 달구지의 빈 발판 옆에서 가방을 내려놓고 답을 기다리는 박 선생.'],
+ ['recruit-jaeyi-tunnel-conversation-day-v1','assets/scenes/recruit-jaeyi-tunnel-conversation-day-v1.webp','character','낮 무주 터널 교환대, 촛불과 종이를 앞에 두고 이야기하는 재이와 옆에 정차한 달구지.'],
+ ['recruit-jaeyi-tunnel-conversation-night-v1','assets/scenes/recruit-jaeyi-tunnel-conversation-night-v1.webp','character','밤 무주 터널 안 촛불 켠 교환대에서 이야기를 듣는 재이와 달구지의 뒤쪽 바퀴.'],
+ ['recruit-jaeyi-trapped-box-night-v1','assets/scenes/recruit-jaeyi-trapped-box-night-v1.webp','character','밤 무너진 창고에서 철근 아래 아직 끼인 가족 상자를 살펴보는 재이.'],
+ ['recruit-jaeyi-recovered-neutral-day-v1','assets/scenes/recruit-jaeyi-recovered-neutral-day-v1.webp','character','낮 창고 잔해에서 회수한 닫힌 가족 상자 곁에 쪼그려 앉은 재이.'],
+ ['recruit-jaeyi-recovered-neutral-night-v1','assets/scenes/recruit-jaeyi-recovered-neutral-night-v1.webp','character','밤 국소 조명 아래 회수한 닫힌 가족 상자에 손을 얹은 재이.'],
+ ['explore-greenhouse-cafe-day-v1','assets/scenes/explore-greenhouse-cafe-day-v1.webp','place','낮 유리 온실 카페의 테이블 사이 몬스테라와 카운터 위 닫힌 통, 화분의 허브.'],
+ ['explore-greenhouse-cafe-night-v1','assets/scenes/explore-greenhouse-cafe-night-v1.webp','place','밤 등불 켠 온실 카페 실내, 테이블 사이 잎과 카운터 위 닫힌 통.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle89/README.md',description};
+}
+for(const id of ['rq_parkss_join','recruit_reunion_parkss'])D.eventSceneTimeVariants[id]={byBase:{
+ 'recruit-parkss-join-decision':{day:'recruit-parkss-join-waiting-day-v1',night:'recruit-parkss-join-waiting-night-v1'}
+}};
+D.eventSceneTimeVariants.jy_recruit={byBase:Object.fromEntries(
+ ['recruit-jaeyi-tunnel-exchange-v2','recruit-jaeyi-suspension-check','recruit-jaeyi-meet-action'].map(key=>
+ [key,{day:'recruit-jaeyi-tunnel-conversation-day-v1',night:'recruit-jaeyi-tunnel-conversation-night-v1'}]))};
+D.eventSceneTimeVariants.rq_jaeyi_task={byBase:{
+ 'recruit-jaeyi-trapped-box-v1':{day:'recruit-jaeyi-trapped-box-v1',night:'recruit-jaeyi-trapped-box-night-v1'},
+ 'recruit-jaeyi-task-lift':{day:'recruit-jaeyi-recovered-neutral-day-v1',night:'recruit-jaeyi-recovered-neutral-night-v1'},
+ 'recruit-jaeyi-box-recovered-v2':{day:'recruit-jaeyi-recovered-neutral-day-v1',night:'recruit-jaeyi-recovered-neutral-night-v1'}
+}};
+D.eventSceneTimeVariants.exp_greenhouse_cafe={base:'event-explore-farm',day:'explore-greenhouse-cafe-day-v1',night:'explore-greenhouse-cafe-night-v1'};
+
+// Cycle 91: retain location fallback, but use Suwon's existing daylight plate
+// for a current daytime conversation. Other locations keep their own scenery.
+D.eventSceneTimeVariants.pair_leo_es_2={byBase:{
+ 'suwon-fortress':{day:'event-suwon-fortress-day-v1',night:'suwon-fortress'}
+}};
+
+for(const [key,file,format,description] of [
+ ['recruit-parkss-clinic-table-night-v1','assets/scenes/recruit-parkss-clinic-table-night-v1.webp','detail','밤 정류소 진료대의 약가방과 냉장 상자, 물컵 세 개, 뒤쪽 어두운 산등성이.'],
+ ['recruit-leo-join-waiting-day-v1','assets/scenes/recruit-leo-join-waiting-day-v1.webp','character','낮 달구지 문 밖에서 닫힌 기타 케이스의 손잡이를 잡고 보리와 함께 기다리는 레오.'],
+ ['recruit-leo-join-waiting-night-v1','assets/scenes/recruit-leo-join-waiting-night-v1.webp','character','밤 달구지의 빈 발판 앞, 닫힌 기타 케이스와 보리 곁에서 답을 기다리는 레오.'],
+ ['camp-leo-rest-day-v1','assets/scenes/camp-leo-rest-day-v1.webp','character','낮 정차한 달구지 곁, 손을 무릎에 쉬고 보리와 나란히 앉아 대화를 듣는 레오.'],
+ ['camp-leo-rest-night-v1','assets/scenes/camp-leo-rest-night-v1.webp','character','밤 달구지 불빛 곁에서 보리와 쉬는 레오. 기타와 케이스는 화면 밖에 있다.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle91/README.md',description};
+}
+D.eventSceneTimeVariants.rq_parkss_task.byBase['recruit-parkss-task']={
+ day:'recruit-parkss-task',night:'recruit-parkss-clinic-table-night-v1'
+};
+for(const id of ['rq_leo_join','recruit_reunion_leo'])D.eventSceneTimeVariants[id]={byBase:Object.fromEntries(
+ ['recruit-leo-join','recruit-leo-join-decision'].map(key=>
+ [key,{day:'recruit-leo-join-waiting-day-v1',night:'recruit-leo-join-waiting-night-v1'}]))};
+
+// New camp records opt in; captured historical camp views retain their old keys.
+for(const [period,key,file] of [
+ ['day','camp-parkss-rest-day-v1','assets/scenes/camp-parkss-rest-day-v1.webp'],
+ ['night','camp-parkss-rest-night-v1','assets/scenes/camp-parkss-rest-night-v1.webp']
+]){
+ const description=`${period==='day'?'낮':'밤'} 달구지 곁에 앉아 빈손을 무릎에 쉬는 박 선생. 약가방과 기록은 화면 밖에 있다.`;
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'character',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle93/root/park-art-integration.json',description};
+}
+// The rescue result is outside the flooded underpass; later follow-up scenes
+// and paid saves still own the old follow/wade keys.
+for(const [period,key,file] of [
+ ['day','recruit-leo-rescued-day-v1','assets/scenes/recruit-leo-rescued-day-v1.webp'],
+ ['night','recruit-leo-rescued-night-v1','assets/scenes/recruit-leo-rescued-night-v1.webp']
+]){
+ const description=`${period==='day'?'낮':'밤'} 침수 지하차도 밖 높은 도로에 함께 안착한 젖은 레오와 보리.`;
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'character',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle93/root/leo-art-integration.json',description};
+}
+D.eventSceneTimeVariants.rq_leo_task={byBase:Object.fromEntries(
+ ['recruit-leo-follow','recruit-leo-task-wade'].map(key=>
+ [key,{day:'recruit-leo-rescued-day-v1',night:'recruit-leo-rescued-night-v1'}]))};
+
+// Shared road conversations retain their old base keys for historical readers.
+// New clocked presentations distinguish cab, living box and roadside locations.
+for(const [period,key,file,description] of [
+ ['day','comp-minji-conversation-interior-day-v1','assets/scenes/comp-minji-conversation-interior-day-v1.webp','달구지의 닫힌 운전칸 조수석에서 대화를 듣는 민지.'],
+ ['night','comp-minji-conversation-interior-night-v1','assets/scenes/comp-minji-conversation-interior-night-v1.webp','달구지의 닫힌 운전칸 조수석에서 대화를 듣는 민지.'],
+ ['day','comp-minji-conversation-living-day-v1','assets/scenes/comp-minji-conversation-living-day-v1.webp','달구지 생활칸 뒷문과 빗방울 맺힌 창 곁에서 대화하는 민지.'],
+ ['night','comp-minji-conversation-living-night-v1','assets/scenes/comp-minji-conversation-living-night-v1.webp','달구지 생활칸 뒷문과 빗방울 맺힌 창 곁에서 대화하는 민지.'],
+ ['day','comp-minji-conversation-exterior-day-v1','assets/scenes/comp-minji-conversation-exterior-day-v1.webp','정차한 캡오버 달구지 곁에서 이야기하는 민지. 엔진이나 점검 패널은 열려 있지 않다.'],
+ ['night','comp-minji-conversation-exterior-night-v1','assets/scenes/comp-minji-conversation-exterior-night-v1.webp','정차한 캡오버 달구지 곁에서 이야기하는 민지. 엔진이나 점검 패널은 열려 있지 않다.'],
+ ['day','comp-kangwoo-conversation-interior-day-v1','assets/scenes/comp-kangwoo-conversation-interior-day-v1.webp','달구지 생활칸 안에서 옆자리를 비워 두고 앉아 대화하는 강우.'],
+ ['night','comp-kangwoo-conversation-interior-night-v1','assets/scenes/comp-kangwoo-conversation-interior-night-v1.webp','달구지 생활칸 안에서 옆자리를 비워 두고 앉아 대화하는 강우.'],
+ ['day','comp-kangwoo-conversation-exterior-day-v1','assets/scenes/comp-kangwoo-conversation-exterior-day-v1.webp','정차한 캡오버 달구지 곁에서 대화하는 강우.'],
+ ['night','comp-kangwoo-conversation-exterior-night-v1','assets/scenes/comp-kangwoo-conversation-exterior-night-v1.webp','정차한 캡오버 달구지 곁에서 대화하는 강우.']
+]){
+ D.scenes[key]=file;
+ D.sceneDescriptions[key]=`${period==='day'?'낮':'밤'}, ${description}`;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'character',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle93/explorer/art/REVIEW.md',description:D.sceneDescriptions[key]};
+}
+for(const [cid,space,ids] of [
+ ['minji','interior',['talk_mj_05','talk_mj_07','talk_mj_13','talk_mj_15','talk_mj_17','talkr_mj_1','talkr_mj_3']],
+ ['minji','exterior',['talk_mj_01','talk_mj_03','talk_mj_19','talk_mj_21']],
+ ['minji','living',['talk_mj_11']],
+ ['kangwoo','interior',['talk_kw_01','talk_kw_07','talk_kw_09','talk_kw_11','talk_kw_13','talk_kw_15','talk_kw_17','talkr_kw_1','talkr_kw_3']],
+ ['kangwoo','exterior',['talk_kw_03','talk_kw_19','talk_kw_21']]
+])for(const id of ids)D.eventSceneTimeVariants[id]={base:`comp-talk-${cid}-road-v1`,
+ day:`comp-${cid}-conversation-${space}-day-v1`,night:`comp-${cid}-conversation-${space}-night-v1`};
+D.eventSceneTimeVariants.talk_mj_11.outcomeStages=[{afterText:'차에서 내려',
+ day:'comp-minji-conversation-exterior-day-v1',night:'comp-minji-conversation-exterior-night-v1'}];
+
+// Cycle95 revisions belong only to newly opened/paid receipts. A clocked old
+// text-only receipt retains its former selector; captured views always win.
+for(const [key,file,description] of [
+ ['recruit-minji-join-night-v1','assets/scenes/recruit-minji-join-night-v1.webp','밤 달구지 생활칸에서 공구함의 자리를 살피며 동행을 제안하는 민지.'],
+ ['recruit-minji-join-decision-night-v1','assets/scenes/recruit-minji-join-decision-night-v1.webp','밤 생활칸에서 드릴을 켜기 전에 공구함 고정 여부를 묻는 민지.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'character',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle95/root/minji-art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa95',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ revise('rq_minji_join',{byBase:{
+  'recruit-minji-join':{day:'recruit-minji-join',night:'recruit-minji-join-night-v1'},
+  'recruit-minji-join-decision':{day:'recruit-minji-join-decision',night:'recruit-minji-join-decision-night-v1'}
+ }});
+ for(const [space,ids]of [['interior',['talk_kw_08','talk_kw_10']],['exterior',['talk_kw_04','talk_kw_14','talkr_kw_2']]])
+  for(const id of ids)revise(id,{base:'comp-talk-kangwoo-camp-v1',
+   day:`comp-kangwoo-conversation-${space}-day-v1`,night:`comp-kangwoo-conversation-${space}-night-v1`});
+}
+
+for(const [key,file,format,description] of [
+ ['story-jaeyi-container-warehouse-day-v1','assets/scenes/story-jaeyi-container-warehouse-day-v1.webp','place','낮, 세 컨테이너를 연결한 재이 가족 창고 안의 통조림과 기름통, 부품 선반.'],
+ ['story-jaeyi-container-warehouse-night-v1','assets/scenes/story-jaeyi-container-warehouse-night-v1.webp','place','밤, 등잔 아래 이어진 컨테이너 창고의 물자 선반과 열린 안쪽 문.'],
+ ['event-crisis-stationary-cab-day-v1','assets/scenes/event-crisis-stationary-cab-day-v1.webp','detail','낮, 갓길에 정차한 달구지 운전칸과 올린 주차 브레이크, 비어 있는 식량통.'],
+ ['event-crisis-stationary-cab-night-v1','assets/scenes/event-crisis-stationary-cab-night-v1.webp','detail','밤, 갓길에 정차한 달구지 운전칸과 빈 식량통. 운전대를 잡은 손은 없다.'],
+ ['event-crisis-forage-field-edge-day-v1','assets/scenes/event-crisis-forage-field-edge-day-v1.webp','place','낮, 먹을 것을 찾아 살핀 묵은 밭과 참나무 숲 가장자리.'],
+ ['event-crisis-forage-field-edge-night-v1','assets/scenes/event-crisis-forage-field-edge-night-v1.webp','place','밤, 작은 불빛으로 살핀 묵은 밭과 참나무 아래의 땅.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle95/root/crisis-cache-art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa95',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ const stopped={day:'event-crisis-stationary-cab-day-v1',night:'event-crisis-stationary-cab-night-v1'};
+ const driving={base:'event-crisis-exhaustion',day:'event-crisis-exhaustion',night:'event-crisis-exhaustion-night-v1'};
+ for(const [id,afterText]of [
+  ['crisis_drowsy','갓길에 차를 세우고 시트를 젖혔다'],
+  ['crisis_collapse','갓길에 차를 세운 것까지는 기억난다'],
+  ['crisis_collapse2','이번엔 여섯 시간이 지나 있었다']
+ ])revise(id,{...driving,outcomeStages:[{afterText,...stopped}]});
+ revise('crisis_hungry',{base:'event-crisis-exhaustion',...stopped,
+  outcomeStages:['밭이었던 곳에서 야생 감자와 쑥을 캤다','세 시간을 뒤져 도토리 몇 줌'].map(afterText=>({afterText,
+   day:'event-crisis-forage-field-edge-day-v1',night:'event-crisis-forage-field-edge-night-v1'}))});
+ revise('loc_jaeyi_cache',{base:'arrival-jaeyi-cache',
+  day:'story-jaeyi-container-warehouse-day-v1',night:'story-jaeyi-container-warehouse-night-v1'});
+}
+
+// Park's general conversations share neutral interiors; completed physical
+// actions switch only at their own narration beat, never before the choice.
+for(const [key,file,format,description]of [
+ ["comp-parkss-conversation-interior-day-v1", "assets/scenes/comp-parkss-conversation-interior-day-v1.webp", "character", "낮 달구지 생활칸 창 곁에서 대화를 듣는 박 선생. 손과 들고 있는 물건은 화면 밖이다."],
+ ["comp-parkss-conversation-interior-night-v1", "assets/scenes/comp-parkss-conversation-interior-night-v1.webp", "character", "밤 생활칸 창과 등잔 곁에서 대화하는 박 선생. 손과 무릎은 화면 밖이다."],
+ ["comp-parkss-sleep-interior-v1", "assets/scenes/comp-parkss-sleep-interior-v1.webp", "character", "컵을 내려놓은 뒤 생활칸 의자에 앉아 잠든 박 선생."],
+ ["comp-parkss-whitecoat-interior-v1", "assets/scenes/comp-parkss-whitecoat-interior-v1.webp", "character", "생활칸 안에서 낡은 흰 가운을 입고 단추를 잠근 박 선생."],
+ ["comp-parkss-passenger-door-chime-v1", "assets/scenes/comp-parkss-passenger-door-chime-v1.webp", "detail", "달구지 앞 운전칸의 조수석 문에 새로 매단 작은 종."],
+ ["comp-parkss-bag-shoulder-interior-day-v1", "assets/scenes/comp-parkss-bag-shoulder-interior-day-v1.webp", "character", "낮 생활칸에서 닫힌 약가방을 어깨에 고쳐 멘 박 선생."],
+ ["comp-parkss-bag-shoulder-interior-night-v1", "assets/scenes/comp-parkss-bag-shoulder-interior-night-v1.webp", "character", "밤 생활칸에서 닫힌 약가방의 어깨끈을 잡고 이야기하는 박 선생."]
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle95/root/park-art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa95',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ const interior={day:'comp-parkss-conversation-interior-day-v1',night:'comp-parkss-conversation-interior-night-v1'};
+ for(const [base,ids]of [
+  ['comp-talk-parkss-road-v1',['talk_pss_01','talk_pss_03','talk_pss_07','talk_pss_09','talk_pss_11','talk_pss_13','talk_pss_15','talk_pss_17','talk_pss_19','talk_pss_21','talkr_pss_1','talkr_pss_3']],
+  ['comp-talk-parkss-camp-v1',['talk_pss_02','talk_pss_05','talk_pss_06','talk_pss_08','talk_pss_10','talk_pss_12','talk_pss_14','talk_pss_16','talk_pss_20','talkr_pss_2']]
+ ])for(const id of ids)revise(id,{base,...interior});
+ revise('talk_pss_18',{base:'comp-talk-parkss-camp-v1',day:'comp-talk-parkss-camp-day-v1',night:interior.night});
+ for(const [id,afterText,day,night]of [
+  ['talk_pss_05','먼저 코를 골고 있었다','comp-parkss-sleep-interior-v1','comp-parkss-sleep-interior-v1'],
+  ['talk_pss_08','가방을 고쳐 멨다','comp-parkss-bag-shoulder-interior-day-v1','comp-parkss-bag-shoulder-interior-night-v1'],
+  ['talk_pss_17','작은 종을 찾아 조수석 문에 달았다','comp-parkss-passenger-door-chime-v1','comp-parkss-passenger-door-chime-v1'],
+  ['talk_pss_18','종이는 접어 두고','camp-parkss-rest-day-v1',interior.night],
+  ['talk_pss_21','박 선생이 팔을 한쪽씩 넣었다','comp-parkss-whitecoat-interior-v1','comp-parkss-whitecoat-interior-v1']
+ ])D.eventSceneTimeVariants[id].outcomeStages=[{afterText,day,night}];
+}
+
+// QA97: current night scenes and object ownership. Each receipt owns its
+// revision; existing paid views and unmarked text-only histories stay intact.
+for(const [key,file,format,description]of [
+ ['family-verification-key-mounted-night-v1','assets/scenes/family-verification-key-mounted-night-v1.webp','detail','밤 달구지 계기판 안에 아직 배선으로 연결된 부모님의 검증키.'],
+ ['postman-again-bicycle-night-v1','assets/scenes/postman-again-bicycle-night-v1.webp','character','밤 산길에서 짐을 실은 자전거를 붙잡고 다시 만난 우편배달부.'],
+ ['story-generation-theories-cast-night-v1','assets/scenes/story-generation-theories-cast-night-v1.webp','character','밤 폐교 기록실에서 지도와 진료 기록, 전단을 대조하는 세 사람.'],
+ ['route-ridge-rigging-night-v1','assets/scenes/route-ridge-rigging-night-v1.webp','action','밤 능선의 무너진 길 아래 수레를 붙든 견인줄과 정차한 달구지.'],
+ ['route-ridge-safe-night-v1','assets/scenes/route-ridge-safe-night-v1.webp','action','밤 능선 길 위에서 구조를 마친 세 어른과 아이가 달구지 곁에서 숨을 고른다.'],
+ ['story-parent-floor-compartment-detail-v1','assets/scenes/story-parent-floor-compartment-detail-v1.webp','detail','오래된 화물표 두 장을 떼어 낸 달구지 바닥 수납칸의 접착 흔적. 사람과 종이, 검증키는 화면 밖이다.'],
+ ['story-parent-route-envelope-detail-v1','assets/scenes/story-parent-route-envelope-detail-v1.webp','detail','부모님의 분리 절차를 완성하는 뜯긴 두 장과 열린 봉투를 살펴보는 기록 장면.'],
+ ['family-verification-key-detached-detail-v1','assets/scenes/family-verification-key-detached-detail-v1.webp','detail','배선을 모두 분리해 천 위에 내려놓은 검증키와 모듈이 빠져나온 빈 계기판 자리.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle97/root/art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa97',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ for(const id of ['story_family_key','main_recovery_story_family_key'])revise(id,{
+  base:'family-verification-key',day:'family-verification-key',night:'family-verification-key-mounted-night-v1'});
+ revise('postman_again',{base:'postman-again-bicycle-v1',day:'postman-again-bicycle-v1',night:'postman-again-bicycle-night-v1'});
+ revise('story_generation_theories',{base:'story-generation-theories-cast-v1',day:'story-generation-theories-cast-v1',night:'story-generation-theories-cast-night-v1'});
+ for(const id of ['route_ridge_rescue','route_ridge_anchor','route_ridge_extract'])revise(id,{byBase:{
+  'route-ridge-rigging-v2':{day:'route-ridge-rigging-v2',night:'route-ridge-rigging-night-v1'},
+  'route-ridge-safe-v2':{day:'route-ridge-safe-v2',night:'route-ridge-safe-night-v1'}
+ }});
+ revise('story_bridge_parent_route',{base:'story-bridge-parent-route-v1',
+  day:'story-parent-floor-compartment-detail-v1',night:'story-parent-floor-compartment-detail-v1'});
+ for(const [id,base]of [
+  ['story_parent_route_shared','story-bridge-parent-route-v1'],
+  ['story_parent_route_guarded','story-personal-cache-v1'],
+  ['main_recovery_story_parent_route_shared','parents-linked-records-v2'],
+  ['main_recovery_story_parent_route_guarded','parents-linked-records-v2']
+ ])revise(id,{base,day:'story-parent-route-envelope-detail-v1',night:'story-parent-route-envelope-detail-v1',
+  outcomeStages:[{afterText:'검증키',day:'family-verification-key-detached-detail-v1',night:'family-verification-key-detached-detail-v1'}]});
+}
+
+// QA99: newly paid action beats; preserved historical selectors and asset bytes.
+for(const [key,file,format,description]of [
+ ["event-filmset-poster-detail-v1", "assets/scenes/event-filmset-poster-detail-v1.webp", "detail", "낡은 버스정류장에 남은 사극 장군 포스터와 눈 옆에 덧그린 화살표."],
+ ["event-human-retrieval-team-night-v1", "assets/scenes/event-human-retrieval-team-night-v1.webp", "character", "밤 길가에서 청회색 승합차 안의 여자에게 다가온 네 회수조원."],
+ ["event-retrieval-prayer-day-v1", "assets/scenes/event-retrieval-prayer-day-v1.webp", "action", "낮 정차한 달구지 곁에 무릎을 꿇은 네 회수조원."],
+ ["event-retrieval-prayer-night-v1", "assets/scenes/event-retrieval-prayer-night-v1.webp", "action", "밤 정차한 달구지 곁에 무릎을 꿇은 네 회수조원."],
+ ["event-retrieval-shield-day-v1", "assets/scenes/event-retrieval-shield-day-v1.webp", "action", "낮 차 밖으로 나온 여자와 네 회수조 사이에서 바라본 길가."],
+ ["event-retrieval-shield-night-v1", "assets/scenes/event-retrieval-shield-night-v1.webp", "action", "밤 차 밖으로 나온 여자와 네 회수조 사이에서 바라본 길가."],
+ ["event-retrieval-woman-alone-detail-v1", "assets/scenes/event-retrieval-woman-alone-detail-v1.webp", "character", "회수조가 물러난 뒤 낡은 차체 곁에 홀로 남은 여자. 출입문과 외부 시각은 화면 밖이다."],
+ ["event-retrieval-woman-depart-day-v1", "assets/scenes/event-retrieval-woman-depart-day-v1.webp", "action", "낮 회수조가 떠난 뒤 여자가 혼자 걸어가는 들길."],
+ ["event-retrieval-woman-depart-night-v1", "assets/scenes/event-retrieval-woman-depart-night-v1.webp", "action", "밤 회수조가 떠난 뒤 여자가 혼자 걸어가는 들길."],
+ ["event-postman-solo-night-v1", "assets/scenes/event-postman-solo-night-v1.webp", "character", "밤 길가에서 짐을 실은 자전거 곁에 서서 편지를 내미는 우편배달부."],
+ ["parkss-bag-name-detail-v1", "assets/scenes/parkss-bag-name-detail-v1.webp", "detail", "생활칸의 붕대와 식량상자 곁에 열린 낡은 약가방. 안쪽 이름표와 손잡이가 보인다."],
+ ["crisis-tire-bare-rim-day-v1", "assets/scenes/crisis-tire-bare-rim-day-v1.webp", "detail", "낮 정차한 달구지의 고무 타이어 없이 금속 림만 노면에 닿은 뒷바퀴."],
+ ["crisis-tire-bare-rim-night-v1", "assets/scenes/crisis-tire-bare-rim-night-v1.webp", "detail", "밤 정차한 달구지의 고무 타이어 없이 금속 림만 노면에 닿은 뒷바퀴."],
+ ["crisis-tire-flat-day-v1", "assets/scenes/crisis-tire-flat-day-v1.webp", "detail", "낮 정차한 달구지의 아직 수리하지 않아 주저앉은 뒷타이어."],
+ ["crisis-tire-flat-night-v1", "assets/scenes/crisis-tire-flat-night-v1.webp", "detail", "밤 정차한 달구지의 아직 수리하지 않아 주저앉은 뒷타이어."],
+ ["crisis-tire-patched-day-v1", "assets/scenes/crisis-tire-patched-day-v1.webp", "detail", "낮 정차한 달구지의 작은 고무 패치를 붙여 공기를 채운 뒷타이어."],
+ ["crisis-tire-patched-night-v1", "assets/scenes/crisis-tire-patched-night-v1.webp", "detail", "밤 정차한 달구지의 작은 고무 패치를 붙여 공기를 채운 뒷타이어."],
+ ["crisis-tire-stuffed-day-v1", "assets/scenes/crisis-tire-stuffed-day-v1.webp", "detail", "낮 정차한 달구지의 찢긴 곳에 헝겊과 풀을 채워 임시로 모양을 잡은 뒷타이어."],
+ ["crisis-tire-stuffed-night-v1", "assets/scenes/crisis-tire-stuffed-night-v1.webp", "detail", "밤 정차한 달구지의 찢긴 곳에 헝겊과 풀을 채워 임시로 모양을 잡은 뒷타이어."]
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle99/root/art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa99',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ revise('find_filmset',{base:'event-find-document',day:'event-filmset-poster-detail-v1',night:'event-filmset-poster-detail-v1'});
+ revise('parkss_bag',{base:'parkss-clinic',day:'parkss-bag-name-detail-v1',night:'parkss-bag-name-detail-v1'});
+ revise('meet_postman',{base:'event-postman-solo-v2',day:'event-postman-solo-v2',night:'event-postman-solo-night-v1'});
+ revise('cleaners_recall',{base:'event-human-retrieval-team-v1',day:'event-human-retrieval-team-v1',night:'event-human-retrieval-team-night-v1',
+  outcomeStages:[
+   {afterText:'말없이 여자와 회수조 사이에 섰다',day:'event-retrieval-shield-day-v1',night:'event-retrieval-shield-night-v1'},
+   {afterText:'넷은 고개를 숙이고',day:'event-retrieval-woman-alone-detail-v1',night:'event-retrieval-woman-alone-detail-v1'},
+   {afterText:'넷이 무릎을 꿇고',day:'event-retrieval-prayer-day-v1',night:'event-retrieval-prayer-night-v1'},
+   {afterText:'발소리가 멀어진 뒤',day:'event-retrieval-woman-depart-day-v1',night:'event-retrieval-woman-depart-night-v1'},
+   {afterText:'회수조는 물러났다',day:'event-retrieval-woman-alone-detail-v1',night:'event-retrieval-woman-alone-detail-v1'}
+  ]});
+ revise('ev_no_spare_tire',{base:'event-crisis-tire',day:'crisis-tire-flat-day-v1',night:'crisis-tire-flat-night-v1',
+  outcomeStages:[
+   {afterText:'터진 타이어에 헝겊과 풀을 꽉꽉 채워 넣었다',day:'crisis-tire-stuffed-day-v1',night:'crisis-tire-stuffed-night-v1'},
+   {afterText:'민지가 펑크 난 자리를 찾아 고무 조각과 접착제로 정교하게 때웠다',day:'crisis-tire-patched-day-v1',night:'crisis-tire-patched-night-v1'},
+   {afterText:'타이어를 포기하고 휠만으로 기어갔다',day:'crisis-tire-bare-rim-day-v1',night:'crisis-tire-bare-rim-night-v1'}
+  ]});
+}
+
+// QA99 Leo: current objects and ownership across all general conversations.
+for(const [key,file,description]of [
+ ["comp-leo-interior-quiet-v1", "assets/scenes/comp-leo-interior-quiet-v1.webp", "생활칸 안에서 대화를 듣는 레오. 손과 악기, 기록은 앞쪽 가구에 가려 보이지 않는다."],
+ ["comp-leo-interior-guitar-v1", "assets/scenes/comp-leo-interior-guitar-v1.webp", "생활칸에 앉아 낡은 기타를 안고 이야기하는 레오."],
+ ["comp-leo-harmonica-v1", "assets/scenes/comp-leo-harmonica-v1.webp", "닫힌 생활칸 안에서 낡은 하모니카를 손안에 들고 바라보는 레오."],
+ ["comp-leo-bori-sleep-v1", "assets/scenes/comp-leo-bori-sleep-v1.webp", "생활칸에서 잠든 보리를 바라보는 레오. 손과 보리의 발은 화면 밖이다."],
+ ["comp-leo-notebook-v1", "assets/scenes/comp-leo-notebook-v1.webp", "생활칸의 작은 탁자에 가사 수첩을 펼쳐 놓고 이야기하는 레오."],
+ ["comp-leo-letter-v1", "assets/scenes/comp-leo-letter-v1.webp", "생활칸 안에서 기타 케이스의 오래된 팬레터를 꺼내 바라보는 레오."],
+ ["comp-leo-guitar-back-v1", "assets/scenes/comp-leo-guitar-back-v1.webp", "생활칸에서 약속을 새긴 낡은 기타의 뒷판을 보여 주는 레오."],
+ ["comp-leo-camp-song-night-v2", "assets/scenes/comp-leo-camp-song-night-v2.webp", "밤 숲길 야영지에서 정차한 달구지와 모닥불 곁에 앉아 노래하는 레오."],
+ ["comp-leo-camp-song-day-v2", "assets/scenes/comp-leo-camp-song-day-v2.webp", "낮 익명의 숲길 야영지에서 정차한 달구지와 모닥불 곁에 앉아 노래하는 레오."]
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'character',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle99/root/art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa99',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ revise("talk_leo_01",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1", "outcomeStages": [{"afterText": "레오가 내 손가락을 지판에 하나씩 얹어줬다.", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_02",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1", "outcomeStages": [{"afterText": "옆에서 작게 키잡이를 불러 봤다.", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"}, {"afterText": "레오가 손가락으로 후보를 세다가 기타 줄을 튕겼다.", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"}]});
+ revise("talk_leo_03",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-harmonica-v1", "night": "comp-leo-harmonica-v1", "outcomeStages": [{"afterText": "레오는 하모니카를 도로 주머니에 넣었다.", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_04",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"});
+ revise("talk_leo_05",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-bori-sleep-v1", "night": "comp-leo-bori-sleep-v1"});
+ revise("talk_leo_06",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"});
+ revise("talk_leo_07",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-notebook-v1", "night": "comp-leo-notebook-v1", "outcomeStages": [{"afterText": "레오가 수첩을 덮었다.", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_08",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-harmonica-v1", "night": "comp-leo-harmonica-v1", "outcomeStages": [{"afterText": "레오가 기타 줄을 골랐다.", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"}]});
+ revise("talk_leo_09",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"});
+ revise("talk_leo_10",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"});
+ revise("talk_leo_11",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"});
+ revise("talk_leo_12",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-notebook-v1", "night": "comp-leo-notebook-v1"});
+ revise("talk_leo_13",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-letter-v1", "night": "comp-leo-letter-v1", "outcomeStages": [{"afterText": "관객 세 명 시절의 훈장은 사탕 두 개와 이 편지였다.", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_14",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"});
+ revise("talk_leo_15",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"});
+ revise("talk_leo_16",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1", "outcomeStages": [{"afterText": "손가락이 줄에 눌려 아우성쳤지만", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_17",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-bori-sleep-v1", "night": "comp-leo-bori-sleep-v1"});
+ revise("talk_leo_18",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-notebook-v1", "night": "comp-leo-notebook-v1", "outcomeStages": [{"afterText": "레오가 수첩을 뒤로 숨겼다.", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_19",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-camp-song-day-v2", "night": "comp-leo-camp-song-night-v2"});
+ revise("talk_leo_20",{"base": "comp-talk-leo-camp-v1", "day": "comp-leo-notebook-v1", "night": "comp-leo-notebook-v1", "outcomeStages": [{"afterText": "레오가 화들짝 수첩을 덮었다.", "day": "comp-leo-interior-quiet-v1", "night": "comp-leo-interior-quiet-v1"}]});
+ revise("talk_leo_21",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-guitar-back-v1", "night": "comp-leo-guitar-back-v1"});
+ revise("talkr_leo_1",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-interior-guitar-v1", "night": "comp-leo-interior-guitar-v1"});
+ revise("talkr_leo_2",{"base": "comp-talk-leo-camp-v1", "day": "camp-leo-rest-day-v1", "night": "camp-leo-rest-night-v1"});
+ revise("talkr_leo_3",{"base": "comp-talk-leo-road-v1", "day": "comp-leo-notebook-v1", "night": "comp-leo-notebook-v1"});
+}
+
+// QA101: current drawer discovery and notebook placement, not the old garage memory.
+for(const [key,file,description] of [
+ ['event-van-receipt-drawer-detail-v1','assets/scenes/event-van-receipt-drawer-detail-v1.webp','달구지 서랍 바닥 틈에 아직 끼어 있는 누런 영수증. 인물·바깥 시각 없이 현재 발견을 보여 준다.'],
+ ['event-van-receipt-notebook-detail-v1','assets/scenes/event-van-receipt-notebook-detail-v1.webp','정비 수첩 첫 장에 보관한 영수증. 서랍에서 옮긴 뒤의 조용한 실내 세부.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'detail',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle101/root/art-integration.json',description};
+}
+{
+ const legacy=D.eventSceneTimeVariants.van_receipt;
+ D.eventSceneTimeVariants.van_receipt={base:'grandfather-garage',
+  day:'event-van-receipt-drawer-detail-v1',night:'event-van-receipt-drawer-detail-v1',
+  outcomeStages:[{afterText:'할아버지의 정비 수첩 첫 장에 영수증을 끼웠다',
+   day:'event-van-receipt-notebook-detail-v1',night:'event-van-receipt-notebook-detail-v1'}],
+  revision:'qa101',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};
+}
+
+// QA101: Eunsu24 props, ownership, actual narration cuts and canonical vehicle.
+for(const [key,file,format,description] of [
+ ["comp-eunsu-conversation-worn-interior-v1", "assets/scenes/comp-eunsu-conversation-worn-interior-v1.webp", "character", "은수가 헤드폰을 쓴 채 차 안에서 대화를 듣는다. 바깥 시각과 다른 동료를 드러내지 않는다."],
+ ["comp-eunsu-conversation-bare-interior-v1", "assets/scenes/comp-eunsu-conversation-bare-interior-v1.webp", "character", "헤드폰을 벗은 은수. 손과 헤드폰은 화면 밖에 있고, 운전실과 생활칸 어느 쪽에도 맞는 중립 실내다."],
+ ["comp-eunsu-headphones-neck-interior-v1", "assets/scenes/comp-eunsu-headphones-neck-interior-v1.webp", "character", "헤드폰을 목에 건 은수가 조용히 이야기를 이어 간다."],
+ ["comp-eunsu-headphones-shared-interior-v1", "assets/scenes/comp-eunsu-headphones-shared-interior-v1.webp", "character", "주인공과 은수가 한 세트의 헤드폰을 한쪽씩 나누어 듣는다."],
+ ["comp-eunsu-notebook-interior-v1", "assets/scenes/comp-eunsu-notebook-interior-v1.webp", "character", "은수가 교신 수첩을 펼치고 기록과 대화 사이에서 펜을 잠시 멈춘다."],
+ ["comp-eunsu-map-interior-v1", "assets/scenes/comp-eunsu-map-interior-v1.webp", "character", "은수가 펼친 지도의 한쪽을 짚으며 다음 여정을 이야기한다."],
+ ["comp-eunsu-radio-dial-detail-v1", "assets/scenes/comp-eunsu-radio-dial-detail-v1.webp", "detail", "낡은 휴대 수신기의 다이얼과 전면. 손과 받침면을 드러내지 않는 실내 세부다."],
+ ["comp-eunsu-bori-interior-v1", "assets/scenes/comp-eunsu-bori-interior-v1.webp", "character", "은수가 곁의 보리를 내려다보며 웃는다. 레오와 보리가 실제 동행하는 대화에서만 쓴다."],
+ ["comp-eunsu-microphone-interior-v1", "assets/scenes/comp-eunsu-microphone-interior-v1.webp", "character", "불투명 창의 운전실에서 은수가 마이크와 컵을 들고 말할 순서를 기다린다."],
+ ["comp-eunsu-carrier-exterior-day-v1", "assets/scenes/comp-eunsu-carrier-exterior-day-v1.webp", "character", "낮, 은수가 캡오버 운전실과 분리 생활칸을 가진 달구지 곁에 선다. 손의 소품은 화면 밖이다."],
+ ["comp-eunsu-carrier-exterior-night-v1", "assets/scenes/comp-eunsu-carrier-exterior-night-v1.webp", "character", "밤, 생활칸의 불빛이 새어 나오는 달구지 곁의 은수. 다른 인물이나 특정 랜드마크는 없다."],
+ ["comp-eunsu-coffee-ground-day-v1", "assets/scenes/comp-eunsu-coffee-ground-day-v1.webp", "character", "낮, 은수가 차 밖에서 컵을 들고 바닥에 나눈 커피를 내려다본다."],
+ ["comp-eunsu-coffee-ground-night-v1", "assets/scenes/comp-eunsu-coffee-ground-night-v1.webp", "character", "밤, 달구지의 생활 불빛 아래에서 은수가 컵을 들고 바닥에 나눈 커피를 내려다본다."],
+ ]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle101/root/art-integration.json',description};
+}
+{
+ const revise=(id,value)=>{const legacy=D.eventSceneTimeVariants[id];D.eventSceneTimeVariants[id]={...value,
+  revision:'qa101',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ revise("talk_es_01",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1", "outcomeStages": [{"afterText": "잡음 사이로 아주 먼 데서 음악이 흘렀다", "day": "comp-eunsu-headphones-shared-interior-v1", "night": "comp-eunsu-headphones-shared-interior-v1"}, {"afterText": "은수가 아쉬워하며 헤드폰을 도로 꼈다", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"}]});
+ revise("talk_es_02",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"});
+ revise("talk_es_03",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1", "outcomeStages": [{"afterText": "은수가 헤드폰을 목에 걸었다", "day": "comp-eunsu-headphones-neck-interior-v1", "night": "comp-eunsu-headphones-neck-interior-v1"}]});
+ revise("talk_es_04",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"});
+ revise("talk_es_05",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1", "outcomeStages": [{"afterText": "은수가 헤드폰을 내려놓았다", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1"}]});
+ revise("talk_es_06",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"});
+ revise("talk_es_07",{"base": "companion-noise-recorder-detail-v1", "day": "companion-noise-recorder-detail-v1", "night": "companion-noise-recorder-detail-v1"});
+ revise("talk_es_08",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1"});
+ revise("talk_es_09",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1", "outcomeStages": [{"afterText": "은수가 헤드폰을 목에 걸었다", "day": "comp-eunsu-headphones-neck-interior-v1", "night": "comp-eunsu-headphones-neck-interior-v1"}, {"afterText": "웃으면서 헤드폰을 다시 썼다", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"}]});
+ revise("talk_es_10",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-map-interior-v1", "night": "comp-eunsu-map-interior-v1"});
+ revise("talk_es_11",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1", "outcomeStages": [{"afterText": "은수가 헤드폰 한쪽을 벗어 내밀었다", "day": "comp-eunsu-headphones-shared-interior-v1", "night": "comp-eunsu-headphones-shared-interior-v1"}, {"afterText": "은수는 헤드폰을 고쳐 쓰고", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"}]});
+ revise("talk_es_12",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"});
+ revise("talk_es_13",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1", "outcomeStages": [{"afterText": "은수가 헤드폰을 도로 썼다", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"}]});
+ revise("talk_es_14",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1", "outcomeStages": [{"afterText": "은수가 헤드폰을 끼고", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"}]});
+ revise("talk_es_15",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-bori-interior-v1", "night": "comp-eunsu-bori-interior-v1", "outcomeStages": [{"afterText": "은수가 교신 일지 한쪽에 짧게 적었다", "day": "comp-eunsu-notebook-interior-v1", "night": "comp-eunsu-notebook-interior-v1"}]});
+ revise("talk_es_16",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1", "outcomeStages": [{"afterText": "은수가 차를 오래 봤다", "day": "comp-eunsu-carrier-exterior-day-v1", "night": "comp-eunsu-carrier-exterior-night-v1"}]});
+ revise("talk_es_17",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-radio-dial-detail-v1", "night": "comp-eunsu-radio-dial-detail-v1"});
+ revise("talk_es_18",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1", "outcomeStages": [{"afterText": "은수가 수첩 귀퉁이에 적어뒀다", "day": "comp-eunsu-notebook-interior-v1", "night": "comp-eunsu-notebook-interior-v1"}]});
+ revise("talk_es_19",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-coffee-ground-day-v1", "night": "comp-eunsu-coffee-ground-night-v1", "outcomeStages": [{"afterText": "은수는 빈 컵 두 개를 함께 받아 챙겼다", "day": "comp-eunsu-carrier-exterior-day-v1", "night": "comp-eunsu-carrier-exterior-night-v1"}]});
+ revise("talk_es_20",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-microphone-interior-v1", "night": "comp-eunsu-microphone-interior-v1", "outcomeStages": [{"afterText": "나는 수신기를 내려놓았다", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1"}]});
+ revise("talk_es_21",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1", "outcomeStages": [{"afterText": "은수가 수신기를 집어 들었다", "day": "comp-eunsu-radio-dial-detail-v1", "night": "comp-eunsu-radio-dial-detail-v1"}, {"afterText": "은수는 수첩을 펴", "day": "comp-eunsu-notebook-interior-v1", "night": "comp-eunsu-notebook-interior-v1"}]});
+ revise("talkr_es_1",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-conversation-bare-interior-v1", "night": "comp-eunsu-conversation-bare-interior-v1", "outcomeStages": [{"afterText": "은수가 수첩에 시각을 적었다", "day": "comp-eunsu-notebook-interior-v1", "night": "comp-eunsu-notebook-interior-v1"}]});
+ revise("talkr_es_2",{"base": "comp-talk-eunsu-camp-v1", "day": "comp-eunsu-conversation-worn-interior-v1", "night": "comp-eunsu-conversation-worn-interior-v1"});
+ revise("talkr_es_3",{"base": "comp-talk-eunsu-road-v1", "day": "comp-eunsu-notebook-interior-v1", "night": "comp-eunsu-notebook-interior-v1"});
+}
+
+// QA103: the empty station precedes its paid office discovery.
+for(const [key,file,description] of [
+ ['explore-station-waiting-room-day-v1','assets/scenes/explore-station-waiting-room-day-v1.webp','낮의 빈 간이역 대합실. 닳은 나무 의자와 풀에 묻힌 철길만 보이고, 인물과 발견 전 의료품은 없다.'],
+ ['explore-station-waiting-room-night-v1','assets/scenes/explore-station-waiting-room-night-v1.webp','밤의 같은 간이역 대합실. 빈 나무 의자 곁 작은 등불, 문밖의 어두운 철길.'],
+ ['explore-station-office-detail-v1','assets/scenes/explore-station-office-detail-v1.webp','역무실 책상 위의 오래된 일지, 열쇠 꾸러미와 닫힌 구급함. 인물이나 꺼낸 의료품은 없다.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:key.includes('office')?'detail':'place',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle103/root/station-art-review.json',description};
+}
+{
+ const legacy=D.eventSceneTimeVariants.exp_station;
+ D.eventSceneTimeVariants.exp_station={base:'event-explore-transit',
+  day:'explore-station-waiting-room-day-v1',night:'explore-station-waiting-room-night-v1',
+  outcomeStages:[{afterText:'역무실에서 역장의 일지를 발견했다',
+   day:'explore-station-office-detail-v1',night:'explore-station-office-detail-v1'}],
+  revision:'qa103',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};
+}
+
+// QA103: authored remembered departures use explicit night/dawn cuts.
+for(const [key,file,description] of [
+ ['camp-thief-roof-night-v2','assets/scenes/camp-thief-roof-night-v2.webp','지난밤 새벽, 분리된 생활칸 지붕의 짐끈을 푸는 도둑 한 명.'],
+ ['camp-thief-after-night-v1','assets/scenes/camp-thief-after-night-v1.webp','도둑이 떠난 뒤의 조용한 달구지와 느슨해진 지붕 짐끈. 인물이나 분기별 전리품은 없다.'],
+ ['camp-thief-after-day-v1','assets/scenes/camp-thief-after-day-v1.webp','다음 아침, 도둑이 사라진 야영지의 달구지. 지붕 짐을 확인하는 시점의 중립 풍경.'],
+ ['camp-scan-cleared-night-v1','assets/scenes/camp-scan-cleared-night-v1.webp','드론이 지나간 뒤의 어두운 야영지. 탐조등과 드론, 모닥불, 실내등은 모두 보이지 않는다.'],
+ ['camp-visitor-empty-night-v1','assets/scenes/camp-visitor-empty-night-v1.webp','노인이 떠난 밤 야영지. 작은 모닥불과 달구지만 남고 방문객은 없다.'],
+ ['camp-visitor-empty-day-v1','assets/scenes/camp-visitor-empty-day-v1.webp','손님이 먼저 떠난 다음 아침. 불씨가 정리된 야영지와 달구지, 빈 자리.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:key==='camp-thief-roof-night-v2'?'action':'place',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle103/root/camp-art-review.json',description};
+}
+{
+ const revise=(id,base,scene,outcomeStages)=>{const legacy=D.eventSceneTimeVariants[id];
+  D.eventSceneTimeVariants[id]={base,scene,authoredMemory:true,outcomeStages,
+   revision:'qa103',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};};
+ revise('camp_thief','camp-roof-thief-v1','camp-thief-roof-night-v2',[
+  {afterText:'그림자가 화들짝 뛰어 어둠으로 사라졌다',scene:'camp-thief-after-night-v1'},
+  {afterText:'도둑이 놀라 훔친 자루를 통째로 떨어뜨리고 도망쳤다',scene:'camp-thief-after-night-v1'},
+  {afterText:'도둑은 훔치려던 것을 내려놓고',scene:'camp-thief-after-night-v1'},
+  {afterText:'이어지다 멀어졌다',scene:'camp-thief-after-night-v1'},
+  {afterText:'아침에 지붕의 짐끈이 풀려 있었다',scene:'camp-thief-after-day-v1'}]);
+ revise('camp_scan','camp-field-searchlight-v1','camp-field-searchlight-v1',[
+  {afterText:'빛기둥이 차 지붕을 스윽— 지나갔다',scene:'camp-scan-cleared-night-v1'},
+  {afterText:'드론은 그냥 갔지만',scene:'camp-scan-cleared-night-v1'},
+  {afterText:'드론이 차를',scene:'camp-scan-cleared-night-v1'}]);
+ revise('camp_visitor','event-meet-community','camp-visitor-night-v1',[
+  {afterText:'아침에 노인은 먼저 떠나며',scene:'camp-visitor-empty-day-v1'},
+  {afterText:'노인은 화내지 않고 어둠 속으로 사라졌다',scene:'camp-visitor-empty-night-v1'}]);
+}
+
+// QA103: Eunsu switches off the receiver and removes headphones before consent.
+{
+ const legacy=D.eventSceneTimeVariants.rq_eunsu_join;
+ D.eventSceneTimeVariants.rq_eunsu_join={byBase:{
+  'recruit-eunsu-join':{day:'comp-eunsu-conversation-worn-interior-v1',night:'comp-eunsu-conversation-worn-interior-v1'},
+  'recruit-eunsu-join-decision':{day:'recruit-eunsu-join-result-day-v1',night:'recruit-eunsu-join-decision'}
+ },entryStages:[{afterText:'은수는 수신기를 끄고 헤드폰을 벗는다',
+  day:'comp-eunsu-conversation-bare-interior-v1',night:'comp-eunsu-conversation-bare-interior-v1'}],
+ revision:'qa103',legacy:JSON.parse(JSON.stringify(legacy))};
+}
+// The separately registered reunion shares the neutral invitation plate, but
+// has no headphone-removal action. Keep its own pre103 selector for old saves.
+{
+ const legacy=D.eventSceneTimeVariants.recruit_reunion_eunsu;
+ D.eventSceneTimeVariants.recruit_reunion_eunsu={byBase:{
+  'recruit-eunsu-join':{day:'comp-eunsu-conversation-worn-interior-v1',night:'comp-eunsu-conversation-worn-interior-v1'},
+  'recruit-eunsu-join-decision':{day:'recruit-eunsu-join-result-day-v1',night:'recruit-eunsu-join-decision'}
+ },revision:'qa103',legacy:JSON.parse(JSON.stringify(legacy))};
+}
+
+// QA105: current ridge observations retain their actual night light.
+{
+ const key='story-ridge-uplink-dishes-night-v1';
+ const description='밤의 북부 국도와 산으로 꺾이는 통신 케이블. 능선 위 수십 접시 안테나가 어두운 하늘을 향한다.';
+ D.scenes[key]='assets/scenes/story-ridge-uplink-dishes-night-v1.webp';
+ D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['story-ridge-uplink-dishes-v1'],format:'place',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle105/root/uplink-art-review.json',description};
+ const legacy=D.eventSceneTimeVariants.ev_uplink;
+ D.eventSceneTimeVariants.ev_uplink={base:'story-ridge-uplink-dishes-v1',
+  day:'story-ridge-uplink-dishes-v1',night:key,revision:'qa105',
+  legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};
+}
+
+// QA105: Leo's waiting invitation and already tied guitar are different states.
+for(const [key,file,format,description] of [
+ ['recruit-leo-market-waiting-day-v3','assets/scenes/recruit-leo-market-waiting-day-v3.webp','character','낮의 광주 대인시장. 레오는 평상에 앉고 붉은 스카프의 보리는 장화 곁 바닥에 있다. 기타와 케이스는 화면 밖이다.'],
+ ['recruit-leo-market-waiting-night-v3','assets/scenes/recruit-leo-market-waiting-night-v3.webp','character','밤의 대인시장 모닥불 곁. 레오와 발치의 보리가 기다린다. 다른 동료나 손에 든 악기는 없다.'],
+ ['recruit-leo-market-roof-case-day-v1','assets/scenes/recruit-leo-market-roof-case-day-v1.webp','detail','낮의 시장에 정차한 달구지 지붕. 닫힌 기타 케이스를 짐받이에 묶었고 승객들은 화면 밖이다.'],
+ ['recruit-leo-market-roof-case-night-v1','assets/scenes/recruit-leo-market-roof-case-night-v1.webp','detail','밤 시장 불빛 아래 달구지 짐받이에 안전하게 묶인 기타 케이스. 레오와 보리의 자리는 화면에 드러나지 않는다.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['recruit-leo-daein-market-v2'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle105/root/leo-art-review.json',description};
+}
+{
+ const legacy=D.eventSceneTimeVariants.meet_hitchhiker;
+ D.eventSceneTimeVariants.meet_hitchhiker={base:'recruit-leo-daein-market-v2',
+  day:'recruit-leo-market-waiting-day-v3',night:'recruit-leo-market-waiting-night-v3',
+  outcomeStages:[{afterText:'레오는 기타부터 지붕 끈에 묶었다',
+   day:'recruit-leo-market-roof-case-day-v1',night:'recruit-leo-market-roof-case-night-v1'}],
+  revision:'qa105',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null};
+}
+
+// QA107: remembered departures and current night visits retain separate clocks.
+for(const [key,file,base,format,description] of [
+ ['camp-dogs-returned-can-morning-v1','assets/scenes/camp-dogs-returned-can-morning-v1.webp','camp-stray-dogs-night-v1','detail','들개가 떠난 다음 아침. 달구지 앞 젖은 땅에 비어 있는 통조림 하나가 가지런히 놓였다.'],
+ ['explore-arcade-airhockey-night-v1','assets/scenes/explore-arcade-airhockey-night-v1.webp','explore-arcade-airhockey-v1','character','밤의 전원 없는 오락실. 두 노인이 어두운 창밖을 등지고 에어하키를 한다. 기계와 거리 전등은 꺼져 있다.'],
+ ['arrival-sejong-night-v1','assets/scenes/arrival-sejong-night-v1.webp','arrival-sejong','place','깊은 밤의 비어 있는 세종 행정도시. 어두운 청사와 젖은 도로, 달구지의 생활등과 뒷등만 남았다.']
+]){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta[base],format,reference:'',companions:[],
+  references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+   'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp'],
+  size:key==='arrival-sejong-night-v1'?'960x1600':'1024x576',styleId:'caravan-grounded-cinematic-v1',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle107/survival/art-review.json',description};
+}
+{
+ const legacy=D.eventSceneTimeVariants.camp_dogs;
+ D.eventSceneTimeVariants.camp_dogs={base:'camp-stray-dogs-night-v1',scene:'camp-stray-dogs-night-v1',
+  authoredMemory:true,revision:'qa107',legacy:legacy?JSON.parse(JSON.stringify(legacy)):null,
+  outcomeStages:[
+   {afterText:'무리를 물렸다',scene:'camp-thief-after-night-v1'},
+   {afterText:'보리는 아침까지',scene:'camp-visitor-empty-day-v1'},
+   {afterText:'무리가 그쪽으로 몰려간 사이',scene:'camp-thief-after-night-v1'},
+   {afterText:'아침에 보니 빈 깡통',scene:'camp-dogs-returned-can-morning-v1'},
+   {afterText:'들개들이 흩어졌다',scene:'camp-thief-after-night-v1'},
+   {afterText:'들개들은 흩어졌지만',scene:'camp-thief-after-night-v1'}]};
+ for(const [id,base,night] of [
+  ['exp_arcade','explore-arcade-airhockey-v1','explore-arcade-airhockey-night-v1'],
+  ['loc_sejong','arrival-sejong','arrival-sejong-night-v1']
+ ]){
+  const old=D.eventSceneTimeVariants[id];
+  D.eventSceneTimeVariants[id]={base,day:base,night,revision:'qa107',
+   legacy:old?JSON.parse(JSON.stringify(old)):null};
+ }
+}
+
+// QA109: dedicated play-cafe plates and Eunsu's already removed headphones.
+for(const [key,file,base,format,description] of [
+ ['explore-kids-cafe-day-v1','assets/scenes/explore-kids-cafe-day-v1.webp','event-explore-school','place','낮의 먼지 쌓인 키즈카페. 볼풀과 작은 미끄럼틀, 놀이 매트, 장난감과 매점이 남아 있다. 사람은 없다.'],
+ ['explore-kids-cafe-night-v1','assets/scenes/explore-kids-cafe-night-v1.webp','event-explore-school','place','밤의 전원 없는 키즈카페. 어두운 창밖의 빛 아래 볼풀과 미끄럼틀, 매트와 매점이 보인다. 사람은 없다.'],
+ ['recruit-eunsu-join-result-night-v2','assets/scenes/recruit-eunsu-join-result-night-v2.webp','recruit-eunsu-join-decision','character','밤의 달구지 문밖. 은수는 헤드폰을 목에 내리고 닫힌 장비 가방 손잡이를 쥔 채 기다린다. 수신기는 가방 안에 있다.']
+]){
+ const eunsu=key==='recruit-eunsu-join-result-night-v2';
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta[base],format,companions:eunsu?['eunsu']:[],
+  reference:eunsu?'assets/portraits/eunsu.png':'',
+  references:['assets/reference/visual-canon-2026-08-11.png','assets/reference/world-canon-2026-08-11.png',
+   'assets/reference/people-canon-2026-08-11.png','assets/reference/dalguji-technical-canon-2026-08-11.webp',
+   ...(eunsu?['assets/portraits/eunsu.png','assets/portraits/me.png']:[])],
+  vehicleReference:eunsu?['assets/reference/dalguji-technical-canon-2026-08-11.webp']:[],
+  size:'1024x576',styleId:'caravan-grounded-cinematic-v1',
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/qa-cycle-20261026/cycle109/explorer/'+(eunsu?'eunsu-art-review.json':'art-review.json'),description};
+}
+{
+ const old=D.eventSceneTimeVariants.ev_kids_cafe;
+ D.eventSceneTimeVariants.ev_kids_cafe={base:'event-explore-school',
+  day:'explore-kids-cafe-day-v1',night:'explore-kids-cafe-night-v1',revision:'qa109',
+  legacy:old?JSON.parse(JSON.stringify(old)):null};
+ const legacy=JSON.parse(JSON.stringify(D.eventSceneTimeVariants.rq_eunsu_join));
+ D.eventSceneTimeVariants.rq_eunsu_join={...legacy,byBase:{...legacy.byBase,
+  'recruit-eunsu-join-decision':{...legacy.byBase['recruit-eunsu-join-decision'],
+   night:'recruit-eunsu-join-result-night-v2'}},revision:'qa109',legacy};
+}

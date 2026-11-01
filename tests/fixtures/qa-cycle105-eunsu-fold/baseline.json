@@ -1,0 +1,3798 @@
+[
+  {
+    "prev": "facts",
+    "facts": 1,
+    "wait": 0,
+    "min": 600,
+    "entryFile": "facts-600-entry.json",
+    "paidFile": "facts-600-paid.json",
+    "entry": {
+      "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다.\n\n은수가 수신기를 낮추고 기록지를 내 쪽으로 돌린다.\n\n\"왼쪽 칸이 한 줄뿐이에요. 짐작은 여섯 줄이고요. …여섯 줄 다 말씀드릴 필요는 없겠죠?\"",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다."
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 수신기를 낮추고 기록지를 내 쪽으로 돌린다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "왼쪽 칸이 한 줄뿐이에요. 짐작은 여섯 줄이고요. …여섯 줄 다 말씀드릴 필요는 없겠죠?"
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-notebook-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 600
+        }
+      }
+    },
+    "paid": {
+      "text": "\"한 줄부터 들려주세요.\"\n\n\"세 번 울렸어요. 여기까지가 들은 거예요.\"\n\n나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다.",
+      "turns": [
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "한 줄부터 들려주세요."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "세 번 울렸어요. 여기까지가 들은 거예요."
+        },
+        {
+          "kind": "narration",
+          "text": "나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다."
+        }
+      ],
+      "chips": [
+        {
+          "t": "30분 경과",
+          "c": ""
+        },
+        {
+          "t": "은수 유대 +2",
+          "c": "item"
+        },
+        {
+          "t": "은수의 수신 기록 · 새 흔적",
+          "c": "item"
+        }
+      ],
+      "ok": true,
+      "applied": true,
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-notebook-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 630
+        }
+      }
+    },
+    "state": {
+      "day": 7,
+      "min": 630,
+      "food": 10,
+      "water": 18,
+      "fuel": 40,
+      "scrap": 30,
+      "van": 82.19999999999855,
+      "fatigue": 36.025999999999996,
+      "party": [
+        "eunsu"
+      ],
+      "comps": {
+        "minji": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "parkss": {
+          "mood": 76,
+          "bond": 10,
+          "lvl": 2,
+          "perks": [
+            "pss_thrift",
+            "pss_herb"
+          ],
+          "pending": 0,
+          "approach": "medicine"
+        },
+        "kangwoo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "leo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "jaeyi": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "eunsu": {
+          "mood": 65,
+          "bond": 2,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        }
+      },
+      "flags": {
+        "mother_keepsakes": true,
+        "intro_family_helped": true,
+        "intro_appeal_failed": true,
+        "intro_module_seen": true,
+        "intro_workshop_left": true,
+        "recruit_migration_v2": true,
+        "opening_call_answered": true,
+        "main_mission_started": true,
+        "first_order_trace": true,
+        "parent_signature_match": true,
+        "miryang_oldcard": true,
+        "bridge_departure_echo": true,
+        "bridge_trace_gap": true,
+        "jeonju_coldbag": true,
+        "bridge_watched": true,
+        "massacre_known": true,
+        "trace_registry": true,
+        "parents_split_known": true,
+        "route_market_escorted": true,
+        "parents_routes_traced": true,
+        "postman_met": true,
+        "parent_principle_found": true,
+        "armed_age": true,
+        "parent_key_located": true,
+        "daejeon_deployment_card": true,
+        "parent_key_found": true,
+        "main_testimony_record": true,
+        "recall_blocked": true,
+        "bridge_parent_route": true,
+        "bridge_child_voice": true,
+        "bridge_crew_answer": true,
+        "bridge_reason_family": true,
+        "trace_dialect": true,
+        "parkss_approach_drive": true,
+        "trace_theories": true,
+        "trace_route": true,
+        "route_water_left": true,
+        "failed_namsan_known": true
+      },
+      "notes": [
+        {
+          "id": "n0",
+          "type": "장소",
+          "title": "부산 감천 부두",
+          "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n1",
+          "type": "물건",
+          "title": "달구지",
+          "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n2",
+          "type": "인물",
+          "title": "천리안",
+          "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n3",
+          "type": "인물",
+          "title": "부모님",
+          "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n4",
+          "type": "인물",
+          "title": "할아버지",
+          "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+          "links": [
+            "달구지",
+            "부모님"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n5",
+          "type": "출발",
+          "title": "닫고 나온 작업장",
+          "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+          "links": [
+            "달구지",
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n6",
+          "type": "출발",
+          "title": "도윤 가족의 버스",
+          "body": "새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다.",
+          "links": [
+            "도윤의 가족",
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n7",
+          "type": "출발",
+          "title": "남산 주소 옆의 세 이름",
+          "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+          "links": [
+            "도윤의 가족",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n8",
+          "type": "출발",
+          "title": "계기판 속 검증키",
+          "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+          "links": [
+            "엄마의 철제 상자",
+            "부모님",
+            "달구지",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n9",
+          "type": "출발",
+          "title": "맡겨 둔 작업장 열쇠",
+          "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+          "links": [
+            "할아버지",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n10",
+          "type": "소문",
+          "title": "옥상 커피나무",
+          "body": "북쪽 어느 옥상에서 커피를 재배하는 사람이 있다. 트럭 카페 주인 제보.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n11",
+          "type": "장소",
+          "title": "양산 고가차도",
+          "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n12",
+          "type": "본편",
+          "title": "검문소 저장 모듈",
+          "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+          "links": [
+            "부모님",
+            "천리안",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n13",
+          "type": "사건",
+          "title": "부산 터미널의 마지막 불",
+          "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n14",
+          "type": "장소",
+          "title": "밀양 장터",
+          "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n15",
+          "type": "사건",
+          "title": "밀양의 부품 천막",
+          "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+          "links": [
+            "밀양 장터",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n16",
+          "type": "세대의 흔적",
+          "title": "2026년 교통카드 번호표",
+          "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+          "links": [
+            "밀양 장터",
+            "2026년"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n17",
+          "type": "사건",
+          "title": "운전 숙련: 손에 익은 운전사",
+          "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n18",
+          "type": "장소",
+          "title": "합천 과수원",
+          "body": "DAY 1 도착. 주인 잃은 사과나무들이 제멋대로 열매를 맺는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n19",
+          "type": "장소",
+          "title": "거창 분지",
+          "body": "DAY 1 도착. 산으로 둘러싸인 분지. 안개가 자주 고인다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n20",
+          "type": "사건",
+          "title": "가짜 행정소",
+          "body": "관공서를 흉내 낸 통행세 사기. 꺼진 태블릿을 가리키자 물러섰다. 다음 차는 속을지도 모른다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n21",
+          "type": "장소",
+          "title": "남원 광한루",
+          "body": "DAY 2 도착. 무너진 누각 옆에서 누군가 판소리를 연습하고 있었다는 소문.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n22",
+          "type": "사건",
+          "title": "운전 숙련: 베테랑 운전사",
+          "body": "누적 주행 181km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n23",
+          "type": "사건",
+          "title": "구역이라는 말",
+          "body": "무너진 창고 앞에서 회수료를 냈다. 남은 물건보다 허가증이 비쌌다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n24",
+          "type": "장소",
+          "title": "전주 서문 시장",
+          "body": "DAY 2 도착. 서쪽 최대 정착지. 음식 냄새가 나는 마지막 도시.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n25",
+          "type": "세대의 흔적",
+          "title": "문 앞에 놓인 국밥",
+          "body": "2026년 배달 가방이 세대를 지나 아픈 집에 국밥을 나르는 공동 가방으로 쓰였다.",
+          "links": [
+            "전주 서문 시장",
+            "2026년"
+          ],
+          "day": 2
+        },
+        {
+          "id": "n26",
+          "type": "인물",
+          "title": "박 선생",
+          "body": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 따뜻해지기 전에 약을 옮겨야 한다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 의약품을 보탰다. 세 아이 앞에서 누구에게 약을 줄지 고르지 않아도 됐다. 마지막까지 약국을 지켰던 사람. 구하지 못한 환자들의 이름을 전부 기억한다.",
+          "links": [
+            "박 선생",
+            "전주 서문 시장"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n27",
+          "type": "사건",
+          "title": "반복된 마지막 속보",
+          "body": "첫 정리 이후에도 서울 추방 방송은 여러 세대에 걸쳐 반복됐다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n28",
+          "type": "장소",
+          "title": "무주 터널",
+          "body": "DAY 3 도착. 산속 터널에 숨어 사는 공동체. 낯선 이를 반기지 않는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n29",
+          "type": "사건",
+          "title": "운전 숙련: 길의 장인",
+          "body": "누적 주행 300km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n30",
+          "type": "사건",
+          "title": "세 겹의 이송표",
+          "body": "한 집안 세 세대가 서로 다른 서울 구역에서 서로 다른 해에 쫓겨났다. 가설을 답처럼 쓰지 않고 빈 사유란까지 기록했다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n31",
+          "type": "장소",
+          "title": "김천 갈림길",
+          "body": "DAY 3 도착. 고속도로와 국도가 엉키는 곳. 표지판이 전부 뽑혀 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n32",
+          "type": "사건",
+          "title": "김천에서 고른 길: 서쪽 장터길",
+          "body": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n33",
+          "type": "사건",
+          "title": "오지 않은 다음 차",
+          "body": "부모님이 기술 경력에 따라 서로 다른 이송선으로 보내졌음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n34",
+          "type": "사건",
+          "title": "호송 기록: 잠든 자동 검문소",
+          "body": "지형: 좁은 국도와 폐차 차양, 고장 난 차단봉\n처음 목표: 다섯 수레를 기록 없이 통과시킨다\n실패 위험: 행렬이 끊기면 센서가 사람 수를 센다\n행렬 세우기 — 편성: 수레를 달구지 뒤에 한 줄로 묶는다\n센서 속이기 — 교란: 달구지 발전기로 센서 주기를 흐트러뜨린다\n통과시키기 — 인력 릴레이: 짐 높이를 낮추고 전원이 손으로 넘긴다\n결과: 목표 달성. 차체 79/100, 관측 0/5.",
+          "links": [
+            "달구지",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n35",
+          "type": "사건",
+          "title": "두 곳에서 만든 한 절차",
+          "body": "아버지가 남산 유지선에 분리 절차를 나누어 숨겼음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n36",
+          "type": "소문",
+          "title": "우편부의 지름길",
+          "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n37",
+          "type": "사건",
+          "title": "예측은 명령이 아니다",
+          "body": "부모님의 발표 연습 영상에서 엄마의 발언을 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.",
+          "links": [
+            "천리안",
+            "부모님의 검증키"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n38",
+          "type": "사건",
+          "title": "운전 숙련: 로드마스터",
+          "body": "누적 주행 440km. 로드마스터 — 할아버지가 스스로를 그렇게 불렀다. 이제 그 이름이 내 것이 됐다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n39",
+          "type": "장소",
+          "title": "논산 평야",
+          "body": "DAY 3 도착. 끝없는 논. 허수아비들이 아직 서 있다. 어떤 것은 방향이 바뀌어 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n40",
+          "type": "사건",
+          "title": "첫 경고사격",
+          "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n41",
+          "type": "사건",
+          "title": "실행 전 인간 확인",
+          "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+          "links": [
+            "천리안",
+            "할아버지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n42",
+          "type": "장소",
+          "title": "대전 연구단지",
+          "body": "DAY 4 도착. 과학자들의 코뮌. 천리안을 가장 잘 아는 사람들이 남아 있다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n43",
+          "type": "세대의 흔적",
+          "title": "미설치된 마지막 칸",
+          "body": "2026년 TIANYAN 배포 카드에서 교통·의료·전력·행정은 설치됐지만 강제 명령 인간 확인은 비어 있었다.",
+          "links": [
+            "대전 연구단지 코뮌",
+            "천리안",
+            "2026년"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n44",
+          "type": "사건",
+          "title": "부모님이 감춘 상자",
+          "body": "부모님의 원본은 지키고 단서만 장부에 베꼈다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n45",
+          "type": "장소",
+          "title": "청주 방송국",
+          "body": "DAY 4 도착. 송신탑이 꺾인 채 서 있다. 마지막 방송이 뭐였는지 아는 사람은 없다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n46",
+          "type": "사건",
+          "title": "노선 완주: 서쪽 장터길",
+          "body": "김천에서 고른 길을 청주까지 바꾸지 않고 왔다. 보급과 증언을 얻는 대신 연료와 하루를 더 쓴다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n47",
+          "type": "사건",
+          "title": "찢긴 자리에 맞는 종이",
+          "body": "부모님의 분리 절차를 직접 완성하고 검증키를 회수했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n48",
+          "type": "본편",
+          "title": "당사자가 확인한 세 증언",
+          "body": "순옥·태문·지아가 각자의 이송표와 증언을 대조하고 사본 전달에 동의했다. 정정한 문장과 서명이 남아 있다.",
+          "links": [
+            "인간 확인",
+            "서울 추방"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n49",
+          "type": "사건",
+          "title": "기도하는 포위",
+          "body": "회수조는 기도하다 물러났고, 여자는 차에서 내려 혼자 들길로 갔다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+          "links": [
+            "정리자들"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n50",
+          "type": "장소",
+          "title": "영동 포도밭",
+          "body": "DAY 4 도착. 야생화된 포도넝쿨이 도로까지 점령했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n51",
+          "type": "장소",
+          "title": "구미 공단 폐허",
+          "body": "DAY 5 도착. 멈춘 공장들. 굴뚝 하나에서 이유 모를 연기가 오른다.",
+          "links": [],
+          "day": 5
+        },
+        {
+          "id": "n52",
+          "type": "사건",
+          "title": "차가운 채로 건넨 약",
+          "body": "버스에서 꺼낸 냉장 약품을 길가 진료소의 아이 셋에게 전달했다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n53",
+          "type": "사건",
+          "title": "사람 안의 서울",
+          "body": "서울을 본 적 없는 아이는 서울이 어디냐는 질문에 자기 할머니를 가리켰다.",
+          "links": [
+            "서울 추방"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n54",
+          "type": "인물",
+          "title": "박 선생 · 잠깐 내려놓는 가방",
+          "body": "내일의 준비를 나눠 맡고 선생의 몫을 줄인다. 체온표 뒤에 준비를 나눠 맡을 사람의 이름을 적었다. 선생 혼자 들 가방이 아니다.",
+          "links": [
+            "박 선생",
+            "달구지"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n55",
+          "type": "인물",
+          "title": "두 번 세는 버릇",
+          "body": "30년 묵은 결심. 실수는 부끄럽지 않다 — 반복이 부끄럽다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n56",
+          "type": "사건",
+          "title": "빈칸을 둘러싼 세 가설",
+          "body": "물·질병·통제 가설에는 서로 충돌하는 증거가 있다. 이유는 미확정이지만 설명 없이 집행했다는 사실은 남는다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n57",
+          "type": "사건",
+          "title": "북쪽을 향한 물병",
+          "body": "구 이송로에 물을 놓고 「돌아가는 중」이라고 적었다. 남행의 기억 사이에 처음 놓인 북행의 문장.",
+          "links": [
+            "서울 추방",
+            "남산"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n58",
+          "type": "인물",
+          "title": "은수",
+          "body": "대전 연구단지에서 만난 전직 천리안 오퍼레이터. 청주 중계기의 잔류자 좌표 송신을 끝내려 한다.",
+          "links": [
+            "은수",
+            "천리안",
+            "대전 연구단지 코뮌"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n59",
+          "type": "본편",
+          "title": "실패한 남산 진입",
+          "body": "코어를 무작정 끊으면 강제 이송뿐 아니라 급수와 진료도 멈춘다. 집행 권한만 사람에게 돌려놓아야 한다.",
+          "links": [
+            "남산",
+            "천리안",
+            "인간 확인"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n60",
+          "type": "사건",
+          "title": "은수가 끈 중계기",
+          "body": "본망에 들킬 위험을 감수하고 중계기와 저장 좌표를 함께 태웠다.",
+          "links": [
+            "은수",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n61",
+          "type": "본편",
+          "title": "버스가 기다리던 시절",
+          "body": "천리안은 교통과 구조를 도우며 신뢰를 얻었다. 편리함 자체가 아니라, 이후 사라진 인간 확인 절차가 문제였다.",
+          "links": [
+            "천리안",
+            "대중교통"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n62",
+          "type": "장소",
+          "title": "천안 삼거리",
+          "body": "DAY 6 도착. 북쪽으로 갈수록 길이 깨끗해진다. 그게 더 불안하다.",
+          "links": [],
+          "day": 6
+        },
+        {
+          "id": "n63",
+          "type": "인물",
+          "title": "은수 · 물음표 옆의 자리",
+          "body": "확인한 한 줄만 함께 읽고 나머지는 남겨 둔다. 수신 기록을 함께 읽었다. 확인하지 못한 칸은 지우지 않고 접어 두었다.",
+          "links": [
+            "은수",
+            "달구지"
+          ],
+          "day": 7
+        }
+      ],
+      "items": {
+        "부품": 3,
+        "의약품": 0,
+        "탄약": 0,
+        "부모님의 검증키": 1
+      },
+      "seed": 1021307,
+      "impact": {
+        "key": "daejeon:ration_board",
+        "stlId": "daejeon",
+        "actionId": "ration_board",
+        "from": "daejeon",
+        "to": "cheongju",
+        "wx": "fog",
+        "day": 6,
+        "visual": "record",
+        "label": "물 배급 화이트보드",
+        "done": false
+      },
+      "field": {
+        "daily": {
+          "1:miryang:parts": true,
+          "1:miryang:pump": true,
+          "1:miryang:oldcard": true,
+          "2:jeonju:well_chain": true,
+          "2:jeonju:roof_tiles": true,
+          "2:jeonju:coldbag": true,
+          "3:muju:vent_fan": true,
+          "4:daejeon:ration_board": true,
+          "4:daejeon:cell_bank": true,
+          "4:daejeon:deployment_card": true,
+          "6:daejeon:ration_board": true
+        },
+        "once": {
+          "miryang:parts": true,
+          "miryang:oldcard": true,
+          "jeonju:roof_tiles": true,
+          "jeonju:coldbag": true,
+          "muju:vent_fan": true,
+          "daejeon:cell_bank": true,
+          "daejeon:deployment_card": true
+        },
+        "impact": {
+          "miryang:parts": {
+            "day": 1,
+            "min": 886.6
+          },
+          "miryang:pump": {
+            "day": 1,
+            "min": 936.6
+          },
+          "miryang:oldcard": {
+            "day": 1,
+            "min": 961.6
+          },
+          "jeonju:well_chain": {
+            "day": 2,
+            "min": 950.5
+          },
+          "jeonju:roof_tiles": {
+            "day": 2,
+            "min": 980.5
+          },
+          "jeonju:coldbag": {
+            "day": 2,
+            "min": 1040.5
+          },
+          "muju:vent_fan": {
+            "day": 3,
+            "min": 390
+          },
+          "daejeon:ration_board": {
+            "day": 4,
+            "min": 675
+          },
+          "daejeon:cell_bank": {
+            "day": 4,
+            "min": 710
+          },
+          "daejeon:deployment_card": {
+            "day": 4,
+            "min": 780
+          }
+        },
+        "roadEchoed": {},
+        "log": [
+          {
+            "stl": "miryang",
+            "id": "parts",
+            "day": 1,
+            "min": 886.6
+          },
+          {
+            "stl": "miryang",
+            "id": "pump",
+            "day": 1,
+            "min": 936.6
+          },
+          {
+            "stl": "miryang",
+            "id": "oldcard",
+            "day": 1,
+            "min": 961.6
+          },
+          {
+            "stl": "jeonju",
+            "id": "well_chain",
+            "day": 2,
+            "min": 950.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "roof_tiles",
+            "day": 2,
+            "min": 980.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "coldbag",
+            "day": 2,
+            "min": 1040.5
+          },
+          {
+            "stl": "muju",
+            "id": "vent_fan",
+            "day": 3,
+            "min": 390
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 4,
+            "min": 675
+          },
+          {
+            "stl": "daejeon",
+            "id": "cell_bank",
+            "day": 4,
+            "min": 710
+          },
+          {
+            "stl": "daejeon",
+            "id": "deployment_card",
+            "day": 4,
+            "min": 780
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 6,
+            "min": 897
+          }
+        ]
+      }
+    }
+  },
+  {
+    "prev": "facts",
+    "facts": 1,
+    "wait": 0,
+    "min": 1200,
+    "entryFile": "facts-1200-entry.json",
+    "paidFile": "facts-1200-paid.json",
+    "entry": {
+      "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다.\n\n은수가 수신기를 낮추고 기록지를 내 쪽으로 돌린다.\n\n\"왼쪽 칸이 한 줄뿐이에요. 짐작은 여섯 줄이고요. …여섯 줄 다 말씀드릴 필요는 없겠죠?\"",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다."
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 수신기를 낮추고 기록지를 내 쪽으로 돌린다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "왼쪽 칸이 한 줄뿐이에요. 짐작은 여섯 줄이고요. …여섯 줄 다 말씀드릴 필요는 없겠죠?"
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-notebook-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 1200
+        }
+      }
+    },
+    "paid": {
+      "text": "\"한 줄부터 들려주세요.\"\n\n\"세 번 울렸어요. 여기까지가 들은 거예요.\"\n\n나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다.",
+      "turns": [
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "한 줄부터 들려주세요."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "세 번 울렸어요. 여기까지가 들은 거예요."
+        },
+        {
+          "kind": "narration",
+          "text": "나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다."
+        }
+      ],
+      "chips": [
+        {
+          "t": "30분 경과",
+          "c": ""
+        },
+        {
+          "t": "은수 유대 +2",
+          "c": "item"
+        },
+        {
+          "t": "은수의 수신 기록 · 새 흔적",
+          "c": "item"
+        }
+      ],
+      "ok": true,
+      "applied": true,
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-notebook-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 1230
+        }
+      }
+    },
+    "state": {
+      "day": 7,
+      "min": 1230,
+      "food": 9,
+      "water": 18,
+      "fuel": 40,
+      "scrap": 30,
+      "van": 82.19999999999855,
+      "fatigue": 36.025999999999996,
+      "party": [
+        "eunsu"
+      ],
+      "comps": {
+        "minji": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "parkss": {
+          "mood": 76,
+          "bond": 10,
+          "lvl": 2,
+          "perks": [
+            "pss_thrift",
+            "pss_herb"
+          ],
+          "pending": 0,
+          "approach": "medicine"
+        },
+        "kangwoo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "leo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "jaeyi": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "eunsu": {
+          "mood": 65,
+          "bond": 2,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        }
+      },
+      "flags": {
+        "mother_keepsakes": true,
+        "intro_family_helped": true,
+        "intro_appeal_failed": true,
+        "intro_module_seen": true,
+        "intro_workshop_left": true,
+        "recruit_migration_v2": true,
+        "opening_call_answered": true,
+        "main_mission_started": true,
+        "first_order_trace": true,
+        "parent_signature_match": true,
+        "miryang_oldcard": true,
+        "bridge_departure_echo": true,
+        "bridge_trace_gap": true,
+        "jeonju_coldbag": true,
+        "bridge_watched": true,
+        "massacre_known": true,
+        "trace_registry": true,
+        "parents_split_known": true,
+        "route_market_escorted": true,
+        "parents_routes_traced": true,
+        "postman_met": true,
+        "parent_principle_found": true,
+        "armed_age": true,
+        "parent_key_located": true,
+        "daejeon_deployment_card": true,
+        "parent_key_found": true,
+        "main_testimony_record": true,
+        "recall_blocked": true,
+        "bridge_parent_route": true,
+        "bridge_child_voice": true,
+        "bridge_crew_answer": true,
+        "bridge_reason_family": true,
+        "trace_dialect": true,
+        "parkss_approach_drive": true,
+        "trace_theories": true,
+        "trace_route": true,
+        "route_water_left": true,
+        "failed_namsan_known": true
+      },
+      "notes": [
+        {
+          "id": "n0",
+          "type": "장소",
+          "title": "부산 감천 부두",
+          "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n1",
+          "type": "물건",
+          "title": "달구지",
+          "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n2",
+          "type": "인물",
+          "title": "천리안",
+          "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n3",
+          "type": "인물",
+          "title": "부모님",
+          "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n4",
+          "type": "인물",
+          "title": "할아버지",
+          "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+          "links": [
+            "달구지",
+            "부모님"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n5",
+          "type": "출발",
+          "title": "닫고 나온 작업장",
+          "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+          "links": [
+            "달구지",
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n6",
+          "type": "출발",
+          "title": "도윤 가족의 버스",
+          "body": "새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다.",
+          "links": [
+            "도윤의 가족",
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n7",
+          "type": "출발",
+          "title": "남산 주소 옆의 세 이름",
+          "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+          "links": [
+            "도윤의 가족",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n8",
+          "type": "출발",
+          "title": "계기판 속 검증키",
+          "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+          "links": [
+            "엄마의 철제 상자",
+            "부모님",
+            "달구지",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n9",
+          "type": "출발",
+          "title": "맡겨 둔 작업장 열쇠",
+          "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+          "links": [
+            "할아버지",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n10",
+          "type": "소문",
+          "title": "옥상 커피나무",
+          "body": "북쪽 어느 옥상에서 커피를 재배하는 사람이 있다. 트럭 카페 주인 제보.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n11",
+          "type": "장소",
+          "title": "양산 고가차도",
+          "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n12",
+          "type": "본편",
+          "title": "검문소 저장 모듈",
+          "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+          "links": [
+            "부모님",
+            "천리안",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n13",
+          "type": "사건",
+          "title": "부산 터미널의 마지막 불",
+          "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n14",
+          "type": "장소",
+          "title": "밀양 장터",
+          "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n15",
+          "type": "사건",
+          "title": "밀양의 부품 천막",
+          "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+          "links": [
+            "밀양 장터",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n16",
+          "type": "세대의 흔적",
+          "title": "2026년 교통카드 번호표",
+          "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+          "links": [
+            "밀양 장터",
+            "2026년"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n17",
+          "type": "사건",
+          "title": "운전 숙련: 손에 익은 운전사",
+          "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n18",
+          "type": "장소",
+          "title": "합천 과수원",
+          "body": "DAY 1 도착. 주인 잃은 사과나무들이 제멋대로 열매를 맺는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n19",
+          "type": "장소",
+          "title": "거창 분지",
+          "body": "DAY 1 도착. 산으로 둘러싸인 분지. 안개가 자주 고인다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n20",
+          "type": "사건",
+          "title": "가짜 행정소",
+          "body": "관공서를 흉내 낸 통행세 사기. 꺼진 태블릿을 가리키자 물러섰다. 다음 차는 속을지도 모른다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n21",
+          "type": "장소",
+          "title": "남원 광한루",
+          "body": "DAY 2 도착. 무너진 누각 옆에서 누군가 판소리를 연습하고 있었다는 소문.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n22",
+          "type": "사건",
+          "title": "운전 숙련: 베테랑 운전사",
+          "body": "누적 주행 181km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n23",
+          "type": "사건",
+          "title": "구역이라는 말",
+          "body": "무너진 창고 앞에서 회수료를 냈다. 남은 물건보다 허가증이 비쌌다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n24",
+          "type": "장소",
+          "title": "전주 서문 시장",
+          "body": "DAY 2 도착. 서쪽 최대 정착지. 음식 냄새가 나는 마지막 도시.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n25",
+          "type": "세대의 흔적",
+          "title": "문 앞에 놓인 국밥",
+          "body": "2026년 배달 가방이 세대를 지나 아픈 집에 국밥을 나르는 공동 가방으로 쓰였다.",
+          "links": [
+            "전주 서문 시장",
+            "2026년"
+          ],
+          "day": 2
+        },
+        {
+          "id": "n26",
+          "type": "인물",
+          "title": "박 선생",
+          "body": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 따뜻해지기 전에 약을 옮겨야 한다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 의약품을 보탰다. 세 아이 앞에서 누구에게 약을 줄지 고르지 않아도 됐다. 마지막까지 약국을 지켰던 사람. 구하지 못한 환자들의 이름을 전부 기억한다.",
+          "links": [
+            "박 선생",
+            "전주 서문 시장"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n27",
+          "type": "사건",
+          "title": "반복된 마지막 속보",
+          "body": "첫 정리 이후에도 서울 추방 방송은 여러 세대에 걸쳐 반복됐다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n28",
+          "type": "장소",
+          "title": "무주 터널",
+          "body": "DAY 3 도착. 산속 터널에 숨어 사는 공동체. 낯선 이를 반기지 않는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n29",
+          "type": "사건",
+          "title": "운전 숙련: 길의 장인",
+          "body": "누적 주행 300km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n30",
+          "type": "사건",
+          "title": "세 겹의 이송표",
+          "body": "한 집안 세 세대가 서로 다른 서울 구역에서 서로 다른 해에 쫓겨났다. 가설을 답처럼 쓰지 않고 빈 사유란까지 기록했다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n31",
+          "type": "장소",
+          "title": "김천 갈림길",
+          "body": "DAY 3 도착. 고속도로와 국도가 엉키는 곳. 표지판이 전부 뽑혀 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n32",
+          "type": "사건",
+          "title": "김천에서 고른 길: 서쪽 장터길",
+          "body": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n33",
+          "type": "사건",
+          "title": "오지 않은 다음 차",
+          "body": "부모님이 기술 경력에 따라 서로 다른 이송선으로 보내졌음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n34",
+          "type": "사건",
+          "title": "호송 기록: 잠든 자동 검문소",
+          "body": "지형: 좁은 국도와 폐차 차양, 고장 난 차단봉\n처음 목표: 다섯 수레를 기록 없이 통과시킨다\n실패 위험: 행렬이 끊기면 센서가 사람 수를 센다\n행렬 세우기 — 편성: 수레를 달구지 뒤에 한 줄로 묶는다\n센서 속이기 — 교란: 달구지 발전기로 센서 주기를 흐트러뜨린다\n통과시키기 — 인력 릴레이: 짐 높이를 낮추고 전원이 손으로 넘긴다\n결과: 목표 달성. 차체 79/100, 관측 0/5.",
+          "links": [
+            "달구지",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n35",
+          "type": "사건",
+          "title": "두 곳에서 만든 한 절차",
+          "body": "아버지가 남산 유지선에 분리 절차를 나누어 숨겼음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n36",
+          "type": "소문",
+          "title": "우편부의 지름길",
+          "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n37",
+          "type": "사건",
+          "title": "예측은 명령이 아니다",
+          "body": "부모님의 발표 연습 영상에서 엄마의 발언을 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.",
+          "links": [
+            "천리안",
+            "부모님의 검증키"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n38",
+          "type": "사건",
+          "title": "운전 숙련: 로드마스터",
+          "body": "누적 주행 440km. 로드마스터 — 할아버지가 스스로를 그렇게 불렀다. 이제 그 이름이 내 것이 됐다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n39",
+          "type": "장소",
+          "title": "논산 평야",
+          "body": "DAY 3 도착. 끝없는 논. 허수아비들이 아직 서 있다. 어떤 것은 방향이 바뀌어 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n40",
+          "type": "사건",
+          "title": "첫 경고사격",
+          "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n41",
+          "type": "사건",
+          "title": "실행 전 인간 확인",
+          "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+          "links": [
+            "천리안",
+            "할아버지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n42",
+          "type": "장소",
+          "title": "대전 연구단지",
+          "body": "DAY 4 도착. 과학자들의 코뮌. 천리안을 가장 잘 아는 사람들이 남아 있다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n43",
+          "type": "세대의 흔적",
+          "title": "미설치된 마지막 칸",
+          "body": "2026년 TIANYAN 배포 카드에서 교통·의료·전력·행정은 설치됐지만 강제 명령 인간 확인은 비어 있었다.",
+          "links": [
+            "대전 연구단지 코뮌",
+            "천리안",
+            "2026년"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n44",
+          "type": "사건",
+          "title": "부모님이 감춘 상자",
+          "body": "부모님의 원본은 지키고 단서만 장부에 베꼈다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n45",
+          "type": "장소",
+          "title": "청주 방송국",
+          "body": "DAY 4 도착. 송신탑이 꺾인 채 서 있다. 마지막 방송이 뭐였는지 아는 사람은 없다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n46",
+          "type": "사건",
+          "title": "노선 완주: 서쪽 장터길",
+          "body": "김천에서 고른 길을 청주까지 바꾸지 않고 왔다. 보급과 증언을 얻는 대신 연료와 하루를 더 쓴다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n47",
+          "type": "사건",
+          "title": "찢긴 자리에 맞는 종이",
+          "body": "부모님의 분리 절차를 직접 완성하고 검증키를 회수했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n48",
+          "type": "본편",
+          "title": "당사자가 확인한 세 증언",
+          "body": "순옥·태문·지아가 각자의 이송표와 증언을 대조하고 사본 전달에 동의했다. 정정한 문장과 서명이 남아 있다.",
+          "links": [
+            "인간 확인",
+            "서울 추방"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n49",
+          "type": "사건",
+          "title": "기도하는 포위",
+          "body": "회수조는 기도하다 물러났고, 여자는 차에서 내려 혼자 들길로 갔다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+          "links": [
+            "정리자들"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n50",
+          "type": "장소",
+          "title": "영동 포도밭",
+          "body": "DAY 4 도착. 야생화된 포도넝쿨이 도로까지 점령했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n51",
+          "type": "장소",
+          "title": "구미 공단 폐허",
+          "body": "DAY 5 도착. 멈춘 공장들. 굴뚝 하나에서 이유 모를 연기가 오른다.",
+          "links": [],
+          "day": 5
+        },
+        {
+          "id": "n52",
+          "type": "사건",
+          "title": "차가운 채로 건넨 약",
+          "body": "버스에서 꺼낸 냉장 약품을 길가 진료소의 아이 셋에게 전달했다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n53",
+          "type": "사건",
+          "title": "사람 안의 서울",
+          "body": "서울을 본 적 없는 아이는 서울이 어디냐는 질문에 자기 할머니를 가리켰다.",
+          "links": [
+            "서울 추방"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n54",
+          "type": "인물",
+          "title": "박 선생 · 잠깐 내려놓는 가방",
+          "body": "내일의 준비를 나눠 맡고 선생의 몫을 줄인다. 체온표 뒤에 준비를 나눠 맡을 사람의 이름을 적었다. 선생 혼자 들 가방이 아니다.",
+          "links": [
+            "박 선생",
+            "달구지"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n55",
+          "type": "인물",
+          "title": "두 번 세는 버릇",
+          "body": "30년 묵은 결심. 실수는 부끄럽지 않다 — 반복이 부끄럽다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n56",
+          "type": "사건",
+          "title": "빈칸을 둘러싼 세 가설",
+          "body": "물·질병·통제 가설에는 서로 충돌하는 증거가 있다. 이유는 미확정이지만 설명 없이 집행했다는 사실은 남는다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n57",
+          "type": "사건",
+          "title": "북쪽을 향한 물병",
+          "body": "구 이송로에 물을 놓고 「돌아가는 중」이라고 적었다. 남행의 기억 사이에 처음 놓인 북행의 문장.",
+          "links": [
+            "서울 추방",
+            "남산"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n58",
+          "type": "인물",
+          "title": "은수",
+          "body": "대전 연구단지에서 만난 전직 천리안 오퍼레이터. 청주 중계기의 잔류자 좌표 송신을 끝내려 한다.",
+          "links": [
+            "은수",
+            "천리안",
+            "대전 연구단지 코뮌"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n59",
+          "type": "본편",
+          "title": "실패한 남산 진입",
+          "body": "코어를 무작정 끊으면 강제 이송뿐 아니라 급수와 진료도 멈춘다. 집행 권한만 사람에게 돌려놓아야 한다.",
+          "links": [
+            "남산",
+            "천리안",
+            "인간 확인"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n60",
+          "type": "사건",
+          "title": "은수가 끈 중계기",
+          "body": "본망에 들킬 위험을 감수하고 중계기와 저장 좌표를 함께 태웠다.",
+          "links": [
+            "은수",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n61",
+          "type": "본편",
+          "title": "버스가 기다리던 시절",
+          "body": "천리안은 교통과 구조를 도우며 신뢰를 얻었다. 편리함 자체가 아니라, 이후 사라진 인간 확인 절차가 문제였다.",
+          "links": [
+            "천리안",
+            "대중교통"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n62",
+          "type": "장소",
+          "title": "천안 삼거리",
+          "body": "DAY 6 도착. 북쪽으로 갈수록 길이 깨끗해진다. 그게 더 불안하다.",
+          "links": [],
+          "day": 6
+        },
+        {
+          "id": "n63",
+          "type": "인물",
+          "title": "은수 · 물음표 옆의 자리",
+          "body": "확인한 한 줄만 함께 읽고 나머지는 남겨 둔다. 수신 기록을 함께 읽었다. 확인하지 못한 칸은 지우지 않고 접어 두었다.",
+          "links": [
+            "은수",
+            "달구지"
+          ],
+          "day": 7
+        }
+      ],
+      "items": {
+        "부품": 3,
+        "의약품": 0,
+        "탄약": 0,
+        "부모님의 검증키": 1
+      },
+      "seed": 1021307,
+      "impact": {
+        "key": "daejeon:ration_board",
+        "stlId": "daejeon",
+        "actionId": "ration_board",
+        "from": "daejeon",
+        "to": "cheongju",
+        "wx": "fog",
+        "day": 6,
+        "visual": "record",
+        "label": "물 배급 화이트보드",
+        "done": false
+      },
+      "field": {
+        "daily": {
+          "1:miryang:parts": true,
+          "1:miryang:pump": true,
+          "1:miryang:oldcard": true,
+          "2:jeonju:well_chain": true,
+          "2:jeonju:roof_tiles": true,
+          "2:jeonju:coldbag": true,
+          "3:muju:vent_fan": true,
+          "4:daejeon:ration_board": true,
+          "4:daejeon:cell_bank": true,
+          "4:daejeon:deployment_card": true,
+          "6:daejeon:ration_board": true
+        },
+        "once": {
+          "miryang:parts": true,
+          "miryang:oldcard": true,
+          "jeonju:roof_tiles": true,
+          "jeonju:coldbag": true,
+          "muju:vent_fan": true,
+          "daejeon:cell_bank": true,
+          "daejeon:deployment_card": true
+        },
+        "impact": {
+          "miryang:parts": {
+            "day": 1,
+            "min": 886.6
+          },
+          "miryang:pump": {
+            "day": 1,
+            "min": 936.6
+          },
+          "miryang:oldcard": {
+            "day": 1,
+            "min": 961.6
+          },
+          "jeonju:well_chain": {
+            "day": 2,
+            "min": 950.5
+          },
+          "jeonju:roof_tiles": {
+            "day": 2,
+            "min": 980.5
+          },
+          "jeonju:coldbag": {
+            "day": 2,
+            "min": 1040.5
+          },
+          "muju:vent_fan": {
+            "day": 3,
+            "min": 390
+          },
+          "daejeon:ration_board": {
+            "day": 4,
+            "min": 675
+          },
+          "daejeon:cell_bank": {
+            "day": 4,
+            "min": 710
+          },
+          "daejeon:deployment_card": {
+            "day": 4,
+            "min": 780
+          }
+        },
+        "roadEchoed": {},
+        "log": [
+          {
+            "stl": "miryang",
+            "id": "parts",
+            "day": 1,
+            "min": 886.6
+          },
+          {
+            "stl": "miryang",
+            "id": "pump",
+            "day": 1,
+            "min": 936.6
+          },
+          {
+            "stl": "miryang",
+            "id": "oldcard",
+            "day": 1,
+            "min": 961.6
+          },
+          {
+            "stl": "jeonju",
+            "id": "well_chain",
+            "day": 2,
+            "min": 950.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "roof_tiles",
+            "day": 2,
+            "min": 980.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "coldbag",
+            "day": 2,
+            "min": 1040.5
+          },
+          {
+            "stl": "muju",
+            "id": "vent_fan",
+            "day": 3,
+            "min": 390
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 4,
+            "min": 675
+          },
+          {
+            "stl": "daejeon",
+            "id": "cell_bank",
+            "day": 4,
+            "min": 710
+          },
+          {
+            "stl": "daejeon",
+            "id": "deployment_card",
+            "day": 4,
+            "min": 780
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 6,
+            "min": 897
+          }
+        ]
+      }
+    }
+  },
+  {
+    "prev": "wait",
+    "facts": 1,
+    "wait": 2,
+    "min": 600,
+    "entryFile": "wait-600-entry.json",
+    "paidFile": "wait-600-paid.json",
+    "entry": {
+      "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다.\n\n은수가 헤드폰을 옆에 내려놓는다. 수신기는 둘 다 들을 만큼만 켜 두었다.\n\n\"오늘 길 얘기부터 해요. 기록에 안 써도 되는 걸로요.\"",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다."
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 헤드폰을 옆에 내려놓는다. 수신기는 둘 다 들을 만큼만 켜 두었다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "오늘 길 얘기부터 해요. 기록에 안 써도 되는 걸로요."
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-conversation-bare-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 600
+        }
+      }
+    },
+    "paid": {
+      "text": "\"한 줄부터 들려주세요.\"\n\n\"세 번 울렸어요. 여기까지가 들은 거예요.\"\n\n나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다.",
+      "turns": [
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "한 줄부터 들려주세요."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "세 번 울렸어요. 여기까지가 들은 거예요."
+        },
+        {
+          "kind": "narration",
+          "text": "나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다."
+        }
+      ],
+      "chips": [
+        {
+          "t": "30분 경과",
+          "c": ""
+        },
+        {
+          "t": "은수 유대 +2",
+          "c": "item"
+        },
+        {
+          "t": "은수의 수신 기록 · 새 흔적",
+          "c": "item"
+        }
+      ],
+      "ok": true,
+      "applied": true,
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-notebook-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 630
+        }
+      }
+    },
+    "state": {
+      "day": 7,
+      "min": 630,
+      "food": 10,
+      "water": 18,
+      "fuel": 40,
+      "scrap": 30,
+      "van": 82.19999999999855,
+      "fatigue": 36.025999999999996,
+      "party": [
+        "eunsu"
+      ],
+      "comps": {
+        "minji": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "parkss": {
+          "mood": 76,
+          "bond": 10,
+          "lvl": 2,
+          "perks": [
+            "pss_thrift",
+            "pss_herb"
+          ],
+          "pending": 0,
+          "approach": "medicine"
+        },
+        "kangwoo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "leo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "jaeyi": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "eunsu": {
+          "mood": 65,
+          "bond": 2,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        }
+      },
+      "flags": {
+        "mother_keepsakes": true,
+        "intro_family_helped": true,
+        "intro_appeal_failed": true,
+        "intro_module_seen": true,
+        "intro_workshop_left": true,
+        "recruit_migration_v2": true,
+        "opening_call_answered": true,
+        "main_mission_started": true,
+        "first_order_trace": true,
+        "parent_signature_match": true,
+        "miryang_oldcard": true,
+        "bridge_departure_echo": true,
+        "bridge_trace_gap": true,
+        "jeonju_coldbag": true,
+        "bridge_watched": true,
+        "massacre_known": true,
+        "trace_registry": true,
+        "parents_split_known": true,
+        "route_market_escorted": true,
+        "parents_routes_traced": true,
+        "postman_met": true,
+        "parent_principle_found": true,
+        "armed_age": true,
+        "parent_key_located": true,
+        "daejeon_deployment_card": true,
+        "parent_key_found": true,
+        "main_testimony_record": true,
+        "recall_blocked": true,
+        "bridge_parent_route": true,
+        "bridge_child_voice": true,
+        "bridge_crew_answer": true,
+        "bridge_reason_family": true,
+        "trace_dialect": true,
+        "parkss_approach_drive": true,
+        "trace_theories": true,
+        "trace_route": true,
+        "route_water_left": true,
+        "failed_namsan_known": true
+      },
+      "notes": [
+        {
+          "id": "n0",
+          "type": "장소",
+          "title": "부산 감천 부두",
+          "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n1",
+          "type": "물건",
+          "title": "달구지",
+          "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n2",
+          "type": "인물",
+          "title": "천리안",
+          "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n3",
+          "type": "인물",
+          "title": "부모님",
+          "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n4",
+          "type": "인물",
+          "title": "할아버지",
+          "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+          "links": [
+            "달구지",
+            "부모님"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n5",
+          "type": "출발",
+          "title": "닫고 나온 작업장",
+          "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+          "links": [
+            "달구지",
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n6",
+          "type": "출발",
+          "title": "도윤 가족의 버스",
+          "body": "새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다.",
+          "links": [
+            "도윤의 가족",
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n7",
+          "type": "출발",
+          "title": "남산 주소 옆의 세 이름",
+          "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+          "links": [
+            "도윤의 가족",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n8",
+          "type": "출발",
+          "title": "계기판 속 검증키",
+          "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+          "links": [
+            "엄마의 철제 상자",
+            "부모님",
+            "달구지",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n9",
+          "type": "출발",
+          "title": "맡겨 둔 작업장 열쇠",
+          "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+          "links": [
+            "할아버지",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n10",
+          "type": "소문",
+          "title": "옥상 커피나무",
+          "body": "북쪽 어느 옥상에서 커피를 재배하는 사람이 있다. 트럭 카페 주인 제보.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n11",
+          "type": "장소",
+          "title": "양산 고가차도",
+          "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n12",
+          "type": "본편",
+          "title": "검문소 저장 모듈",
+          "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+          "links": [
+            "부모님",
+            "천리안",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n13",
+          "type": "사건",
+          "title": "부산 터미널의 마지막 불",
+          "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n14",
+          "type": "장소",
+          "title": "밀양 장터",
+          "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n15",
+          "type": "사건",
+          "title": "밀양의 부품 천막",
+          "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+          "links": [
+            "밀양 장터",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n16",
+          "type": "세대의 흔적",
+          "title": "2026년 교통카드 번호표",
+          "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+          "links": [
+            "밀양 장터",
+            "2026년"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n17",
+          "type": "사건",
+          "title": "운전 숙련: 손에 익은 운전사",
+          "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n18",
+          "type": "장소",
+          "title": "합천 과수원",
+          "body": "DAY 1 도착. 주인 잃은 사과나무들이 제멋대로 열매를 맺는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n19",
+          "type": "장소",
+          "title": "거창 분지",
+          "body": "DAY 1 도착. 산으로 둘러싸인 분지. 안개가 자주 고인다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n20",
+          "type": "사건",
+          "title": "가짜 행정소",
+          "body": "관공서를 흉내 낸 통행세 사기. 꺼진 태블릿을 가리키자 물러섰다. 다음 차는 속을지도 모른다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n21",
+          "type": "장소",
+          "title": "남원 광한루",
+          "body": "DAY 2 도착. 무너진 누각 옆에서 누군가 판소리를 연습하고 있었다는 소문.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n22",
+          "type": "사건",
+          "title": "운전 숙련: 베테랑 운전사",
+          "body": "누적 주행 181km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n23",
+          "type": "사건",
+          "title": "구역이라는 말",
+          "body": "무너진 창고 앞에서 회수료를 냈다. 남은 물건보다 허가증이 비쌌다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n24",
+          "type": "장소",
+          "title": "전주 서문 시장",
+          "body": "DAY 2 도착. 서쪽 최대 정착지. 음식 냄새가 나는 마지막 도시.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n25",
+          "type": "세대의 흔적",
+          "title": "문 앞에 놓인 국밥",
+          "body": "2026년 배달 가방이 세대를 지나 아픈 집에 국밥을 나르는 공동 가방으로 쓰였다.",
+          "links": [
+            "전주 서문 시장",
+            "2026년"
+          ],
+          "day": 2
+        },
+        {
+          "id": "n26",
+          "type": "인물",
+          "title": "박 선생",
+          "body": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 따뜻해지기 전에 약을 옮겨야 한다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 의약품을 보탰다. 세 아이 앞에서 누구에게 약을 줄지 고르지 않아도 됐다. 마지막까지 약국을 지켰던 사람. 구하지 못한 환자들의 이름을 전부 기억한다.",
+          "links": [
+            "박 선생",
+            "전주 서문 시장"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n27",
+          "type": "사건",
+          "title": "반복된 마지막 속보",
+          "body": "첫 정리 이후에도 서울 추방 방송은 여러 세대에 걸쳐 반복됐다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n28",
+          "type": "장소",
+          "title": "무주 터널",
+          "body": "DAY 3 도착. 산속 터널에 숨어 사는 공동체. 낯선 이를 반기지 않는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n29",
+          "type": "사건",
+          "title": "운전 숙련: 길의 장인",
+          "body": "누적 주행 300km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n30",
+          "type": "사건",
+          "title": "세 겹의 이송표",
+          "body": "한 집안 세 세대가 서로 다른 서울 구역에서 서로 다른 해에 쫓겨났다. 가설을 답처럼 쓰지 않고 빈 사유란까지 기록했다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n31",
+          "type": "장소",
+          "title": "김천 갈림길",
+          "body": "DAY 3 도착. 고속도로와 국도가 엉키는 곳. 표지판이 전부 뽑혀 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n32",
+          "type": "사건",
+          "title": "김천에서 고른 길: 서쪽 장터길",
+          "body": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n33",
+          "type": "사건",
+          "title": "오지 않은 다음 차",
+          "body": "부모님이 기술 경력에 따라 서로 다른 이송선으로 보내졌음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n34",
+          "type": "사건",
+          "title": "호송 기록: 잠든 자동 검문소",
+          "body": "지형: 좁은 국도와 폐차 차양, 고장 난 차단봉\n처음 목표: 다섯 수레를 기록 없이 통과시킨다\n실패 위험: 행렬이 끊기면 센서가 사람 수를 센다\n행렬 세우기 — 편성: 수레를 달구지 뒤에 한 줄로 묶는다\n센서 속이기 — 교란: 달구지 발전기로 센서 주기를 흐트러뜨린다\n통과시키기 — 인력 릴레이: 짐 높이를 낮추고 전원이 손으로 넘긴다\n결과: 목표 달성. 차체 79/100, 관측 0/5.",
+          "links": [
+            "달구지",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n35",
+          "type": "사건",
+          "title": "두 곳에서 만든 한 절차",
+          "body": "아버지가 남산 유지선에 분리 절차를 나누어 숨겼음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n36",
+          "type": "소문",
+          "title": "우편부의 지름길",
+          "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n37",
+          "type": "사건",
+          "title": "예측은 명령이 아니다",
+          "body": "부모님의 발표 연습 영상에서 엄마의 발언을 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.",
+          "links": [
+            "천리안",
+            "부모님의 검증키"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n38",
+          "type": "사건",
+          "title": "운전 숙련: 로드마스터",
+          "body": "누적 주행 440km. 로드마스터 — 할아버지가 스스로를 그렇게 불렀다. 이제 그 이름이 내 것이 됐다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n39",
+          "type": "장소",
+          "title": "논산 평야",
+          "body": "DAY 3 도착. 끝없는 논. 허수아비들이 아직 서 있다. 어떤 것은 방향이 바뀌어 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n40",
+          "type": "사건",
+          "title": "첫 경고사격",
+          "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n41",
+          "type": "사건",
+          "title": "실행 전 인간 확인",
+          "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+          "links": [
+            "천리안",
+            "할아버지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n42",
+          "type": "장소",
+          "title": "대전 연구단지",
+          "body": "DAY 4 도착. 과학자들의 코뮌. 천리안을 가장 잘 아는 사람들이 남아 있다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n43",
+          "type": "세대의 흔적",
+          "title": "미설치된 마지막 칸",
+          "body": "2026년 TIANYAN 배포 카드에서 교통·의료·전력·행정은 설치됐지만 강제 명령 인간 확인은 비어 있었다.",
+          "links": [
+            "대전 연구단지 코뮌",
+            "천리안",
+            "2026년"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n44",
+          "type": "사건",
+          "title": "부모님이 감춘 상자",
+          "body": "부모님의 원본은 지키고 단서만 장부에 베꼈다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n45",
+          "type": "장소",
+          "title": "청주 방송국",
+          "body": "DAY 4 도착. 송신탑이 꺾인 채 서 있다. 마지막 방송이 뭐였는지 아는 사람은 없다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n46",
+          "type": "사건",
+          "title": "노선 완주: 서쪽 장터길",
+          "body": "김천에서 고른 길을 청주까지 바꾸지 않고 왔다. 보급과 증언을 얻는 대신 연료와 하루를 더 쓴다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n47",
+          "type": "사건",
+          "title": "찢긴 자리에 맞는 종이",
+          "body": "부모님의 분리 절차를 직접 완성하고 검증키를 회수했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n48",
+          "type": "본편",
+          "title": "당사자가 확인한 세 증언",
+          "body": "순옥·태문·지아가 각자의 이송표와 증언을 대조하고 사본 전달에 동의했다. 정정한 문장과 서명이 남아 있다.",
+          "links": [
+            "인간 확인",
+            "서울 추방"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n49",
+          "type": "사건",
+          "title": "기도하는 포위",
+          "body": "회수조는 기도하다 물러났고, 여자는 차에서 내려 혼자 들길로 갔다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+          "links": [
+            "정리자들"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n50",
+          "type": "장소",
+          "title": "영동 포도밭",
+          "body": "DAY 4 도착. 야생화된 포도넝쿨이 도로까지 점령했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n51",
+          "type": "장소",
+          "title": "구미 공단 폐허",
+          "body": "DAY 5 도착. 멈춘 공장들. 굴뚝 하나에서 이유 모를 연기가 오른다.",
+          "links": [],
+          "day": 5
+        },
+        {
+          "id": "n52",
+          "type": "사건",
+          "title": "차가운 채로 건넨 약",
+          "body": "버스에서 꺼낸 냉장 약품을 길가 진료소의 아이 셋에게 전달했다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n53",
+          "type": "사건",
+          "title": "사람 안의 서울",
+          "body": "서울을 본 적 없는 아이는 서울이 어디냐는 질문에 자기 할머니를 가리켰다.",
+          "links": [
+            "서울 추방"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n54",
+          "type": "인물",
+          "title": "박 선생 · 잠깐 내려놓는 가방",
+          "body": "내일의 준비를 나눠 맡고 선생의 몫을 줄인다. 체온표 뒤에 준비를 나눠 맡을 사람의 이름을 적었다. 선생 혼자 들 가방이 아니다.",
+          "links": [
+            "박 선생",
+            "달구지"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n55",
+          "type": "인물",
+          "title": "두 번 세는 버릇",
+          "body": "30년 묵은 결심. 실수는 부끄럽지 않다 — 반복이 부끄럽다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n56",
+          "type": "사건",
+          "title": "빈칸을 둘러싼 세 가설",
+          "body": "물·질병·통제 가설에는 서로 충돌하는 증거가 있다. 이유는 미확정이지만 설명 없이 집행했다는 사실은 남는다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n57",
+          "type": "사건",
+          "title": "북쪽을 향한 물병",
+          "body": "구 이송로에 물을 놓고 「돌아가는 중」이라고 적었다. 남행의 기억 사이에 처음 놓인 북행의 문장.",
+          "links": [
+            "서울 추방",
+            "남산"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n58",
+          "type": "인물",
+          "title": "은수",
+          "body": "대전 연구단지에서 만난 전직 천리안 오퍼레이터. 청주 중계기의 잔류자 좌표 송신을 끝내려 한다.",
+          "links": [
+            "은수",
+            "천리안",
+            "대전 연구단지 코뮌"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n59",
+          "type": "본편",
+          "title": "실패한 남산 진입",
+          "body": "코어를 무작정 끊으면 강제 이송뿐 아니라 급수와 진료도 멈춘다. 집행 권한만 사람에게 돌려놓아야 한다.",
+          "links": [
+            "남산",
+            "천리안",
+            "인간 확인"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n60",
+          "type": "사건",
+          "title": "은수가 끈 중계기",
+          "body": "본망에 들킬 위험을 감수하고 중계기와 저장 좌표를 함께 태웠다.",
+          "links": [
+            "은수",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n61",
+          "type": "본편",
+          "title": "버스가 기다리던 시절",
+          "body": "천리안은 교통과 구조를 도우며 신뢰를 얻었다. 편리함 자체가 아니라, 이후 사라진 인간 확인 절차가 문제였다.",
+          "links": [
+            "천리안",
+            "대중교통"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n62",
+          "type": "장소",
+          "title": "천안 삼거리",
+          "body": "DAY 6 도착. 북쪽으로 갈수록 길이 깨끗해진다. 그게 더 불안하다.",
+          "links": [],
+          "day": 6
+        },
+        {
+          "id": "n63",
+          "type": "인물",
+          "title": "은수 · 헤드폰을 벗어 둔 시간",
+          "body": "확인한 한 줄만 함께 읽고 나머지는 남겨 둔다. 수신 기록을 함께 읽었다. 확인하지 못한 칸은 지우지 않고 접어 두었다.",
+          "links": [
+            "은수",
+            "달구지"
+          ],
+          "day": 7
+        }
+      ],
+      "items": {
+        "부품": 3,
+        "의약품": 0,
+        "탄약": 0,
+        "부모님의 검증키": 1
+      },
+      "seed": 1021307,
+      "impact": {
+        "key": "daejeon:ration_board",
+        "stlId": "daejeon",
+        "actionId": "ration_board",
+        "from": "daejeon",
+        "to": "cheongju",
+        "wx": "fog",
+        "day": 6,
+        "visual": "record",
+        "label": "물 배급 화이트보드",
+        "done": false
+      },
+      "field": {
+        "daily": {
+          "1:miryang:parts": true,
+          "1:miryang:pump": true,
+          "1:miryang:oldcard": true,
+          "2:jeonju:well_chain": true,
+          "2:jeonju:roof_tiles": true,
+          "2:jeonju:coldbag": true,
+          "3:muju:vent_fan": true,
+          "4:daejeon:ration_board": true,
+          "4:daejeon:cell_bank": true,
+          "4:daejeon:deployment_card": true,
+          "6:daejeon:ration_board": true
+        },
+        "once": {
+          "miryang:parts": true,
+          "miryang:oldcard": true,
+          "jeonju:roof_tiles": true,
+          "jeonju:coldbag": true,
+          "muju:vent_fan": true,
+          "daejeon:cell_bank": true,
+          "daejeon:deployment_card": true
+        },
+        "impact": {
+          "miryang:parts": {
+            "day": 1,
+            "min": 886.6
+          },
+          "miryang:pump": {
+            "day": 1,
+            "min": 936.6
+          },
+          "miryang:oldcard": {
+            "day": 1,
+            "min": 961.6
+          },
+          "jeonju:well_chain": {
+            "day": 2,
+            "min": 950.5
+          },
+          "jeonju:roof_tiles": {
+            "day": 2,
+            "min": 980.5
+          },
+          "jeonju:coldbag": {
+            "day": 2,
+            "min": 1040.5
+          },
+          "muju:vent_fan": {
+            "day": 3,
+            "min": 390
+          },
+          "daejeon:ration_board": {
+            "day": 4,
+            "min": 675
+          },
+          "daejeon:cell_bank": {
+            "day": 4,
+            "min": 710
+          },
+          "daejeon:deployment_card": {
+            "day": 4,
+            "min": 780
+          }
+        },
+        "roadEchoed": {},
+        "log": [
+          {
+            "stl": "miryang",
+            "id": "parts",
+            "day": 1,
+            "min": 886.6
+          },
+          {
+            "stl": "miryang",
+            "id": "pump",
+            "day": 1,
+            "min": 936.6
+          },
+          {
+            "stl": "miryang",
+            "id": "oldcard",
+            "day": 1,
+            "min": 961.6
+          },
+          {
+            "stl": "jeonju",
+            "id": "well_chain",
+            "day": 2,
+            "min": 950.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "roof_tiles",
+            "day": 2,
+            "min": 980.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "coldbag",
+            "day": 2,
+            "min": 1040.5
+          },
+          {
+            "stl": "muju",
+            "id": "vent_fan",
+            "day": 3,
+            "min": 390
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 4,
+            "min": 675
+          },
+          {
+            "stl": "daejeon",
+            "id": "cell_bank",
+            "day": 4,
+            "min": 710
+          },
+          {
+            "stl": "daejeon",
+            "id": "deployment_card",
+            "day": 4,
+            "min": 780
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 6,
+            "min": 897
+          }
+        ]
+      }
+    }
+  },
+  {
+    "prev": "wait",
+    "facts": 1,
+    "wait": 2,
+    "min": 1200,
+    "entryFile": "wait-1200-entry.json",
+    "paidFile": "wait-1200-paid.json",
+    "entry": {
+      "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다.\n\n은수가 헤드폰을 옆에 내려놓는다. 수신기는 둘 다 들을 만큼만 켜 두었다.\n\n\"오늘 길 얘기부터 해요. 기록에 안 써도 되는 걸로요.\"",
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "청주 방송국에서 천안 삼거리까지 온 길을 떠올린다."
+        },
+        {
+          "kind": "narration",
+          "text": "은수가 헤드폰을 옆에 내려놓는다. 수신기는 둘 다 들을 만큼만 켜 두었다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "오늘 길 얘기부터 해요. 기록에 안 써도 되는 걸로요."
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-conversation-bare-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 1200
+        }
+      }
+    },
+    "paid": {
+      "text": "\"한 줄부터 들려주세요.\"\n\n\"세 번 울렸어요. 여기까지가 들은 거예요.\"\n\n나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다.",
+      "turns": [
+        {
+          "kind": "dialogue",
+          "who": "me",
+          "text": "한 줄부터 들려주세요."
+        },
+        {
+          "kind": "dialogue",
+          "who": "eunsu",
+          "text": "세 번 울렸어요. 여기까지가 들은 거예요."
+        },
+        {
+          "kind": "narration",
+          "text": "나는 고개를 끄덕였다. 은수는 다음 설명을 하려다가 종이를 접었다. 접힌 바깥에 물음표가 조금 남았다."
+        }
+      ],
+      "chips": [
+        {
+          "t": "30분 경과",
+          "c": ""
+        },
+        {
+          "t": "은수 유대 +2",
+          "c": "item"
+        },
+        {
+          "t": "은수의 수신 기록 · 새 흔적",
+          "c": "item"
+        }
+      ],
+      "ok": true,
+      "applied": true,
+      "info": {
+        "sceneKeys": [
+          "comp-eunsu-notebook-interior-v1"
+        ],
+        "sceneTime": {
+          "day": 7,
+          "min": 1230
+        }
+      }
+    },
+    "state": {
+      "day": 7,
+      "min": 1230,
+      "food": 9,
+      "water": 18,
+      "fuel": 40,
+      "scrap": 30,
+      "van": 82.19999999999855,
+      "fatigue": 36.025999999999996,
+      "party": [
+        "eunsu"
+      ],
+      "comps": {
+        "minji": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "parkss": {
+          "mood": 76,
+          "bond": 10,
+          "lvl": 2,
+          "perks": [
+            "pss_thrift",
+            "pss_herb"
+          ],
+          "pending": 0,
+          "approach": "medicine"
+        },
+        "kangwoo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "leo": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "jaeyi": {
+          "mood": 65,
+          "bond": 0,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        },
+        "eunsu": {
+          "mood": 65,
+          "bond": 2,
+          "lvl": 0,
+          "perks": [],
+          "pending": 0
+        }
+      },
+      "flags": {
+        "mother_keepsakes": true,
+        "intro_family_helped": true,
+        "intro_appeal_failed": true,
+        "intro_module_seen": true,
+        "intro_workshop_left": true,
+        "recruit_migration_v2": true,
+        "opening_call_answered": true,
+        "main_mission_started": true,
+        "first_order_trace": true,
+        "parent_signature_match": true,
+        "miryang_oldcard": true,
+        "bridge_departure_echo": true,
+        "bridge_trace_gap": true,
+        "jeonju_coldbag": true,
+        "bridge_watched": true,
+        "massacre_known": true,
+        "trace_registry": true,
+        "parents_split_known": true,
+        "route_market_escorted": true,
+        "parents_routes_traced": true,
+        "postman_met": true,
+        "parent_principle_found": true,
+        "armed_age": true,
+        "parent_key_located": true,
+        "daejeon_deployment_card": true,
+        "parent_key_found": true,
+        "main_testimony_record": true,
+        "recall_blocked": true,
+        "bridge_parent_route": true,
+        "bridge_child_voice": true,
+        "bridge_crew_answer": true,
+        "bridge_reason_family": true,
+        "trace_dialect": true,
+        "parkss_approach_drive": true,
+        "trace_theories": true,
+        "trace_route": true,
+        "route_water_left": true,
+        "failed_namsan_known": true
+      },
+      "notes": [
+        {
+          "id": "n0",
+          "type": "장소",
+          "title": "부산 감천 부두",
+          "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n1",
+          "type": "물건",
+          "title": "달구지",
+          "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n2",
+          "type": "인물",
+          "title": "천리안",
+          "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n3",
+          "type": "인물",
+          "title": "부모님",
+          "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n4",
+          "type": "인물",
+          "title": "할아버지",
+          "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+          "links": [
+            "달구지",
+            "부모님"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n5",
+          "type": "출발",
+          "title": "닫고 나온 작업장",
+          "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+          "links": [
+            "달구지",
+            "할아버지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n6",
+          "type": "출발",
+          "title": "도윤 가족의 버스",
+          "body": "새 부품을 써서 유나가 탄 이송 버스의 난방을 빠르게 되살렸다.",
+          "links": [
+            "도윤의 가족",
+            "천리안"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n7",
+          "type": "출발",
+          "title": "남산 주소 옆의 세 이름",
+          "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+          "links": [
+            "도윤의 가족",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n8",
+          "type": "출발",
+          "title": "계기판 속 검증키",
+          "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+          "links": [
+            "엄마의 철제 상자",
+            "부모님",
+            "달구지",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n9",
+          "type": "출발",
+          "title": "맡겨 둔 작업장 열쇠",
+          "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+          "links": [
+            "할아버지",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n10",
+          "type": "소문",
+          "title": "옥상 커피나무",
+          "body": "북쪽 어느 옥상에서 커피를 재배하는 사람이 있다. 트럭 카페 주인 제보.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n11",
+          "type": "장소",
+          "title": "양산 고가차도",
+          "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n12",
+          "type": "본편",
+          "title": "검문소 저장 모듈",
+          "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+          "links": [
+            "부모님",
+            "천리안",
+            "남산"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n13",
+          "type": "사건",
+          "title": "부산 터미널의 마지막 불",
+          "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n14",
+          "type": "장소",
+          "title": "밀양 장터",
+          "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n15",
+          "type": "사건",
+          "title": "밀양의 부품 천막",
+          "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+          "links": [
+            "밀양 장터",
+            "달구지"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n16",
+          "type": "세대의 흔적",
+          "title": "2026년 교통카드 번호표",
+          "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+          "links": [
+            "밀양 장터",
+            "2026년"
+          ],
+          "day": 1
+        },
+        {
+          "id": "n17",
+          "type": "사건",
+          "title": "운전 숙련: 손에 익은 운전사",
+          "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n18",
+          "type": "장소",
+          "title": "합천 과수원",
+          "body": "DAY 1 도착. 주인 잃은 사과나무들이 제멋대로 열매를 맺는다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n19",
+          "type": "장소",
+          "title": "거창 분지",
+          "body": "DAY 1 도착. 산으로 둘러싸인 분지. 안개가 자주 고인다.",
+          "links": [],
+          "day": 1
+        },
+        {
+          "id": "n20",
+          "type": "사건",
+          "title": "가짜 행정소",
+          "body": "관공서를 흉내 낸 통행세 사기. 꺼진 태블릿을 가리키자 물러섰다. 다음 차는 속을지도 모른다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n21",
+          "type": "장소",
+          "title": "남원 광한루",
+          "body": "DAY 2 도착. 무너진 누각 옆에서 누군가 판소리를 연습하고 있었다는 소문.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n22",
+          "type": "사건",
+          "title": "운전 숙련: 베테랑 운전사",
+          "body": "누적 주행 181km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n23",
+          "type": "사건",
+          "title": "구역이라는 말",
+          "body": "무너진 창고 앞에서 회수료를 냈다. 남은 물건보다 허가증이 비쌌다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n24",
+          "type": "장소",
+          "title": "전주 서문 시장",
+          "body": "DAY 2 도착. 서쪽 최대 정착지. 음식 냄새가 나는 마지막 도시.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n25",
+          "type": "세대의 흔적",
+          "title": "문 앞에 놓인 국밥",
+          "body": "2026년 배달 가방이 세대를 지나 아픈 집에 국밥을 나르는 공동 가방으로 쓰였다.",
+          "links": [
+            "전주 서문 시장",
+            "2026년"
+          ],
+          "day": 2
+        },
+        {
+          "id": "n26",
+          "type": "인물",
+          "title": "박 선생",
+          "body": "전주 서문의 진료 버스를 지키던 전직 약사. 구미 쪽 진료소로 따뜻해지기 전에 약을 옮겨야 한다.\n떠나기 전의 일을 함께 끝낸 뒤 달구지에 합류했다. 의약품을 보탰다. 세 아이 앞에서 누구에게 약을 줄지 고르지 않아도 됐다. 마지막까지 약국을 지켰던 사람. 구하지 못한 환자들의 이름을 전부 기억한다.",
+          "links": [
+            "박 선생",
+            "전주 서문 시장"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n27",
+          "type": "사건",
+          "title": "반복된 마지막 속보",
+          "body": "첫 정리 이후에도 서울 추방 방송은 여러 세대에 걸쳐 반복됐다.",
+          "links": [],
+          "day": 2
+        },
+        {
+          "id": "n28",
+          "type": "장소",
+          "title": "무주 터널",
+          "body": "DAY 3 도착. 산속 터널에 숨어 사는 공동체. 낯선 이를 반기지 않는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n29",
+          "type": "사건",
+          "title": "운전 숙련: 길의 장인",
+          "body": "누적 주행 300km. 핸들이 손에 붙는다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n30",
+          "type": "사건",
+          "title": "세 겹의 이송표",
+          "body": "한 집안 세 세대가 서로 다른 서울 구역에서 서로 다른 해에 쫓겨났다. 가설을 답처럼 쓰지 않고 빈 사유란까지 기록했다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n31",
+          "type": "장소",
+          "title": "김천 갈림길",
+          "body": "DAY 3 도착. 고속도로와 국도가 엉키는 곳. 표지판이 전부 뽑혀 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n32",
+          "type": "사건",
+          "title": "김천에서 고른 길: 서쪽 장터길",
+          "body": "약 219km · 멀지만 장터와 보급 거점이 이어지고, 여러 사람의 증언을 싣는다. 청주에서 길이 다시 합쳐질 때까지 이 노선을 간다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n33",
+          "type": "사건",
+          "title": "오지 않은 다음 차",
+          "body": "부모님이 기술 경력에 따라 서로 다른 이송선으로 보내졌음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n34",
+          "type": "사건",
+          "title": "호송 기록: 잠든 자동 검문소",
+          "body": "지형: 좁은 국도와 폐차 차양, 고장 난 차단봉\n처음 목표: 다섯 수레를 기록 없이 통과시킨다\n실패 위험: 행렬이 끊기면 센서가 사람 수를 센다\n행렬 세우기 — 편성: 수레를 달구지 뒤에 한 줄로 묶는다\n센서 속이기 — 교란: 달구지 발전기로 센서 주기를 흐트러뜨린다\n통과시키기 — 인력 릴레이: 짐 높이를 낮추고 전원이 손으로 넘긴다\n결과: 목표 달성. 차체 79/100, 관측 0/5.",
+          "links": [
+            "달구지",
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n35",
+          "type": "사건",
+          "title": "두 곳에서 만든 한 절차",
+          "body": "아버지가 남산 유지선에 분리 절차를 나누어 숨겼음을 확인했다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n36",
+          "type": "소문",
+          "title": "우편부의 지름길",
+          "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n37",
+          "type": "사건",
+          "title": "예측은 명령이 아니다",
+          "body": "부모님의 발표 연습 영상에서 엄마의 발언을 복원했다. 천리안은 사람을 미래 파급으로 평가했고, 부모는 이유 공개·인간 서명·이의 제기를 되돌리려 했다.",
+          "links": [
+            "천리안",
+            "부모님의 검증키"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n38",
+          "type": "사건",
+          "title": "운전 숙련: 로드마스터",
+          "body": "누적 주행 440km. 로드마스터 — 할아버지가 스스로를 그렇게 불렀다. 이제 그 이름이 내 것이 됐다.",
+          "links": [
+            "할아버지"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n39",
+          "type": "장소",
+          "title": "논산 평야",
+          "body": "DAY 3 도착. 끝없는 논. 허수아비들이 아직 서 있다. 어떤 것은 방향이 바뀌어 있다.",
+          "links": [],
+          "day": 3
+        },
+        {
+          "id": "n40",
+          "type": "사건",
+          "title": "첫 경고사격",
+          "body": "위수 구역의 경고탄에 튄 파편이 차 외판을 상하게 했다. 뒤 칸의 고철과 공구를 손 닿는 곳으로 옮겼다.",
+          "links": [
+            "천리안"
+          ],
+          "day": 3
+        },
+        {
+          "id": "n41",
+          "type": "사건",
+          "title": "실행 전 인간 확인",
+          "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+          "links": [
+            "천리안",
+            "할아버지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n42",
+          "type": "장소",
+          "title": "대전 연구단지",
+          "body": "DAY 4 도착. 과학자들의 코뮌. 천리안을 가장 잘 아는 사람들이 남아 있다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n43",
+          "type": "세대의 흔적",
+          "title": "미설치된 마지막 칸",
+          "body": "2026년 TIANYAN 배포 카드에서 교통·의료·전력·행정은 설치됐지만 강제 명령 인간 확인은 비어 있었다.",
+          "links": [
+            "대전 연구단지 코뮌",
+            "천리안",
+            "2026년"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n44",
+          "type": "사건",
+          "title": "부모님이 감춘 상자",
+          "body": "부모님의 원본은 지키고 단서만 장부에 베꼈다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n45",
+          "type": "장소",
+          "title": "청주 방송국",
+          "body": "DAY 4 도착. 송신탑이 꺾인 채 서 있다. 마지막 방송이 뭐였는지 아는 사람은 없다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n46",
+          "type": "사건",
+          "title": "노선 완주: 서쪽 장터길",
+          "body": "김천에서 고른 길을 청주까지 바꾸지 않고 왔다. 보급과 증언을 얻는 대신 연료와 하루를 더 쓴다.",
+          "links": [
+            "달구지"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n47",
+          "type": "사건",
+          "title": "찢긴 자리에 맞는 종이",
+          "body": "부모님의 분리 절차를 직접 완성하고 검증키를 회수했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n48",
+          "type": "본편",
+          "title": "당사자가 확인한 세 증언",
+          "body": "순옥·태문·지아가 각자의 이송표와 증언을 대조하고 사본 전달에 동의했다. 정정한 문장과 서명이 남아 있다.",
+          "links": [
+            "인간 확인",
+            "서울 추방"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n49",
+          "type": "사건",
+          "title": "기도하는 포위",
+          "body": "회수조는 기도하다 물러났고, 여자는 차에서 내려 혼자 들길로 갔다. 차로 돌아와도 기도 소리가 귓가에 남았다.",
+          "links": [
+            "정리자들"
+          ],
+          "day": 4
+        },
+        {
+          "id": "n50",
+          "type": "장소",
+          "title": "영동 포도밭",
+          "body": "DAY 4 도착. 야생화된 포도넝쿨이 도로까지 점령했다.",
+          "links": [],
+          "day": 4
+        },
+        {
+          "id": "n51",
+          "type": "장소",
+          "title": "구미 공단 폐허",
+          "body": "DAY 5 도착. 멈춘 공장들. 굴뚝 하나에서 이유 모를 연기가 오른다.",
+          "links": [],
+          "day": 5
+        },
+        {
+          "id": "n52",
+          "type": "사건",
+          "title": "차가운 채로 건넨 약",
+          "body": "버스에서 꺼낸 냉장 약품을 길가 진료소의 아이 셋에게 전달했다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n53",
+          "type": "사건",
+          "title": "사람 안의 서울",
+          "body": "서울을 본 적 없는 아이는 서울이 어디냐는 질문에 자기 할머니를 가리켰다.",
+          "links": [
+            "서울 추방"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n54",
+          "type": "인물",
+          "title": "박 선생 · 잠깐 내려놓는 가방",
+          "body": "내일의 준비를 나눠 맡고 선생의 몫을 줄인다. 체온표 뒤에 준비를 나눠 맡을 사람의 이름을 적었다. 선생 혼자 들 가방이 아니다.",
+          "links": [
+            "박 선생",
+            "달구지"
+          ],
+          "day": 5
+        },
+        {
+          "id": "n55",
+          "type": "인물",
+          "title": "두 번 세는 버릇",
+          "body": "30년 묵은 결심. 실수는 부끄럽지 않다 — 반복이 부끄럽다.",
+          "links": [
+            "박 선생"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n56",
+          "type": "사건",
+          "title": "빈칸을 둘러싼 세 가설",
+          "body": "물·질병·통제 가설에는 서로 충돌하는 증거가 있다. 이유는 미확정이지만 설명 없이 집행했다는 사실은 남는다.",
+          "links": [
+            "서울 추방",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n57",
+          "type": "사건",
+          "title": "북쪽을 향한 물병",
+          "body": "구 이송로에 물을 놓고 「돌아가는 중」이라고 적었다. 남행의 기억 사이에 처음 놓인 북행의 문장.",
+          "links": [
+            "서울 추방",
+            "남산"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n58",
+          "type": "인물",
+          "title": "은수",
+          "body": "대전 연구단지에서 만난 전직 천리안 오퍼레이터. 청주 중계기의 잔류자 좌표 송신을 끝내려 한다.",
+          "links": [
+            "은수",
+            "천리안",
+            "대전 연구단지 코뮌"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n59",
+          "type": "본편",
+          "title": "실패한 남산 진입",
+          "body": "코어를 무작정 끊으면 강제 이송뿐 아니라 급수와 진료도 멈춘다. 집행 권한만 사람에게 돌려놓아야 한다.",
+          "links": [
+            "남산",
+            "천리안",
+            "인간 확인"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n60",
+          "type": "사건",
+          "title": "은수가 끈 중계기",
+          "body": "본망에 들킬 위험을 감수하고 중계기와 저장 좌표를 함께 태웠다.",
+          "links": [
+            "은수",
+            "천리안"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n61",
+          "type": "본편",
+          "title": "버스가 기다리던 시절",
+          "body": "천리안은 교통과 구조를 도우며 신뢰를 얻었다. 편리함 자체가 아니라, 이후 사라진 인간 확인 절차가 문제였다.",
+          "links": [
+            "천리안",
+            "대중교통"
+          ],
+          "day": 6
+        },
+        {
+          "id": "n62",
+          "type": "장소",
+          "title": "천안 삼거리",
+          "body": "DAY 6 도착. 북쪽으로 갈수록 길이 깨끗해진다. 그게 더 불안하다.",
+          "links": [],
+          "day": 6
+        },
+        {
+          "id": "n63",
+          "type": "인물",
+          "title": "은수 · 헤드폰을 벗어 둔 시간",
+          "body": "확인한 한 줄만 함께 읽고 나머지는 남겨 둔다. 수신 기록을 함께 읽었다. 확인하지 못한 칸은 지우지 않고 접어 두었다.",
+          "links": [
+            "은수",
+            "달구지"
+          ],
+          "day": 7
+        }
+      ],
+      "items": {
+        "부품": 3,
+        "의약품": 0,
+        "탄약": 0,
+        "부모님의 검증키": 1
+      },
+      "seed": 1021307,
+      "impact": {
+        "key": "daejeon:ration_board",
+        "stlId": "daejeon",
+        "actionId": "ration_board",
+        "from": "daejeon",
+        "to": "cheongju",
+        "wx": "fog",
+        "day": 6,
+        "visual": "record",
+        "label": "물 배급 화이트보드",
+        "done": false
+      },
+      "field": {
+        "daily": {
+          "1:miryang:parts": true,
+          "1:miryang:pump": true,
+          "1:miryang:oldcard": true,
+          "2:jeonju:well_chain": true,
+          "2:jeonju:roof_tiles": true,
+          "2:jeonju:coldbag": true,
+          "3:muju:vent_fan": true,
+          "4:daejeon:ration_board": true,
+          "4:daejeon:cell_bank": true,
+          "4:daejeon:deployment_card": true,
+          "6:daejeon:ration_board": true
+        },
+        "once": {
+          "miryang:parts": true,
+          "miryang:oldcard": true,
+          "jeonju:roof_tiles": true,
+          "jeonju:coldbag": true,
+          "muju:vent_fan": true,
+          "daejeon:cell_bank": true,
+          "daejeon:deployment_card": true
+        },
+        "impact": {
+          "miryang:parts": {
+            "day": 1,
+            "min": 886.6
+          },
+          "miryang:pump": {
+            "day": 1,
+            "min": 936.6
+          },
+          "miryang:oldcard": {
+            "day": 1,
+            "min": 961.6
+          },
+          "jeonju:well_chain": {
+            "day": 2,
+            "min": 950.5
+          },
+          "jeonju:roof_tiles": {
+            "day": 2,
+            "min": 980.5
+          },
+          "jeonju:coldbag": {
+            "day": 2,
+            "min": 1040.5
+          },
+          "muju:vent_fan": {
+            "day": 3,
+            "min": 390
+          },
+          "daejeon:ration_board": {
+            "day": 4,
+            "min": 675
+          },
+          "daejeon:cell_bank": {
+            "day": 4,
+            "min": 710
+          },
+          "daejeon:deployment_card": {
+            "day": 4,
+            "min": 780
+          }
+        },
+        "roadEchoed": {},
+        "log": [
+          {
+            "stl": "miryang",
+            "id": "parts",
+            "day": 1,
+            "min": 886.6
+          },
+          {
+            "stl": "miryang",
+            "id": "pump",
+            "day": 1,
+            "min": 936.6
+          },
+          {
+            "stl": "miryang",
+            "id": "oldcard",
+            "day": 1,
+            "min": 961.6
+          },
+          {
+            "stl": "jeonju",
+            "id": "well_chain",
+            "day": 2,
+            "min": 950.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "roof_tiles",
+            "day": 2,
+            "min": 980.5
+          },
+          {
+            "stl": "jeonju",
+            "id": "coldbag",
+            "day": 2,
+            "min": 1040.5
+          },
+          {
+            "stl": "muju",
+            "id": "vent_fan",
+            "day": 3,
+            "min": 390
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 4,
+            "min": 675
+          },
+          {
+            "stl": "daejeon",
+            "id": "cell_bank",
+            "day": 4,
+            "min": 710
+          },
+          {
+            "stl": "daejeon",
+            "id": "deployment_card",
+            "day": 4,
+            "min": 780
+          },
+          {
+            "stl": "daejeon",
+            "id": "ration_board",
+            "day": 6,
+            "min": 897
+          }
+        ]
+      }
+    }
+  }
+]

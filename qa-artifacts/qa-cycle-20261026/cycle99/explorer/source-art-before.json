@@ -1,0 +1,5 @@
+{
+  "file": "assets/scenes/event-crisis-tire.webp",
+  "sha256": "d65d0247fd422af871b0cf3f0b90d44412b2e9b85b62b7aeaafd1688017e4767",
+  "purpose": "Historical generic asset must remain byte-identical; only new ev_no_spare_tire opt-in."
+}

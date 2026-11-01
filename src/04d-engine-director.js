@@ -834,6 +834,7 @@ G.doStlFieldAction = (stlId,actionId)=>{
   state.log.push({stl:stlId,id:action.id,day:S.day,min:S.min});
   G.qualitySettlementAction(stlId);
   if(state.log.length>40) state.log=state.log.slice(-40);
+  if(action.npc) G.markNpcMet(action.npc);
   const chips=G.applyFx(fx);
   if(firstImpact){
     const localNpc=(D.stls[stlId].npcs||[])[0];

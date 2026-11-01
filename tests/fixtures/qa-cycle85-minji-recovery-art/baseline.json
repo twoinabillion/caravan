@@ -1,0 +1,3896 @@
+{
+  "provenance": "Controlled cycle85 interim timed receipts captured after first night-three art registration, before recovery art correction. Derived from unchanged controlled84 fixture. Not a fresh journey.",
+  "origin": "tests/fixtures/qa-cycle85-night-art/rq_minji_task-controlled-entry.json",
+  "originSha256": "b7bb3358de46e156244648c7363509283bdeb021b771d882fd3d79fc9d9c3518",
+  "sourceSha256": "0837f552b55b3e7f02d46b5b035a1dcfb92d4fc0ed9bbae528f138d50da30ae6",
+  "rows": [
+    {
+      "min": 600,
+      "entry": {
+        "file": "interim-600-entry.json",
+        "sha256": "3b4312eb9493127d9301ad2126598392ca0d3cbe66f5a3172517dfc269ff300a",
+        "view": {
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+            },
+            {
+              "kind": "dialogue",
+              "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+              "who": "minji"
+            },
+            {
+              "kind": "narration",
+              "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+            },
+            {
+              "kind": "dialogue",
+              "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+              "who": "minji"
+            }
+          ],
+          "index": 0,
+          "sceneTime": {
+            "day": 4,
+            "min": 600
+          },
+          "knownSpeaker": false,
+          "readingRecord": "",
+          "recordOpen": false,
+          "readingRecordLabel": "",
+          "resultRecordOpen": false,
+          "restoredLineOpen": false,
+          "readerMode": "current",
+          "inspectionId": "",
+          "inspectedIds": [],
+          "sceneKeys": [
+            "recruit-minji-task",
+            "recruit-minji-task-signal"
+          ]
+        },
+        "state": {
+          "day": 4,
+          "min": 600,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 10,
+          "party": [],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": true,
+            "intro_appeal_failed": true,
+            "intro_module_seen": true,
+            "intro_workshop_left": true,
+            "recruit_migration_v2": true,
+            "opening_call_answered": true,
+            "main_mission_started": true,
+            "postman_met": true,
+            "first_order_trace": true,
+            "parent_signature_match": true,
+            "miryang_oldcard": true,
+            "minji_request_heard": true,
+            "bridge_departure_echo": true,
+            "bridge_trace_gap": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "출발",
+              "title": "닫고 나온 작업장",
+              "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+              "links": [
+                "달구지",
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n6",
+              "type": "출발",
+              "title": "도윤 가족의 버스",
+              "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+              "links": [
+                "도윤의 가족",
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n7",
+              "type": "출발",
+              "title": "남산 주소 옆의 세 이름",
+              "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+              "links": [
+                "도윤의 가족",
+                "남산"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n8",
+              "type": "출발",
+              "title": "계기판 속 검증키",
+              "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+              "links": [
+                "엄마의 철제 상자",
+                "부모님",
+                "달구지",
+                "남산"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n9",
+              "type": "출발",
+              "title": "맡겨 둔 작업장 열쇠",
+              "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+              "links": [
+                "할아버지",
+                "달구지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n10",
+              "type": "소문",
+              "title": "우편부의 지름길",
+              "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n11",
+              "type": "장소",
+              "title": "양산 고가차도",
+              "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n12",
+              "type": "본편",
+              "title": "검문소 저장 모듈",
+              "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+              "links": [
+                "부모님",
+                "천리안",
+                "남산"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n13",
+              "type": "사건",
+              "title": "부산 터미널의 마지막 불",
+              "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n14",
+              "type": "장소",
+              "title": "밀양 장터",
+              "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n15",
+              "type": "사건",
+              "title": "밀양의 부품 천막",
+              "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+              "links": [
+                "밀양 장터",
+                "달구지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n16",
+              "type": "세대의 흔적",
+              "title": "2026년 교통카드 번호표",
+              "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+              "links": [
+                "밀양 장터",
+                "2026년"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n17",
+              "type": "인물",
+              "title": "민지",
+              "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+              "links": [
+                "민지",
+                "밀양 장터"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n18",
+              "type": "인물",
+              "title": "민지와 울산까지",
+              "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+              "links": [
+                "민지",
+                "울산 공단"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n19",
+              "type": "사건",
+              "title": "운전 숙련: 손에 익은 운전사",
+              "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n20",
+              "type": "장소",
+              "title": "울산 공업탑",
+              "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+              "links": [],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "seed": 841227,
+          "impact": {
+            "key": "miryang:oldcard",
+            "stlId": "miryang",
+            "actionId": "oldcard",
+            "from": "miryang",
+            "to": "yangsan",
+            "wx": "clear",
+            "day": 1,
+            "visual": "record",
+            "label": "천막 뒤 번호표",
+            "done": false
+          },
+          "field": {
+            "daily": {
+              "1:miryang:parts": true,
+              "1:miryang:pump": true,
+              "1:miryang:oldcard": true
+            },
+            "once": {
+              "miryang:parts": true,
+              "miryang:oldcard": true
+            },
+            "impact": {
+              "miryang:parts": {
+                "day": 1,
+                "min": 876.6
+              },
+              "miryang:pump": {
+                "day": 1,
+                "min": 951.6
+              },
+              "miryang:oldcard": {
+                "day": 1,
+                "min": 976.6
+              }
+            },
+            "roadEchoed": {},
+            "log": [
+              {
+                "stl": "miryang",
+                "id": "parts",
+                "day": 1,
+                "min": 876.6
+              },
+              {
+                "stl": "miryang",
+                "id": "pump",
+                "day": 1,
+                "min": 951.6
+              },
+              {
+                "stl": "miryang",
+                "id": "oldcard",
+                "day": 1,
+                "min": 976.6
+              }
+            ]
+          }
+        }
+      },
+      "outcomes": [
+        {
+          "file": "interim-600-paid-0-0.json",
+          "sha256": "a3d2b445e7cbf7cca4809dd430dbfdf94ce860e4caf8f52a9cfd6517293dcf84",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "윈치가 한 칸씩 울 때마다 차 더미가 숨을 참는다. 민지가 손가락 둘을 접었다. 멈춤. 하나를 폈다. 당김."
+              },
+              {
+                "kind": "narration",
+                "text": "상자가 진흙 위로 빠져나온 순간, 뒤의 차 더미가 주저앉았다. 줄을 거두던 민지가 헐거운 윈치 받침 볼트를 찾아 조였다. 차체에서 나던 떨림이 멎었다. 그제야 상자를 품에 안고 걸쇠를 잡았다 놓고, 다시 잡았다."
+              },
+              {
+                "kind": "narration",
+                "text": "지직— 잡음 뒤로 남자의 목소리."
+              },
+              {
+                "kind": "radio",
+                "text": "민지야, 정오다. 살아 있으면 대답해.",
+                "who": "mingyu",
+                "name": "민규의 녹음"
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 소매 끝으로 눈가를 한 번 훔쳤다. 그러고는 아무 일도 없었다는 얼굴로 진단기의 지도 화면을 켰다. 화면이 들어오고도 손은 한동안 그대로였다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "…발신 좌표부터 봐요. 남아 있으면 찾아갈 수 있으니까. 아니, 있을 수도 있고.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 645
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-collapse"
+            ]
+          },
+          "state": {
+            "day": 4,
+            "min": 645,
+            "food": 23,
+            "water": 27,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 84,
+            "fatigue": 11.9035,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": true,
+              "intro_appeal_failed": true,
+              "intro_module_seen": true,
+              "intro_workshop_left": true,
+              "recruit_migration_v2": true,
+              "opening_call_answered": true,
+              "main_mission_started": true,
+              "postman_met": true,
+              "first_order_trace": true,
+              "parent_signature_match": true,
+              "miryang_oldcard": true,
+              "minji_request_heard": true,
+              "bridge_departure_echo": true,
+              "bridge_trace_gap": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "출발",
+                "title": "닫고 나온 작업장",
+                "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+                "links": [
+                  "달구지",
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n6",
+                "type": "출발",
+                "title": "도윤 가족의 버스",
+                "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+                "links": [
+                  "도윤의 가족",
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n7",
+                "type": "출발",
+                "title": "남산 주소 옆의 세 이름",
+                "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+                "links": [
+                  "도윤의 가족",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n8",
+                "type": "출발",
+                "title": "계기판 속 검증키",
+                "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+                "links": [
+                  "엄마의 철제 상자",
+                  "부모님",
+                  "달구지",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n9",
+                "type": "출발",
+                "title": "맡겨 둔 작업장 열쇠",
+                "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+                "links": [
+                  "할아버지",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n10",
+                "type": "소문",
+                "title": "우편부의 지름길",
+                "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n11",
+                "type": "장소",
+                "title": "양산 고가차도",
+                "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n12",
+                "type": "본편",
+                "title": "검문소 저장 모듈",
+                "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+                "links": [
+                  "부모님",
+                  "천리안",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n13",
+                "type": "사건",
+                "title": "부산 터미널의 마지막 불",
+                "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n14",
+                "type": "장소",
+                "title": "밀양 장터",
+                "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n15",
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n16",
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n17",
+                "type": "인물",
+                "title": "민지",
+                "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+                "links": [
+                  "민지",
+                  "밀양 장터"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n18",
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n19",
+                "type": "사건",
+                "title": "운전 숙련: 손에 익은 운전사",
+                "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n20",
+                "type": "장소",
+                "title": "울산 공업탑",
+                "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n21",
+                "type": "사건",
+                "title": "무너지기 전의 목소리",
+                "body": "폐차장 차 더미 아래서 민규의 진단기와 마지막 정오 신호를 꺼냈다.",
+                "links": [
+                  "민지",
+                  "민규의 신호"
+                ],
+                "day": 4
+              }
+            ],
+            "items": {
+              "부품": 2,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 841227,
+            "impact": {
+              "key": "miryang:oldcard",
+              "stlId": "miryang",
+              "actionId": "oldcard",
+              "from": "miryang",
+              "to": "yangsan",
+              "wx": "clear",
+              "day": 1,
+              "visual": "record",
+              "label": "천막 뒤 번호표",
+              "done": false
+            },
+            "field": {
+              "daily": {
+                "1:miryang:parts": true,
+                "1:miryang:pump": true,
+                "1:miryang:oldcard": true
+              },
+              "once": {
+                "miryang:parts": true,
+                "miryang:oldcard": true
+              },
+              "impact": {
+                "miryang:parts": {
+                  "day": 1,
+                  "min": 876.6
+                },
+                "miryang:pump": {
+                  "day": 1,
+                  "min": 951.6
+                },
+                "miryang:oldcard": {
+                  "day": 1,
+                  "min": 976.6
+                }
+              },
+              "roadEchoed": {},
+              "log": [
+                {
+                  "stl": "miryang",
+                  "id": "parts",
+                  "day": 1,
+                  "min": 876.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "pump",
+                  "day": 1,
+                  "min": 951.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "oldcard",
+                  "day": 1,
+                  "min": 976.6
+                }
+              ]
+            }
+          },
+          "ci": 0,
+          "oi": 0,
+          "result": {
+            "text": "윈치가 한 칸씩 울 때마다 차 더미가 숨을 참는다. 민지가 손가락 둘을 접었다. 멈춤. 하나를 폈다. 당김.\n\n상자가 진흙 위로 빠져나온 순간, 뒤의 차 더미가 주저앉았다. 줄을 거두던 민지가 헐거운 윈치 받침 볼트를 찾아 조였다. 차체에서 나던 떨림이 멎었다. 그제야 상자를 품에 안고 걸쇠를 잡았다 놓고, 다시 잡았다.\n\n지직— 잡음 뒤로 남자의 목소리. \"민지야, 정오다. 살아 있으면 대답해.\"\n\n민지는 소매 끝으로 눈가를 한 번 훔쳤다. 그러고는 아무 일도 없었다는 얼굴로 진단기의 지도 화면을 켰다. 화면이 들어오고도 손은 한동안 그대로였다. \"…발신 좌표부터 봐요. 남아 있으면 찾아갈 수 있으니까. 아니, 있을 수도 있고.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "윈치가 한 칸씩 울 때마다 차 더미가 숨을 참는다. 민지가 손가락 둘을 접었다. 멈춤. 하나를 폈다. 당김."
+              },
+              {
+                "kind": "narration",
+                "text": "상자가 진흙 위로 빠져나온 순간, 뒤의 차 더미가 주저앉았다. 줄을 거두던 민지가 헐거운 윈치 받침 볼트를 찾아 조였다. 차체에서 나던 떨림이 멎었다. 그제야 상자를 품에 안고 걸쇠를 잡았다 놓고, 다시 잡았다."
+              },
+              {
+                "kind": "narration",
+                "text": "지직— 잡음 뒤로 남자의 목소리."
+              },
+              {
+                "kind": "radio",
+                "who": "mingyu",
+                "name": "민규의 녹음",
+                "text": "민지야, 정오다. 살아 있으면 대답해."
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 소매 끝으로 눈가를 한 번 훔쳤다. 그러고는 아무 일도 없었다는 얼굴로 진단기의 지도 화면을 켰다. 화면이 들어오고도 손은 한동안 그대로였다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "…발신 좌표부터 봐요. 남아 있으면 찾아갈 수 있으니까. 아니, 있을 수도 있고."
+              }
+            ],
+            "chips": [
+              {
+                "t": "차체 +2%",
+                "c": "plus"
+              },
+              {
+                "t": "45분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 무너지기 전의 목소리",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "recruit-minji-task-collapse"
+              ],
+              "sceneTime": {
+                "day": 4,
+                "min": 645
+              }
+            }
+          },
+          "history": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 600
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task",
+              "recruit-minji-task-signal"
+            ]
+          }
+        },
+        {
+          "file": "interim-600-paid-1-0.json",
+          "sha256": "50c86d0b20557b3bc01c442a1f7b651489bcf21ff5d2c349d4ef325debcaeed4",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "범퍼와 휠 허브로 도르래를 만들었다. 민지가 숫자를 세었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "하나, 둘.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "우리는 줄을 당겼다. 셋을 세기 전에 차 더미가 내려앉았다. 튄 철판이 달구지 옆문을 때렸다."
+              },
+              {
+                "kind": "narration",
+                "text": "상자는 마지막 한 뼘을 굴러 우리 발 앞에 멈췄다. 안에서 남자의 녹음이 살아났다."
+              },
+              {
+                "kind": "radio",
+                "text": "민지야, 정오다. 살아 있으면 대답해.",
+                "who": "mingyu",
+                "name": "민규의 녹음"
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 상자에 이마를 댄 채 어깨를 한 번 떨었다. 조금 뒤 고개를 들더니 잠금쇠를 확인했다. 이미 확인한 잠금쇠를 다시 확인했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "…이거, 걸쇠가 휘었네요. 펴면 되고. 좌표는— 좌표는 이따 볼래요.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 690
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-collapse"
+            ]
+          },
+          "state": {
+            "day": 4,
+            "min": 690,
+            "food": 23,
+            "water": 27,
+            "fuel": 60,
+            "scrap": 46,
+            "van": 79,
+            "fatigue": 13.806999999999999,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": true,
+              "intro_appeal_failed": true,
+              "intro_module_seen": true,
+              "intro_workshop_left": true,
+              "recruit_migration_v2": true,
+              "opening_call_answered": true,
+              "main_mission_started": true,
+              "postman_met": true,
+              "first_order_trace": true,
+              "parent_signature_match": true,
+              "miryang_oldcard": true,
+              "minji_request_heard": true,
+              "bridge_departure_echo": true,
+              "bridge_trace_gap": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "출발",
+                "title": "닫고 나온 작업장",
+                "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+                "links": [
+                  "달구지",
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n6",
+                "type": "출발",
+                "title": "도윤 가족의 버스",
+                "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+                "links": [
+                  "도윤의 가족",
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n7",
+                "type": "출발",
+                "title": "남산 주소 옆의 세 이름",
+                "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+                "links": [
+                  "도윤의 가족",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n8",
+                "type": "출발",
+                "title": "계기판 속 검증키",
+                "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+                "links": [
+                  "엄마의 철제 상자",
+                  "부모님",
+                  "달구지",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n9",
+                "type": "출발",
+                "title": "맡겨 둔 작업장 열쇠",
+                "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+                "links": [
+                  "할아버지",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n10",
+                "type": "소문",
+                "title": "우편부의 지름길",
+                "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n11",
+                "type": "장소",
+                "title": "양산 고가차도",
+                "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n12",
+                "type": "본편",
+                "title": "검문소 저장 모듈",
+                "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+                "links": [
+                  "부모님",
+                  "천리안",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n13",
+                "type": "사건",
+                "title": "부산 터미널의 마지막 불",
+                "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n14",
+                "type": "장소",
+                "title": "밀양 장터",
+                "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n15",
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n16",
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n17",
+                "type": "인물",
+                "title": "민지",
+                "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+                "links": [
+                  "민지",
+                  "밀양 장터"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n18",
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n19",
+                "type": "사건",
+                "title": "운전 숙련: 손에 익은 운전사",
+                "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n20",
+                "type": "장소",
+                "title": "울산 공업탑",
+                "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n21",
+                "type": "사건",
+                "title": "무너지기 전의 목소리",
+                "body": "임시 도르래로 민규의 진단기를 구했다. 마지막 신호의 좌표를 확인할 길이 열렸다.",
+                "links": [
+                  "민지",
+                  "민규의 신호"
+                ],
+                "day": 4
+              }
+            ],
+            "items": {
+              "부품": 2,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 841227,
+            "impact": {
+              "key": "miryang:oldcard",
+              "stlId": "miryang",
+              "actionId": "oldcard",
+              "from": "miryang",
+              "to": "yangsan",
+              "wx": "clear",
+              "day": 1,
+              "visual": "record",
+              "label": "천막 뒤 번호표",
+              "done": false
+            },
+            "field": {
+              "daily": {
+                "1:miryang:parts": true,
+                "1:miryang:pump": true,
+                "1:miryang:oldcard": true
+              },
+              "once": {
+                "miryang:parts": true,
+                "miryang:oldcard": true
+              },
+              "impact": {
+                "miryang:parts": {
+                  "day": 1,
+                  "min": 876.6
+                },
+                "miryang:pump": {
+                  "day": 1,
+                  "min": 951.6
+                },
+                "miryang:oldcard": {
+                  "day": 1,
+                  "min": 976.6
+                }
+              },
+              "roadEchoed": {},
+              "log": [
+                {
+                  "stl": "miryang",
+                  "id": "parts",
+                  "day": 1,
+                  "min": 876.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "pump",
+                  "day": 1,
+                  "min": 951.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "oldcard",
+                  "day": 1,
+                  "min": 976.6
+                }
+              ]
+            }
+          },
+          "ci": 1,
+          "oi": 0,
+          "result": {
+            "text": "범퍼와 휠 허브로 도르래를 만들었다. 민지가 숫자를 세었다. \"하나, 둘.\"\n\n우리는 줄을 당겼다. 셋을 세기 전에 차 더미가 내려앉았다. 튄 철판이 달구지 옆문을 때렸다.\n\n상자는 마지막 한 뼘을 굴러 우리 발 앞에 멈췄다. 안에서 남자의 녹음이 살아났다.\n\n\"민지야, 정오다. 살아 있으면 대답해.\"\n\n민지는 상자에 이마를 댄 채 어깨를 한 번 떨었다. 조금 뒤 고개를 들더니 잠금쇠를 확인했다. 이미 확인한 잠금쇠를 다시 확인했다.\n\n\"…이거, 걸쇠가 휘었네요. 펴면 되고. 좌표는— 좌표는 이따 볼래요.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "범퍼와 휠 허브로 도르래를 만들었다. 민지가 숫자를 세었다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "하나, 둘."
+              },
+              {
+                "kind": "narration",
+                "text": "우리는 줄을 당겼다. 셋을 세기 전에 차 더미가 내려앉았다. 튄 철판이 달구지 옆문을 때렸다."
+              },
+              {
+                "kind": "narration",
+                "text": "상자는 마지막 한 뼘을 굴러 우리 발 앞에 멈췄다. 안에서 남자의 녹음이 살아났다."
+              },
+              {
+                "kind": "radio",
+                "who": "mingyu",
+                "name": "민규의 녹음",
+                "text": "민지야, 정오다. 살아 있으면 대답해."
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 상자에 이마를 댄 채 어깨를 한 번 떨었다. 조금 뒤 고개를 들더니 잠금쇠를 확인했다. 이미 확인한 잠금쇠를 다시 확인했다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "…이거, 걸쇠가 휘었네요. 펴면 되고. 좌표는— 좌표는 이따 볼래요."
+              }
+            ],
+            "chips": [
+              {
+                "t": "고철 -4",
+                "c": "minus"
+              },
+              {
+                "t": "차체 -3%",
+                "c": "minus"
+              },
+              {
+                "t": "1.5시간 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 무너지기 전의 목소리",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "recruit-minji-task-collapse"
+              ],
+              "sceneTime": {
+                "day": 4,
+                "min": 690
+              }
+            }
+          },
+          "history": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 600
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task",
+              "recruit-minji-task-signal"
+            ]
+          }
+        },
+        {
+          "file": "interim-600-paid-2-0.json",
+          "sha256": "ce33c78cb28c318cd2a03cddc37663965970e5ae2eec76a2760efffd72fbb4f3",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "달구지를 차 더미 바로 앞에 세웠다. 민지가 달구지 앞판을 한 번 쓰다듬는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "미안. 조금 아플 거야.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "견인선이 팽팽해지고, 철판 하나가 생활칸을 긁으며 떨어졌다. 상자는 나왔다. 차체엔 긴 흉터가 남았다."
+              },
+              {
+                "kind": "narration",
+                "text": "진단기에서"
+              },
+              {
+                "kind": "radio",
+                "text": "살아 있으면 대답해",
+                "who": "mingyu",
+                "name": "민규의 녹음"
+              },
+              {
+                "kind": "narration",
+                "text": "라는 목소리가 새어 나왔다. 민지는 곧장 재생을 멈췄다. 멈추고 나서는 달구지의 흉터만 손바닥으로 위아래로 쓸었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이건 제가 고칠게요. 판금은 못 하고 덧대는 건 되니까. 저건… 차가 조용해지면요.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 650
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-collapse"
+            ]
+          },
+          "state": {
+            "day": 4,
+            "min": 650,
+            "food": 23,
+            "water": 27,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 70,
+            "fatigue": 12.115,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": true,
+              "intro_appeal_failed": true,
+              "intro_module_seen": true,
+              "intro_workshop_left": true,
+              "recruit_migration_v2": true,
+              "opening_call_answered": true,
+              "main_mission_started": true,
+              "postman_met": true,
+              "first_order_trace": true,
+              "parent_signature_match": true,
+              "miryang_oldcard": true,
+              "minji_request_heard": true,
+              "bridge_departure_echo": true,
+              "bridge_trace_gap": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "출발",
+                "title": "닫고 나온 작업장",
+                "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+                "links": [
+                  "달구지",
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n6",
+                "type": "출발",
+                "title": "도윤 가족의 버스",
+                "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+                "links": [
+                  "도윤의 가족",
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n7",
+                "type": "출발",
+                "title": "남산 주소 옆의 세 이름",
+                "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+                "links": [
+                  "도윤의 가족",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n8",
+                "type": "출발",
+                "title": "계기판 속 검증키",
+                "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+                "links": [
+                  "엄마의 철제 상자",
+                  "부모님",
+                  "달구지",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n9",
+                "type": "출발",
+                "title": "맡겨 둔 작업장 열쇠",
+                "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+                "links": [
+                  "할아버지",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n10",
+                "type": "소문",
+                "title": "우편부의 지름길",
+                "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n11",
+                "type": "장소",
+                "title": "양산 고가차도",
+                "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n12",
+                "type": "본편",
+                "title": "검문소 저장 모듈",
+                "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+                "links": [
+                  "부모님",
+                  "천리안",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n13",
+                "type": "사건",
+                "title": "부산 터미널의 마지막 불",
+                "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n14",
+                "type": "장소",
+                "title": "밀양 장터",
+                "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n15",
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n16",
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n17",
+                "type": "인물",
+                "title": "민지",
+                "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+                "links": [
+                  "민지",
+                  "밀양 장터"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n18",
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n19",
+                "type": "사건",
+                "title": "운전 숙련: 손에 익은 운전사",
+                "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n20",
+                "type": "장소",
+                "title": "울산 공업탑",
+                "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n21",
+                "type": "사건",
+                "title": "무너지기 전의 목소리",
+                "body": "달구지에 흉터를 남기고 민규의 마지막 정오 신호를 구했다.",
+                "links": [
+                  "민지",
+                  "민규의 신호",
+                  "달구지"
+                ],
+                "day": 4
+              }
+            ],
+            "items": {
+              "부품": 2,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 841227,
+            "impact": {
+              "key": "miryang:oldcard",
+              "stlId": "miryang",
+              "actionId": "oldcard",
+              "from": "miryang",
+              "to": "yangsan",
+              "wx": "clear",
+              "day": 1,
+              "visual": "record",
+              "label": "천막 뒤 번호표",
+              "done": false
+            },
+            "field": {
+              "daily": {
+                "1:miryang:parts": true,
+                "1:miryang:pump": true,
+                "1:miryang:oldcard": true
+              },
+              "once": {
+                "miryang:parts": true,
+                "miryang:oldcard": true
+              },
+              "impact": {
+                "miryang:parts": {
+                  "day": 1,
+                  "min": 876.6
+                },
+                "miryang:pump": {
+                  "day": 1,
+                  "min": 951.6
+                },
+                "miryang:oldcard": {
+                  "day": 1,
+                  "min": 976.6
+                }
+              },
+              "roadEchoed": {},
+              "log": [
+                {
+                  "stl": "miryang",
+                  "id": "parts",
+                  "day": 1,
+                  "min": 876.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "pump",
+                  "day": 1,
+                  "min": 951.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "oldcard",
+                  "day": 1,
+                  "min": 976.6
+                }
+              ]
+            }
+          },
+          "ci": 2,
+          "oi": 0,
+          "result": {
+            "text": "달구지를 차 더미 바로 앞에 세웠다. 민지가 달구지 앞판을 한 번 쓰다듬는다. \"미안. 조금 아플 거야.\"\n\n견인선이 팽팽해지고, 철판 하나가 생활칸을 긁으며 떨어졌다. 상자는 나왔다. 차체엔 긴 흉터가 남았다.\n\n진단기에서 \"살아 있으면 대답해\"라는 목소리가 새어 나왔다. 민지는 곧장 재생을 멈췄다. 멈추고 나서는 달구지의 흉터만 손바닥으로 위아래로 쓸었다.\n\n\"이건 제가 고칠게요. 판금은 못 하고 덧대는 건 되니까. 저건… 차가 조용해지면요.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "달구지를 차 더미 바로 앞에 세웠다. 민지가 달구지 앞판을 한 번 쓰다듬는다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "미안. 조금 아플 거야."
+              },
+              {
+                "kind": "narration",
+                "text": "견인선이 팽팽해지고, 철판 하나가 생활칸을 긁으며 떨어졌다. 상자는 나왔다. 차체엔 긴 흉터가 남았다."
+              },
+              {
+                "kind": "narration",
+                "text": "진단기에서"
+              },
+              {
+                "kind": "radio",
+                "who": "mingyu",
+                "name": "민규의 녹음",
+                "text": "살아 있으면 대답해"
+              },
+              {
+                "kind": "narration",
+                "text": "라는 목소리가 새어 나왔다. 민지는 곧장 재생을 멈췄다. 멈추고 나서는 달구지의 흉터만 손바닥으로 위아래로 쓸었다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "이건 제가 고칠게요. 판금은 못 하고 덧대는 건 되니까. 저건… 차가 조용해지면요."
+              }
+            ],
+            "chips": [
+              {
+                "t": "차체 -12%",
+                "c": "minus"
+              },
+              {
+                "t": "50분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 무너지기 전의 목소리",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "recruit-minji-task-collapse"
+              ],
+              "sceneTime": {
+                "day": 4,
+                "min": 650
+              }
+            }
+          },
+          "history": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 600
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task",
+              "recruit-minji-task-signal"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "min": 1200,
+      "entry": {
+        "file": "interim-1200-entry.json",
+        "sha256": "9be1d38ef69bf5f5965ef122a7d3e679534948d3658f0137bbb72115aa062b89",
+        "view": {
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+            },
+            {
+              "kind": "dialogue",
+              "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+              "who": "minji"
+            },
+            {
+              "kind": "narration",
+              "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+            },
+            {
+              "kind": "dialogue",
+              "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+              "who": "minji"
+            }
+          ],
+          "index": 0,
+          "sceneTime": {
+            "day": 4,
+            "min": 1200
+          },
+          "knownSpeaker": false,
+          "readingRecord": "",
+          "recordOpen": false,
+          "readingRecordLabel": "",
+          "resultRecordOpen": false,
+          "restoredLineOpen": false,
+          "readerMode": "current",
+          "inspectionId": "",
+          "inspectedIds": [],
+          "sceneKeys": [
+            "recruit-minji-task-night-v1",
+            "recruit-minji-task-signal-night-v1"
+          ]
+        },
+        "state": {
+          "day": 4,
+          "min": 1200,
+          "food": 24,
+          "water": 28,
+          "fuel": 60,
+          "scrap": 50,
+          "van": 82,
+          "fatigue": 10,
+          "party": [],
+          "comps": {
+            "minji": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "parkss": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "kangwoo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "leo": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "jaeyi": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            },
+            "eunsu": {
+              "mood": 65,
+              "bond": 0,
+              "lvl": 0,
+              "perks": [],
+              "pending": 0
+            }
+          },
+          "flags": {
+            "mother_keepsakes": true,
+            "intro_family_helped": true,
+            "intro_appeal_failed": true,
+            "intro_module_seen": true,
+            "intro_workshop_left": true,
+            "recruit_migration_v2": true,
+            "opening_call_answered": true,
+            "main_mission_started": true,
+            "postman_met": true,
+            "first_order_trace": true,
+            "parent_signature_match": true,
+            "miryang_oldcard": true,
+            "minji_request_heard": true,
+            "bridge_departure_echo": true,
+            "bridge_trace_gap": true
+          },
+          "notes": [
+            {
+              "id": "n0",
+              "type": "장소",
+              "title": "부산 감천 부두",
+              "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n1",
+              "type": "물건",
+              "title": "달구지",
+              "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+              "links": [
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n2",
+              "type": "인물",
+              "title": "천리안",
+              "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n3",
+              "type": "인물",
+              "title": "부모님",
+              "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+              "links": [
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n4",
+              "type": "인물",
+              "title": "할아버지",
+              "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+              "links": [
+                "달구지",
+                "부모님"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n5",
+              "type": "출발",
+              "title": "닫고 나온 작업장",
+              "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+              "links": [
+                "달구지",
+                "할아버지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n6",
+              "type": "출발",
+              "title": "도윤 가족의 버스",
+              "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+              "links": [
+                "도윤의 가족",
+                "천리안"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n7",
+              "type": "출발",
+              "title": "남산 주소 옆의 세 이름",
+              "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+              "links": [
+                "도윤의 가족",
+                "남산"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n8",
+              "type": "출발",
+              "title": "계기판 속 검증키",
+              "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+              "links": [
+                "엄마의 철제 상자",
+                "부모님",
+                "달구지",
+                "남산"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n9",
+              "type": "출발",
+              "title": "맡겨 둔 작업장 열쇠",
+              "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+              "links": [
+                "할아버지",
+                "달구지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n10",
+              "type": "소문",
+              "title": "우편부의 지름길",
+              "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n11",
+              "type": "장소",
+              "title": "양산 고가차도",
+              "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n12",
+              "type": "본편",
+              "title": "검문소 저장 모듈",
+              "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+              "links": [
+                "부모님",
+                "천리안",
+                "남산"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n13",
+              "type": "사건",
+              "title": "부산 터미널의 마지막 불",
+              "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n14",
+              "type": "장소",
+              "title": "밀양 장터",
+              "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n15",
+              "type": "사건",
+              "title": "밀양의 부품 천막",
+              "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+              "links": [
+                "밀양 장터",
+                "달구지"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n16",
+              "type": "세대의 흔적",
+              "title": "2026년 교통카드 번호표",
+              "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+              "links": [
+                "밀양 장터",
+                "2026년"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n17",
+              "type": "인물",
+              "title": "민지",
+              "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+              "links": [
+                "민지",
+                "밀양 장터"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n18",
+              "type": "인물",
+              "title": "민지와 울산까지",
+              "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+              "links": [
+                "민지",
+                "울산 공단"
+              ],
+              "day": 1
+            },
+            {
+              "id": "n19",
+              "type": "사건",
+              "title": "운전 숙련: 손에 익은 운전사",
+              "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+              "links": [],
+              "day": 1
+            },
+            {
+              "id": "n20",
+              "type": "장소",
+              "title": "울산 공업탑",
+              "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+              "links": [],
+              "day": 1
+            }
+          ],
+          "items": {
+            "부품": 2,
+            "의약품": 1,
+            "탄약": 0
+          },
+          "seed": 841227,
+          "impact": {
+            "key": "miryang:oldcard",
+            "stlId": "miryang",
+            "actionId": "oldcard",
+            "from": "miryang",
+            "to": "yangsan",
+            "wx": "clear",
+            "day": 1,
+            "visual": "record",
+            "label": "천막 뒤 번호표",
+            "done": false
+          },
+          "field": {
+            "daily": {
+              "1:miryang:parts": true,
+              "1:miryang:pump": true,
+              "1:miryang:oldcard": true
+            },
+            "once": {
+              "miryang:parts": true,
+              "miryang:oldcard": true
+            },
+            "impact": {
+              "miryang:parts": {
+                "day": 1,
+                "min": 876.6
+              },
+              "miryang:pump": {
+                "day": 1,
+                "min": 951.6
+              },
+              "miryang:oldcard": {
+                "day": 1,
+                "min": 976.6
+              }
+            },
+            "roadEchoed": {},
+            "log": [
+              {
+                "stl": "miryang",
+                "id": "parts",
+                "day": 1,
+                "min": 876.6
+              },
+              {
+                "stl": "miryang",
+                "id": "pump",
+                "day": 1,
+                "min": 951.6
+              },
+              {
+                "stl": "miryang",
+                "id": "oldcard",
+                "day": 1,
+                "min": 976.6
+              }
+            ]
+          }
+        }
+      },
+      "outcomes": [
+        {
+          "file": "interim-1200-paid-0-0.json",
+          "sha256": "7331360d614a287d59cb1cd07e3b60b20bf53108e17e400af879bd70a185b0bd",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "윈치가 한 칸씩 울 때마다 차 더미가 숨을 참는다. 민지가 손가락 둘을 접었다. 멈춤. 하나를 폈다. 당김."
+              },
+              {
+                "kind": "narration",
+                "text": "상자가 진흙 위로 빠져나온 순간, 뒤의 차 더미가 주저앉았다. 줄을 거두던 민지가 헐거운 윈치 받침 볼트를 찾아 조였다. 차체에서 나던 떨림이 멎었다. 그제야 상자를 품에 안고 걸쇠를 잡았다 놓고, 다시 잡았다."
+              },
+              {
+                "kind": "narration",
+                "text": "지직— 잡음 뒤로 남자의 목소리."
+              },
+              {
+                "kind": "radio",
+                "text": "민지야, 정오다. 살아 있으면 대답해.",
+                "who": "mingyu",
+                "name": "민규의 녹음"
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 소매 끝으로 눈가를 한 번 훔쳤다. 그러고는 아무 일도 없었다는 얼굴로 진단기의 지도 화면을 켰다. 화면이 들어오고도 손은 한동안 그대로였다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "…발신 좌표부터 봐요. 남아 있으면 찾아갈 수 있으니까. 아니, 있을 수도 있고.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 1245
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-collapse-night-v1"
+            ]
+          },
+          "state": {
+            "day": 4,
+            "min": 1245,
+            "food": 22,
+            "water": 27,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 84,
+            "fatigue": 11.9035,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": true,
+              "intro_appeal_failed": true,
+              "intro_module_seen": true,
+              "intro_workshop_left": true,
+              "recruit_migration_v2": true,
+              "opening_call_answered": true,
+              "main_mission_started": true,
+              "postman_met": true,
+              "first_order_trace": true,
+              "parent_signature_match": true,
+              "miryang_oldcard": true,
+              "minji_request_heard": true,
+              "bridge_departure_echo": true,
+              "bridge_trace_gap": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "출발",
+                "title": "닫고 나온 작업장",
+                "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+                "links": [
+                  "달구지",
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n6",
+                "type": "출발",
+                "title": "도윤 가족의 버스",
+                "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+                "links": [
+                  "도윤의 가족",
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n7",
+                "type": "출발",
+                "title": "남산 주소 옆의 세 이름",
+                "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+                "links": [
+                  "도윤의 가족",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n8",
+                "type": "출발",
+                "title": "계기판 속 검증키",
+                "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+                "links": [
+                  "엄마의 철제 상자",
+                  "부모님",
+                  "달구지",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n9",
+                "type": "출발",
+                "title": "맡겨 둔 작업장 열쇠",
+                "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+                "links": [
+                  "할아버지",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n10",
+                "type": "소문",
+                "title": "우편부의 지름길",
+                "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n11",
+                "type": "장소",
+                "title": "양산 고가차도",
+                "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n12",
+                "type": "본편",
+                "title": "검문소 저장 모듈",
+                "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+                "links": [
+                  "부모님",
+                  "천리안",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n13",
+                "type": "사건",
+                "title": "부산 터미널의 마지막 불",
+                "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n14",
+                "type": "장소",
+                "title": "밀양 장터",
+                "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n15",
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n16",
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n17",
+                "type": "인물",
+                "title": "민지",
+                "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+                "links": [
+                  "민지",
+                  "밀양 장터"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n18",
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n19",
+                "type": "사건",
+                "title": "운전 숙련: 손에 익은 운전사",
+                "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n20",
+                "type": "장소",
+                "title": "울산 공업탑",
+                "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n21",
+                "type": "사건",
+                "title": "무너지기 전의 목소리",
+                "body": "폐차장 차 더미 아래서 민규의 진단기와 마지막 정오 신호를 꺼냈다.",
+                "links": [
+                  "민지",
+                  "민규의 신호"
+                ],
+                "day": 4
+              }
+            ],
+            "items": {
+              "부품": 2,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 841227,
+            "impact": {
+              "key": "miryang:oldcard",
+              "stlId": "miryang",
+              "actionId": "oldcard",
+              "from": "miryang",
+              "to": "yangsan",
+              "wx": "clear",
+              "day": 1,
+              "visual": "record",
+              "label": "천막 뒤 번호표",
+              "done": false
+            },
+            "field": {
+              "daily": {
+                "1:miryang:parts": true,
+                "1:miryang:pump": true,
+                "1:miryang:oldcard": true
+              },
+              "once": {
+                "miryang:parts": true,
+                "miryang:oldcard": true
+              },
+              "impact": {
+                "miryang:parts": {
+                  "day": 1,
+                  "min": 876.6
+                },
+                "miryang:pump": {
+                  "day": 1,
+                  "min": 951.6
+                },
+                "miryang:oldcard": {
+                  "day": 1,
+                  "min": 976.6
+                }
+              },
+              "roadEchoed": {},
+              "log": [
+                {
+                  "stl": "miryang",
+                  "id": "parts",
+                  "day": 1,
+                  "min": 876.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "pump",
+                  "day": 1,
+                  "min": 951.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "oldcard",
+                  "day": 1,
+                  "min": 976.6
+                }
+              ]
+            }
+          },
+          "ci": 0,
+          "oi": 0,
+          "result": {
+            "text": "윈치가 한 칸씩 울 때마다 차 더미가 숨을 참는다. 민지가 손가락 둘을 접었다. 멈춤. 하나를 폈다. 당김.\n\n상자가 진흙 위로 빠져나온 순간, 뒤의 차 더미가 주저앉았다. 줄을 거두던 민지가 헐거운 윈치 받침 볼트를 찾아 조였다. 차체에서 나던 떨림이 멎었다. 그제야 상자를 품에 안고 걸쇠를 잡았다 놓고, 다시 잡았다.\n\n지직— 잡음 뒤로 남자의 목소리. \"민지야, 정오다. 살아 있으면 대답해.\"\n\n민지는 소매 끝으로 눈가를 한 번 훔쳤다. 그러고는 아무 일도 없었다는 얼굴로 진단기의 지도 화면을 켰다. 화면이 들어오고도 손은 한동안 그대로였다. \"…발신 좌표부터 봐요. 남아 있으면 찾아갈 수 있으니까. 아니, 있을 수도 있고.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "윈치가 한 칸씩 울 때마다 차 더미가 숨을 참는다. 민지가 손가락 둘을 접었다. 멈춤. 하나를 폈다. 당김."
+              },
+              {
+                "kind": "narration",
+                "text": "상자가 진흙 위로 빠져나온 순간, 뒤의 차 더미가 주저앉았다. 줄을 거두던 민지가 헐거운 윈치 받침 볼트를 찾아 조였다. 차체에서 나던 떨림이 멎었다. 그제야 상자를 품에 안고 걸쇠를 잡았다 놓고, 다시 잡았다."
+              },
+              {
+                "kind": "narration",
+                "text": "지직— 잡음 뒤로 남자의 목소리."
+              },
+              {
+                "kind": "radio",
+                "who": "mingyu",
+                "name": "민규의 녹음",
+                "text": "민지야, 정오다. 살아 있으면 대답해."
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 소매 끝으로 눈가를 한 번 훔쳤다. 그러고는 아무 일도 없었다는 얼굴로 진단기의 지도 화면을 켰다. 화면이 들어오고도 손은 한동안 그대로였다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "…발신 좌표부터 봐요. 남아 있으면 찾아갈 수 있으니까. 아니, 있을 수도 있고."
+              }
+            ],
+            "chips": [
+              {
+                "t": "차체 +2%",
+                "c": "plus"
+              },
+              {
+                "t": "45분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 무너지기 전의 목소리",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "recruit-minji-task-collapse-night-v1"
+              ],
+              "sceneTime": {
+                "day": 4,
+                "min": 1245
+              }
+            }
+          },
+          "history": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 1200
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-night-v1",
+              "recruit-minji-task-signal-night-v1"
+            ]
+          }
+        },
+        {
+          "file": "interim-1200-paid-1-0.json",
+          "sha256": "cd976ff93b1508d9075178bb81aba7da98a26442e62df5c0b811e2bba66580a3",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "범퍼와 휠 허브로 도르래를 만들었다. 민지가 숫자를 세었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "하나, 둘.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "우리는 줄을 당겼다. 셋을 세기 전에 차 더미가 내려앉았다. 튄 철판이 달구지 옆문을 때렸다."
+              },
+              {
+                "kind": "narration",
+                "text": "상자는 마지막 한 뼘을 굴러 우리 발 앞에 멈췄다. 안에서 남자의 녹음이 살아났다."
+              },
+              {
+                "kind": "radio",
+                "text": "민지야, 정오다. 살아 있으면 대답해.",
+                "who": "mingyu",
+                "name": "민규의 녹음"
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 상자에 이마를 댄 채 어깨를 한 번 떨었다. 조금 뒤 고개를 들더니 잠금쇠를 확인했다. 이미 확인한 잠금쇠를 다시 확인했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "…이거, 걸쇠가 휘었네요. 펴면 되고. 좌표는— 좌표는 이따 볼래요.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 1290
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-collapse-night-v1"
+            ]
+          },
+          "state": {
+            "day": 4,
+            "min": 1290,
+            "food": 22,
+            "water": 27,
+            "fuel": 60,
+            "scrap": 46,
+            "van": 79,
+            "fatigue": 13.806999999999999,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": true,
+              "intro_appeal_failed": true,
+              "intro_module_seen": true,
+              "intro_workshop_left": true,
+              "recruit_migration_v2": true,
+              "opening_call_answered": true,
+              "main_mission_started": true,
+              "postman_met": true,
+              "first_order_trace": true,
+              "parent_signature_match": true,
+              "miryang_oldcard": true,
+              "minji_request_heard": true,
+              "bridge_departure_echo": true,
+              "bridge_trace_gap": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "출발",
+                "title": "닫고 나온 작업장",
+                "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+                "links": [
+                  "달구지",
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n6",
+                "type": "출발",
+                "title": "도윤 가족의 버스",
+                "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+                "links": [
+                  "도윤의 가족",
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n7",
+                "type": "출발",
+                "title": "남산 주소 옆의 세 이름",
+                "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+                "links": [
+                  "도윤의 가족",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n8",
+                "type": "출발",
+                "title": "계기판 속 검증키",
+                "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+                "links": [
+                  "엄마의 철제 상자",
+                  "부모님",
+                  "달구지",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n9",
+                "type": "출발",
+                "title": "맡겨 둔 작업장 열쇠",
+                "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+                "links": [
+                  "할아버지",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n10",
+                "type": "소문",
+                "title": "우편부의 지름길",
+                "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n11",
+                "type": "장소",
+                "title": "양산 고가차도",
+                "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n12",
+                "type": "본편",
+                "title": "검문소 저장 모듈",
+                "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+                "links": [
+                  "부모님",
+                  "천리안",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n13",
+                "type": "사건",
+                "title": "부산 터미널의 마지막 불",
+                "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n14",
+                "type": "장소",
+                "title": "밀양 장터",
+                "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n15",
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n16",
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n17",
+                "type": "인물",
+                "title": "민지",
+                "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+                "links": [
+                  "민지",
+                  "밀양 장터"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n18",
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n19",
+                "type": "사건",
+                "title": "운전 숙련: 손에 익은 운전사",
+                "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n20",
+                "type": "장소",
+                "title": "울산 공업탑",
+                "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n21",
+                "type": "사건",
+                "title": "무너지기 전의 목소리",
+                "body": "임시 도르래로 민규의 진단기를 구했다. 마지막 신호의 좌표를 확인할 길이 열렸다.",
+                "links": [
+                  "민지",
+                  "민규의 신호"
+                ],
+                "day": 4
+              }
+            ],
+            "items": {
+              "부품": 2,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 841227,
+            "impact": {
+              "key": "miryang:oldcard",
+              "stlId": "miryang",
+              "actionId": "oldcard",
+              "from": "miryang",
+              "to": "yangsan",
+              "wx": "clear",
+              "day": 1,
+              "visual": "record",
+              "label": "천막 뒤 번호표",
+              "done": false
+            },
+            "field": {
+              "daily": {
+                "1:miryang:parts": true,
+                "1:miryang:pump": true,
+                "1:miryang:oldcard": true
+              },
+              "once": {
+                "miryang:parts": true,
+                "miryang:oldcard": true
+              },
+              "impact": {
+                "miryang:parts": {
+                  "day": 1,
+                  "min": 876.6
+                },
+                "miryang:pump": {
+                  "day": 1,
+                  "min": 951.6
+                },
+                "miryang:oldcard": {
+                  "day": 1,
+                  "min": 976.6
+                }
+              },
+              "roadEchoed": {},
+              "log": [
+                {
+                  "stl": "miryang",
+                  "id": "parts",
+                  "day": 1,
+                  "min": 876.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "pump",
+                  "day": 1,
+                  "min": 951.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "oldcard",
+                  "day": 1,
+                  "min": 976.6
+                }
+              ]
+            }
+          },
+          "ci": 1,
+          "oi": 0,
+          "result": {
+            "text": "범퍼와 휠 허브로 도르래를 만들었다. 민지가 숫자를 세었다. \"하나, 둘.\"\n\n우리는 줄을 당겼다. 셋을 세기 전에 차 더미가 내려앉았다. 튄 철판이 달구지 옆문을 때렸다.\n\n상자는 마지막 한 뼘을 굴러 우리 발 앞에 멈췄다. 안에서 남자의 녹음이 살아났다.\n\n\"민지야, 정오다. 살아 있으면 대답해.\"\n\n민지는 상자에 이마를 댄 채 어깨를 한 번 떨었다. 조금 뒤 고개를 들더니 잠금쇠를 확인했다. 이미 확인한 잠금쇠를 다시 확인했다.\n\n\"…이거, 걸쇠가 휘었네요. 펴면 되고. 좌표는— 좌표는 이따 볼래요.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "범퍼와 휠 허브로 도르래를 만들었다. 민지가 숫자를 세었다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "하나, 둘."
+              },
+              {
+                "kind": "narration",
+                "text": "우리는 줄을 당겼다. 셋을 세기 전에 차 더미가 내려앉았다. 튄 철판이 달구지 옆문을 때렸다."
+              },
+              {
+                "kind": "narration",
+                "text": "상자는 마지막 한 뼘을 굴러 우리 발 앞에 멈췄다. 안에서 남자의 녹음이 살아났다."
+              },
+              {
+                "kind": "radio",
+                "who": "mingyu",
+                "name": "민규의 녹음",
+                "text": "민지야, 정오다. 살아 있으면 대답해."
+              },
+              {
+                "kind": "narration",
+                "text": "민지는 상자에 이마를 댄 채 어깨를 한 번 떨었다. 조금 뒤 고개를 들더니 잠금쇠를 확인했다. 이미 확인한 잠금쇠를 다시 확인했다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "…이거, 걸쇠가 휘었네요. 펴면 되고. 좌표는— 좌표는 이따 볼래요."
+              }
+            ],
+            "chips": [
+              {
+                "t": "고철 -4",
+                "c": "minus"
+              },
+              {
+                "t": "차체 -3%",
+                "c": "minus"
+              },
+              {
+                "t": "1.5시간 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 무너지기 전의 목소리",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "recruit-minji-task-collapse-night-v1"
+              ],
+              "sceneTime": {
+                "day": 4,
+                "min": 1290
+              }
+            }
+          },
+          "history": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 1200
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-night-v1",
+              "recruit-minji-task-signal-night-v1"
+            ]
+          }
+        },
+        {
+          "file": "interim-1200-paid-2-0.json",
+          "sha256": "53a0d9fea8c2d0d3439b034d92e5b753b6473c5e69fcf1a16350f97dab139f0c",
+          "view": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "달구지를 차 더미 바로 앞에 세웠다. 민지가 달구지 앞판을 한 번 쓰다듬는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "미안. 조금 아플 거야.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "견인선이 팽팽해지고, 철판 하나가 생활칸을 긁으며 떨어졌다. 상자는 나왔다. 차체엔 긴 흉터가 남았다."
+              },
+              {
+                "kind": "narration",
+                "text": "진단기에서"
+              },
+              {
+                "kind": "radio",
+                "text": "살아 있으면 대답해",
+                "who": "mingyu",
+                "name": "민규의 녹음"
+              },
+              {
+                "kind": "narration",
+                "text": "라는 목소리가 새어 나왔다. 민지는 곧장 재생을 멈췄다. 멈추고 나서는 달구지의 흉터만 손바닥으로 위아래로 쓸었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이건 제가 고칠게요. 판금은 못 하고 덧대는 건 되니까. 저건… 차가 조용해지면요.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 1250
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-collapse-night-v1"
+            ]
+          },
+          "state": {
+            "day": 4,
+            "min": 1250,
+            "food": 22,
+            "water": 27,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 70,
+            "fatigue": 12.115,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": true,
+              "intro_appeal_failed": true,
+              "intro_module_seen": true,
+              "intro_workshop_left": true,
+              "recruit_migration_v2": true,
+              "opening_call_answered": true,
+              "main_mission_started": true,
+              "postman_met": true,
+              "first_order_trace": true,
+              "parent_signature_match": true,
+              "miryang_oldcard": true,
+              "minji_request_heard": true,
+              "bridge_departure_echo": true,
+              "bridge_trace_gap": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "출발",
+                "title": "닫고 나온 작업장",
+                "body": "작업장 불씨를 정리하고 예비 공구를 챙겨 이송 버스로 향했다.",
+                "links": [
+                  "달구지",
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n6",
+                "type": "출발",
+                "title": "도윤 가족의 버스",
+                "body": "고철 연결 고리로 유나가 탄 이송 버스의 난방을 살렸다.",
+                "links": [
+                  "도윤의 가족",
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n7",
+                "type": "출발",
+                "title": "남산 주소 옆의 세 이름",
+                "body": "하진의 허락을 받아 도윤과 유나의 이름, 비어 있는 이송 사유, 남산 현장 확인 주소를 기록했다.",
+                "links": [
+                  "도윤의 가족",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n8",
+                "type": "출발",
+                "title": "계기판 속 검증키",
+                "body": "엄마의 회로도와 아빠가 만든 검증키를 확인했다. 분리 절차 두 장을 찾을 때까지 계기판에 연결해 둔다.",
+                "links": [
+                  "엄마의 철제 상자",
+                  "부모님",
+                  "달구지",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n9",
+                "type": "출발",
+                "title": "맡겨 둔 작업장 열쇠",
+                "body": "감천의 단골에게 공구함 열쇠를 맡기고 북쪽으로 출발했다. 돌아오면 다시 셔터를 열 수 있다.",
+                "links": [
+                  "할아버지",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n10",
+                "type": "소문",
+                "title": "우편부의 지름길",
+                "body": "물 반 잔의 답례. 어느 고개의 지름길.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n11",
+                "type": "장소",
+                "title": "양산 고가차도",
+                "body": "DAY 1 도착. 무너진 고가 아래로 길이 하나 살아 있다. 콘크리트 기둥 사이로 북쪽 국도가 이어진다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n12",
+                "type": "본편",
+                "title": "검문소 저장 모듈",
+                "body": "이송 대상을 다시 고르는 규칙과 부모님 이송표로 이어지는 검증 번호를 찾아냈다.",
+                "links": [
+                  "부모님",
+                  "천리안",
+                  "남산"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n13",
+                "type": "사건",
+                "title": "부산 터미널의 마지막 불",
+                "body": "부모님이 돌아오지 않은 이유를 확인할 때까지 단정하지 않기로 했다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n14",
+                "type": "장소",
+                "title": "밀양 장터",
+                "body": "DAY 1 도착. 닷새마다 장이 선다. 멸망 이후에도 장날은 살아남았다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n15",
+                "type": "사건",
+                "title": "밀양의 부품 천막",
+                "body": "경운기와 자전거 부품을 함께 분류하고 달구지에 맞는 체결 부품 하나를 품삯으로 받았다.",
+                "links": [
+                  "밀양 장터",
+                  "달구지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n16",
+                "type": "세대의 흔적",
+                "title": "2026년 교통카드 번호표",
+                "body": "대중교통을 타던 카드는 143년 뒤 밀양 장터의 국수 대기 번호표가 되었다. 기능은 잊혔지만 차례를 지키는 용도만은 남았다.",
+                "links": [
+                  "밀양 장터",
+                  "2026년"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n17",
+                "type": "인물",
+                "title": "민지",
+                "body": "밀양 부품 천막의 정비사. 달구지 소리만 듣고 느슨한 클램프를 찾아냈다.",
+                "links": [
+                  "민지",
+                  "밀양 장터"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n18",
+                "type": "인물",
+                "title": "민지와 울산까지",
+                "body": "오빠의 목소리가 남아 있을지도 모르는 진단기. 민지와 함께 꺼내러 가기로 했다.",
+                "links": [
+                  "민지",
+                  "울산 공단"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n19",
+                "type": "사건",
+                "title": "운전 숙련: 손에 익은 운전사",
+                "body": "누적 주행 80km. 핸들이 손에 붙는다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n20",
+                "type": "장소",
+                "title": "울산 공업탑",
+                "body": "DAY 1 도착. 멈춘 크레인들이 지평선을 이룬다. 세계에서 가장 조용한 공업도시.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n21",
+                "type": "사건",
+                "title": "무너지기 전의 목소리",
+                "body": "달구지에 흉터를 남기고 민규의 마지막 정오 신호를 구했다.",
+                "links": [
+                  "민지",
+                  "민규의 신호",
+                  "달구지"
+                ],
+                "day": 4
+              }
+            ],
+            "items": {
+              "부품": 2,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 841227,
+            "impact": {
+              "key": "miryang:oldcard",
+              "stlId": "miryang",
+              "actionId": "oldcard",
+              "from": "miryang",
+              "to": "yangsan",
+              "wx": "clear",
+              "day": 1,
+              "visual": "record",
+              "label": "천막 뒤 번호표",
+              "done": false
+            },
+            "field": {
+              "daily": {
+                "1:miryang:parts": true,
+                "1:miryang:pump": true,
+                "1:miryang:oldcard": true
+              },
+              "once": {
+                "miryang:parts": true,
+                "miryang:oldcard": true
+              },
+              "impact": {
+                "miryang:parts": {
+                  "day": 1,
+                  "min": 876.6
+                },
+                "miryang:pump": {
+                  "day": 1,
+                  "min": 951.6
+                },
+                "miryang:oldcard": {
+                  "day": 1,
+                  "min": 976.6
+                }
+              },
+              "roadEchoed": {},
+              "log": [
+                {
+                  "stl": "miryang",
+                  "id": "parts",
+                  "day": 1,
+                  "min": 876.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "pump",
+                  "day": 1,
+                  "min": 951.6
+                },
+                {
+                  "stl": "miryang",
+                  "id": "oldcard",
+                  "day": 1,
+                  "min": 976.6
+                }
+              ]
+            }
+          },
+          "ci": 2,
+          "oi": 0,
+          "result": {
+            "text": "달구지를 차 더미 바로 앞에 세웠다. 민지가 달구지 앞판을 한 번 쓰다듬는다. \"미안. 조금 아플 거야.\"\n\n견인선이 팽팽해지고, 철판 하나가 생활칸을 긁으며 떨어졌다. 상자는 나왔다. 차체엔 긴 흉터가 남았다.\n\n진단기에서 \"살아 있으면 대답해\"라는 목소리가 새어 나왔다. 민지는 곧장 재생을 멈췄다. 멈추고 나서는 달구지의 흉터만 손바닥으로 위아래로 쓸었다.\n\n\"이건 제가 고칠게요. 판금은 못 하고 덧대는 건 되니까. 저건… 차가 조용해지면요.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "달구지를 차 더미 바로 앞에 세웠다. 민지가 달구지 앞판을 한 번 쓰다듬는다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "미안. 조금 아플 거야."
+              },
+              {
+                "kind": "narration",
+                "text": "견인선이 팽팽해지고, 철판 하나가 생활칸을 긁으며 떨어졌다. 상자는 나왔다. 차체엔 긴 흉터가 남았다."
+              },
+              {
+                "kind": "narration",
+                "text": "진단기에서"
+              },
+              {
+                "kind": "radio",
+                "who": "mingyu",
+                "name": "민규의 녹음",
+                "text": "살아 있으면 대답해"
+              },
+              {
+                "kind": "narration",
+                "text": "라는 목소리가 새어 나왔다. 민지는 곧장 재생을 멈췄다. 멈추고 나서는 달구지의 흉터만 손바닥으로 위아래로 쓸었다."
+              },
+              {
+                "kind": "dialogue",
+                "who": "minji",
+                "text": "이건 제가 고칠게요. 판금은 못 하고 덧대는 건 되니까. 저건… 차가 조용해지면요."
+              }
+            ],
+            "chips": [
+              {
+                "t": "차체 -12%",
+                "c": "minus"
+              },
+              {
+                "t": "50분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 무너지기 전의 목소리",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "recruit-minji-task-collapse-night-v1"
+              ],
+              "sceneTime": {
+                "day": 4,
+                "min": 1250
+              }
+            }
+          },
+          "history": {
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "폐차장 안쪽에서 차체가 한 번 크게 운다. 민지가 말한 진단기는 접힌 승용차 아래에 끼어 있고, 그 위로 기름 먹은 차 더미가 기울어 있다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "빨간 천 보이죠? 저기— 아니, 그 옆에. 오빠 공구함이에요. 마지막 정오 신호가 저 안에 있어요.",
+                "who": "minji"
+              },
+              {
+                "kind": "narration",
+                "text": "불꽃이 냉각수 호스를 핥는다. 빨리 당기면 상자가 찌그러지고, 천천히 하면 불이 번진다. 민지가 견인선을 걸고 매듭과 차체 각도를 차례로 짚는다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "내가 손 신호 할게요. 손만 봐요. 나 말고, 손만.",
+                "who": "minji"
+              }
+            ],
+            "index": 0,
+            "sceneTime": {
+              "day": 4,
+              "min": 1200
+            },
+            "knownSpeaker": false,
+            "readingRecord": "",
+            "recordOpen": false,
+            "readingRecordLabel": "",
+            "resultRecordOpen": false,
+            "restoredLineOpen": false,
+            "readerMode": "current",
+            "inspectionId": "",
+            "inspectedIds": [],
+            "sceneKeys": [
+              "recruit-minji-task-night-v1",
+              "recruit-minji-task-signal-night-v1"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

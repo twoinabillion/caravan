@@ -1,0 +1,189 @@
+[
+  {
+    "stl": "gwangju",
+    "npc": "geumja",
+    "npcHome": "gwangju",
+    "stlNpcs": [
+      "geumja",
+      "suwan"
+    ],
+    "id": "soup_line",
+    "desc": "배급이 늦은 집에 보낼 국밥 그릇을 줄 맞춰 싼다.",
+    "action": "식량을 보태고 배달 꾸러미를 함께 만든다",
+    "result": "금자는 우리가 낸 식량을 솥에 더 넣고, 누구 집에 몇 그릇이 가는지 이름부터 확인했다. 남은 국물은 달구지 사람들 몫이라며 물통 하나와 함께 밀어 줬다.",
+    "req": {
+      "food": 1
+    },
+    "daily": 1
+  },
+  {
+    "stl": "gwangju",
+    "npc": "geumja",
+    "npcHome": "gwangju",
+    "stlNpcs": [
+      "geumja",
+      "suwan"
+    ],
+    "id": "receipt_names",
+    "desc": "두 일을 거들자 금자가 세대째 버리지 않은 종이철을 보여 준다.",
+    "action": "배급표가 되기 전의 영수증들을 날짜순으로 편다",
+    "result": "맨 아래 영수증은 2026년 대인시장 카드 결제 내역이었다. 그 뒷면에는 추방 뒤 이 골목에서 국밥을 얻어먹은 사람들의 이름이 세대별로 이어졌다. 금자는 빚이 아니라 돌아왔는지 확인하려고 적었다고 했다.",
+    "once": 1,
+    "hidden": 1
+  },
+  {
+    "stl": "miryang",
+    "npc": "sundeok",
+    "npcHome": "miryang",
+    "stlNpcs": [
+      "sundeok",
+      "byungchul",
+      "yeongok"
+    ],
+    "id": "noodles",
+    "desc": "김 오르는 솥 앞에 앉아 장꾼들 이야기를 듣는다.",
+    "action": "국수 한 그릇과 자리를 산다",
+    "result": "순덕이 국수를 말아 내며 빈 의자 하나를 발로 밀어 준다. 뜨거운 국물 사이로 어느 길이 무너졌고 누가 새로 왔는지 이야기가 오간다. 배만 채운 게 아니라 이 장터의 박자를 조금 배웠다.",
+    "req": {
+      "scrap": 2
+    },
+    "daily": 1
+  },
+  {
+    "stl": "miryang",
+    "npc": "sundeok",
+    "npcHome": "miryang",
+    "stlNpcs": [
+      "sundeok",
+      "byungchul",
+      "yeongok"
+    ],
+    "id": "oldcard",
+    "desc": "두 곳을 거들고 나니 순덕이 천막 뒤 작은 상자를 보여 준다.",
+    "action": "143년 동안 쓰인 번호표를 살핀다",
+    "result": "상자 안에는 모서리가 닳은 교통카드 한 장이 들어 있다. 앞면의 날짜는 2026년. 순덕은 이 장터에서 적어도 세 세대 동안 국수 대기 번호표로 썼다고 한다. 한때 사람을 개찰구 너머로 보내던 물건이, 지금은 한 그릇의 차례를 지킨다.",
+    "once": 1,
+    "hidden": 1
+  },
+  {
+    "stl": "daegu",
+    "npc": "taeho",
+    "npcHome": "daegu",
+    "stlNpcs": [
+      "taeho",
+      "sera",
+      "mansu"
+    ],
+    "id": "scoreboard_wire",
+    "desc": "시장 호출에 쓰는 전광판 한 구역이 계속 깜빡인다.",
+    "action": "태호와 좌석 밑 케이블을 따라 단선을 찾는다",
+    "result": "관중석 세 구역을 돌아 끊어진 신호선을 찾았다. 화면에는 경기 점수 대신 오늘 도착한 물자와 잃어버린 아이 이름이 다시 떴다. 남은 커넥터 하나는 달구지 몫이 됐다.",
+    "once": 1
+  },
+  {
+    "stl": "muju",
+    "npc": "jaepil",
+    "npcHome": "muju",
+    "stlNpcs": [
+      "jaepil",
+      "jeomrye"
+    ],
+    "id": "candle_round",
+    "desc": "꺼진 초를 바꾸고 바닥의 촛농을 긁어 다시 심지를 만든다.",
+    "action": "고철 하나를 초받침으로 펴고 순찰 한 바퀴를 돈다",
+    "result": "작은 불 하나가 꺼지면 통로 전체가 더 좁아졌다. 새 받침에 초를 세우고 돌아오자 재필은 가장 안쪽 식탁의 따뜻한 물을 나눠 줬다.",
+    "req": {
+      "scrap": 1
+    },
+    "daily": 1
+  },
+  {
+    "stl": "muju",
+    "npc": "jaepil",
+    "npcHome": "muju",
+    "stlNpcs": [
+      "jaepil",
+      "jeomrye"
+    ],
+    "id": "evac_board",
+    "desc": "순찰을 도운 뒤에야 벽의 다른 색이 눈에 들어온다.",
+    "action": "겹겹이 굳은 촛농을 걷어내고 안내판을 읽는다",
+    "result": "안내판은 2026년 터널 화재 대피도였다. 남쪽 출구를 가리키는 화살표 위에 후대 사람들이 각 세대의 이송 날짜를 덧썼다. 불이 나지 않은 날에도 사람들은 같은 방향으로 빠져나갔다.",
+    "once": 1,
+    "hidden": 1
+  },
+  {
+    "stl": "jeonju",
+    "npc": "miyoung",
+    "npcHome": "jeonju",
+    "stlNpcs": [
+      "miyoung",
+      "dongsu"
+    ],
+    "id": "well_chain",
+    "desc": "물통이 몰리는 시간, 두레박 줄이 자꾸 서로 꼬인다.",
+    "action": "물통에 집 표시를 묶고 우물 순서를 정리한다",
+    "result": "먼저 온 사람이 아니라 오늘 물이 없는 집부터 채웠다. 미영은 마지막 두레박을 달구지 물통에 붓고 “순서를 지켜 준 품삯”이라고 했다.",
+    "daily": 1
+  },
+  {
+    "stl": "daejeon",
+    "npc": "drhan",
+    "npcHome": "daejeon",
+    "stlNpcs": [
+      "drhan",
+      "noah"
+    ],
+    "id": "ration_board",
+    "desc": "누수와 인원 변동 때문에 어제 계산을 그대로 쓸 수 없다.",
+    "action": "각 동의 물통과 오늘 머무는 사람 수를 다시 센다",
+    "result": "수식보다 발로 세는 시간이 더 길었다. 한 박사는 지워진 숫자를 다시 쓰며 “모형보다 현장이 먼저 바뀌는 날도 있죠”라고 말했다. 남은 물은 정확히 한 통씩 돌아갔다.",
+    "daily": 1
+  },
+  {
+    "stl": "daejeon",
+    "npc": "drhan",
+    "npcHome": "daejeon",
+    "stlNpcs": [
+      "drhan",
+      "noah"
+    ],
+    "id": "deployment_card",
+    "desc": "두 현장을 함께 본 뒤 한 박사가 잠긴 서랍을 연다.",
+    "action": "2026년 아시아 공용망 배포 카드를 오프라인으로 연다",
+    "result": "카드에는 TIANYAN 한국 지역판의 설치 항목이 교통·의료·전력·행정 순서로 적혀 있었다. 마지막 칸의 “강제 명령 인간 확인”만 미설치 상태였다. 기술은 한꺼번에 세상을 빼앗지 않았다. 편리한 일부터 하나씩 맡겨졌다.",
+    "once": 1,
+    "hidden": 1
+  },
+  {
+    "stl": "suwon",
+    "npc": "deokgu",
+    "npcHome": "suwon",
+    "stlNpcs": [
+      "deokgu",
+      "hwasun",
+      "gitae"
+    ],
+    "id": "wall_watch",
+    "desc": "망원경 없이 도로의 빛과 먼지를 구분하는 법을 배운다.",
+    "action": "덕구와 한 교대 동안 북쪽 길을 지켜본다",
+    "result": "새 떼의 그림자, 바람에 흔들린 표지판, 멀리 움직인 드론 빛을 하나씩 구분했다. 45분 동안 확인한 길에는 별일이 없었다. 다음 길의 감시 간격만은 눈에 익었다.",
+    "daily": 1
+  },
+  {
+    "stl": "suwon",
+    "npc": "deokgu",
+    "npcHome": "suwon",
+    "stlNpcs": [
+      "deokgu",
+      "hwasun",
+      "gitae"
+    ],
+    "id": "pass_bundle",
+    "desc": "평형추를 비운 자리에서 끈으로 묶은 나무패가 쏟아진다.",
+    "action": "날짜와 출발 구역별로 통행패를 바닥에 펼친다",
+    "result": "나무패마다 서울에서 수원까지 내려온 날짜와 인원이 새겨져 있었다. 가장 오래된 패는 플라스틱 교통카드를 깎아 만든 것이었다. 덕구는 돌아간 사람의 패를 빼려고 묶음을 보관했지만, 빠진 것은 열 장뿐이었다.",
+    "once": 1,
+    "hidden": 1
+  }
+]

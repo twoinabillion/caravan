@@ -69,6 +69,7 @@ test('all 48 personal events / 74 outcomes preserve words and unaffected actual-
    current.choices[0].out[0].fx.note.body=row.event.choices[0].out[0].fx.note.body;
   }
   if(row.id==='talk_mj_10'){const was=row.event.choices[1].out[0].text;assert.equal(current.choices[1].out[0].text,was.replace('받았다. 무게가 렌치 무게가 아니었다.','받았다. 렌치에 새겨진 17mm를 손가락으로 짚었다. 무게가 렌치 무게가 아니었다.'));current.choices[1].out[0].text=was;}
+  if(row.id==='talk_es_14'){const was=row.event.choices[0].out[0].text;assert.equal(was.split('사라졌다. 은수가 헤드폰을 끼고').length,2);assert.equal(current.choices[0].out[0].text,was.replace('사라졌다. 은수가 헤드폰을 끼고','사라졌다.\n\n은수가 헤드폰을 끼고'),'only approved qa101 paragraph split');current.choices[0].out[0].text=was;}
   assert.deepEqual(clean(projectCycle29(row.id,current,row.event)),clean(row.event),row.id+' words/effects');
   for(const c of row.choices){if(specs.find(s=>s.id===row.id)?.choices[c.i+'.'+c.o])continue;
    h.run(`globalThis.out=e.choices[${c.i}].out[${c.o}];globalThis.ts=typeof out.turns==='function'?out.turns(S):Array.isArray(out.turns)&&out.turns.length?out.turns:buildStoryTurns(prose(out.text),e,{knownSpeaker:!!entry.knownSpeaker,speakers:out.speakers,turnSpeakers:out.turnSpeakers})`);
@@ -78,6 +79,7 @@ test('all 48 personal events / 74 outcomes preserve words and unaffected actual-
     assert(first&&last);first.text='다시 불게 하고, 또 불게 하고, 중간에 두 번쯤 말했다.';last.text='그러더니 고개를 끄덕였다.';
    }
    if(row.id==='talk_mj_10'&&c.i===1&&c.o===0){const turn=expected.find(t=>t.text.includes('받았다. 무게가 렌치 무게가 아니었다.'));assert(turn);turn.text=turn.text.replace('받았다. 무게가 렌치 무게가 아니었다.','받았다. 렌치에 새겨진 17mm를 손가락으로 짚었다. 무게가 렌치 무게가 아니었다.');}
+   if(row.id==='talk_es_14'&&c.i===0&&c.o===0){const i=expected.findIndex(t=>t.text.includes('사라졌다. 은수가 헤드폰을 끼고'));assert(i>=0);assert.equal(expected[i].kind,'narration');const [cleaned,wearing]=expected[i].text.split(' 은수가 헤드폰을 끼고');expected.splice(i,1,{kind:'narration',text:cleaned},{kind:'narration',text:'은수가 헤드폰을 끼고'+wearing});}
    assert.deepEqual(h.json('ts'),expected,row.id+'.'+c.i+'.'+c.o+' unchanged reader');
   }
  }

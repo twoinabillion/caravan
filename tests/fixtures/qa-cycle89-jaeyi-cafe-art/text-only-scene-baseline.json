@@ -1,0 +1,73 @@
+{
+  "provenance": "Captured before89 art mapping, after RED showed that stripping all views loses jy_recruit prior single-key selection. This preserves the old fallback array, not the absent exact last-displayed frame. Original fixture blobs/baseline unchanged.",
+  "rows": {
+    "jy_recruit-0-0-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-tunnel-exchange-v2",
+        "recruit-jaeyi-suspension-check",
+        "recruit-jaeyi-meet-action"
+      ]
+    },
+    "jy_recruit-1-0-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-tunnel-exchange-v2",
+        "recruit-jaeyi-suspension-check",
+        "recruit-jaeyi-meet-action"
+      ]
+    },
+    "jy_recruit-2-0-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-tunnel-exchange-v2",
+        "recruit-jaeyi-suspension-check",
+        "recruit-jaeyi-meet-action"
+      ]
+    },
+    "jy_recruit-natural-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-tunnel-exchange-v2",
+        "recruit-jaeyi-suspension-check",
+        "recruit-jaeyi-meet-action"
+      ]
+    },
+    "rq_jaeyi_task-0-0-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-task-lift"
+      ]
+    },
+    "rq_jaeyi_task-1-0-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-box-recovered-v2"
+      ]
+    },
+    "rq_jaeyi_task-2-0-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-box-recovered-v2"
+      ]
+    },
+    "rq_jaeyi_task-natural-paid.json": {
+      "sceneKeys": [
+        "recruit-jaeyi-box-recovered-v2"
+      ]
+    },
+    "exp_greenhouse_cafe-0-0-paid.json": {
+      "sceneKeys": [
+        "event-explore-farm"
+      ]
+    },
+    "exp_greenhouse_cafe-0-1-paid.json": {
+      "sceneKeys": [
+        "event-explore-farm"
+      ]
+    },
+    "exp_greenhouse_cafe-1-0-paid.json": {
+      "sceneKeys": [
+        "event-explore-farm"
+      ]
+    },
+    "exp_greenhouse_cafe-natural-paid.json": {
+      "sceneKeys": [
+        "event-explore-farm"
+      ]
+    }
+  }
+}

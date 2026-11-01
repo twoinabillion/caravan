@@ -1,0 +1,430 @@
+{
+  "seoul_open": {
+    "source": "entry-after-view-278-seoul_open.json",
+    "index": 0,
+    "entry": {
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "한강 남쪽 진입 관문. 전광판에 네 항목이 다시 떴다."
+        },
+        {
+          "kind": "narration",
+          "text": "「동행 증언 완료 / 지역 연락망 연결 / 이송 근거 확인 / 원본 기록 확보」"
+        },
+        {
+          "kind": "narration",
+          "text": "도로를 막고 있던 벽이 천천히 바닥으로 내려갔다. 강을 건너 남산으로 오르는 길이 열렸다."
+        },
+        {
+          "kind": "ai",
+          "text": "\"남산 진입 조건을 모두 확인했습니다. 강제 이송 중단 절차에 접근을 허가합니다.\"",
+          "who": "cheollian",
+          "name": "천리안 방송"
+        },
+        {
+          "kind": "narration",
+          "text": "이제 남산 코어로 가서 이송 명령을 직접 멈출 수 있다."
+        },
+        {
+          "kind": "ai",
+          "text": "\"서울 내부의 이동과 대화는 기록됩니다.\"",
+          "who": "cheollian",
+          "name": "천리안 방송"
+        },
+        {
+          "kind": "narration",
+          "text": "나는 안전벨트를 다시 당겨 맸다. 수첩은 조수석에 펼쳐 두었다."
+        }
+      ],
+      "index": 0,
+      "sceneTime": {
+        "day": 8,
+        "min": 594.1
+      },
+      "knownSpeaker": false,
+      "readingRecord": "",
+      "recordOpen": false,
+      "readingRecordLabel": "",
+      "resultRecordOpen": false,
+      "restoredLineOpen": false,
+      "readerMode": "current",
+      "inspectionId": "",
+      "inspectedIds": [],
+      "sceneKeys": [
+        "seoul-han"
+      ]
+    },
+    "choices": [
+      {
+        "label": "서울로 들어간다",
+        "out": [
+          {
+            "p": 1,
+            "fx": {
+              "flag": "seoul_open",
+              "enterSeoul": 1,
+              "note": {
+                "type": "사건",
+                "title": "서울 진입",
+                "body": "남산 진입 조건이 확인되어 막혔던 도로가 열렸다. 이제 코어에서 강제 이송을 멈춘다.",
+                "links": [
+                  "천리안",
+                  "남산",
+                  "서울"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "paid": {
+      "version": 1,
+      "eventId": "seoul_open",
+      "phase": "result",
+      "sceneTime": {
+        "day": 8,
+        "min": 594.1
+      },
+      "text": "액셀을 밟았다. 도로 벽이 내려간 자리를 지나 서울 안으로 들어갔다.\n\n501km를 달려 도착했다. 이제 남산 코어에서 강제 이송 명령을 멈춰야 한다.",
+      "view": null,
+      "reading": {
+        "eventId": "seoul_open",
+        "phase": "outcome",
+        "view": {
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "액셀을 밟았다. 도로 벽이 내려간 자리를 지나 서울 안으로 들어갔다."
+            },
+            {
+              "kind": "narration",
+              "text": "501km를 달려 도착했다. 이제 남산 코어에서 강제 이송 명령을 멈춰야 한다."
+            }
+          ],
+          "index": 0,
+          "sceneTime": {
+            "day": 8,
+            "min": 594.1
+          },
+          "knownSpeaker": false,
+          "readingRecord": "",
+          "recordOpen": false,
+          "readingRecordLabel": "",
+          "resultRecordOpen": false,
+          "restoredLineOpen": false,
+          "readerMode": "current",
+          "inspectionId": "",
+          "inspectedIds": [],
+          "sceneKeys": [
+            "seoul-han"
+          ]
+        },
+        "history": {
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "한강 남쪽 진입 관문. 전광판에 네 항목이 다시 떴다."
+            },
+            {
+              "kind": "narration",
+              "text": "「동행 증언 완료 / 지역 연락망 연결 / 이송 근거 확인 / 원본 기록 확보」"
+            },
+            {
+              "kind": "narration",
+              "text": "도로를 막고 있던 벽이 천천히 바닥으로 내려갔다. 강을 건너 남산으로 오르는 길이 열렸다."
+            },
+            {
+              "kind": "ai",
+              "text": "\"남산 진입 조건을 모두 확인했습니다. 강제 이송 중단 절차에 접근을 허가합니다.\"",
+              "who": "cheollian",
+              "name": "천리안 방송"
+            },
+            {
+              "kind": "narration",
+              "text": "이제 남산 코어로 가서 이송 명령을 직접 멈출 수 있다."
+            },
+            {
+              "kind": "ai",
+              "text": "\"서울 내부의 이동과 대화는 기록됩니다.\"",
+              "who": "cheollian",
+              "name": "천리안 방송"
+            },
+            {
+              "kind": "narration",
+              "text": "나는 안전벨트를 다시 당겨 맸다. 수첩은 조수석에 펼쳐 두었다."
+            }
+          ],
+          "index": 0,
+          "sceneTime": {
+            "day": 8,
+            "min": 594.1
+          },
+          "knownSpeaker": false,
+          "readingRecord": "",
+          "recordOpen": false,
+          "readingRecordLabel": "",
+          "resultRecordOpen": false,
+          "restoredLineOpen": false,
+          "readerMode": "current",
+          "inspectionId": "",
+          "inspectedIds": [],
+          "sceneKeys": [
+            "seoul-han"
+          ]
+        },
+        "selection": "서울로 들어간다",
+        "updates": [
+          {
+            "title": "6장 · 한강 관문을 지나 남산 코어로 오른다",
+            "next": "한강 관문에서 상황을 확인하고 다음 진입 지점으로 간다.",
+            "kind": "main"
+          }
+        ]
+      },
+      "choiceIndex": 0,
+      "outcomeIndex": 0,
+      "chips": [
+        {
+          "t": "새 기록 · 서울 진입",
+          "c": "item"
+        }
+      ]
+    },
+    "crewText": "한강 남쪽 진입 관문. 전광판에 네 항목이 다시 떴다.\n\n「동행 증언 완료 / 지역 연락망 연결 / 이송 근거 확인 / 원본 기록 확보」\n\n도로를 막고 있던 벽이 천천히 바닥으로 내려갔다. 강을 건너 남산으로 오르는 길이 열렸다.\n\n<span class=\"ai\">\"남산 진입 조건을 모두 확인했습니다. 강제 이송 중단 절차에 접근을 허가합니다.\"</span>\n\n이제 남산 코어로 가서 이송 명령을 직접 멈출 수 있다.\n\n<span class=\"ai\">\"서울 내부의 이동과 대화는 기록됩니다.\"</span>\n\n민지가 공구함을 잠갔다. 수첩은 조수석에 펼쳐 두었다."
+  },
+  "seoul_costs": {
+    "source": "entry-after-view-307-seoul_costs.json",
+    "index": 2,
+    "entry": {
+      "turns": [
+        {
+          "kind": "narration",
+          "text": "결정 전에, 코어가 세 개의 화면을 나란히 띄웠다."
+        },
+        {
+          "kind": "narration",
+          "text": "첫 화면 — 인계. 연결된 3곳 — 이음망, 유령(Ghost), 산지기의 채널이 열렸다. 도로를 먼저 열지, 물차를 먼저 보낼지 응답이 겹친다."
+        },
+        {
+          "kind": "ai",
+          "text": "\"합의 평균 소요: 산출 불가.\"",
+          "who": "cheollian",
+          "name": "천리안 방송"
+        },
+        {
+          "kind": "narration",
+          "text": "둘째 화면 — 격리 수면. 원본 기록 검색창이 회색으로 바뀌는 미리보기. 그 창구 앞에 예약 표시 하나. 「면사무소 · 내일 오전 · 이송표 3건 조회」. 코어가 잠들면 저 예약도 잠긴다."
+        },
+        {
+          "kind": "narration",
+          "text": "셋째 화면 — 보존. 빈 근무표. 이름 세 칸과 서명 세 칸이 매일 밤 채워져야 한다. 첫 줄은 아마 우리 중 누군가의 이름이 될 것이다."
+        },
+        {
+          "kind": "narration",
+          "text": "나는 세 화면을 번갈아 봤다. 어느 쪽도 대가 없이 끝나는 일은 아니었다."
+        },
+        {
+          "kind": "ai",
+          "text": "\"세 값 모두 계산했습니다. 어느 값이 옳은지는 계산하지 못했습니다.\"",
+          "who": "cheollian",
+          "name": "천리안 방송"
+        }
+      ],
+      "index": 0,
+      "knownSpeaker": false,
+      "readingRecord": "",
+      "recordOpen": false,
+      "readingRecordLabel": "",
+      "resultRecordOpen": false,
+      "restoredLineOpen": false,
+      "readerMode": "current",
+      "inspectionId": "",
+      "inspectedIds": [],
+      "sceneKeys": [
+        "seoul-core-view-v2"
+      ]
+    },
+    "choices": [
+      {
+        "label": "거점 채널을 먼저 열어 본다",
+        "out": [
+          {
+            "p": 1,
+            "fx": {
+              "chain": "seoul_decision",
+              "flag": "seoul_costs_seen",
+              "flag2": "costs_checked_cells"
+            }
+          }
+        ]
+      },
+      {
+        "label": "잠길 기록 창구를 먼저 확인한다",
+        "out": [
+          {
+            "p": 1,
+            "text": "코어가 원본 기록 검색창을 띄웠다. 예약 목록 맨 위에 「면사무소 · 내일 오전 · 이송표 3건 조회」.\n\n신청자 이름과 회신받을 면사무소가 적혀 있었다. 내가 만난 사람인지는 알 수 없었다. 내일 이 답을 기다릴 사람이 있다는 것까지는 알 수 있었다.\n\n<span class=\"ai\">\"격리 수면 선택 시 이 창구는 함께 닫힙니다. 재개 시점은 열쇠 보유자들의 합의에 따릅니다.\"</span>\n\n닫히는 것과 없어지는 것은 다르다. 다만 저 예약은 내일이었다.",
+            "fx": {
+              "chain": "seoul_decision",
+              "flag": "seoul_costs_seen",
+              "flag2": "costs_checked_records"
+            }
+          }
+        ]
+      },
+      {
+        "label": "근무표에 이름을 적을 사람을 먼저 묻는다",
+        "out": [
+          {
+            "p": 1,
+            "fx": {
+              "chain": "seoul_decision",
+              "flag": "seoul_costs_seen",
+              "flag2": "costs_checked_watch"
+            }
+          }
+        ]
+      }
+    ],
+    "paid": {
+      "version": 1,
+      "eventId": "seoul_costs",
+      "phase": "result",
+      "text": "\"밤에 저것 옆에 설 사람.\"\n\n손이 바로 올라오지는 않았다.\n\n돌아봐도 다른 사람은 없었다. 혼자서는 세 사람의 교대를 채울 수 없다.\n\n빈칸 세 개짜리 근무표가 떴다. 첫 근무에 필요한 세 사람 중 0명. 아직 3명이 더 필요하다.",
+      "view": null,
+      "reading": {
+        "eventId": "seoul_costs",
+        "phase": "outcome",
+        "view": {
+          "turns": [
+            {
+              "kind": "dialogue",
+              "text": "밤에 저것 옆에 설 사람.",
+              "who": "me"
+            },
+            {
+              "kind": "narration",
+              "text": "손이 바로 올라오지는 않았다."
+            },
+            {
+              "kind": "narration",
+              "text": "돌아봐도 다른 사람은 없었다. 혼자서는 세 사람의 교대를 채울 수 없다."
+            },
+            {
+              "kind": "narration",
+              "text": "빈칸 세 개짜리 근무표가 떴다. 첫 근무에 필요한 세 사람 중 0명. 아직 3명이 더 필요하다."
+            }
+          ],
+          "index": 0,
+          "knownSpeaker": false,
+          "readingRecord": "",
+          "recordOpen": false,
+          "readingRecordLabel": "",
+          "resultRecordOpen": false,
+          "restoredLineOpen": false,
+          "readerMode": "current",
+          "inspectionId": "",
+          "inspectedIds": [],
+          "sceneKeys": [
+            "seoul-core-view-v2"
+          ]
+        },
+        "history": {
+          "turns": [
+            {
+              "kind": "narration",
+              "text": "결정 전에, 코어가 세 개의 화면을 나란히 띄웠다."
+            },
+            {
+              "kind": "narration",
+              "text": "첫 화면 — 인계. 연결된 3곳 — 이음망, 유령(Ghost), 산지기의 채널이 열렸다. 도로를 먼저 열지, 물차를 먼저 보낼지 응답이 겹친다."
+            },
+            {
+              "kind": "ai",
+              "text": "\"합의 평균 소요: 산출 불가.\"",
+              "who": "cheollian",
+              "name": "천리안 방송"
+            },
+            {
+              "kind": "narration",
+              "text": "둘째 화면 — 격리 수면. 원본 기록 검색창이 회색으로 바뀌는 미리보기. 그 창구 앞에 예약 표시 하나. 「면사무소 · 내일 오전 · 이송표 3건 조회」. 코어가 잠들면 저 예약도 잠긴다."
+            },
+            {
+              "kind": "narration",
+              "text": "셋째 화면 — 보존. 빈 근무표. 이름 세 칸과 서명 세 칸이 매일 밤 채워져야 한다. 첫 줄은 아마 우리 중 누군가의 이름이 될 것이다."
+            },
+            {
+              "kind": "narration",
+              "text": "나는 세 화면을 번갈아 봤다. 어느 쪽도 대가 없이 끝나는 일은 아니었다."
+            },
+            {
+              "kind": "ai",
+              "text": "\"세 값 모두 계산했습니다. 어느 값이 옳은지는 계산하지 못했습니다.\"",
+              "who": "cheollian",
+              "name": "천리안 방송"
+            }
+          ],
+          "index": 0,
+          "knownSpeaker": false,
+          "readingRecord": "",
+          "recordOpen": false,
+          "readingRecordLabel": "",
+          "resultRecordOpen": false,
+          "restoredLineOpen": false,
+          "readerMode": "current",
+          "inspectionId": "",
+          "inspectedIds": [],
+          "sceneKeys": [
+            "seoul-core-view-v2"
+          ]
+        },
+        "selection": "근무표에 이름을 적을 사람을 먼저 묻는다",
+        "updates": [
+          {
+            "title": "메인 스토리 진행 · 남산 코어에서 마지막 결정을 내린다",
+            "next": "서울 지도에서 남산 코어를 열어 멈춘 결정을 이어 간다.",
+            "kind": "main"
+          }
+        ]
+      },
+      "choiceIndex": 2,
+      "outcomeIndex": 0,
+      "authoredView": {
+        "turns": [
+          {
+            "kind": "dialogue",
+            "text": "밤에 저것 옆에 설 사람.",
+            "who": "me"
+          },
+          {
+            "kind": "narration",
+            "text": "손이 바로 올라오지는 않았다."
+          },
+          {
+            "kind": "narration",
+            "text": "돌아봐도 다른 사람은 없었다. 혼자서는 세 사람의 교대를 채울 수 없다."
+          },
+          {
+            "kind": "narration",
+            "text": "빈칸 세 개짜리 근무표가 떴다. 첫 근무에 필요한 세 사람 중 0명. 아직 3명이 더 필요하다."
+          }
+        ],
+        "index": 0,
+        "knownSpeaker": false,
+        "readingRecord": "",
+        "recordOpen": false,
+        "readingRecordLabel": "",
+        "resultRecordOpen": false,
+        "restoredLineOpen": false,
+        "readerMode": "current",
+        "inspectionId": "",
+        "inspectedIds": [],
+        "sceneKeys": []
+      },
+      "chips": []
+    },
+    "crewText": "결정 전에, 코어가 세 개의 화면을 나란히 띄웠다.\n\n첫 화면 — 인계. 연결된 3곳 — 이음망, 유령(Ghost), 산지기의 채널이 열렸다. 도로를 먼저 열지, 물차를 먼저 보낼지 응답이 겹친다. <span class=\"ai\">\"합의 평균 소요: 산출 불가.\"</span>\n\n둘째 화면 — 격리 수면. 원본 기록 검색창이 회색으로 바뀌는 미리보기. 그 창구 앞에 예약 표시 하나. 「면사무소 · 내일 오전 · 이송표 3건 조회」. 코어가 잠들면 저 예약도 잠긴다.\n\n셋째 화면 — 보존. 빈 근무표. 이름 세 칸과 서명 세 칸이 매일 밤 채워져야 한다. 첫 줄은 아마 우리 중 누군가의 이름이 될 것이다.\n\n나는 세 화면을 번갈아 봤다. 어느 쪽도 대가 없이 끝나는 일은 아니었다.\n\n<span class=\"ai\">\"세 값 모두 계산했습니다. 어느 값이 옳은지는 계산하지 못했습니다.\"</span>"
+  }
+}

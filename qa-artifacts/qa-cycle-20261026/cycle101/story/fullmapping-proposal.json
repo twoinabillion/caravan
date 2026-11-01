@@ -1,0 +1,1036 @@
+{
+  "status": "ROOT APPROVED 13 keys; r1 entry bare;14 whitespace split only",
+  "newKeys": [
+    "comp-eunsu-conversation-worn-interior-v1",
+    "comp-eunsu-conversation-bare-interior-v1",
+    "comp-eunsu-headphones-neck-interior-v1",
+    "comp-eunsu-headphones-shared-interior-v1",
+    "comp-eunsu-notebook-interior-v1",
+    "comp-eunsu-map-interior-v1",
+    "comp-eunsu-radio-dial-detail-v1",
+    "comp-eunsu-bori-interior-v1",
+    "comp-eunsu-microphone-interior-v1",
+    "comp-eunsu-carrier-exterior-day-v1",
+    "comp-eunsu-carrier-exterior-night-v1",
+    "comp-eunsu-coffee-ground-day-v1",
+    "comp-eunsu-coffee-ground-night-v1"
+  ],
+  "count": 13,
+  "composition": "Head18–28% image height, medium distance; closed opaque living compartment without outdoor time/landmark cues, namedEunsu identity. Handheld/prop state exact; no extra cast. Bori only15. Exterior16c0 and coffee19 get day/night. Existing07 recorder detail preserved.",
+  "rows": [
+    {
+      "id": "talk_es_01",
+      "physicalPlace": "생활칸, 한쪽 헤드폰 제안",
+      "entry": {
+        "day": "comp-eunsu-conversation-bare-interior-v1",
+        "night": "comp-eunsu-conversation-bare-interior-v1",
+        "text": "은수가 헤드폰 한쪽을 내밀었다.\n\n\"…들어볼래요? 지금 좋은 게 잡혀서.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "잡음 사이로 아주 먼 데서 음악이 흘렀다. 어느 나라 말인지도 모를 노래.\n\n\"소리 괜찮아요? 크면 말하고요. …단파예요. 밤엔 전파가 멀리 와요. 지구 반대편일 수도 있어요. 반대편까지는 아닌가. 아무튼 멀어요.\"\n\n지구 반대편에도 누가 살아서 노래를 튼다. 그 사실을 한쪽 귀로 나눠 들었다. \"이래서 제가 밤을 좋아해요.\" 은수가 말했다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "note": {
+              "type": "사건",
+              "title": "한쪽 귀의 지구 반대편",
+              "body": "단파로 들은 모르는 나라의 노래. 헤드폰 반쪽의 동맹.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "잡음 사이로 아주 먼 데서 음악이 흘렀다",
+              "day": "comp-eunsu-headphones-shared-interior-v1",
+              "night": "comp-eunsu-headphones-shared-interior-v1",
+              "matchedNarration": "잡음 사이로 아주 먼 데서 음악이 흘렀다. 어느 나라 말인지도 모를 노래."
+            }
+          ]
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "\"…좋은 건 나누면 두 배인데.\" 은수가 아쉬워하며 헤드폰을 도로 꼈다.\n\n대신 내용을 실황 중계해줬다. 중계도 나쁘지 않았지만, 다음엔 그냥 받기로 했다.",
+          "fx": {
+            "mood": {
+              "eunsu": 1
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 아쉬워하며 헤드폰을 도로 꼈다",
+              "day": "comp-eunsu-conversation-worn-interior-v1",
+              "night": "comp-eunsu-conversation-worn-interior-v1",
+              "matchedNarration": "은수가 아쉬워하며 헤드폰을 도로 꼈다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_02",
+      "physicalPlace": "차 안, 콜사인",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"관제할 때는 서로 콜사인으로 불렀어요.\" 은수가 말했다. \"이름보다 정확하니까.\"\n\n\"…우리도 하나씩 정할래요?\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "은수가 3초 고민했다. 3초 더 고민했다.\n\n\"'델타 원'. 달구지의 D는 델타. 맨 앞에서 운전하니까 원.\"\n\n\"본인은요?\" \"…'노스 스타'. 북쪽 별. 방향 잡는 데 쓰라고요. 여행용이에요. 관제실에서 쓰던 이름하고는 따로요.\" 관제사다운 작명이었고, 관제사다운 구분이었다.\n\n은수는 새 콜사인을 시험하듯 무전 톤으로 말했다. \"델타 원, 전방에 커브. 감속 권고.\" 놀이인데, 이상하게 든든했다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "flag": "eunsu_callsign_held",
+            "note": {
+              "type": "사건",
+              "title": "델타 원 · 노스 스타",
+              "body": "콜사인 교환. 이름보다 정확한 부름. 무전 놀이 개시.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_03",
+      "physicalPlace": "차 안/창밖, 목걸이전환",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"침묵에도 종류가 있어요.\" 은수가 창밖을 보며 말했다. \"관제사는 그걸 구분하는 직업이에요. 무전이 조용한 이유가 평온인지 사고인지.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "은수가 차 안을 한 바퀴 둘러봤다. 각자 제 할 일을 하느라 조용했다.\n\n\"…이건 '교신할 필요가 없는 침묵'이에요. 제일 좋은 등급.\" 은수가 헤드폰을 목에 걸었다. \"등급표가 따로 있는 건 아니에요. 방금 만들었어요. …관제실에선 한 번도 못 들어본 침묵이라서.\"\n\n나는 고개만 끄덕였다. 은수도 더 말하지 않았다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "note": {
+              "type": "인물",
+              "title": "침묵 분류학",
+              "body": "최상급 침묵 = 교신할 필요가 없는 침묵. 관제실엔 없던 등급.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 헤드폰을 목에 걸었다",
+              "day": "comp-eunsu-headphones-neck-interior-v1",
+              "night": "comp-eunsu-headphones-neck-interior-v1",
+              "matchedNarration": "은수가 헤드폰을 목에 걸었다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_04",
+      "physicalPlace": "차 안 수업",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"오늘의 관제 용어.\" 은수가 수업을 열었다. 은수식 스몰토크다.\n\n\"'로저'는 알아들었다. '윌코'는 알아들었고 그대로 하겠다. 차이가 뭘까요?\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"정확해요. 로저는 듣기만 한 거고, 윌코는 하겠다는 약속이에요.\"\n\n\"…어느 쪽이 로저라고요?\"\n\n\"듣기만 한 쪽이요. 방금 그 질문이 딱 로저였어요.\" 은수가 드물게 장난스러운 표정을 지었다. \"사람들 대답도 다 로저 아니면 윌코예요. '알았어'가 로저인 사람이 있고 윌코인 사람이 있죠.\"\n\n\"이 차 사람들은요?\" \"…전원 윌코.\" 최고 등급 평가였다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "moodAll": 1,
+            "note": {
+              "type": "사건",
+              "title": "전원 윌코",
+              "body": "로저=들었다, 윌코=하겠다. 이 차의 대답은 전부 윌코 등급.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_05",
+      "physicalPlace": "차 안, 내려놓기",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"은수 씨는 어쩌다 관제사가 됐어요?\"\n\n\"…별을 좋아해서요.\" 예상 밖의 답이 왔다."
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"천문학과 가고 싶었는데 성적이… 그래서 하늘 보는 직업 중에 되는 걸 골랐어요. 아니, '되는 걸'은 말이 좀 그런가. 할 수 있는 거요.\" 은수가 웃었다. \"레이더 화면도 밤하늘 비슷해요. 점들이 떠 있고, 저는 그 점들이 무사히 지나가게 지키고.\"\n\n\"이젠 관제탑 아니어도 별 보러 갈 수 있겠네요.\"\n\n\"밤이 맑으면요. 야간수당은 없지만.\" 은수가 헤드폰을 내려놓았다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "note": {
+              "type": "인물",
+              "title": "별 대신 레이더",
+              "body": "천문학과 대신 관제탑을 택했던 은수. 별을 좋아해 하늘을 보는 직업을 골랐다고 했다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 헤드폰을 내려놓았다",
+              "day": "comp-eunsu-conversation-bare-interior-v1",
+              "night": "comp-eunsu-conversation-bare-interior-v1",
+              "matchedNarration": "은수가 헤드폰을 내려놓았다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_06",
+      "physicalPlace": "차 안/창밖, 헤드폰 만짐",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"가끔… 아니에요.\" 은수가 말을 접었다가, 다시 폈다. \"궁금한 게 있어요. 내가 관제실에 있었으면서 아무것도 몰랐다는 게… 잘못일까요.\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"…그렇게 말해주는 사람은 처음이에요.\" 은수가 헤드폰을 만지작거렸다.\n\n\"다들 관제실에 있었다고 하면 일단 한 발 물러서거든요. 뭔가 알았을 거라고.\" 은수가 창밖을 봤다. \"몰랐어요. 그게 제일 무서운 거예요. 아는 사람이 정말 없었다는 게.\"\n\n\"남산 가면 물어볼 거예요. 너는 우리한테 왜 안 알려줬냐고. …반말로요.\" 반말이라는 데서 웃어버렸고, 은수도 웃었다.",
+          "fx": {
+            "mood": {
+              "eunsu": 5
+            },
+            "note": {
+              "type": "인물",
+              "title": "반말로 물을 것",
+              "body": "\"너는 우리한테 왜 안 알려줬냐\" — 남산에서 천리안에게 할 질문(반말 예정).",
+              "links": [
+                "은수",
+                "천리안",
+                "남산"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_07",
+      "physicalPlace": "장소비특정 녹음기 detail",
+      "entry": {
+        "day": "companion-noise-recorder-detail-v1",
+        "night": "companion-noise-recorder-detail-v1",
+        "text": "은수가 녹음기(어디서 구했는지)에 뭔가를 모으고 있다.\n\n\"잡음이요. 좋은 잡음만.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"있죠. 잠깐만요. 이 앞인데… 지나갔다.\" 은수가 되감기를 두 번 놓치고 세 번째에 맞췄다. 빗소리 뒤로 희미한 음악이 잡혔다.\n\n\"여기요. 사람 목소리 들리죠? 앞에서 말하는 사람 말고, 뒤에서 따라 부르는 사람.\"\n\n볼륨을 올리자 잡음만 커졌다. 은수는 조금 낮추고 같은 부분을 다시 틀었다. 그제야 한 음 늦게 따라오는 목소리가 들렸다.\n\n\"관제실에선 이런 건 다 지웠어요. 지금은 따로 남겨요. 나중에 이것만 이어서 들어 보려고요.\"\n\n은수는 녹음기 옆에 재생 위치를 적었다. 나는 한 번 더 듣고 나서 헤드폰을 돌려줬다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "note": {
+              "type": "인물",
+              "title": "좋은 잡음 수집가",
+              "body": "은수가 잡음 뒤에서 노래를 따라 부르는 목소리를 들려줬다. 관제실에서 지우던 소리를 이제는 따로 모은다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_08",
+      "physicalPlace": "차 안, 손에 헤드폰 쥠",
+      "entry": {
+        "day": "comp-eunsu-conversation-bare-interior-v1",
+        "night": "comp-eunsu-conversation-bare-interior-v1",
+        "text": "\"그날 마지막으로 관제한 비행기, 기억해요.\" 은수가 묻지 않은 이야기를 시작했다. 이 사람에겐 드문 일이다."
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"제주발 김포행. 착륙 10분 전에 시스템이 넘어갔어요. 마지막으로 제가 한 말이 '유지하세요, 곧 다시 연결됩니다'였어요.\"\n\n\"…연결됐어요?\"\n\n\"몰라요. 아직도.\" 은수가 헤드폰을 꼭 쥐었다. \"그래서 매일 밤 스캔해요. 그 기장 목소리를 아니까. 무전 한 번만 잡히면… 뭐라고 할지는, 아직 못 정했어요.\"\n\n그 뒤로 은수가 야간 스캔을 시작하면, 아무도 채널을 먼저 돌리지 않았다.",
+          "fx": {
+            "mood": {
+              "eunsu": 6
+            },
+            "note": {
+              "type": "인물",
+              "title": "유지하세요, 곧 다시 연결됩니다",
+              "body": "마지막 관제의 마지막 문장. 은수는 지금도 매일 밤 그 비행기의 신호를 찾는다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_09",
+      "physicalPlace": "차 안, 목→착용",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"비밀 하나 말해도 돼요?\" 은수가 물었다. \"관제사는 비밀이 생기면 기록으로 남겨요. 직업병이에요. 근데 이건 기록 못 하겠어서.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"…중계기만 끄면 제 볼일은 끝이라고 생각했어요. 대전에서 차 얻어 탔을 때는요.\"\n\n\"그다음엔 혼자 가려고 했는데. 같이 가도 된다고 하니까… 그냥 좋더라고요. 말할 때는 티 안 냈지만.\" 은수가 헤드폰을 목에 걸었다. 케이블을 무릎 위에서 풀었다가 다시 감았다.\n\n\"그 얘기예요. 계속 같이 가고 싶다고요. 이상, 교신 끝.\"\n\n\"로저.\"\n\n\"수신 확인했으니까 이제 제 자리 좀 남겨 주세요.\" 웃으면서 헤드폰을 다시 썼다.",
+          "fx": {
+            "mood": {
+              "eunsu": 6
+            },
+            "note": {
+              "type": "사건",
+              "title": "교신 끝",
+              "body": "중계기를 끈 뒤 혼자 가려던 은수가, 계속 함께 가고 싶다고 말했다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 헤드폰을 목에 걸었다",
+              "day": "comp-eunsu-headphones-neck-interior-v1",
+              "night": "comp-eunsu-headphones-neck-interior-v1",
+              "matchedNarration": "은수가 헤드폰을 목에 걸었다. 케이블을 무릎 위에서 풀었다가 다시 감았다."
+            },
+            {
+              "afterText": "웃으면서 헤드폰을 다시 썼다",
+              "day": "comp-eunsu-conversation-worn-interior-v1",
+              "night": "comp-eunsu-conversation-worn-interior-v1",
+              "matchedNarration": "웃으면서 헤드폰을 다시 썼다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_10",
+      "physicalPlace": "차 안 지도",
+      "entry": {
+        "day": "comp-eunsu-map-interior-v1",
+        "night": "comp-eunsu-map-interior-v1",
+        "text": "\"남산 끝나면요.\" 은수가 지도의 서울 위쪽, 빈 데를 짚었다.\n\n\"저는 더 올라가 볼까 해요.\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"북쪽에도 관제탑이 있어요. 거기도 누가 있었을 거고, 거기도 하늘이 있잖아요.\"\n\n은수가 헤드폰을 고쳐 썼다. \"천리안한테 물어보고, 대답을 듣고, 그 다음엔— 아무도 관제 안 하는 하늘을 보러 갈 거예요. 별만 있는 하늘.\"\n\n\"혼자요?\"\n\n\"…글쎄요. 계획은 혼자였는데, 계획이라는 게 요즘 잘 안 지켜져서.\" 은수가 나를 봤다. \"동행 신청은 선착순이에요.\" 3막의 예고편 같은 말을, 나는 접수해뒀다.",
+          "fx": {
+            "mood": {
+              "eunsu": 6
+            },
+            "note": {
+              "type": "소문",
+              "title": "별만 있는 하늘",
+              "body": "남산 이후의 계획: 더 북쪽, 아무도 관제 안 하는 하늘. 동행 신청 선착순.",
+              "links": [
+                "은수",
+                "남산"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_11",
+      "physicalPlace": "폭풍이 들리는 차 안",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "폭풍. 은수가 헤드폰을 꼭 누르며 눈을 빛냈다.\n\n\"지금이에요. 폭풍 때만 잡히는 게 있어요.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"번개가 만드는 전파요. 휘슬러라고— 지구 반대편 번개가 자기장을 타고 와요. 휘이— 하고.\"\n\n\"자기장이요?\"\n\n\"자기력선이요. …아니 자기장이 맞나. 용어는 다시 확인할게요.\" 은수가 헤드폰 한쪽을 벗어 내밀었다.\n\n나눠 들었다. 정말로 낙하하는 휘파람 같은 소리가 났다.\n\n\"방송국이 다 꺼져도 지구는 방송 중이에요.\" 은수는 헤드폰을 고쳐 쓰고 다음 소리를 기다렸다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "note": {
+              "type": "사건",
+              "title": "휘슬러",
+              "body": "지구 반대편 번개의 휘파람. 방송국이 꺼져도 지구는 방송 중.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 헤드폰 한쪽을 벗어 내밀었다",
+              "day": "comp-eunsu-headphones-shared-interior-v1",
+              "night": "comp-eunsu-headphones-shared-interior-v1",
+              "matchedNarration": "은수가 헤드폰 한쪽을 벗어 내밀었다."
+            },
+            {
+              "afterText": "은수는 헤드폰을 고쳐 쓰고",
+              "day": "comp-eunsu-conversation-worn-interior-v1",
+              "night": "comp-eunsu-conversation-worn-interior-v1",
+              "matchedNarration": "은수는 헤드폰을 고쳐 쓰고 다음 소리를 기다렸다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_12",
+      "physicalPlace": "차 안 일출회고/손목시계",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"관제탑에서 본 것 중에 제일 좋았던 게 뭐게요.\" 은수가 퀴즈를 냈다.\n\n\"비행기요?\" \"땡.\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"정답이요. 관제탑이 공항에서 제일 높잖아요. 새벽 근무 때 일출을 통유리로 봐요. 활주로가 금색이 되고, 첫 비행기가 그 금색을 밟고 떠요.\"\n\n\"그거 보려고 새벽 근무를 자원했어요. 다들 기피하는데.\"\n\n\"몇 시부터였는데요?\"\n\n\"네 시 반이요. 아니, 인수인계까지 하면 네 시.\" 은수가 잠깐 셈을 했다. \"…지금은 매일 지평선에서 보니까 승진한 셈이네요, 저.\"\n\n은수는 손목시계를 확인하고 헤드폰을 고쳐 썼다. 일출 이야기를 하던 표정이 조금 남아 있었다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "note": {
+              "type": "인물",
+              "title": "일출 자원 근무자",
+              "body": "관제탑 새벽 근무의 이유. 현재는 지평선 전망대로 승진.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_13",
+      "physicalPlace": "차 안 노래, 끝에 도로착용",
+      "entry": {
+        "day": "comp-eunsu-conversation-bare-interior-v1",
+        "night": "comp-eunsu-conversation-bare-interior-v1",
+        "text": "\"노래방 가면 뭐 불렀어요?\" 뜬금없는 질문에 은수가 정색했다.\n\n\"…비밀이에요.\" 정색이 수상하다."
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "몇 번 더 묻자 대답이 나왔다. \"…트로트요.\"\n\n\"네?\"\n\n\"트로트요. 관제사들 회식 가면 제가 분위기 담당이었어요.\" 은수가 헛기침을 했다. \"상상 안 되죠. 그게 포인트예요, 반전.\"\n\n아주 작게 한 소절. 정말로 잘했고, 정말로 트로트였다.\n\n\"노래방 다시 생기면 풀버전으로— 아니다. 그건 그때 가서 정할게요.\" 은수가 헤드폰을 도로 썼다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            },
+            "moodAll": 1,
+            "note": {
+              "type": "사건",
+              "title": "은수의 18번",
+              "body": "관제사 회식 분위기 담당(트로트). 풀버전은 노래방 복구 시.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 헤드폰을 도로 썼다",
+              "day": "comp-eunsu-conversation-worn-interior-v1",
+              "night": "comp-eunsu-conversation-worn-interior-v1",
+              "matchedNarration": "은수가 헤드폰을 도로 썼다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_14",
+      "physicalPlace": "차 안, 인계→분해청소→재착용",
+      "entry": {
+        "day": "comp-eunsu-conversation-bare-interior-v1",
+        "night": "comp-eunsu-conversation-bare-interior-v1",
+        "text": "은수의 헤드폰에서 잡음이 난다. 기계 잡음 — 진짜 고장이다.\n\n은수가 헤드폰을 내밀다가 줄을 도로 감았다. 내가 손을 내밀자 그제야 건넸다."
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"줄도 갈아야 해요?\"\n\n\"접점부터 볼게요. 줄은 멀쩡하면 두고요.\"\n\n\"네. 부탁드릴게요.\" 은수는 내가 덮개를 여는 동안 손을 무릎에 모았다. \"오래 쓰던 거라 그래요. 옆에서 봐도 되죠?\"\n\n전원을 끄고 접점의 때를 닦았다. 다시 연결하자 잡음이 사라졌다.\n\n은수가 헤드폰을 끼고 오래 확인하더니 말했다.\n\n\"수리비는 다음에 좋은 주파수 잡히면 첫 청취권으로 드릴게요.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 5
+            },
+            "note": {
+              "type": "사건",
+              "title": "귀 수리",
+              "body": "오래 쓰던 헤드폰을 맡긴 은수. 접점을 청소해 잡음을 없앴고, 좋은 주파수의 첫 청취권을 수리비로 받기로 했다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 헤드폰을 끼고",
+              "day": "comp-eunsu-conversation-worn-interior-v1",
+              "night": "comp-eunsu-conversation-worn-interior-v1",
+              "matchedNarration": "은수가 헤드폰을 끼고 오래 확인하더니 말했다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": [
+        "Resolved by root: exact new outcome paragraph break before 은수가 헤드폰을 끼고; no other words/roles/fx changed. Old paid text remains frozen."
+      ]
+    },
+    {
+      "id": "talk_es_15",
+      "physicalPlace": "차 안 보리→교신일지",
+      "entry": {
+        "day": "comp-eunsu-bori-interior-v1",
+        "night": "comp-eunsu-bori-interior-v1",
+        "text": "\"보리가 지렁이를 옮겼다는 게 진짜예요?\" 은수가 물었다.\n\n은수가 보리를 내려다봤다. 보리는 영문도 모르고 꼬리를 흔들었다."
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"아홉 마리요? 한 마리도 아니고?\"\n\n\"그래서 최다 구조 대원이었죠.\"\n\n\"보리 씨가요. …최다 구조 대원.\" 은수가 말을 되풀이하다 웃음을 터뜨렸다.\n\n\"관제실 나온 뒤로 웃을 일이 없을 줄 알았거든요. 근데 여기는 웃긴 일이 시속 44km로 계속 와요.\"\n\n은수가 교신 일지 한쪽에 짧게 적었다. '웃음 재개.' 날짜를 쓰고 잠깐 펜을 멈췄다. \"이유는 안 썼어요. 쓰면 좀… 아니에요. 그냥 안 썼어요.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 6
+            },
+            "note": {
+              "type": "사건",
+              "title": "웃음 재개",
+              "body": "보리의 지렁이 구조 이야기에 은수가 웃음을 터뜨렸다. 교신 일지에는 날짜와 웃음 재개라고 적었다.",
+              "links": [
+                "은수",
+                "보리"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 교신 일지 한쪽에 짧게 적었다",
+              "day": "comp-eunsu-notebook-interior-v1",
+              "night": "comp-eunsu-notebook-interior-v1",
+              "matchedNarration": "은수가 교신 일지 한쪽에 짧게 적었다. '웃음 재개.' 날짜를 쓰고 잠깐 펜을 멈췄다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_16",
+      "physicalPlace": "진입 차 안; c0실외 차관찰/c1줄손가락",
+      "entry": {
+        "day": "comp-eunsu-conversation-bare-interior-v1",
+        "night": "comp-eunsu-conversation-bare-interior-v1",
+        "text": "\"관제실에선 본명보다 호출부호를 더 많이 써요. 저도 선배 성을 얼마 뒤에 알았어요.\"\n\n은수가 헤드폰을 만지작거렸다. \"그 이름 들으면 아직도 저절로 대답해요. 일을 그만뒀는데도.\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "은수가 차를 오래 봤다. 앞바퀴부터 지붕까지.\n\n\"…「캐리어」요.\"\n\n\"어디요?\"\n\n\"캐리어요. 항공모함. 다들 여기서 뜨고 여기로 내리잖아요.\"\n\n고물 달구지한테 거창하다고 하자 은수가 고개를 저었다. \"관제사는 호출부호 허투루 안 정해요. 이건 직업적 판단이에요.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 5
+            },
+            "note": {
+              "type": "사건",
+              "title": "콜사인 — 캐리어",
+              "body": "달구지의 공식 호출부호. \"다들 여기서 뜨고 여기로 내리잖아요.\"",
+              "links": [
+                "은수",
+                "달구지"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 차를 오래 봤다",
+              "day": "comp-eunsu-carrier-exterior-day-v1",
+              "night": "comp-eunsu-carrier-exterior-night-v1",
+              "matchedNarration": "은수가 차를 오래 봤다. 앞바퀴부터 지붕까지."
+            }
+          ]
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "\"「에코」요. 무전 용어로 E.\"\n\n은수가 잠깐 멈췄다. \"…근데 뜻이 좋아서 아꼈어요. 메아리요. 보낸 신호가 돌아오는 거.\"\n\n\"관제사한텐 그게 제일 반가운 소리예요. 응답이 있다는 뜻이라.\" 은수가 헤드폰 줄을 손가락에 감았다. \"그, 설명하면 길어지는데— 아무튼요.\"\n\n\"요즘은 어느 쪽으로 불러요?\"\n\n\"…받을 자신이 있을 때는 에코요. 아직은, 노스 스타가 더 많고요.\" 은수는 그 말을 하고도 헤드폰 줄을 한 번 더 감았다.",
+          "fx": {
+            "mood": {
+              "eunsu": 5
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_17",
+      "physicalPlace": "차 안 라디오다이얼",
+      "entry": {
+        "day": "comp-eunsu-radio-dial-detail-v1",
+        "night": "comp-eunsu-radio-dial-detail-v1",
+        "text": "은수가 라디오 다이얼을 천천히 돌리고 있다. 지직— 지직—\n\n\"…잡음에도 취향이 있는 거 알아요? 전 빗소리 같은 잡음이 좋아요. 이런 거.\" 지지지— 하는 부드러운 백색소음."
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"…네?\" 은수가 다이얼에서 손을 뗐다. \"아, 왜 좋냐고요.\"\n\n\"아무 말도 안 들리는데, 완전히 끊긴 건 아니잖아요. 관제실에선 신호가 아예 사라지는 게 더 무서웠어요.\"\n\n지지지— 소리가 계속 났다. 은수는 그걸 껐다가 다시 켰다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            }
+          },
+          "stages": []
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "\"92.7이요. 옛날에 새벽 클래식 채널이었어요. 당직 때 몰래 들었어요.\"\n\n은수가 다이얼을 92.7에 맞췄다. 지금은 잡음뿐이다.\n\n\"쇼팽이었나, 슈만이었나… 앞부분은 아직 기억나요.\" 은수가 손가락으로 느리게 박자를 셌다.",
+          "fx": {
+            "mood": {
+              "eunsu": 4
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_18",
+      "physicalPlace": "차 안 수업→c1수첩",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"오늘의 관제 용어.\" 은수가 수업을 열었다. 오늘은 대기와 구조 신호를 알려 주겠단다.\n\n은수가 손가락을 하나씩 폈다. \"「스탠바이」— 대기. 「세이 어게인」— 다시 말하라. 「메이데이」— 이건… 안 쓸 일이 있길 바라요.\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "차 안에서 방금 배운 관제 용어를 써 봤다. \"정차 5분.\" \"스탠바이.\" \"뭐라고?\" \"세이 어게인.\"\n\n\"그건 거기 쓰는 거 아닌데요.\" \"세이 어게인.\" \"…그것도 아니에요.\"\n\n배운 지 몇 분도 안 돼 엉뚱한 데 남발하자 은수가 오랜만에 소리 내어 웃었다. \"관제사 하길 잘했어요. 이 교신은— 아니, 됐어요. 그냥 좋아요.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 5
+            },
+            "moodAll": 1
+          },
+          "stages": []
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "\"메이데이는 너무 무섭잖아요. 우리끼린 「집에 가자」 어때요?\"\n\n은수가 눈을 깜빡였다. \"교범 위반인데요.\"\n\n\"우리 차에 교범이 어디 있어요.\"\n\n\"…좋아요. 차 안에서만.\" 은수가 수첩 귀퉁이에 적어뒀다.",
+          "fx": {
+            "mood": {
+              "eunsu": 6
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 수첩 귀퉁이에 적어뒀다",
+              "day": "comp-eunsu-notebook-interior-v1",
+              "night": "comp-eunsu-notebook-interior-v1",
+              "matchedNarration": "은수가 수첩 귀퉁이에 적어뒀다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talk_es_19",
+      "physicalPlace": "차 밖 지면, 컵/커피",
+      "entry": {
+        "day": "comp-eunsu-coffee-ground-day-v1",
+        "night": "comp-eunsu-coffee-ground-night-v1",
+        "text": "은수가 커피 비슷한 것을 끓이며 이상한 의식을 치른다. 컵을 세 번 돌리고, 한 모금은 바닥에 붓는다.\n\n\"…아, 이거요. 당직 교대식이에요. 먼저 간 교대자 몫.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"…오늘은요.\" 은수가 컵을 한 번 더 돌렸다. \"그날 저랑 교대했어야 할 선배 몫이요. 오지 말라고 제가 무전 쳤어요. 길이 위험하다고.\"\n\n\"…그날 제가 한 말 중에 그게, 그게 제일 잘한 말이에요. 한 명은 살렸으니까.\" 은수가 바닥에 부은 자국을 봤다.\n\n\"그 선배도 어디선가 은수 씨 몫을 붓고 있을 거예요.\"\n\n은수는 대답 대신 바닥에 한 모금 더 부었다. 잔이 반쯤 비었다.",
+          "fx": {
+            "mood": {
+              "eunsu": 6
+            },
+            "note": {
+              "type": "인물",
+              "title": "교대식 커피",
+              "body": "은수는 그날 무전으로 살린 선배 몫의 커피를 먼저 따른다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "내 컵에서도 한 모금을 바닥에 부었다. 은수가 놀란 눈으로 봤다.\n\n\"…누구 몫이에요?\" \"여기까지 못 온 사람들 몫이요. 많잖아요, 우리 둘 다.\"\n\n은수가 고개를 끄덕이고, 우리는 남은 커피를 말없이 마셨다.\n\n은수는 빈 컵 두 개를 함께 받아 챙겼다.",
+          "fx": {
+            "mood": {
+              "eunsu": 5
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수는 빈 컵 두 개를 함께 받아 챙겼다",
+              "day": "comp-eunsu-carrier-exterior-day-v1",
+              "night": "comp-eunsu-carrier-exterior-night-v1",
+              "matchedNarration": "은수는 빈 컵 두 개를 함께 받아 챙겼다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": [
+        "Coffee artwork must hold cup over ground without fixed active-pour stream, allowing entry pour and discussion/current sipping. c1 final empty-cup collection switches to exterior neutral. Reuse16 exterior only if hands/cups outside composition and no fixed pointing pose."
+      ]
+    },
+    {
+      "id": "talk_es_20",
+      "physicalPlace": "차 안 마이크; c0주인공차뒤후운전석귀환/c1무릎헤드폰",
+      "entry": {
+        "day": "comp-eunsu-microphone-interior-v1",
+        "night": "comp-eunsu-microphone-interior-v1",
+        "text": "커피를 마시던 은수가 무전기 마이크를 쥐고 한참 망설이고 있다.\n\n\"…좌표나 작업 순서는 말하겠는데, 제 얘기를 하려면 막혀요. 무슨 말을 해야 할지도 모르겠고.\"\n\n송신 버튼에 올린 손가락이 움직이지 않는다."
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"…네?\" \"같은 채널 맞춰요. 제가 차 뒤에서 받을게요.\"\n\n\"…무슨 얘기를요?\"\n\n\"아까 마신 커피는 어땠어요?\"\n\n달구지 뒤에서 무전기를 켰다. 잡음이 끊기고 은수의 목소리가 들렸다. \"…너무 썼어요. 안 쓴 척했는데.\"\n\n\"저도요. 다음엔 물 좀 더 넣어요.\"\n\n무전기 너머로 짧게 웃는 소리가 났다. 운전석으로 돌아오자 은수가 빈 컵을 들어 보였다.",
+          "fx": {
+            "mood": {
+              "eunsu": 8
+            },
+            "note": {
+              "type": "사건",
+              "title": "커피 얘기를 나눈 채널",
+              "body": "은수와 무전으로 커피 얘기를 나눴다. 좌표도 작업 지시도 없는 짧은 교신이었다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": []
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "\"급하게 안 해도 돼요. 여기서 듣고 있을게요.\"\n\n은수가 마이크를 오래 보다가 버튼을 눌렀다. \"…지금은 그냥 쉬고 싶어요. 아무것도 안 듣고.\"\n\n\"그럼 잠깐 꺼 둬요.\"\n\n나는 수신기를 내려놓았다. 은수도 헤드폰을 벗어 무릎에 놓았다.",
+          "fx": {
+            "mood": {
+              "eunsu": 7
+            },
+            "moodAll": 2
+          },
+          "stages": [
+            {
+              "afterText": "나는 수신기를 내려놓았다",
+              "day": "comp-eunsu-conversation-bare-interior-v1",
+              "night": "comp-eunsu-conversation-bare-interior-v1",
+              "matchedNarration": "나는 수신기를 내려놓았다. 은수도 헤드폰을 벗어 무릎에 놓았다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": [
+        "c0 first-person moves behind vehicle: microphone art must show Eunsu alone, no visible player; cup return at final combined narration may use existing microphone+emptycup image if cup in her hand was already plausible."
+      ]
+    },
+    {
+      "id": "talk_es_21",
+      "physicalPlace": "차 안 수신기/c1수첩",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"관제사는요, 비행기를 못 몰아요. 뜨지도 내리지도 못해요. 평생 남 뜨고 내리는 것만 봐요.\"\n\n은수가 조용히 말했다. \"그게 제 콤플렉스였어요. 저는 늘 화면 밖이었어요.\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"…그 말, 관제 학교 첫날에 배워요.\" 은수가 웃었다. \"그땐 시험 답이라서 외웠고요.\"\n\n\"지금은요?\"\n\n은수가 수신기를 집어 들었다. \"지금은 알 것 같아요. 이 차도 제가 주파수 안 보면 못 가잖아요. 그러니까 오늘도 먼저 볼게요.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 8
+            },
+            "moodAll": 2,
+            "note": {
+              "type": "사건",
+              "title": "우리의 관제탑",
+              "body": "은수는 달구지에서 관제사의 일을 다시 자기 일로 받아들였다.",
+              "links": [
+                "은수"
+              ]
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 수신기를 집어 들었다",
+              "day": "comp-eunsu-radio-dial-detail-v1",
+              "night": "comp-eunsu-radio-dial-detail-v1",
+              "matchedNarration": "은수가 수신기를 집어 들었다."
+            }
+          ]
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "text": "\"…남산 착륙이요?\" \"제일 어려운 착륙이 될 거예요. 관제탑이 필요해요.\"\n\n은수가 자세를 고쳐 앉았다. 관제사의 얼굴로.\n\n\"…착륙 요청 접수. 활주로 상태 확인 중.\" 은수가 잠깐 멈췄다. \"…끝까지 유도할게요. 여기는 에코.\"\n\n은수는 수첩을 펴 남산 쪽 주파수 옆에 확인 표시를 남겼다.",
+          "fx": {
+            "mood": {
+              "eunsu": 7
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수는 수첩을 펴",
+              "day": "comp-eunsu-notebook-interior-v1",
+              "night": "comp-eunsu-notebook-interior-v1",
+              "matchedNarration": "은수는 수첩을 펴 남산 쪽 주파수 옆에 확인 표시를 남겼다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talkr_es_1",
+      "physicalPlace": "차 안 헤드폰한쪽→수첩",
+      "entry": {
+        "day": "comp-eunsu-conversation-bare-interior-v1",
+        "night": "comp-eunsu-conversation-bare-interior-v1",
+        "text": "\"오늘의 전파 보고입니다.\" 은수가 헤드폰 한쪽을 들었다. \"들으실래요?\""
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "오늘 잡힌 신호들이 브리핑됐다. 멀리서 온 잡음, 정체불명의 규칙적 신호, 혹은 아무것도 없음.\n\n\"오늘은 아무것도 없었어요.\"\n\n\"그것도 보고예요?\"\n\n\"'이상 무'도 정보니까요.\" 은수가 수첩에 시각을 적었다. \"…아, 새벽 세 시쯤 한 번 뭐가 있었는데 제가 졸아서요. 그건 못 들은 걸로 적었어요.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 2
+            }
+          },
+          "stages": [
+            {
+              "afterText": "은수가 수첩에 시각을 적었다",
+              "day": "comp-eunsu-notebook-interior-v1",
+              "night": "comp-eunsu-notebook-interior-v1",
+              "matchedNarration": "은수가 수첩에 시각을 적었다."
+            }
+          ]
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talkr_es_2",
+      "physicalPlace": "차 안 교신놀이",
+      "entry": {
+        "day": "comp-eunsu-conversation-worn-interior-v1",
+        "night": "comp-eunsu-conversation-worn-interior-v1",
+        "text": "\"델타 원, 여기는 노스 스타.\" 은수가 무전 톤으로 말을 걸어왔다. \"감도 확인 바람.\""
+      },
+      "legacy": {
+        "base": "comp-talk-eunsu-camp-v1",
+        "day": "comp-talk-eunsu-camp-day-v1",
+        "night": "comp-talk-eunsu-camp-v1"
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"수신 확인. 금일 주행 계획 공유 바람.\"\n\n\"계획대로 가요. 이럴 때는 뭐라고 해요?\"\n\n\"윌코. 지시대로 하겠다는 뜻이에요. 계획을 바꿀 거면 먼저 말해 주시고요.\"\n\n오늘의 경로를 관제 용어로 주고받았다. 놀이인데, 하고 나면 이상하게 운행이 정돈된다. \"교신 종료. 안전 운행.\" \"윌코.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 2
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    },
+    {
+      "id": "talkr_es_3",
+      "physicalPlace": "차 안 수첩",
+      "entry": {
+        "day": "comp-eunsu-notebook-interior-v1",
+        "night": "comp-eunsu-notebook-interior-v1",
+        "text": "은수가 차 안을 살피더니 수첩을 꺼냈다. 오늘의 침묵 등급 판정 시간이다."
+      },
+      "legacy": null,
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "text": "\"오늘은…\" 은수가 각자 딴짓 중인 차 안을 훑었다. \"2등급이요. '교신 불필요'까진 아니고, '교신 대기'.\"\n\n\"1등급은요?\"\n\n\"저녁에 다 같이 웃는 일이 한 번 있으면요.\" 은수가 수첩에 시각을 적었다. \"…아, 등급은 제가 정한 거예요. 교범에 있는 건 아니고.\"",
+          "fx": {
+            "mood": {
+              "eunsu": 2
+            }
+          },
+          "stages": []
+        }
+      ],
+      "revision": "qa101",
+      "issues": []
+    }
+  ]
+}

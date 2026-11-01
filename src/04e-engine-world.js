@@ -162,7 +162,9 @@ G.campConversationEvent = ()=>{
   const data=D.campConversationData(record), cid=record.cid, context=G.campReadingContext(record);
   const text=[context,record.revisit?data.later:data.first,`"${data.line}"`].filter(Boolean).join('\n\n');
   return {id:record.id,campConversation:true,type:'대화',title:data.title,
-    scene:`comp-talk-${cid}-${record.timeLabel==='밤'||record.timeLabel==='저녁'||record.timeLabel==='새벽'?'camp':'road'}-v1`,
+    scene:cid==='leo'&&record.sceneContext==='leo-rest-v1'?'camp-leo-rest-day-v1':
+      cid==='parkss'&&record.sceneContext==='pss-rest-v1'?'camp-parkss-rest-day-v1':
+      cid==='eunsu'&&record.sceneContext==='eunsu-records-v1'?(record.chapter===3?'comp-eunsu-conversation-bare-interior-v1':'comp-eunsu-notebook-interior-v1'):`comp-talk-${cid}-${record.timeLabel==='밤'||record.timeLabel==='저녁'||record.timeLabel==='새벽'?'camp':'road'}-v1`,
     text,readingRecord:context!==record.context?record.context:undefined,speakers:[cid,'me'],turns:[
       ...(context?[{kind:'narration',text:context}]:[]),
       {kind:'narration',text:record.revisit?data.later:data.first},
@@ -274,6 +276,9 @@ G.prepareCamp = (kind,cid)=>{
         day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
         chapter:Math.min(3,(choiceVisits[previousChoiceId]||0)+1),previousChoiceId,choiceVisits,
         choiceId:null,chips:[],active:true};
+      if(cid==='leo') S.campConversation.sceneContext='leo-rest-v1';
+      if(cid==='parkss') S.campConversation.sceneContext='pss-rest-v1';
+      if(cid==='eunsu'){S.campConversation.sceneContext='eunsu-records-v1';S.campConversation.sceneRevision='qa105';}
       if(cid==='kangwoo'&&S.campConversation.chapter===2&&previousChoiceId==='rotate'&&choiceVisits.trust===1)
         S.campConversation.replyContext='kangwoo-rotate-trust-v1';
       else if(cid==='kangwoo'&&S.campConversation.chapter>=2&&['trust','rotate'].includes(previousChoiceId))
@@ -494,16 +499,19 @@ G.checkDriverLv = ()=>{
 };
 
 /* ── 현장 수리 ── */
+G.fieldRepairGain = ()=> S?clamp(S.van+(S.up&&S.up.sidebox?45:35),0,S.vanMax)-S.van:0;
 G.fieldRepair = ()=>{
   if(!S||S.ended) return false;
   if(!G.hasResource('부품',1) || S.van>=S.vanMax-2) return false;
   const box=S.up&&S.up.sidebox;
   const saved = box && rng()<0.5;
   if(!saved) G.spendResource('부품',1);
+  const beforeVan=S.van;
   S.van=clamp(S.van+(box?45:35),0,S.vanMax);
+  const repaired=S.van-beforeVan;
   G.advance(100);
   if(S.ended) return true;
-  UI.toast('🔧 부품으로 정비 완료 — 내구 +'+(box?45:35)+(saved?' · 🧰 부품 아낌':''));
+  UI.toast('🔧 부품으로 정비 완료 — 내구 +'+Number(repaired.toFixed(1))+(saved?' · 🧰 부품 아낌':''));
   UI.renderAll(); G.save(); return true;
 };
 
@@ -933,7 +941,7 @@ G.checkQuest = ()=>{
   const q=S.quest; S.quest=null;
   const K=G.QKIND[q.kind]||G.QKIND.deliver;
   if(q.kind==='procure') S.items[q.need.name]-=q.need.qty;
-  const early = S.day<=q.due-2;
+  const early = !q.noExpiry && S.day<=q.due-2;
   const bonus = early ? (q.kind==='express'?6:4) : 0;
   S.scrap += q.reward + bonus;
   if(bonus) UI.toast(`⚡ 빠른 처리 보너스 — 고철 +${bonus}`);

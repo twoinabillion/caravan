@@ -1,0 +1,62 @@
+{
+  "rows": [
+    {
+      "name": "returned-can",
+      "key": "camp-dogs-returned-can-morning-v1",
+      "candidate": "qa-artifacts/qa-cycle-20261026/cycle107/root/art/returned-can-candidate-v1.webp",
+      "sha256": "1ec1f2c5df61732b2f4b9d87a8ff238a617afaf73b436d7a5b963ca04fa8af61",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle107/root/art/returned-can-master-v1.png",
+      "masterViewed": true,
+      "width360Viewed": true,
+      "width480Viewed": true,
+      "existingOriginalCompared": true,
+      "verdict": "approved",
+      "notes": "Approved. Single clearly empty opened tin placed on damp morning ground before canonical weathered cabover front wheel. No pack or Bori remains; no human actor, loot pile or invented landmark. Partial technical front detail preserves vehicle identity. Tin remains recognizable at360/480. Compared with original night encirclement: correct next-morning aftermath without implying dogs still present.",
+      "runtimeCropVerified": false,
+      "file": "assets/scenes/camp-dogs-returned-can-morning-v1.webp",
+      "bytes": 140720
+    },
+    {
+      "name": "arcade-night",
+      "key": "explore-arcade-airhockey-night-v1",
+      "candidate": "qa-artifacts/qa-cycle-20261026/cycle107/root/art/arcade-night-candidate-v2.webp",
+      "sha256": "2e0ccf3a7970e521543f646de8f03a608657c6e9077faa873d89a2cd4d760fd6",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle107/root/art/arcade-night-master-v2.png",
+      "masterViewed": true,
+      "width360Viewed": true,
+      "width480Viewed": true,
+      "existingOriginalCompared": true,
+      "verdict": "approved",
+      "notes": "Approved v2. Same elderly Korean pair, faces/clothes/hands, table/puck/pushers, dead cabinets and plush machine as original. Windows/door now blue-black night; exterior windows/street lamps and cabinet screens remain unlit. Faces and table readable at360/480 using restrained ambient illumination. No new companion identity or electrical light introduced.",
+      "runtimeCropVerified": false,
+      "file": "assets/scenes/explore-arcade-airhockey-night-v1.webp",
+      "bytes": 106294
+    },
+    {
+      "name": "sejong-night",
+      "key": "arrival-sejong-night-v1",
+      "candidate": "qa-artifacts/qa-cycle-20261026/cycle107/root/art/sejong-night-candidate-v1.webp",
+      "sha256": "a0a60603cabf6388818e8c2c693b15a11d17f83349da92f356a3055f18b48d2e",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle107/root/art/sejong-night-master-v1.png",
+      "masterViewed": true,
+      "width360Viewed": true,
+      "width480Viewed": true,
+      "existingOriginalCompared": true,
+      "verdict": "approved",
+      "notes": "Approved. Same portrait administrative masses/elevated opening, overgrown avenue and rear Dalguji. Deep night replaces daylight break; architecture remains dark, only existing camper amber/red practicals reflected. Technical separation of cab and box retained. No invented people/landmarks or powered city lights.360/480 preserve the empty city and small vehicle composition.",
+      "runtimeCropVerified": false,
+      "file": "assets/scenes/arrival-sejong-night-v1.webp",
+      "bytes": 180514
+    }
+  ],
+  "totalBytes": 427528,
+  "galleryListed": true,
+  "runtimeCrop": false,
+  "gallery": "http://127.0.0.1:4319/__live/assets",
+  "galleryAt": "2026-11-01T02:17:06.425008+00:00",
+  "galleryChecks": {
+    "assets/scenes/camp-dogs-returned-can-morning-v1.webp": true,
+    "assets/scenes/explore-arcade-airhockey-night-v1.webp": true,
+    "assets/scenes/arrival-sejong-night-v1.webp": true
+  }
+}

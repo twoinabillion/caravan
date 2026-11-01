@@ -35,6 +35,12 @@ test('quote roles retain the pre-edit corpus except the explicitly reviewed cont
     choices:(e.choices||[]).map(c=>({q:quotes(c.label),out:(c.out||[]).map(o=>({
       q:quotes(o.text),speakers:o.turnSpeakers,turns:turns(o.turns)}))}))}))
     .sort((a,b)=>a.id.localeCompare(b.id));
+  // Cycle91: the three actual address states retain one entry/three Jaeyi quotes.
+  // Function-source quotes contain all branches, so project only this verified delta.
+  {const e=event('talk_jy_08');require('../tests/fixtures/qa-cycle91-jaeyi-address/contract.cjs').assertReviewed(e);
+   const row=rows.find(r=>r.id==='talk_jy_08');assert.equal(row.q,2);assert.equal(row.choices[0].out[0].q,5);
+   assert.deepEqual(Array.from(row.choices[0].out[0].speakers),['jaeyi','jaeyi','jaeyi']);
+   row.q=1;row.choices[0].out[0].q=3;}
   {const row=rows.find(r=>r.id==='exp_gas').choices[1].out[0];assert.deepEqual(JSON.parse(JSON.stringify(row.speakers)),['minji','me','minji']);row.speakers=undefined;}
   {const out=rows.find(r=>r.id==='ev_fire_station').choices[1].out[0];assert.deepEqual(JSON.parse(JSON.stringify(out.speakers)),[{who:'record',kind:'record',name:'소방서 출동일지',medium:'paper'}]);out.speakers=undefined;}
   // Cycle57: exact seed-food prose is separately asserted; quotation counts remain unchanged.

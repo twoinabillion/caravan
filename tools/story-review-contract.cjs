@@ -238,6 +238,9 @@ module.exports=function projectReviewedStoryChanges(rows){
     ['text','label','turnSpeakers','turns','readingRecord','note'].includes(key)?undefined:value));
   for(const row of rows){
     // R5/R6: actual-time entrances and voluntary spending, not outcome nerfs.
+    // QA99: this encounter describes the present sleeping dog. Retain the
+    // historical corpus hash while asserting this one new presence gate.
+    if(row.id==='talk_leo_05'){assert.equal(row.needsDog,true);delete row.needsDog;}
     if(row.id==='comp_rps'){assert.deepEqual(row.minuteWindow,[720,1020]);delete row.minuteWindow;}
     if(row.id==='loc_yeosu'){assert.equal(row.night,true);delete row.night;}
     if(['exp_outdoor','lc_suwon_galbi'].includes(row.id)){

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-30T11:30:19.053Z",
+  "generatedAt": "2026-11-01T04:06:39.973Z",
   "html": {
-    "bytes": 123298992,
+    "bytes": 147474598,
     "warnBytes": 160000000,
     "maxBytes": 200000000
   },
@@ -10,12 +10,12 @@
     "savedBytes": 315331
   },
   "losslessDelivery": {
-    "assets": 776,
-    "savedBytes": 5130523
+    "assets": 910,
+    "savedBytes": 6734217
   },
   "embedded": {
-    "files": 1019,
-    "bytes": 89851079,
+    "files": 1153,
+    "bytes": 109131761,
     "categories": {
       "audio": {
         "files": 45,
@@ -27,15 +27,15 @@
         "bytes": 27902332,
         "encodedBytes": 37203340
       },
+      "scene": {
+        "files": 801,
+        "bytes": 67274799,
+        "encodedBytes": 89700844
+      },
       "other": {
         "files": 78,
         "bytes": 3196537,
         "encodedBytes": 4262172
-      },
-      "scene": {
-        "files": 667,
-        "bytes": 47994117,
-        "encodedBytes": 63993076
       },
       "portrait": {
         "files": 50,
@@ -106,6 +106,12 @@
       "encodedBytes": 458304
     },
     {
+      "path": "assets/scenes/event-crisis-forage-field-edge-day-v1.webp",
+      "mime": "image/webp",
+      "bytes": 322488,
+      "encodedBytes": 429984
+    },
+    {
       "path": "assets/ui/road-studies/atlas-v1/gangneung--sokcho.webp",
       "mime": "image/webp",
       "bytes": 321190,
@@ -158,12 +164,6 @@
       "mime": "image/webp",
       "bytes": 297044,
       "encodedBytes": 396060
-    },
-    {
-      "path": "assets/ui/road-studies/atlas-v1/gimhae--jinju.webp",
-      "mime": "image/webp",
-      "bytes": 296938,
-      "encodedBytes": 395920
     }
   ]
 }

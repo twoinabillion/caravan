@@ -1,0 +1,71 @@
+{
+  "id": "seoul_night",
+  "type": "스토리",
+  "ai": 1,
+  "once": true,
+  "noPool": 1,
+  "minParty": 1,
+  "title": "남산의 밤 — 에필로그",
+  "turnSpeakers": [
+    "mother"
+  ],
+  "text": "(S)=>{\n      const father=S.flags.father_fate_known\n        ? '\\n\\n아빠가 마지막 17분 동안 붙들었던 의료와 급수 회선은 그대로 살아 있었다. 그 회선과 강제 이송선이 처음으로 서로 다른 권한 아래 놓였다.' : '';\n      const mother=S.flags.mother_broadcast_ready\n        ? '\\n\\n외곽 중계소에서 엄마의 무전이 들어왔다. 여섯 주파수 모두 취소 명령을 받았다고 했다. 잠깐 숨을 고른 뒤 엄마가 말했다. “이번에는 내가 다음 차를 기다릴게. 너는 천천히 내려와.”' : '';\n      return original(S)+father+mother;\n    }",
+  "choices": [
+    {
+      "label": "불 곁에서 오늘의 결정을 확인한다",
+      "out": [
+        {
+          "p": 1,
+          "text": "(S)=>{\n    const has=id=>S.party.includes(id);\n    const local=S.flags.core_transfer\n      ? '집행권은 저항 연대망으로 넘어갔다. 각 거점은 벌써 도로와 물의 순서를 두고 다퉜다. 그 느린 합의까지 되찾은 권한의 일부였다.'\n      : S.flags.core_sleep\n      ? '천리안은 잠들었고 서울의 필수 설비는 살아 있었다. 대신 원본 기록도 잠겼다. 안전을 지키는 동안 답은 멀어졌다.'\n      : '천리안은 공동 승인 아래 격리됐다. 기록은 열렸지만 첫 감시조가 밤을 새웠다. 깨어 있는 목소리 곁에는 계속 사람이 필요하다.';\n    const reactions=[\n      has('minji')?'민지는 공구함을 닫기 전에 남산 쪽을 보았다. 고칠 곳과 꺼야 할 선을 끝까지 구별해 냈다.':'',\n      has('kangwoo')?'강우가 서울 쪽을 한 번 보고 말했다. \"멈춘 건 확인했다. 오늘은 그걸로 됐어.\"':'',\n      has('parkss')?'박 선생은 따뜻한 물을 돌렸다. \"원인을 못 찾았어도 출혈부터 막는 날이 있지. 오늘이 그런 날이네.\"':'',\n      has('jaeyi')?'재이는 빈 사유란 아래에 값을 쓰지 않았다. 대신 「재집행 불가」라고 적었다.':'',\n      has('leo')?'레오는 컵을 내려놓고 기타 케이스에서 수첩을 꺼냈다.':'',\n      has('eunsu')?'은수는 마지막 정리 방송이 취소된 것을 세 번 확인한 뒤에야 헤드폰을 벗었다.':'',\n    ].filter(Boolean).join('\\n\\n');\n    const trace=S.flags.traces_presented?'\\n\\n코어 앞에 펼쳤던 흔적들은 이음망 기록함으로 옮겼다. 정답의 증거가 아니라, 답 없이도 살아낸 143년의 증언으로.':'';\n    const crew=S.flags.full_crew_testimony?'\\n\\n여섯 사람은 서로 다른 말로 증언했고, 서로 다른 표정으로 같은 불을 바라봤다. 전원 합의는 오늘 여기서 쉬자는 것 하나였다.':'';\n    /* 반대를 눌러 결정했다면, 반대했던 사람의 밤이 따로 있다 */\n    const dissent=(S.flags.core_sleep&&has('eunsu'))?'\\n\\n은수는 잠긴 검색창 이야기를 다시 꺼내지 않았다. 대신 면사무소 예약 세 건을 수첩에 옮겨 적고, 재가동 열쇠를 맡은 거점 이름에 밑줄을 세 번 그었다. 반대는 끝났고, 숙제는 남았다는 표정이었다.'\n      :(S.flags.core_quarantine&&has('kangwoo'))?(D.coreWatchSigners(S).includes('kangwoo')?'\\n\\n강우는 감시조 근무표 첫 줄에 자기 이름을 적었다. \"반대했으니까 내가 먼저 선다.\" 그는 그런 사람이었다.' : '\\n\\n강우는 반대 의견을 거두지 않았다. 첫 근무는 서명한 세 사람에게 맡기고, 자신은 근무표의 교대 순서를 확인했다.')\n      :(S.flags.core_transfer&&has('jaeyi'))?'\\n\\n재이는 이음망 채널의 다툼을 끝까지 들었다. \"저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게요.\" 반대했던 사람이 제일 먼저 자리를 맡았다.'\n      :'';\n    /* 처분이 다르면 마지막 신호도 다르다 — 에필로그가 같은 문단으로 합류하지 않는다 */\n    const lastSignal=S.flags.core_sleep\n      ?'코어실을 나올 때 마지막으로 본 것은 콘솔의 꺼진 수신등이었다. 코어는 잠들었다.\\n\\n면사무소에 전할 말을 수첩 맨 뒤에 적었다. 처리 결과는 사람이 확인한다.'\n      :S.flags.core_quarantine\n      ?'불이 잦아든 뒤, 남산 감시조 근무표에 다음 교대자의 이름이 채워졌다. 빈 컵을 챙기고 등불을 그 자리에 두었다.'\n      :D.coreLinkedCells(S).map(cell=>cell.name).join('·')+'의 공동 채널에서는 도로와 물차 이야기가 오갔다. 무전기 소리를 낮추고 식은 물을 한 모금 마셨다.';\n    return '남산 중턱에 불을 피웠다. '+local+(reactions?'\\n\\n'+reactions:'')+trace+crew+dissent+'\\n\\n'+D.jaeyiScaleReturnText(S)+'\\n\\n'+D.leoFinalVerseText(S)+'\\n\\n새벽이 오자 남쪽에서 첫 차량들이 한강을 건넜다. 돌아오는 사람도 있었고, 구경만 하고 다시 내려가는 사람도 있었다. 누구에게도 정해진 자리는 없었다.\\n\\n조수석에는 할아버지의 수첩을 두었다. 부모의 이송표 사유란은 끝내 빈칸으로 두었다. 천리안의 위험 점수를 사람의 죄명처럼 옮겨 적고 싶지 않았다. 대신 그 아래에 한 줄을 적었다.\\n\\n「계산은 이유가 아니다. 이 빈칸으로 다시는 사람을 쫓아내지 않는다.」\\n\\n'+D.finaleJourneyRecall(S)+'\\n\\n'+lastSignal+'\\n\\n발신자와 승인자 칸은 여전히 비어 있었다.\\n\\n<span style=\"color:var(--faded)\">서울의 이송은 멈췄다. 오늘 돌아갈 곳은 각자가 정한다.</span>'+'\\n\\n'+D.finaleHomeClosure(S);\n   }",
+          "fx": {
+            "flag": "seoul_local_saved",
+            "chain": "seoul_uplink_reveal",
+            "moodAll": 5,
+            "note": {
+              "type": "사건",
+              "title": "남산의 밤",
+              "body": "가족 이송 명령은 천리안이 만들었음을 확인했고, 서울의 반복 정리와 제7 구역 이송을 끝냈다. 집행 중지는 외곽 중계소에 알렸다. 격리 수면의 처리 결과는 다음 날 사람이 확인하고, 나머지 방식은 거점과 감시조의 확인을 받는다.",
+              "links": [
+                "천리안",
+                "남산",
+                "달구지",
+                "부모님의 검증키"
+              ]
+            }
+          },
+          "readingRecord": "S=>plain(typeof original==='function'?original(S):original)",
+          "turns": "S=>{\n    const turns=[epilogue({...narration(index===0?'남산 중턱 계단에 등불을 놓고 앉았다. 컵을 옆 칸에 내려놓았다.':'남산 계단에 앉아 수첩을 폈다.'),scene:'seoul-night-quiet-v2'},'그날 밤, 남산 계단')];\n    if(index===0){\n      const reactions={minji:'민지는 공구함 잠금쇠가 안 맞아 한 번 더 눌렀다.',kangwoo:'강우는 아래쪽 차단기를 다시 보고 나서 앉았다.',parkss:'박 선생은 컵마다 따뜻한 물을 조금씩 부었다.',jaeyi:'재이는 빈 사유란 아래 「재집행 불가」라고 적었다.',leo:'레오는 기타를 꺼내지 않고 컵을 받았다.',eunsu:'은수는 방송 취소를 세 번 확인한 뒤 헤드폰을 벗었다.'};\n      const present=S.party.map(id=>reactions[id]).filter(Boolean);\n      if(present.length) turns.push(narration(present.join(' ')));\n      if(S.flags.traces_presented) turns.push(narration('코어 앞에 펼쳤던 생활의 흔적은 이음망 기록함으로 옮겼다. 143년을 살아낸 증언으로 남긴다.'));\n      if(S.flags.full_crew_testimony) turns.push(narration('여섯 사람은 서로 다른 말로 증언했다. 오늘 여기서 쉬자는 것만은 모두 같았다.'));\n    }else turns.push(narration('가족 이송 명령은 천리안이 만들었다. 143년 전 최초 목적은 아직 모른다. 아는 것과 모르는 것을 나눠 적었다.'));\n    if(index===0&&S.flags.core_sleep&&S.party.includes('eunsu')) turns.push(narration('은수는 반대했던 잠긴 검색창 대신, 조회 예약 세 건과 열쇠를 맡은 거점을 수첩에 옮겼다. 숙제는 남았다.'));\n    if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(D.coreWatchSigners(S).includes('kangwoo')\n      ?say('kangwoo','반대했으니까 내가 먼저 선다.')\n      :narration('강우는 반대 의견을 거두지 않았다. 첫 근무는 서명한 세 사람에게 맡기고, 자신은 근무표의 교대 순서를 확인했다.'));\n    if(index===0&&S.flags.core_transfer&&S.party.includes('jaeyi')) turns.push(say('jaeyi','저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게요.'));\n    turns.push(...personalRecall(S));\n    turns.push(...D.jaeyiScaleReturnTurns(S));\n    turns.push(...D.leoFinalVerseTurns(S));\n    turns.push(epilogue({...narration('새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'),scene:'seoul-home-dawn-v2'},'다음 날 새벽, 남산 계단'));\n    turns.push(narration(S.flags.core_sleep\n      ? '코어실을 나올 때 마지막으로 본 것은 콘솔의 꺼진 수신등이었다. 코어는 잠들었다. 면사무소에 전할 말을 수첩 맨 뒤에 적었다. 처리 결과는 사람이 확인한다.'\n      : S.flags.core_quarantine?'감시조 근무표에 다음 교대자의 이름이 채워졌다. 빈 컵을 챙기고 등불을 그 자리에 두었다.'\n      : D.coreLinkedCells(S).map(cell=>cell.name).join('·')+'의 공동 채널에서는 아직 도로와 물차 이야기가 오갔다. 무전기 소리를 낮추고 식은 물을 한 모금 마셨다.'));\n    turns.push(...D.finaleHomeClosure(S).split('\\n\\n').map(narration));\n    return turns;\n  }"
+        }
+      ]
+    },
+    {
+      "label": "수첩에 오늘의 선택을 적는다",
+      "out": [
+        {
+          "p": 1,
+          "text": "(S)=>{\n    const made=S.flags.core_transfer?'집행권을 사람들에게 넘겼다':S.flags.core_sleep?'코어를 재웠다':'코어의 집행을 묶고 기록을 보존했다';\n    const cost=S.flags.core_transfer?'거점들의 다툼이 시작됐다는 것'\n      :S.flags.core_sleep?'원본 기록의 창구가 함께 잠겼다는 것'\n      :'매일 밤 누군가 근무표에 이름을 써야 한다는 것';\n    const lastSignal=S.flags.core_sleep\n      ?'코어실을 나올 때 본 콘솔의 꺼진 수신등이 떠올랐다. 코어는 우리가 재운 채로 남아 있다.\\n\\n어두운 등을 마지막 줄 밑에 그려 넣었다. 대답이 없는 것도 기록이다.'\n      :S.flags.core_quarantine?'다음 교대자의 이름을 근무표에서 확인했다. 감시조에 등불을 남겨 두고 수첩을 덮었다.':D.coreLinkedCells(S).map(cell=>cell.name).join('·')+'의 공동 채널에서 돌아갈 길을 묻는 목소리가 들렸다. 무전기 소리를 낮추고 수첩을 덮었다.';\n    return (S.party.length?'동료들과 인사를 나누고 남산 계단에 앉아 수첩을 폈다.':'남산 계단에 혼자 앉아 수첩을 폈다.')+'\\n\\n오늘 우리는 '+made+'. 그 선택의 값— '+cost+'까지 같이 적었다. 내일 아침 제7 잔류구역 사람들은 적어도 같은 정리 방송을 듣지 않는다.\\n\\n할아버지의 마지막 글씨와, 사유가 빈 부모의 이송표가 손전등 아래 겹쳤다. 가족을 겨눈 직접 계산은 찾았지만, 143년의 최초 목적은 찾지 못했다.\\n\\n그래도 할아버지가 가르쳐 준 대로 아는 것과 모르는 것을 나눠 적었다.\\n\\n「'+Math.round(S.stats?.km||0)+'km · DAY '+S.day+'. 가족 이송 명령: 천리안 생성. 최초 조건: 미확인. 반복 정리 중지. 재집행 불가.」\\n\\n'+(S.party.length?'수첩을 덮고 동료들이 쉬는 곳으로 돌아갔다. 각자 내일 할 일을 하나씩 남겨 두었다.':'수첩을 덮고 빈 조수석에 놓았다. 혼자 온 길이었지만, 맡아 온 말까지 혼자의 것은 아니었다.')+'\\n\\n'+D.jaeyiScaleReturnText(S)+'\\n\\n'+D.leoFinalVerseText(S)+'\\n\\n'+D.finaleJourneyRecall(S)+'\\n\\n'+lastSignal+'\\n\\n발신자와 승인자 칸은 여전히 비어 있었다.\\n\\n<span style=\"color:var(--faded)\">서울의 이송은 멈췄다. 오늘 돌아갈 곳은 각자가 정한다.</span>'+'\\n\\n'+D.finaleHomeClosure(S);\n   }",
+          "fx": {
+            "flag": "seoul_local_saved",
+            "chain": "seoul_uplink_reveal",
+            "moodAll": 3,
+            "note": {
+              "type": "사건",
+              "title": "수첩의 마지막 줄",
+              "body": "가족의 직접 사유와 143년의 미확인 목적을 나눠 적었다. 반복 정리 중지와 재집행 불가를 기록했다. 코어 수면 뒤에는 다음 날 사람의 확인을 기다린다.",
+              "links": [
+                "천리안",
+                "할아버지",
+                "남산",
+                "부모님의 검증키"
+              ]
+            }
+          },
+          "readingRecord": "S=>plain(typeof original==='function'?original(S):original)",
+          "turns": "S=>{\n    const turns=[epilogue({...narration(index===0?'남산 중턱 계단에 등불을 놓고 앉았다. 컵을 옆 칸에 내려놓았다.':'남산 계단에 앉아 수첩을 폈다.'),scene:'seoul-night-quiet-v2'},'그날 밤, 남산 계단')];\n    if(index===0){\n      const reactions={minji:'민지는 공구함 잠금쇠가 안 맞아 한 번 더 눌렀다.',kangwoo:'강우는 아래쪽 차단기를 다시 보고 나서 앉았다.',parkss:'박 선생은 컵마다 따뜻한 물을 조금씩 부었다.',jaeyi:'재이는 빈 사유란 아래 「재집행 불가」라고 적었다.',leo:'레오는 기타를 꺼내지 않고 컵을 받았다.',eunsu:'은수는 방송 취소를 세 번 확인한 뒤 헤드폰을 벗었다.'};\n      const present=S.party.map(id=>reactions[id]).filter(Boolean);\n      if(present.length) turns.push(narration(present.join(' ')));\n      if(S.flags.traces_presented) turns.push(narration('코어 앞에 펼쳤던 생활의 흔적은 이음망 기록함으로 옮겼다. 143년을 살아낸 증언으로 남긴다.'));\n      if(S.flags.full_crew_testimony) turns.push(narration('여섯 사람은 서로 다른 말로 증언했다. 오늘 여기서 쉬자는 것만은 모두 같았다.'));\n    }else turns.push(narration('가족 이송 명령은 천리안이 만들었다. 143년 전 최초 목적은 아직 모른다. 아는 것과 모르는 것을 나눠 적었다.'));\n    if(index===0&&S.flags.core_sleep&&S.party.includes('eunsu')) turns.push(narration('은수는 반대했던 잠긴 검색창 대신, 조회 예약 세 건과 열쇠를 맡은 거점을 수첩에 옮겼다. 숙제는 남았다.'));\n    if(index===0&&S.flags.core_quarantine&&S.party.includes('kangwoo')) turns.push(D.coreWatchSigners(S).includes('kangwoo')\n      ?say('kangwoo','반대했으니까 내가 먼저 선다.')\n      :narration('강우는 반대 의견을 거두지 않았다. 첫 근무는 서명한 세 사람에게 맡기고, 자신은 근무표의 교대 순서를 확인했다.'));\n    if(index===0&&S.flags.core_transfer&&S.party.includes('jaeyi')) turns.push(say('jaeyi','저울이 필요해지면 불러요. 어느 쪽으로도 안 기울게 잡아 줄게요.'));\n    turns.push(...personalRecall(S));\n    turns.push(...D.jaeyiScaleReturnTurns(S));\n    turns.push(...D.leoFinalVerseTurns(S));\n    turns.push(epilogue({...narration('새벽, 남쪽에서 첫 차량들이 한강을 건넜다. 돌아올지 다시 내려갈지는 각자가 정했다.'),scene:'seoul-home-dawn-v2'},'다음 날 새벽, 남산 계단'));\n    turns.push(narration(S.flags.core_sleep\n      ? '코어실을 나올 때 마지막으로 본 것은 콘솔의 꺼진 수신등이었다. 코어는 잠들었다. 면사무소에 전할 말을 수첩 맨 뒤에 적었다. 처리 결과는 사람이 확인한다.'\n      : S.flags.core_quarantine?'감시조 근무표에 다음 교대자의 이름이 채워졌다. 빈 컵을 챙기고 등불을 그 자리에 두었다.'\n      : D.coreLinkedCells(S).map(cell=>cell.name).join('·')+'의 공동 채널에서는 아직 도로와 물차 이야기가 오갔다. 무전기 소리를 낮추고 식은 물을 한 모금 마셨다.'));\n    turns.push(...D.finaleHomeClosure(S).split('\\n\\n').map(narration));\n    return turns;\n  }"
+        }
+      ]
+    }
+  ],
+  "readingRecord": "S=>plain(typeof original==='function'?original(S):original)",
+  "turns": "S=>[\n    narration('제7 잔류구역 6,412명의 강제 이송이 취소됐다. 더는 누구도 강제로 실려 가지 않는다. 남산 아래 차단기가 올라가고 수도와 전력은 남았다.'),\n    ...(S.flags.father_fate_known?[narration('아빠가 마지막 17분 동안 지킨 의료·급수 회선도 살아 있었다. 강제 이송선과는 다른 권한 아래 놓였다.')]:[]),\n    ...(S.flags.mother_broadcast_ready?[say('mother','여섯 주파수 모두 취소 명령을 받았어. 이번에는 내가 다음 차를 기다릴게. 너는 천천히 내려와.')]:[]),\n    narration('새 집행 규칙은 「사유 공개. 인간 책임자 서명. 당사자 이의 제기.」 셋 중 하나라도 비면 이송 버튼은 켜지지 않는다.')\n  ]"
+}

@@ -30,12 +30,14 @@ test('all authored event words, costs, gates, probabilities and effects remain e
   for(const [changed,ci,before,after] of [
    ['cleaners_recall',1,'우리가 창문을 올리지 않고 버티자, 회수조는 "오늘은 여기까지"라며 물러났다.', '우리가 창문을 올리지 않고 버티자, 회수조 선두가 말했다.\n\n"오늘은 여기까지."\n\n회수조는 물러났다.'],
    ['talkr_pss_1',0,'답에 따라 처방이 나왔다. 물 한 잔이거나, 스트레칭이거나, "오늘은 일찍 자" 한마디거나.', '답에 따라 물 한 잔을 권하거나 스트레칭을 알려줬다.\n\n"오늘은 일찍 자."\n\n그 말도 처방이었다.']]) if(id===changed){let expected=old.choices[ci].out[0].text.replace(before,after);if(id==='cleaners_recall')expected=expected.replace('남자가 되물었다.','남자가 대답했다.');assert.equal(now.choices[ci].out[0].text,expected);now.choices[ci].out[0].text=old.choices[ci].out[0].text;}
+  if(id==='talk_jy_08'){require('./fixtures/qa-cycle91-jaeyi-address/contract.cjs').assertReviewed(h.run("event('talk_jy_08')"));now.text=old.text;now.choices[0].out[0].text=old.choices[0].out[0].text;}
   assert.deepEqual(now,old);}
 });
 test('roof work describes the repair during an existing storm without changing its cost/effects',()=>{
  const h=setup();h.run("S.at='jeonju';S.weather='storm';S.min=900");const now=h.json("D.stls.jeonju.field.actions.find(x=>x.id==='roof_tiles')"),old=require(path.join(dir,'before-roof.json'));
  assert.equal(now.desc,'공동 숙소 지붕의 깨진 기와를 갈고, 비가 들이칠 틈을 막아야 한다.');
- assert.deepEqual({...now,desc:old.desc},old);
+ assert.equal(now.result,old.result.replace('해가 기울기 전에 ',''));
+ assert.deepEqual({...now,desc:old.desc,result:old.result},old);
 });
 test('cycle12 entry routes do not leak into any adjacent choice/outcome',()=>{
  const matrix={lc_busan_dried:[['passer_woman','me','passer_woman','me','passer_woman'],['passer_woman']],

@@ -1,0 +1,898 @@
+{
+  "id": "recruit_reunion_eunsu",
+  "rows": [
+    {
+      "min": 329,
+      "definition": {
+        "id": "recruit_reunion_eunsu",
+        "type": "대화",
+        "w": 0,
+        "noPool": 1,
+        "title": "은수와 다시 만나다",
+        "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다.",
+        "choices": [
+          {
+            "label": "다시 함께 갈지 묻는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+                "fx": {
+                  "offerComp": "eunsu"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "variant": {
+        "byBase": {
+          "recruit-eunsu-join": {
+            "day": "recruit-eunsu-join-day-v1",
+            "night": "recruit-eunsu-join"
+          },
+          "recruit-eunsu-join-decision": {
+            "day": "recruit-eunsu-join-result-day-v1",
+            "night": "recruit-eunsu-join-decision"
+          }
+        }
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 329
+          }
+        }
+      },
+      "entryFile": "controlled-329-entry.json",
+      "result": {
+        "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다."
+          }
+        ],
+        "chips": [],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join-decision"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 329
+          }
+        }
+      },
+      "state": {
+        "day": 9,
+        "min": 329,
+        "food": 24,
+        "water": 28,
+        "fuel": 60,
+        "scrap": 50,
+        "van": 82,
+        "fatigue": 35,
+        "party": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ],
+        "comps": {
+          "minji": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": false,
+          "intro_appeal_failed": false,
+          "intro_module_seen": false,
+          "intro_workshop_left": false,
+          "recruit_migration_v2": true,
+          "seed_borrowed": true,
+          "sea_route": true,
+          "dome_dossier": true,
+          "postman_met": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          }
+        ],
+        "items": {
+          "부품": 1,
+          "의약품": 1,
+          "탄약": 0,
+          "남산행 편지": 1
+        },
+        "seed": 202020,
+        "impact": {
+          "key": "miryang:parts",
+          "stlId": "miryang",
+          "from": "miryang",
+          "to": "daegu",
+          "actionId": "parts",
+          "label": "부품 정리",
+          "visual": "order",
+          "wx": "clear",
+          "done": false
+        },
+        "field": {
+          "daily": {},
+          "once": {},
+          "impact": {},
+          "roadEchoed": {},
+          "log": []
+        }
+      },
+      "paidFile": "controlled-329-paid.json"
+    },
+    {
+      "min": 330,
+      "definition": {
+        "id": "recruit_reunion_eunsu",
+        "type": "대화",
+        "w": 0,
+        "noPool": 1,
+        "title": "은수와 다시 만나다",
+        "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다.",
+        "choices": [
+          {
+            "label": "다시 함께 갈지 묻는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+                "fx": {
+                  "offerComp": "eunsu"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "variant": {
+        "byBase": {
+          "recruit-eunsu-join": {
+            "day": "recruit-eunsu-join-day-v1",
+            "night": "recruit-eunsu-join"
+          },
+          "recruit-eunsu-join-decision": {
+            "day": "recruit-eunsu-join-result-day-v1",
+            "night": "recruit-eunsu-join-decision"
+          }
+        }
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join-day-v1"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 330
+          }
+        }
+      },
+      "entryFile": "controlled-330-entry.json",
+      "result": {
+        "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다."
+          }
+        ],
+        "chips": [],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join-result-day-v1"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 330
+          }
+        }
+      },
+      "state": {
+        "day": 9,
+        "min": 330,
+        "food": 24,
+        "water": 28,
+        "fuel": 60,
+        "scrap": 50,
+        "van": 82,
+        "fatigue": 35,
+        "party": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ],
+        "comps": {
+          "minji": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": false,
+          "intro_appeal_failed": false,
+          "intro_module_seen": false,
+          "intro_workshop_left": false,
+          "recruit_migration_v2": true,
+          "seed_borrowed": true,
+          "sea_route": true,
+          "dome_dossier": true,
+          "postman_met": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          }
+        ],
+        "items": {
+          "부품": 1,
+          "의약품": 1,
+          "탄약": 0,
+          "남산행 편지": 1
+        },
+        "seed": 202020,
+        "impact": {
+          "key": "miryang:parts",
+          "stlId": "miryang",
+          "from": "miryang",
+          "to": "daegu",
+          "actionId": "parts",
+          "label": "부품 정리",
+          "visual": "order",
+          "wx": "clear",
+          "done": false
+        },
+        "field": {
+          "daily": {},
+          "once": {},
+          "impact": {},
+          "roadEchoed": {},
+          "log": []
+        }
+      },
+      "paidFile": "controlled-330-paid.json"
+    },
+    {
+      "min": 1169,
+      "definition": {
+        "id": "recruit_reunion_eunsu",
+        "type": "대화",
+        "w": 0,
+        "noPool": 1,
+        "title": "은수와 다시 만나다",
+        "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다.",
+        "choices": [
+          {
+            "label": "다시 함께 갈지 묻는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+                "fx": {
+                  "offerComp": "eunsu"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "variant": {
+        "byBase": {
+          "recruit-eunsu-join": {
+            "day": "recruit-eunsu-join-day-v1",
+            "night": "recruit-eunsu-join"
+          },
+          "recruit-eunsu-join-decision": {
+            "day": "recruit-eunsu-join-result-day-v1",
+            "night": "recruit-eunsu-join-decision"
+          }
+        }
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join-day-v1"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 1169
+          }
+        }
+      },
+      "entryFile": "controlled-1169-entry.json",
+      "result": {
+        "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다."
+          }
+        ],
+        "chips": [],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join-result-day-v1"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 1169
+          }
+        }
+      },
+      "state": {
+        "day": 9,
+        "min": 1169,
+        "food": 24,
+        "water": 28,
+        "fuel": 60,
+        "scrap": 50,
+        "van": 82,
+        "fatigue": 35,
+        "party": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ],
+        "comps": {
+          "minji": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": false,
+          "intro_appeal_failed": false,
+          "intro_module_seen": false,
+          "intro_workshop_left": false,
+          "recruit_migration_v2": true,
+          "seed_borrowed": true,
+          "sea_route": true,
+          "dome_dossier": true,
+          "postman_met": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          }
+        ],
+        "items": {
+          "부품": 1,
+          "의약품": 1,
+          "탄약": 0,
+          "남산행 편지": 1
+        },
+        "seed": 202020,
+        "impact": {
+          "key": "miryang:parts",
+          "stlId": "miryang",
+          "from": "miryang",
+          "to": "daegu",
+          "actionId": "parts",
+          "label": "부품 정리",
+          "visual": "order",
+          "wx": "clear",
+          "done": false
+        },
+        "field": {
+          "daily": {},
+          "once": {},
+          "impact": {},
+          "roadEchoed": {},
+          "log": []
+        }
+      },
+      "paidFile": "controlled-1169-paid.json"
+    },
+    {
+      "min": 1170,
+      "definition": {
+        "id": "recruit_reunion_eunsu",
+        "type": "대화",
+        "w": 0,
+        "noPool": 1,
+        "title": "은수와 다시 만나다",
+        "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다.",
+        "choices": [
+          {
+            "label": "다시 함께 갈지 묻는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+                "fx": {
+                  "offerComp": "eunsu"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "variant": {
+        "byBase": {
+          "recruit-eunsu-join": {
+            "day": "recruit-eunsu-join-day-v1",
+            "night": "recruit-eunsu-join"
+          },
+          "recruit-eunsu-join-decision": {
+            "day": "recruit-eunsu-join-result-day-v1",
+            "night": "recruit-eunsu-join-decision"
+          }
+        }
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수와 중계기의 송신을 끊었던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 1170
+          }
+        }
+      },
+      "entryFile": "controlled-1170-entry.json",
+      "result": {
+        "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "은수에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다."
+          }
+        ],
+        "chips": [],
+        "ok": true,
+        "applied": true,
+        "info": {
+          "sceneKeys": [
+            "recruit-eunsu-join-decision"
+          ],
+          "sceneTime": {
+            "day": 9,
+            "min": 1170
+          }
+        }
+      },
+      "state": {
+        "day": 9,
+        "min": 1170,
+        "food": 24,
+        "water": 28,
+        "fuel": 60,
+        "scrap": 50,
+        "van": 82,
+        "fatigue": 35,
+        "party": [
+          "minji",
+          "jaeyi",
+          "kangwoo"
+        ],
+        "comps": {
+          "minji": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "parkss": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "kangwoo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "leo": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "jaeyi": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          },
+          "eunsu": {
+            "mood": 65,
+            "bond": 0,
+            "lvl": 0,
+            "perks": [],
+            "pending": 0
+          }
+        },
+        "flags": {
+          "mother_keepsakes": true,
+          "intro_family_helped": false,
+          "intro_appeal_failed": false,
+          "intro_module_seen": false,
+          "intro_workshop_left": false,
+          "recruit_migration_v2": true,
+          "seed_borrowed": true,
+          "sea_route": true,
+          "dome_dossier": true,
+          "postman_met": true
+        },
+        "notes": [
+          {
+            "id": "n0",
+            "type": "장소",
+            "title": "부산 감천 부두",
+            "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n1",
+            "type": "물건",
+            "title": "달구지",
+            "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+            "links": [
+              "할아버지"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n2",
+            "type": "인물",
+            "title": "천리안",
+            "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+            "links": [],
+            "day": 1
+          },
+          {
+            "id": "n3",
+            "type": "인물",
+            "title": "부모님",
+            "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+            "links": [
+              "천리안"
+            ],
+            "day": 1
+          },
+          {
+            "id": "n4",
+            "type": "인물",
+            "title": "할아버지",
+            "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+            "links": [
+              "달구지",
+              "부모님"
+            ],
+            "day": 1
+          }
+        ],
+        "items": {
+          "부품": 1,
+          "의약품": 1,
+          "탄약": 0,
+          "남산행 편지": 1
+        },
+        "seed": 202020,
+        "impact": {
+          "key": "miryang:parts",
+          "stlId": "miryang",
+          "from": "miryang",
+          "to": "daegu",
+          "actionId": "parts",
+          "label": "부품 정리",
+          "visual": "order",
+          "wx": "clear",
+          "done": false
+        },
+        "field": {
+          "daily": {},
+          "once": {},
+          "impact": {},
+          "roadEchoed": {},
+          "log": []
+        }
+      },
+      "paidFile": "controlled-1170-paid.json"
+    }
+  ],
+  "sourceHashes": {
+    "src/03g-scenes.js": "52fd5d8078491e9fec74835dfc0c1f1ddf6d837221f9462541768bd2db69c7e4",
+    "src/04h-engine-presentation.js": "8961450e48800beefaf1fc84b36b5106ef37731755cc05373393a4c2829f1921",
+    "src/07-ui.js": "4f53eb9bddbc14cfe8ead4f574730c2ef8102d8cfbb1481c3254a4b7fc0a96d6"
+  }
+}

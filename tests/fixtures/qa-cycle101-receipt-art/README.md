@@ -1,0 +1,5 @@
+Pre101 immutable evidence. Four natural source saves were copied byte-for-byte from cycle100/story/agent99/attempt01, choice n279 (paid reload n280). Provenance and SHA in baseline.json and SHA256.json. The original files remain unchanged.
+
+Two controlled entry and two paid saves were created by loading that natural before-view save and opening van_receipt at day8/min600 or1290 with bounded resources20/20. These are controlled fixtures, not new players or natural encounters. Exactly one choice/outcome exists. Baseline captures full definition, actual parser turns/identity, all effects/notes/raw fractional state and old scene selection before101 wiring.
+
+Tests deliberately strip view/reading/authoredView only in in-memory text-only probes; these are synthetic recovery cases, not natural corrupted saves. Since this event had no timed selector, revision-gated legacy:null preserves old grandfather-garage. No source baseline JSON or original bytes were edited to accept the new scenes. A newly paid answer to an old unanswered entry receives the new revision; its previous history stays old.

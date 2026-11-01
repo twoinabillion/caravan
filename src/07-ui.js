@@ -2091,6 +2091,12 @@ function dialogueSide(turn,lanes,opt={}){
     result.knownSpeaker=state.knownSpeaker;
     return result;
   }
+  // Payment can be saved before the result's first frame. Freeze this same
+  // reader parser then, so consecutive speakers and written records survive
+  // that interruption without borrowing a later version of the source.
+  if(typeof G!=='undefined')G.presentationAuthoredTurns=(event,choice,out,text,history)=>
+    buildStoryTurns(text,event,{knownSpeaker:!!history?.knownSpeaker,speakers:out.speakers,
+      turnSpeakers:D.finaleSpeakers(event.id,event.choices.indexOf(choice),S)||out.turnSpeakers});
   function prepareEventAudio(turns,evd){
     if(!Array.isArray(turns)||!evd) return turns;
     if(evd.id==='seoul_core'){
@@ -2958,11 +2964,11 @@ function dialogueSide(turn,lanes,opt={}){
     }));
     if(S.van<S.vanMax-5){
       const hasP=G.hasResource('부품',1);
-      const repairGain=S.up&&S.up.sidebox?45:35;
+      const repairGain=G.fieldRepairGain();
       localActions.push(stayActionModel({
         action:'repair',kicker:'정차 정비',title:'달구지를 정비한다',
         description:hasP?'부품으로 차체를 현장에서 복구한다.':'부품이 없어 지금은 현장 정비를 할 수 없다.',disabled:!hasP,
-        chips:hasP?[{label:'부품',value:G.isInfiniteResourceMode()?'∞':S.up&&S.up.sidebox?'최대 -1':'-1',tone:G.isInfiniteResourceMode()?'gain':'cost',icon:'parts'},{label:'시간',value:'+1:40',tone:'cost',icon:'time'},{label:'차체',value:`+${repairGain}`,tone:'gain',icon:'van'}]
+        chips:hasP?[{label:'부품',value:G.isInfiniteResourceMode()?'∞':S.up&&S.up.sidebox?'최대 -1':'-1',tone:G.isInfiniteResourceMode()?'gain':'cost',icon:'parts'},{label:'시간',value:'+1:40',tone:'cost',icon:'time'},{label:'차체',value:stayGainLabel(repairGain),tone:'gain',icon:'van'}]
           :[{label:'부품',value:'필요',tone:'cost',icon:'parts'}],cta:'정비하기',disabledCta:'부품 필요'
       }));
     }
@@ -3357,7 +3363,27 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneTime=evd.campConversation
       ?G.presentationSceneTime(phase==='outcome'?owner?.resultSceneTime:owner?.entrySceneTime)
       :owner?.phase===ownerPhase?G.presentationSceneTime(owner.sceneTime):null;
-    const keys=eventSceneKeys(evd,leading),variant=D.eventSceneTimeVariantFor(evd.id);
+    const keys=eventSceneKeys(evd,leading),currentVariant=D.eventSceneTimeVariantFor(evd.id);
+    // A new revision can have several historical layers. Match the saved owner
+    // all the way back, so unmarked readers never adopt an intermediate revision.
+    let variant=currentVariant;
+    while(variant?.revision&&owner?.sceneRevision!==variant.revision)variant=variant.legacy;
+    // Explicit authored memories own their depicted night/dawn, never today's clock.
+    // Only a newly stamped receipt may adopt these cuts; stored views won above.
+    if(variant?.authoredMemory===true&&G.presentationSceneRevision(variant.revision)
+      &&owner?.sceneRevision===variant.revision&&owner.phase===ownerPhase
+      &&evd.storyOrigin?.kind==='memory'&&D.scenes[variant.scene]
+      &&turns.every(turn=>!turn.timeKind||turn.timeKind==='memory')){
+      const sceneKeys=[variant.scene];
+      for(const stage of phase==='outcome'?variant.outcomeStages||[]:variant.entryStages||[]){
+        const at=typeof stage.afterText==='string'&&stage.afterText
+          ?turns.findIndex(turn=>turn.kind==='narration'&&turn.text.includes(stage.afterText)):-1;
+        if(at<0||!D.scenes[stage.scene])continue;
+        if(!turns[0].scene)turns[0].scene=variant.scene;
+        turns[at].scene=stage.scene;sceneKeys.push(stage.scene);
+      }
+      return {sceneKeys:[...new Set(sceneKeys)]};
+    }
     const fixed=owner?.phase===ownerPhase&&G.presentationFixedScene(owner.fixedScene);
     if(fixed)return {sceneKeys:[...new Set(keys.map(key=>key===fixed.base?fixed.scene:key))]};
     const historical=['memory','video'].includes(evd.storyOrigin?.kind)
@@ -3368,12 +3394,27 @@ function dialogueSide(turn,lanes,opt={}){
     const sceneKeys=keys.map(key=>{
       if(variant.byBase){
         const match=Object.entries(variant.byBase).find(([base,pair])=>
-          [base,pair.day,pair.night].includes(key));
+          [base,pair.day,pair.night,variant.legacy?.byBase?.[base]?.day,
+            variant.legacy?.byBase?.[base]?.night].includes(key));
         return match&&D.scenes[match[1][period]]?match[1][period]:key;
       }
-      return [].concat(variant.base,variant.day,variant.night).includes(key)
+      return [].concat(variant.base,variant.day,variant.night,
+        variant.legacy?.base,variant.legacy?.day,variant.legacy?.night).includes(key)
         &&D.scenes[variant[period]]?variant[period]:key;
     });
+    // Only a newly rendered, clocked entry/result may introduce an authored move.
+    // Saved views returned above already own both their cuts and turn markers.
+    if(turns.length){
+      for(const stage of phase==='outcome'?variant.outcomeStages||[]:variant.entryStages||[]){
+        const at=typeof stage.afterText==='string'&&stage.afterText
+          ?turns.findIndex(turn=>turn.kind==='narration'&&turn.text.includes(stage.afterText)):-1;
+        const next=stage[period];
+        if(at<0||!D.scenes[next])continue;
+        if(!turns[0].scene)turns[0].scene=sceneKeys[0];
+        turns[at].scene=next;
+        sceneKeys.push(next);
+      }
+    }
     return {sceneKeys:[...new Set(sceneKeys)],sceneTime};
   }
   function eventSceneOrientation(evd,sceneTime){
@@ -4444,7 +4485,7 @@ function dialogueSide(turn,lanes,opt={}){
       <section class="comp-profile-actions">
         ${!S.driving?`<button type="button" class="comp-talk-action ${talkedToday?'is-done':''}" data-talk="${id}" ${talkedToday?'disabled':''}>
           <span class="comp-action-icon" aria-hidden="true">${talkedToday?'✓':'말'}</span><span class="comp-action-copy"><small>${talkedToday?'오늘 대화 완료':'오늘의 대화'}</small>
-          <b>${talkedToday?`${esc(c.name)}와 오늘 이야기를 나눴다`:`${esc(c.name)}에게 말을 건다`}</b><em>${talkedToday?'다음 날 다시 이야기할 수 있다':'하루 한 번 · 대화가 유대를 만든다'}</em></span>
+          <b>${talkedToday?`${esc(D.withParticle(c.name,'과','와'))} 오늘 이야기를 나눴다`:`${esc(c.name)}에게 말을 건다`}</b><em>${talkedToday?'다음 날 다시 이야기할 수 있다':'하루 한 번 · 대화가 유대를 만든다'}</em></span>
           <span class="comp-action-cta">${talkedToday?'완료':'대화'}</span></button>`:`<div class="comp-talk-state"><small>주행 중</small><b>길 화면에서 동료와 이야기할 수 있다</b></div>`}
         <button type="button" class="comp-profile-close" data-x="1">닫기</button>
       </section></section>`;
@@ -5880,7 +5921,7 @@ function dialogueSide(turn,lanes,opt={}){
       :lastPlan==='repair'&&party.includes('minji')?'minji'
       :party.length?party[campHash%party.length]:null;
     const crewSceneKey=lastPlan==='repair'&&crewSceneId==='minji'
-      ?'comp-talk-minji-road-v1'
+      ?`comp-minji-underbody-${G.isNight()?'night':'day'}-v1`
       :crewSceneId?campSceneByComp[crewSceneId]:'';
     const visuals=[
       {key:'camp-home-stage-v1',label:'야영지 확인',detail:'차를 세웠다. 식사나 점검, 대화를 고르거나 바로 쉴 수 있다.'},
@@ -6083,13 +6124,12 @@ function dialogueSide(turn,lanes,opt={}){
   /* ── NPC 대화 ── */
   function talk(nid){
     const npc=D.npcs[nid], st=S.npcs[nid];
-    if(!st.met && G.hasPerk('leo_fame')) st.att+=15;   // 길 위의 명성
     const tries=S.flags.seoulTries||0;
     const greet = (nid==='deokgu'&&tries>0)
       ? (tries===1? '…돌아왔냐. 남산이 "아직"이래? 흥, 그럴 줄 알았다. 성문은 안 좁아지니까 천천히 해라. 못 실은 게 뭔지는— 네 차가 제일 잘 알 거다.'
         : `…${tries}번째다, 이 미친놈들. 근데 이상하지. 올 때마다 차가 무거워 보여. 짐이 아니라 뭐가 다른 게 실리는 모양이야. …밥은 먹었냐. 국밥 시켜놨다.`)
       : D.npcGreeting(nid,st);
-    st.met=true;
+    G.markNpcMet(nid);
     G.save(); // Keep first-meeting/fame state even on cancel.
     if(S.mode==='offroad'&&OFF.ready()){ return talkOff(nid, greet); }
     let history=[];

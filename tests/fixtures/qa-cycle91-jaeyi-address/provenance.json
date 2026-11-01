@@ -1,0 +1,22 @@
+{
+  "sourceFiles": {
+    "src/03-data.js": "70b365ac613435a401c379911cf1b10189da75942059bf5cfb5c0c9928cc2c59",
+    "src/04b-engine-crew.js": "4938a3d74062158646e68cbe86b7d74c9c050dd12ada0e55dcdaeea82a44ef51",
+    "src/04h-engine-presentation.js": "f6532ea386f88362a7c61037ad9e5b1c6943e5dbb93b9b19b9be78c64304e956",
+    "src/04d-engine-director.js": "fca42596263a882911b89bb89eddfb8e39fe38bffdf124cda851d153b939f8c0",
+    "src/04e-engine-world.js": "ed8f0cd60eb165f35e74d4b99985947218e9a80b5265eaf617b37ed77b2de7a4"
+  },
+  "natural": {
+    "entry": {
+      "file": "natural-entry.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle90/explorer/agent90/attempt01/scene-talk_jy_08-entry-426.json",
+      "sha256": "d3247f6577d3141e32f30c6a91b88ce3500d1b86ddc897422efcc73332c21e57"
+    },
+    "result": {
+      "file": "natural-result.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle90/explorer/agent90/attempt01/scene-talk_jy_08-result-426.json",
+      "sha256": "c091896f6826c4c7a2ca145dad288907fd25f13c2206a3f23067dfdb1be086cd"
+    }
+  },
+  "baselineSha256": "27a881f728ab3cc945d5fbbce374d4292f46fd9b42faf16e00d80b434a66d977"
+}

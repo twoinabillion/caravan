@@ -1,0 +1,140 @@
+{
+  "independentReviewer": "explorer_review",
+  "at": "2026-11-01T02:52:08.287Z",
+  "verdict": "approve both candidates",
+  "scope": "Art review only; no gallery, production wiring or fresh journey performed.",
+  "canonicalReferences": [
+    {
+      "path": "assets/reference/visual-canon-2026-08-11.png",
+      "viewed": true,
+      "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+    },
+    {
+      "path": "assets/reference/world-canon-2026-08-11.png",
+      "viewed": true,
+      "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+    },
+    {
+      "path": "assets/reference/people-canon-2026-08-11.png",
+      "viewed": true,
+      "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+    },
+    {
+      "path": "assets/reference/dalguji-technical-canon-2026-08-11.webp",
+      "viewed": true,
+      "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+    }
+  ],
+  "requestProvenance": "Both request JSON files include exact mandatory4 references; night request adds day master as target image5. Reviewed request and resulting actual artifacts.",
+  "oldSchoolMismatch": "Existing event-explore-school was independently viewed in108 native04/scaled03. Classroom desks/chalkboard and2figures conflict with cafe ballpool/slide/snackcounter. New empty cafe resolves place/cast mismatch; existing shared school key must remain untouched for other events and oldpaid.",
+  "assets": [
+    {
+      "key": "explore-kids-cafe-day-v1",
+      "verdict": "approve",
+      "files": {
+        "master": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-master-v1.png",
+          "sha256": "be07c9c3d5f7db26e013e4d0471b29faaf9b624a685a2f8f11006358d8ad627c",
+          "bytes": 2610581,
+          "width": 1672,
+          "height": 941,
+          "format": "png"
+        },
+        "candidate": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-candidate-v1.webp",
+          "sha256": "d91c342eeec941f9de770ef4c0d88d6c909975d64e95a388847439d4d883d249",
+          "bytes": 135602,
+          "width": 1024,
+          "height": 576,
+          "format": "webp"
+        },
+        "width360": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-360-v1.png",
+          "sha256": "894bfcb5b1139735483c186d718cda1d906509f214257f340120688881f426b8",
+          "bytes": 134859,
+          "width": 360,
+          "height": 202,
+          "format": "png"
+        },
+        "width480": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-480-v1.png",
+          "sha256": "0f225495787ce6ddeacb20e8e1d2e832c3503b5f97b9f54f14aca0114357b976",
+          "bytes": 234515,
+          "width": 480,
+          "height": 270,
+          "format": "png"
+        }
+      },
+      "viewedOriginalMaster": true,
+      "viewedWebP": true,
+      "viewed360": true,
+      "viewed480": true,
+      "findings": {
+        "place": "Ballpool, short slide/netted play structure, padded floor, toys, blankets, snack counter and closed firstaid box directly match kids cafe prose.",
+        "cast": "Empty interior; no invented children, people or companions.",
+        "world": "Weathered Korean commercial interior, restrained faded color/plastic, grounded material detail and cinematic gray palette agree with canonical world/style.",
+        "dayNight": "Overcast broadwindow daylight; no lit ceiling or arcade machines.",
+        "continuity": "Day/night preserve slide, netposts, counter/closedbox, plush toys, tables and camera geometry; lighting changes do not invent story props.",
+        "disclosure": "Supplies are already described at entry; closed firstaid box does not disclose new medical contents or an unearned result.",
+        "text": "No readable lettering, logo, UI, watermark.",
+        "composition": "Central slide and pool identifiable at360 and480; full-frame scaling checked, actual runtime crop remains pending."
+      }
+    },
+    {
+      "key": "explore-kids-cafe-night-v1",
+      "verdict": "approve",
+      "files": {
+        "master": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-master-v1.png",
+          "sha256": "fc1e8a84a8cee280eb5ab2a1b818f247af771d5d5ea7baf16f090dd513da16da",
+          "bytes": 2215418,
+          "width": 1672,
+          "height": 941,
+          "format": "png"
+        },
+        "candidate": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-candidate-v1.webp",
+          "sha256": "60508f52e4fd1336b6122761192d01a1ef35d06792b95e874cdf325cc29ff48a",
+          "bytes": 101860,
+          "width": 1024,
+          "height": 576,
+          "format": "webp"
+        },
+        "width360": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-360-v1.png",
+          "sha256": "0d5bff8d0c0f1b72c2e5425716559fbbc35c0b4e1bac0c2d8328594b097e998f",
+          "bytes": 120138,
+          "width": 360,
+          "height": 202,
+          "format": "png"
+        },
+        "width480": {
+          "path": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-480-v1.png",
+          "sha256": "dcc1d530783db40c4012ac9926dc07a6ee40248802aea33a4a09c600bd3630ec",
+          "bytes": 208804,
+          "width": 480,
+          "height": 270,
+          "format": "png"
+        }
+      },
+      "viewedOriginalMaster": true,
+      "viewedWebP": true,
+      "viewed360": true,
+      "viewed480": true,
+      "findings": {
+        "place": "Ballpool, short slide/netted play structure, padded floor, toys, blankets, snack counter and closed firstaid box directly match kids cafe prose.",
+        "cast": "Empty interior; no invented children, people or companions.",
+        "world": "Weathered Korean commercial interior, restrained faded color/plastic, grounded material detail and cinematic gray palette agree with canonical world/style.",
+        "dayNight": "Blueblack outside windows and unpowered pendant lamps; central pool and slide remain readable at360/480. No daylit sky/facades or invented power source.",
+        "continuity": "Day/night preserve slide, netposts, counter/closedbox, plush toys, tables and camera geometry; lighting changes do not invent story props.",
+        "disclosure": "Supplies are already described at entry; closed firstaid box does not disclose new medical contents or an unearned result.",
+        "text": "No readable lettering, logo, UI, watermark.",
+        "composition": "Central slide and pool identifiable at360 and480; full-frame scaling checked, actual runtime crop remains pending."
+      }
+    }
+  ],
+  "totalCandidateBytes": 237462,
+  "actualRuntimeCropReviewed": false,
+  "productionModified": false,
+  "frozenInputsModified": false
+}

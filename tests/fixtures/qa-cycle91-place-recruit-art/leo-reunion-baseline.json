@@ -1,0 +1,46 @@
+{
+  "provenance": "Controlled continuation of natural90 join entry: normal paid offer, actual decline, actual openRecruitMeet reunion. Not a new journey or a naturally selected reunion.",
+  "entryFile": "recruit_reunion_leo-controlled-entry.json",
+  "entrySha": "de0d31b7cf60df7b6071dfa651a05ac2f8cacae644cb768efdfa526e3c230826",
+  "paidFile": "recruit_reunion_leo-controlled-paid.json",
+  "paidSha": "c93e5c31dd53cd3ecdc3ad03aeacbd3245ae600b201a7789f46159eed6c06cc9",
+  "result": {
+    "text": "레오에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+    "turns": [
+      {
+        "kind": "narration",
+        "text": "레오에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다."
+      }
+    ],
+    "chips": [],
+    "ok": true,
+    "applied": true,
+    "info": {
+      "sceneKeys": [
+        "recruit-leo-join-decision"
+      ]
+    }
+  },
+  "definition": {
+    "id": "recruit_reunion_leo",
+    "type": "대화",
+    "w": 0,
+    "noPool": 1,
+    "title": "레오와 다시 만나다",
+    "text": "침수된 길에서 레오와 보리를 함께 구했던 일이 떠오른다. 그때는 각자의 길을 택했다. 다시 만나 함께 갈지 묻는다.",
+    "choices": [
+      {
+        "label": "다시 함께 갈지 묻는다",
+        "out": [
+          {
+            "p": 1,
+            "text": "레오에게 서울까지 함께 갈 생각이 있는지 물었다. 대답을 기다렸다.",
+            "fx": {
+              "offerComp": "leo"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

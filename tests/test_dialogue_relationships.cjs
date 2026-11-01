@@ -83,6 +83,10 @@ function npcHarness(D,S,fame=false){
  const start=source.indexOf('  function talk(nid){'),end=source.indexOf('  // Small-talk uses',start);
  let active=null,saved=null,offroad=null;
  const G={hasPerk:()=>fame,save(){saved=plain(S)},addNote(){},applyFx(){G.save()}};
+ const core=fs.readFileSync('src/04a-engine-core.js','utf8');
+ const begin=core.indexOf('G.markNpcMet = '),finish=core.indexOf('G.restoreFieldNpcMeetings = ',begin);
+ assert(begin>=0&&finish>begin);
+ new Function('D','S','G',core.slice(begin,finish))(D,S,G);
  const showNpcDialogue=(id,turns,actions)=>{active={html:turns.map(t=>t.text).join(''),actions}};
  const talk=new Function('D','S','G','OFF','talkOff','showNpcDialogue','pick','renderHud',
   'showStl','curStl','curEv','curStory','closeEvent',source.slice(start,end)+';return talk;')(

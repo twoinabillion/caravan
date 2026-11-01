@@ -137,7 +137,7 @@
   ]);
   attach(event('seoul_session_reset').choices[0].out[0],S=>D.finaleReturnTurns(S).map((turn,index)=>
     index===0?epilogue(turn,'남산을 내려가기 전')
-      :turn.scene==='parents-mother-reunion-v1'?epilogue(turn,'그 뒤, 수원 외곽 중계소')
+      :['parents-mother-reunion-v1','parents-mother-return-interior-v1'].includes(turn.scene)?epilogue(turn,'그 뒤, 수원 외곽 중계소')
       :!S.flags.mother_broadcast_ready&&turn.text.startsWith('남산 아래에서')?epilogue(turn,'그 뒤, 남산 아래')
       :turn));
 })();

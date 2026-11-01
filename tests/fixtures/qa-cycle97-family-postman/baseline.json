@@ -1,0 +1,1518 @@
+{
+  "capturedAt": "2026-10-31T16:34:08.613Z",
+  "events": [
+    {
+      "id": "story_family_key",
+      "definition": {
+        "id": "story_family_key",
+        "scenes": [
+          "family-verification-key"
+        ],
+        "type": "스토리",
+        "w": 0,
+        "once": true,
+        "noPool": 1,
+        "storyOrigin": {
+          "kind": "audio",
+          "label": "수첩·음성 파일",
+          "title": "달구지 계기판에서 확인"
+        },
+        "speakers": [
+          "father",
+          "mother"
+        ],
+        "parseRecords": true,
+        "title": "달구지 안의 검증키",
+        "text": "복원한 발표 연습 영상의 첨부 목록에 ‘검증키 분리 절차 4–5쪽’이 남아 있었다. 파일은 비어 있었고 마지막 전송지는 북부 연락소였다.\n\n차를 세우고 계기판을 열었다. 회로도와 배선을 대조해 안쪽의 모듈을 찾았다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n모듈 옆 수납칸에서 가족사진과 아빠의 회로 수첩을 꺼냈다.\n\n「원 설계자 서명 확인용. 코어 현장 단자에 연결할 것.」\n\n「분리 순서를 지킬 것. 차량 배선과 함께 뜯지 말 것.」\n\n수첩 끝에 적힌 음성 파일을 재생했다.\n\n\"짐칸은 안 돼. 차 팔면 짐부터 다 내리잖아.\"\n\n\"그럼 어디?\"\n\n\"계기판 뒤. 고치려고 여는 사람은 선부터 보고 손댈 테니까.\"\n\n\"아버님한테는 얘기해야 해.\"\n\n공구를 내려놓는 소리가 났다.\n\n\"응. 차는 계속 움직이게 해 달라고.\"\n\n\"당신 설명서도 같이 넣어. 혼자만 알아보게 쓰지 말고.\"\n\n녹음이 끝났다. 수첩의 배선 번호 옆에 할아버지가 갈아 끼운 부품 날짜가 적혀 있었다. 나는 가장 최근 날짜 아래에 오늘 날짜를 썼다. 모듈은 건드리지 않고, 빈 두 쪽의 번호에 동그라미를 쳤다.",
+        "choices": [
+          {
+            "label": "사진과 회로 수첩만 먼저 꺼낸다",
+            "out": [
+              {
+                "p": 1,
+                "text": "사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다.\n\n사진 뒷면에는 엄마 글씨가 있었다.\n\n「우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.」\n\n뜯긴 두 장을 찾기 전까지는 기다려야 했다.",
+                "fx": {
+                  "flag": "parent_key_located",
+                  "moodAll": 4,
+                  "note": {
+                    "type": "사건",
+                    "title": "검증키의 위치",
+                    "body": "계기판 안의 검증키와 북부로 전송된 분리 절차 4·5쪽을 확인했다. 두 장을 찾기 전에는 모듈을 꺼낼 수 없다.",
+                    "links": [
+                      "천리안",
+                      "할아버지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  "mother"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "배선 위치를 표시하고 계기판을 덮는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다.\n\n계기판을 덮기 전 모듈 아래 각인이 보였다.\n\n「실행 전 인간 확인」\n\n이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다.",
+                "fx": {
+                  "flag": "parent_key_located",
+                  "moodAll": 3,
+                  "note": {
+                    "type": "사건",
+                    "title": "실행 전 인간 확인",
+                    "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+                    "links": [
+                      "천리안",
+                      "할아버지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  "father"
+                ]
+              }
+            ]
+          }
+        ],
+        "turnSpeakers": [
+          "father",
+          "father",
+          "father",
+          "mother",
+          "father",
+          "mother",
+          "father",
+          "mother"
+        ]
+      },
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "복원한 발표 연습 영상의 첨부 목록에 ‘검증키 분리 절차 4–5쪽’이 남아 있었다. 파일은 비어 있었고 마지막 전송지는 북부 연락소였다."
+        },
+        {
+          "kind": "narration",
+          "text": "차를 세우고 계기판을 열었다. 회로도와 배선을 대조해 안쪽의 모듈을 찾았다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다."
+        },
+        {
+          "kind": "narration",
+          "text": "모듈 옆 수납칸에서 가족사진과 아빠의 회로 수첩을 꺼냈다."
+        },
+        {
+          "kind": "record",
+          "who": "father",
+          "text": "원 설계자 서명 확인용. 코어 현장 단자에 연결할 것."
+        },
+        {
+          "kind": "record",
+          "who": "father",
+          "text": "분리 순서를 지킬 것. 차량 배선과 함께 뜯지 말 것."
+        },
+        {
+          "kind": "narration",
+          "text": "수첩 끝에 적힌 음성 파일을 재생했다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "father",
+          "text": "짐칸은 안 돼. 차 팔면 짐부터 다 내리잖아."
+        },
+        {
+          "kind": "dialogue",
+          "who": "mother",
+          "text": "그럼 어디?"
+        },
+        {
+          "kind": "dialogue",
+          "who": "father",
+          "text": "계기판 뒤. 고치려고 여는 사람은 선부터 보고 손댈 테니까."
+        },
+        {
+          "kind": "dialogue",
+          "who": "mother",
+          "text": "아버님한테는 얘기해야 해."
+        },
+        {
+          "kind": "narration",
+          "text": "공구를 내려놓는 소리가 났다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "father",
+          "text": "응. 차는 계속 움직이게 해 달라고."
+        },
+        {
+          "kind": "dialogue",
+          "who": "mother",
+          "text": "당신 설명서도 같이 넣어. 혼자만 알아보게 쓰지 말고."
+        },
+        {
+          "kind": "narration",
+          "text": "녹음이 끝났다. 수첩의 배선 번호 옆에 할아버지가 갈아 끼운 부품 날짜가 적혀 있었다. 나는 가장 최근 날짜 아래에 오늘 날짜를 썼다. 모듈은 건드리지 않고, 빈 두 쪽의 번호에 동그라미를 쳤다."
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "family-verification-key"
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "story_family_key-0-0-paid.json",
+          "result": {
+            "text": "사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다.\n\n사진 뒷면에는 엄마 글씨가 있었다.\n\n「우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.」\n\n뜯긴 두 장을 찾기 전까지는 기다려야 했다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다."
+              },
+              {
+                "kind": "narration",
+                "text": "사진 뒷면에는 엄마 글씨가 있었다."
+              },
+              {
+                "kind": "record",
+                "text": "우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.",
+                "who": "mother"
+              },
+              {
+                "kind": "narration",
+                "text": "뜯긴 두 장을 찾기 전까지는 기다려야 했다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "새 기록 · 검증키의 위치",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "family-verification-key"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 12,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "postman_met": true,
+              "parent_key_located": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "검증키의 위치",
+                "body": "계기판 안의 검증키와 북부로 전송된 분리 절차 4·5쪽을 확인했다. 두 장을 찾기 전에는 모듈을 꺼낼 수 없다.",
+                "links": [
+                  "천리안",
+                  "할아버지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "story_family_key-1-0-paid.json",
+          "result": {
+            "text": "선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다.\n\n계기판을 덮기 전 모듈 아래 각인이 보였다.\n\n「실행 전 인간 확인」\n\n이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다."
+              },
+              {
+                "kind": "narration",
+                "text": "계기판을 덮기 전 모듈 아래 각인이 보였다."
+              },
+              {
+                "kind": "record",
+                "text": "실행 전 인간 확인",
+                "who": "father"
+              },
+              {
+                "kind": "narration",
+                "text": "이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "새 기록 · 실행 전 인간 확인",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "family-verification-key"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 12,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "postman_met": true,
+              "parent_key_located": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "실행 전 인간 확인",
+                "body": "달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+                "links": [
+                  "천리안",
+                  "할아버지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "main_recovery_story_family_key",
+      "definition": {
+        "id": "main_recovery_story_family_key",
+        "recoveryOf": "story_family_key",
+        "type": "스토리",
+        "once": true,
+        "noPool": 1,
+        "scene": "family-verification-key",
+        "title": "교환소 앞 달구지의 검증키",
+        "storyOrigin": {
+          "kind": "record",
+          "label": "수원에서 확인",
+          "title": "북부 교환소 · 전달 기록과 보관물"
+        },
+        "parseRecords": true,
+        "text": "수원 북부 교환소의 첨부 목록에 검증키 분리 절차 4·5쪽을 보냈다는 기록이 있었다. 필요한 두 장은 아직 손에 넣지 못했다.\n\n교환소 앞 달구지의 계기판을 열었다. 회로도와 배선을 대조해 안쪽의 모듈을 찾았다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다.\n\n모듈 옆 수납칸에서 가족사진과 아빠의 회로 수첩을 꺼냈다.\n\n「원 설계자 서명 확인용. 코어 현장 단자에 연결할 것.」\n\n「분리 순서를 지킬 것. 차량 배선과 함께 뜯지 말 것.」\n\n수첩 끝에 적힌 음성 파일을 재생했다.\n\n\"짐칸은 안 돼. 차 팔면 짐부터 다 내리잖아.\"\n\n\"그럼 어디?\"\n\n\"계기판 뒤. 고치려고 여는 사람은 선부터 보고 손댈 테니까.\"\n\n\"아버님한테는 얘기해야 해.\"\n\n공구를 내려놓는 소리가 났다.\n\n\"응. 차는 계속 움직이게 해 달라고.\"\n\n\"당신 설명서도 같이 넣어. 혼자만 알아보게 쓰지 말고.\"\n\n녹음이 끝났다. 수첩의 배선 번호 옆에 할아버지가 갈아 끼운 부품 날짜가 적혀 있었다. 나는 가장 최근 날짜 아래에 오늘 날짜를 썼다. 모듈은 건드리지 않고, 빈 두 쪽의 번호에 동그라미를 쳤다.",
+        "turnSpeakers": [
+          "father",
+          "father",
+          "father",
+          "mother",
+          "father",
+          "mother",
+          "father",
+          "mother"
+        ],
+        "choices": [
+          {
+            "label": "사진과 회로 수첩만 먼저 꺼낸다",
+            "out": [
+              {
+                "p": 1,
+                "text": "사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다.\n\n사진 뒷면에는 엄마 글씨가 있었다.\n\n「우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.」\n\n뜯긴 두 장을 찾기 전까지는 기다려야 했다.",
+                "fx": {
+                  "flag": "parent_key_located",
+                  "moodAll": 4,
+                  "note": {
+                    "type": "사건",
+                    "title": "교환소 앞 달구지의 검증키",
+                    "body": "수원 북부 교환소에서 전달 기록과 보관물을 확인했다. 계기판 안의 검증키와 북부로 전송된 분리 절차 4·5쪽을 확인했다. 두 장을 찾기 전에는 모듈을 꺼낼 수 없다.",
+                    "links": [
+                      "천리안",
+                      "할아버지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  "mother"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "배선 위치를 표시하고 계기판을 덮는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다.\n\n계기판을 덮기 전 모듈 아래 각인이 보였다.\n\n「실행 전 인간 확인」\n\n이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다.",
+                "fx": {
+                  "flag": "parent_key_located",
+                  "moodAll": 3,
+                  "note": {
+                    "type": "사건",
+                    "title": "교환소 앞 달구지의 검증키",
+                    "body": "수원 북부 교환소에서 전달 기록과 보관물을 확인했다. 달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+                    "links": [
+                      "천리안",
+                      "할아버지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  "father"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "수원 북부 교환소의 첨부 목록에 검증키 분리 절차 4·5쪽을 보냈다는 기록이 있었다. 필요한 두 장은 아직 손에 넣지 못했다."
+        },
+        {
+          "kind": "narration",
+          "text": "교환소 앞 달구지의 계기판을 열었다. 회로도와 배선을 대조해 안쪽의 모듈을 찾았다. 빠진 두 장 없이는 어느 커넥터부터 풀어야 할지 알 수 없었다."
+        },
+        {
+          "kind": "narration",
+          "text": "모듈 옆 수납칸에서 가족사진과 아빠의 회로 수첩을 꺼냈다."
+        },
+        {
+          "kind": "record",
+          "who": "father",
+          "text": "원 설계자 서명 확인용. 코어 현장 단자에 연결할 것."
+        },
+        {
+          "kind": "record",
+          "who": "father",
+          "text": "분리 순서를 지킬 것. 차량 배선과 함께 뜯지 말 것."
+        },
+        {
+          "kind": "narration",
+          "text": "수첩 끝에 적힌 음성 파일을 재생했다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "father",
+          "text": "짐칸은 안 돼. 차 팔면 짐부터 다 내리잖아."
+        },
+        {
+          "kind": "dialogue",
+          "who": "mother",
+          "text": "그럼 어디?"
+        },
+        {
+          "kind": "dialogue",
+          "who": "father",
+          "text": "계기판 뒤. 고치려고 여는 사람은 선부터 보고 손댈 테니까."
+        },
+        {
+          "kind": "dialogue",
+          "who": "mother",
+          "text": "아버님한테는 얘기해야 해."
+        },
+        {
+          "kind": "narration",
+          "text": "공구를 내려놓는 소리가 났다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "father",
+          "text": "응. 차는 계속 움직이게 해 달라고."
+        },
+        {
+          "kind": "dialogue",
+          "who": "mother",
+          "text": "당신 설명서도 같이 넣어. 혼자만 알아보게 쓰지 말고."
+        },
+        {
+          "kind": "narration",
+          "text": "녹음이 끝났다. 수첩의 배선 번호 옆에 할아버지가 갈아 끼운 부품 날짜가 적혀 있었다. 나는 가장 최근 날짜 아래에 오늘 날짜를 썼다. 모듈은 건드리지 않고, 빈 두 쪽의 번호에 동그라미를 쳤다."
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "family-verification-key"
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "main_recovery_story_family_key-0-0-paid.json",
+          "result": {
+            "text": "사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다.\n\n사진 뒷면에는 엄마 글씨가 있었다.\n\n「우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.」\n\n뜯긴 두 장을 찾기 전까지는 기다려야 했다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "사진과 회로 수첩만 챙기고 모듈은 계기판 안에 남겼다. 떼어 낼 순서를 모른 채 힘을 주면 검증키도 달구지 배선도 함께 망가질 수 있었다."
+              },
+              {
+                "kind": "narration",
+                "text": "사진 뒷면에는 엄마 글씨가 있었다."
+              },
+              {
+                "kind": "record",
+                "text": "우리 대신 결정하지 마. 네가 결정할 수 있게 남기는 거야.",
+                "who": "mother"
+              },
+              {
+                "kind": "narration",
+                "text": "뜯긴 두 장을 찾기 전까지는 기다려야 했다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "새 기록 · 교환소 앞 달구지의 검증키",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "family-verification-key"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 12,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "postman_met": true,
+              "parent_key_located": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "교환소 앞 달구지의 검증키",
+                "body": "수원 북부 교환소에서 전달 기록과 보관물을 확인했다. 계기판 안의 검증키와 북부로 전송된 분리 절차 4·5쪽을 확인했다. 두 장을 찾기 전에는 모듈을 꺼낼 수 없다.",
+                "links": [
+                  "천리안",
+                  "할아버지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "main_recovery_story_family_key-1-0-paid.json",
+          "result": {
+            "text": "선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다.\n\n계기판을 덮기 전 모듈 아래 각인이 보였다.\n\n「실행 전 인간 확인」\n\n이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "선을 빼는 대신 수첩에 색과 위치를 다시 표시했다. 할아버지에게 배운 방식이었다. 모르면 건드리지 말고, 먼저 표시한다."
+              },
+              {
+                "kind": "narration",
+                "text": "계기판을 덮기 전 모듈 아래 각인이 보였다."
+              },
+              {
+                "kind": "record",
+                "text": "실행 전 인간 확인",
+                "who": "father"
+              },
+              {
+                "kind": "narration",
+                "text": "이제 필요한 것은 각인을 읽는 일이 아니라, 모듈을 망가뜨리지 않고 꺼낼 마지막 두 장이었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "새 기록 · 교환소 앞 달구지의 검증키",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "family-verification-key"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 12,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "postman_met": true,
+              "parent_key_located": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "교환소 앞 달구지의 검증키",
+                "body": "수원 북부 교환소에서 전달 기록과 보관물을 확인했다. 달구지 계기판의 숨은 모듈을 확인하고 배선 위치를 표시했다. 뜯긴 분리 절차를 찾을 때까지 그대로 보존한다.",
+                "links": [
+                  "천리안",
+                  "할아버지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "postman_again",
+      "definition": {
+        "id": "postman_again",
+        "pillar": "유산",
+        "type": "조우",
+        "w": 11,
+        "once": true,
+        "needFlag": "postman_met",
+        "region": [
+          "mid",
+          "north"
+        ],
+        "title": "가벼워진 가방",
+        "text": "자전거 방울 소리. 그 우편부다.\n\n\"어! 차!\" 우편부가 급브레이크를 잡았다. 짐받이의 꾸러미가 눈에 띄게 얇아졌다.\n\n\"명단이 줄었어요. 오래 묵은 편지가 두 통 남았는데— 하나가 문제예요. 수신인이 남산 쪽이란 말이지. 거긴 자전거로는…\"\n\n우편부가 우리를 본다. 차를 본다. 다시 우리를 본다.",
+        "choices": [
+          {
+            "label": "편지를 맡는다",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"이러면 안 되는데. 배달은 끝까지 하는 게 원칙인데.\"\n\n말은 그렇게 하면서 우편부는 편지를 세 겹 방수포에 싸서 건넸다. 받는 이: 서울, 남산 아래, 김 O O.\n\n\"전하면— 아니, 전할 수 있으면, 그걸로 됐다고 해 주세요. 오래 걸렸다고는 말고.\"\n\n조수석 서랍 제일 안쪽에 편지가 실렸다. 차가 조금 무거워진 기분이 들었다. 좋은 무거움이다.",
+                "fx": {
+                  "item": {
+                    "남산행 편지": 1
+                  },
+                  "flag": "postman_letter",
+                  "moodAll": 3,
+                  "note": {
+                    "type": "소문",
+                    "title": "남산행 편지",
+                    "body": "우편부의 마지막에서 두 번째 편지. 수신인은 남산 아래 김OO. \"오래 걸렸다고는 말고.\"",
+                    "links": [
+                      "남산"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "label": "\"원칙대로 하세요\"",
+            "out": [
+              {
+                "p": 1,
+                "text": "\"…그렇지. 배달은 끝까지.\" 우편부가 오히려 후련한 얼굴로 페달을 밟았다.\n\n\"남산에서 봅시다!\" 방울 소리가 북쪽으로 멀어졌다.\n\n자전거로 남산까지. 저 사람은 정말 갈 것이다. 그게 이상하게 든든했다.",
+                "fx": {
+                  "moodAll": 2,
+                  "note": {
+                    "type": "인물",
+                    "title": "끝까지 가는 우편부",
+                    "body": "배달은 끝까지가 원칙. 자전거로 남산까지. 정말 갈 사람."
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "entry": [
+        {
+          "kind": "narration",
+          "text": "자전거 방울 소리. 그 우편부다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "postman",
+          "text": "어! 차!"
+        },
+        {
+          "kind": "narration",
+          "text": "우편부가 급브레이크를 잡았다. 짐받이의 꾸러미가 눈에 띄게 얇아졌다."
+        },
+        {
+          "kind": "dialogue",
+          "who": "postman",
+          "text": "명단이 줄었어요. 오래 묵은 편지가 두 통 남았는데— 하나가 문제예요. 수신인이 남산 쪽이란 말이지. 거긴 자전거로는…"
+        },
+        {
+          "kind": "narration",
+          "text": "우편부가 우리를 본다. 차를 본다. 다시 우리를 본다."
+        }
+      ],
+      "info": {
+        "sceneKeys": [
+          "postman-again-bicycle-v1"
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "postman_again-0-0-paid.json",
+          "result": {
+            "text": "\"이러면 안 되는데. 배달은 끝까지 하는 게 원칙인데.\"\n\n말은 그렇게 하면서 우편부는 편지를 세 겹 방수포에 싸서 건넸다. 받는 이: 서울, 남산 아래, 김 O O.\n\n\"전하면— 아니, 전할 수 있으면, 그걸로 됐다고 해 주세요. 오래 걸렸다고는 말고.\"\n\n조수석 서랍 제일 안쪽에 편지가 실렸다. 차가 조금 무거워진 기분이 들었다. 좋은 무거움이다.",
+            "turns": [
+              {
+                "kind": "dialogue",
+                "text": "이러면 안 되는데. 배달은 끝까지 하는 게 원칙인데.",
+                "who": "postman"
+              },
+              {
+                "kind": "narration",
+                "text": "말은 그렇게 하면서 우편부는 편지를 세 겹 방수포에 싸서 건넸다. 받는 이: 서울, 남산 아래, 김 O O."
+              },
+              {
+                "kind": "dialogue",
+                "text": "전하면— 아니, 전할 수 있으면, 그걸로 됐다고 해 주세요. 오래 걸렸다고는 말고.",
+                "who": "postman"
+              },
+              {
+                "kind": "narration",
+                "text": "조수석 서랍 제일 안쪽에 편지가 실렸다. 차가 조금 무거워진 기분이 들었다. 좋은 무거움이다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "남산행 편지 +1",
+                "c": "plus"
+              },
+              {
+                "t": "새 소문 · 남산행 편지",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "postman-again-bicycle-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 12,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "postman_met": true,
+              "postman_letter": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "소문",
+                "title": "남산행 편지",
+                "body": "우편부의 마지막에서 두 번째 편지. 수신인은 남산 아래 김OO. \"오래 걸렸다고는 말고.\"",
+                "links": [
+                  "남산"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "postman_again-1-0-paid.json",
+          "result": {
+            "text": "\"…그렇지. 배달은 끝까지.\" 우편부가 오히려 후련한 얼굴로 페달을 밟았다.\n\n\"남산에서 봅시다!\" 방울 소리가 북쪽으로 멀어졌다.\n\n자전거로 남산까지. 저 사람은 정말 갈 것이다. 그게 이상하게 든든했다.",
+            "turns": [
+              {
+                "kind": "dialogue",
+                "text": "…그렇지. 배달은 끝까지.",
+                "who": "postman"
+              },
+              {
+                "kind": "narration",
+                "text": "우편부가 오히려 후련한 얼굴로 페달을 밟았다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "남산에서 봅시다!",
+                "who": "postman"
+              },
+              {
+                "kind": "narration",
+                "text": "방울 소리가 북쪽으로 멀어졌다."
+              },
+              {
+                "kind": "narration",
+                "text": "자전거로 남산까지. 저 사람은 정말 갈 것이다. 그게 이상하게 든든했다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "새 기록 · 끝까지 가는 우편부",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "postman-again-bicycle-v1"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 600,
+            "food": 12,
+            "water": 20,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "인물",
+                "title": "끝까지 가는 우편부",
+                "body": "배달은 끝까지가 원칙. 자전거로 남산까지. 정말 갈 사람.",
+                "links": [],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/story/agent99/attempt01/scene-story_family_key-entry-162.json",
+      "file": "actual96-story_family_key-entry.json",
+      "sha256": "46f9844d3f5cf5ee8deda8bc8f3dc92b53ea24c6598c1c9b5d3aa2b37a570189"
+    },
+    {
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/story/agent99/attempt01/scene-story_family_key-result-162.json",
+      "file": "actual96-story_family_key-result.json",
+      "sha256": "849ccf039cd6522b8e831687876fbcbaad3c8e91cf08288da5ea57ed3f7b7861"
+    },
+    {
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/story/agent99/attempt01/scene-postman_again-entry-180.json",
+      "file": "actual96-postman_again-entry.json",
+      "sha256": "e98145fd2cd532954e6550e86a5099a426d14b0edf8fdc1464b6e4be69a8948d"
+    },
+    {
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/story/agent99/attempt01/scene-postman_again-result-180.json",
+      "file": "actual96-postman_again-result.json",
+      "sha256": "6c24f74c32b558c8db4a8181336493108af7c000d05266b44d5022264061b333"
+    }
+  ],
+  "sourceSHA": {
+    "src/03g-scenes.js": "3217d9aefe06acabef9e9333cbfb6877e854f579dfebb908eea99f549e9dcb91",
+    "src/03-data.js": "17e360635f2d0dd258da3c7f6c5934cb337fab33fa4fd2165d0435b6b302d43d",
+    "src/03l-main-recovery.js": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+    "src/07-ui.js": "cdf4d3970ef309523b16a618b65319789a7099949ef4ab9cbeb7b822cc2f70c2"
+  }
+}

@@ -1,0 +1,3054 @@
+{
+  "source": "controlled source95 before97 fixes; not fresh players",
+  "events": [
+    {
+      "id": "route_ridge_rescue",
+      "definition": {
+        "id": "route_ridge_rescue",
+        "type": "구조",
+        "w": 0,
+        "fixed": true,
+        "once": true,
+        "scene": "route-ridge-rigging-v2",
+        "title": "능선 아래의 네 사람",
+        "turnSpeakers": [
+          "me",
+          {
+            "who": "passer_woman",
+            "name": "여자"
+          },
+          "me",
+          {
+            "who": "passer_woman",
+            "name": "여자"
+          }
+        ],
+        "combat": {
+          "phase": 1,
+          "total": 3,
+          "step": "멈춰 세우기",
+          "threat": "비탈에 걸린 우편 수레",
+          "objective": "비탈이 다시 움직이기 전에 네 사람을 도로로 올린다",
+          "terrain": "젖은 절개지와 무너진 돌망",
+          "stakes": "수레가 계곡 쪽으로 밀리면 사람과 약 상자를 함께 잃는다",
+          "intent": "젖은 돌망이 한 번 더 내려앉기 전에 사람과 차의 무게를 고정해야 한다",
+          "counters": {
+            "고정": "달구지를 닻으로 쓴다",
+            "지휘": "하중을 사람별로 나눈다"
+          }
+        },
+        "text": "상주를 벗어난 능선에서 손을 흔드는 아이가 보였다. 도로 아래로 작은 수레가 반쯤 굴러 떨어져 있다. 어른 셋과 아이 하나가 돌망 사이에 매달린 채 움직이지 못한다.\n\n\"다친 사람 있어요?\"\n\n아래에서 여자가 고개를 들었다. 바람에 말이 반쯤 날아갔다. \"…목 하나요.\"\n\n\"뭐라고요?\"\n\n\"발목이요! 한 명! 그런데 이 비탈, 아까부터 계속 내려앉아요.\"\n\n차를 산 쪽 바위에 바짝 붙였다. 달구지의 무게를 닻으로 쓸 수는 있다. 문제는 비탈이 얼마나 더 버티느냐다.\n\n총을 꺼낼 상대는 없다. 대신 비탈이 조금씩 우리 시간을 가져가고 있다.",
+        "choices": [
+          {
+            "label": "달구지를 바위 뒤에 걸고 견인줄을 내린다",
+            "tactic": "고정",
+            "prep": 1,
+            "terrainFit": 2,
+            "out": [
+              {
+                "p": 1,
+                "text": "차를 바위 안쪽에 비스듬히 세우고 바퀴마다 돌을 괴었다. 견인줄을 당기자 차체가 한 번 울었지만 버텼다.\n\n\"한 번에 한 사람. 줄 놓치면 안 돼.\"\n\n아이부터 줄에 매달렸다.",
+                "fx": {
+                  "time": 15,
+                  "combatStart": {
+                    "id": "ridge_rescue",
+                    "kind": "구조",
+                    "threat": "비탈에 걸린 우편 수레",
+                    "terrain": "젖은 절개지와 무너진 돌망",
+                    "objective": "네 사람을 도로로 올린다",
+                    "stakes": "비탈이 다시 움직이기 전에 끝내야 한다",
+                    "pressure": 1
+                  },
+                  "combatEdge": 2,
+                  "chain": "route_ridge_anchor"
+                },
+                "sfx": "metal"
+              }
+            ]
+          },
+          {
+            "label": "도로 위 사람들과 먼저 역할을 나눈다",
+            "tactic": "지휘",
+            "prep": 1,
+            "terrainFit": 1,
+            "out": [
+              {
+                "p": 1,
+                "text": "삽을 들 사람, 줄을 잡을 사람, 올라온 사람을 받을 자리를 빠르게 정했다.\n\n\"아이부터. 다친 분은 줄로 몸부터 받쳐요. 수레는 사람 뒤.\"\n\n서로 이름도 모르지만, 적어도 누가 무엇을 하는지는 알게 됐다.",
+                "fx": {
+                  "time": 10,
+                  "combatStart": {
+                    "id": "ridge_rescue",
+                    "kind": "구조",
+                    "threat": "비탈에 걸린 우편 수레",
+                    "terrain": "젖은 절개지와 무너진 돌망",
+                    "objective": "네 사람을 도로로 올린다",
+                    "stakes": "비탈이 다시 움직이기 전에 끝내야 한다",
+                    "pressure": 1
+                  },
+                  "combatEdge": 1,
+                  "combatPressure": -1,
+                  "chain": "route_ridge_anchor"
+                },
+                "sfx": "cover"
+              }
+            ]
+          }
+        ]
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "상주를 벗어난 능선에서 손을 흔드는 아이가 보였다. 도로 아래로 작은 수레가 반쯤 굴러 떨어져 있다. 어른 셋과 아이 하나가 돌망 사이에 매달린 채 움직이지 못한다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "다친 사람 있어요?"
+          },
+          {
+            "kind": "narration",
+            "text": "아래에서 여자가 고개를 들었다. 바람에 말이 반쯤 날아갔다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_woman",
+            "name": "여자",
+            "text": "…목 하나요."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "뭐라고요?"
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_woman",
+            "name": "여자",
+            "text": "발목이요! 한 명! 그런데 이 비탈, 아까부터 계속 내려앉아요."
+          },
+          {
+            "kind": "narration",
+            "text": "차를 산 쪽 바위에 바짝 붙였다. 달구지의 무게를 닻으로 쓸 수는 있다. 문제는 비탈이 얼마나 더 버티느냐다."
+          },
+          {
+            "kind": "narration",
+            "text": "총을 꺼낼 상대는 없다. 대신 비탈이 조금씩 우리 시간을 가져가고 있다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "route-ridge-rigging-v2"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "route_ridge_rescue-0-0-controlled-paid.json",
+          "result": {
+            "text": "차를 바위 안쪽에 비스듬히 세우고 바퀴마다 돌을 괴었다. 견인줄을 당기자 차체가 한 번 울었지만 버텼다.\n\n\"한 번에 한 사람. 줄 놓치면 안 돼.\"\n\n아이부터 줄에 매달렸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "차를 바위 안쪽에 비스듬히 세우고 바퀴마다 돌을 괴었다. 견인줄을 당기자 차체가 한 번 울었지만 버텼다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "한 번에 한 사람. 줄 놓치면 안 돼.",
+                "who": "me"
+              },
+              {
+                "kind": "narration",
+                "text": "아이부터 줄에 매달렸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "구조 여건 우세 +2",
+                "c": "plus"
+              },
+              {
+                "t": "15분 경과",
+                "c": ""
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 615,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35.675,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "route_ridge_rescue-1-0-controlled-paid.json",
+          "result": {
+            "text": "삽을 들 사람, 줄을 잡을 사람, 올라온 사람을 받을 자리를 빠르게 정했다.\n\n\"아이부터. 다친 분은 줄로 몸부터 받쳐요. 수레는 사람 뒤.\"\n\n서로 이름도 모르지만, 적어도 누가 무엇을 하는지는 알게 됐다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "삽을 들 사람, 줄을 잡을 사람, 올라온 사람을 받을 자리를 빠르게 정했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "아이부터. 다친 분은 줄로 몸부터 받쳐요. 수레는 사람 뒤.",
+                "who": "me"
+              },
+              {
+                "kind": "narration",
+                "text": "서로 이름도 모르지만, 적어도 누가 무엇을 하는지는 알게 됐다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "구조 여건 우세 +1",
+                "c": "plus"
+              },
+              {
+                "t": "숨 돌릴 틈 확보",
+                "c": "plus"
+              },
+              {
+                "t": "10분 경과",
+                "c": ""
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 610,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35.45,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "route_ridge_anchor",
+      "definition": {
+        "id": "route_ridge_anchor",
+        "type": "구조",
+        "w": 0,
+        "fixed": true,
+        "once": true,
+        "scene": "route-ridge-rigging-v2",
+        "title": "줄 하나에 걸린 무게",
+        "combat": {
+          "phase": 2,
+          "total": 3,
+          "step": "길 만들기",
+          "threat": "비탈에 걸린 우편 수레",
+          "objective": "사람이 오를 발판을 만들고 줄의 하중을 나눈다",
+          "terrain": "젖은 절개지와 무너진 돌망",
+          "stakes": "한 곳에 무게가 몰리면 흙이 다시 무너진다",
+          "intent": "당기는 힘이 한곳에 몰리면 발판부터 무너진다",
+          "counters": {
+            "토공": "디딜 곳을 늘린다",
+            "장비": "하중을 두 줄로 나눈다"
+          }
+        },
+        "text": "아이와 첫 번째 어른이 도로로 올라왔다. 세 번째 사람을 당기려는 순간, 발밑 돌망이 손바닥만큼 내려앉았다.\n\n아래의 남자가 소리쳤다. \"잠깐! 지금 당기면 여기 다 같이 내려가요.\"\n\n\"놓으라고요?\"\n\n\"풀라고요! 놓지는 말고!\"\n\n줄을 조금 풀어 하중을 뺐다. 차는 버티는데 땅이 못 버틴다. 힘보다 사람이 디딜 길부터 만들어야 한다.\n\n수레 안에는 문경으로 가는 편지와 해열제가 섞여 있다. 하지만 먼저 올라와야 할 것은 사람이다.",
+        "choices": [
+          {
+            "label": "삽으로 하중을 나눌 계단을 판다",
+            "tactic": "토공",
+            "terrainFit": 2,
+            "combatRoll": 0.62,
+            "out": [
+              {
+                "p": 1,
+                "text": "한 사람이 설 너비만큼 흙을 걷고 돌을 눌러 박았다. 빠른 길은 아니지만, 발을 옮길 때마다 다음 사람이 설 곳이 생겼다. 남자가 그 발판을 따라 도로까지 올라왔다.",
+                "fx": {
+                  "time": 25,
+                  "fatigue": 3,
+                  "combatEdge": 1,
+                  "combatPressure": -1,
+                  "combatRead": {
+                    "label": "사람 줄과 짐 줄을 나눌 발판",
+                    "tactics": [
+                      "분리 인양",
+                      "릴레이"
+                    ]
+                  },
+                  "chain": "route_ridge_extract"
+                },
+                "sfx": "cover",
+                "turnSpeakers": []
+              },
+              {
+                "p": 1,
+                "text": "세 번째 계단을 파는 순간 흙이 통째로 밀려 내려갔다. 방금 만든 발판이 아래 사람 어깨 위로 쏟아졌다.\n\n아래에서 괜찮다는 소리가 올라왔지만 괜찮은 목소리가 아니었다.\n\n다시 팠다. 이번엔 더 얕게, 더 느리게. 남자를 도로까지 받쳐 올리고 나니 판 자리로 흙이 또 흘러들었다.",
+                "fx": {
+                  "time": 45,
+                  "fatigue": 8,
+                  "combatPressure": 2,
+                  "combatRead": {
+                    "label": "무너진 자리라 발 디딜 곳을 못 믿는다",
+                    "tactics": [
+                      "토공"
+                    ]
+                  },
+                  "chain": "route_ridge_extract"
+                },
+                "sfx": "impact",
+                "turnSpeakers": []
+              }
+            ]
+          },
+          {
+            "label": "견인줄을 두 갈래로 묶어 흔들림을 잡는다",
+            "req": {
+              "scrap": 2
+            },
+            "foreseeable": {
+              "expense": "고철 1~2 · 실패에 대비해 2 필요"
+            },
+            "tactic": "장비",
+            "terrainFit": 2,
+            "combatRoll": 0.6,
+            "out": [
+              {
+                "p": 1,
+                "text": "본줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다.\n\n\"이제 한 발씩. 뛰지 말고.\"\n\n남자가 두 줄 사이로 몸을 옮겨 도로 위를 짚었다.",
+                "fx": {
+                  "time": 15,
+                  "scrap": -1,
+                  "combatEdge": 1,
+                  "combatRead": {
+                    "label": "한 줄이 흔들릴 때 받쳐 줄 보조 하중",
+                    "tactics": [
+                      "분리 인양",
+                      "릴레이"
+                    ]
+                  },
+                  "chain": "route_ridge_extract"
+                },
+                "sfx": "metal",
+                "turnSpeakers": [
+                  "me"
+                ]
+              },
+              {
+                "p": 1,
+                "text": "가드레일 기둥이 생각보다 삭아 있었다. 보조줄을 당기자 기둥이 뿌리째 기울었다.\n\n급히 본줄 하나로 되돌렸다. 이제 하중을 한 줄에만 실어야 한다.\n\n\"한 명씩. 절대 두 명 같이 오르지 마세요.\"\n\n남자를 먼저 받쳐 올렸다. 그가 도로에 닿고도 본줄은 한동안 흔들렸다.",
+                "fx": {
+                  "time": 30,
+                  "scrap": -2,
+                  "combatPressure": 2,
+                  "combatRead": {
+                    "label": "줄이 하나뿐이라 한 번에 한 사람",
+                    "tactics": [
+                      "릴레이"
+                    ]
+                  },
+                  "chain": "route_ridge_extract"
+                },
+                "sfx": "metal",
+                "turnSpeakers": [
+                  "me"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "아래 남자를 업고 짧게 치고 오른다",
+            "tactic": "완력",
+            "risk": "비탈 압박 상승",
+            "combatRoll": 0.5,
+            "out": [
+              {
+                "p": 1,
+                "text": "남자를 등에 묶고 가장 짧은 선을 골랐다. 절반은 힘으로, 나머지는 위에서 당기는 줄로 도로까지 올렸다. 빠르지만 땅이 한 번 더 울었다. 발목을 다친 여자는 아직 아래에서 차례를 기다렸다.",
+                "fx": {
+                  "time": 10,
+                  "fatigue": 6,
+                  "combatPressure": 1,
+                  "chain": "route_ridge_extract"
+                },
+                "sfx": "engine",
+                "turnSpeakers": []
+              },
+              {
+                "p": 1,
+                "text": "절반쯤 올라갔을 때 발밑이 꺼졌다. 업힌 남자와 함께 미끄러져 원래 자리보다 아래로 떨어졌다.\n\n허리를 돌에 부딪쳤다. 몸을 펴려니 숨부터 막혔다. 남자가 내 등에서 내려 줄을 다시 걸었다.\n\n이번엔 그를 먼저 도로까지 올리고 빈 줄을 받았다. 내 몸 하나를 끌어올리는 데도 몇 번이나 멈춰야 했다.",
+                "fx": {
+                  "time": 35,
+                  "fatigue": 12,
+                  "combatPressure": 2,
+                  "combatEdge": -1,
+                  "injury": {
+                    "who": "driver",
+                    "label": "허리 삠",
+                    "days": 2
+                  },
+                  "chain": "route_ridge_extract"
+                },
+                "sfx": "impact",
+                "turnSpeakers": []
+              }
+            ]
+          }
+        ],
+        "turnSpeakers": [
+          {
+            "who": "passer_man",
+            "name": "아래의 남자"
+          },
+          "me",
+          {
+            "who": "passer_man",
+            "name": "아래의 남자"
+          }
+        ]
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "아이와 첫 번째 어른이 도로로 올라왔다. 세 번째 사람을 당기려는 순간, 발밑 돌망이 손바닥만큼 내려앉았다."
+          },
+          {
+            "kind": "narration",
+            "text": "아래의 남자가 소리쳤다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_man",
+            "name": "아래의 남자",
+            "text": "잠깐! 지금 당기면 여기 다 같이 내려가요."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "놓으라고요?"
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_man",
+            "name": "아래의 남자",
+            "text": "풀라고요! 놓지는 말고!"
+          },
+          {
+            "kind": "narration",
+            "text": "줄을 조금 풀어 하중을 뺐다. 차는 버티는데 땅이 못 버틴다. 힘보다 사람이 디딜 길부터 만들어야 한다."
+          },
+          {
+            "kind": "narration",
+            "text": "수레 안에는 문경으로 가는 편지와 해열제가 섞여 있다. 하지만 먼저 올라와야 할 것은 사람이다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "route-ridge-rigging-v2"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "route_ridge_anchor-0-0-controlled-paid.json",
+          "result": {
+            "text": "한 사람이 설 너비만큼 흙을 걷고 돌을 눌러 박았다. 빠른 길은 아니지만, 발을 옮길 때마다 다음 사람이 설 곳이 생겼다. 남자가 그 발판을 따라 도로까지 올라왔다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "한 사람이 설 너비만큼 흙을 걷고 돌을 눌러 박았다. 빠른 길은 아니지만, 발을 옮길 때마다 다음 사람이 설 곳이 생겼다. 남자가 그 발판을 따라 도로까지 올라왔다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "25분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +3",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 625,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 39.125,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 1,
+          "file": "route_ridge_anchor-0-1-controlled-paid.json",
+          "result": {
+            "text": "세 번째 계단을 파는 순간 흙이 통째로 밀려 내려갔다. 방금 만든 발판이 아래 사람 어깨 위로 쏟아졌다.\n\n아래에서 괜찮다는 소리가 올라왔지만 괜찮은 목소리가 아니었다.\n\n다시 팠다. 이번엔 더 얕게, 더 느리게. 남자를 도로까지 받쳐 올리고 나니 판 자리로 흙이 또 흘러들었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "세 번째 계단을 파는 순간 흙이 통째로 밀려 내려갔다. 방금 만든 발판이 아래 사람 어깨 위로 쏟아졌다."
+              },
+              {
+                "kind": "narration",
+                "text": "아래에서 괜찮다는 소리가 올라왔지만 괜찮은 목소리가 아니었다."
+              },
+              {
+                "kind": "narration",
+                "text": "다시 팠다. 이번엔 더 얕게, 더 느리게. 남자를 도로까지 받쳐 올리고 나니 판 자리로 흙이 또 흘러들었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "45분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +8",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 645,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 45.025,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "route_ridge_anchor-1-0-controlled-paid.json",
+          "result": {
+            "text": "본줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다.\n\n\"이제 한 발씩. 뛰지 말고.\"\n\n남자가 두 줄 사이로 몸을 옮겨 도로 위를 짚었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "본줄은 달구지에, 보조줄은 가드레일 기둥에 걸었다. 한 줄이 흔들릴 때 다른 줄이 몸을 잡았다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이제 한 발씩. 뛰지 말고.",
+                "who": "me"
+              },
+              {
+                "kind": "narration",
+                "text": "남자가 두 줄 사이로 몸을 옮겨 도로 위를 짚었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "고철 -1",
+                "c": "minus"
+              },
+              {
+                "t": "15분 경과",
+                "c": ""
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 615,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 29,
+            "van": 90,
+            "fatigue": 35.675,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 1,
+          "file": "route_ridge_anchor-1-1-controlled-paid.json",
+          "result": {
+            "text": "가드레일 기둥이 생각보다 삭아 있었다. 보조줄을 당기자 기둥이 뿌리째 기울었다.\n\n급히 본줄 하나로 되돌렸다. 이제 하중을 한 줄에만 실어야 한다.\n\n\"한 명씩. 절대 두 명 같이 오르지 마세요.\"\n\n남자를 먼저 받쳐 올렸다. 그가 도로에 닿고도 본줄은 한동안 흔들렸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "가드레일 기둥이 생각보다 삭아 있었다. 보조줄을 당기자 기둥이 뿌리째 기울었다."
+              },
+              {
+                "kind": "narration",
+                "text": "급히 본줄 하나로 되돌렸다. 이제 하중을 한 줄에만 실어야 한다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "한 명씩. 절대 두 명 같이 오르지 마세요.",
+                "who": "me"
+              },
+              {
+                "kind": "narration",
+                "text": "남자를 먼저 받쳐 올렸다. 그가 도로에 닿고도 본줄은 한동안 흔들렸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "고철 -2",
+                "c": "minus"
+              },
+              {
+                "t": "30분 경과",
+                "c": ""
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 630,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 28,
+            "van": 90,
+            "fatigue": 36.35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 2,
+          "oi": 0,
+          "file": "route_ridge_anchor-2-0-controlled-paid.json",
+          "result": {
+            "text": "남자를 등에 묶고 가장 짧은 선을 골랐다. 절반은 힘으로, 나머지는 위에서 당기는 줄로 도로까지 올렸다. 빠르지만 땅이 한 번 더 울었다. 발목을 다친 여자는 아직 아래에서 차례를 기다렸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "남자를 등에 묶고 가장 짧은 선을 골랐다. 절반은 힘으로, 나머지는 위에서 당기는 줄로 도로까지 올렸다. 빠르지만 땅이 한 번 더 울었다. 발목을 다친 여자는 아직 아래에서 차례를 기다렸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "10분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +6",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 610,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 41.45,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 2,
+          "oi": 1,
+          "file": "route_ridge_anchor-2-1-controlled-paid.json",
+          "result": {
+            "text": "절반쯤 올라갔을 때 발밑이 꺼졌다. 업힌 남자와 함께 미끄러져 원래 자리보다 아래로 떨어졌다.\n\n허리를 돌에 부딪쳤다. 몸을 펴려니 숨부터 막혔다. 남자가 내 등에서 내려 줄을 다시 걸었다.\n\n이번엔 그를 먼저 도로까지 올리고 빈 줄을 받았다. 내 몸 하나를 끌어올리는 데도 몇 번이나 멈춰야 했다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "절반쯤 올라갔을 때 발밑이 꺼졌다. 업힌 남자와 함께 미끄러져 원래 자리보다 아래로 떨어졌다."
+              },
+              {
+                "kind": "narration",
+                "text": "허리를 돌에 부딪쳤다. 몸을 펴려니 숨부터 막혔다. 남자가 내 등에서 내려 줄을 다시 걸었다."
+              },
+              {
+                "kind": "narration",
+                "text": "이번엔 그를 먼저 도로까지 올리고 빈 줄을 받았다. 내 몸 하나를 끌어올리는 데도 몇 번이나 멈춰야 했다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "35분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +12",
+                "c": "minus"
+              },
+              {
+                "t": "🩹 상혁 · 허리 삠 2일",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-rigging-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 635,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 48.575,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "route_ridge_extract",
+      "definition": {
+        "id": "route_ridge_extract",
+        "type": "구조",
+        "w": 0,
+        "fixed": true,
+        "once": true,
+        "scene": "route-ridge-rigging-v2",
+        "title": "마지막 한 번",
+        "combat": {
+          "phase": 3,
+          "total": 3,
+          "step": "꺼내기",
+          "threat": "비탈에 걸린 우편 수레",
+          "objective": "마지막 사람과 약 상자를 함께 도로로 올린다",
+          "terrain": "젖은 절개지와 무너진 돌망",
+          "stakes": "흙이 움직이기 시작했다. 한 번에 끝내야 한다",
+          "intent": "큰 자갈이 굴러오기 전에 사람과 약 상자의 하중을 한 번에 나눠야 한다",
+          "counters": {
+            "분리 인양": "두 줄을 반 박자 나눠 당긴다",
+            "릴레이": "사람과 내용물만 가볍게 옮긴다"
+          }
+        },
+        "text": "S=>'사람 셋은 올라왔다. 아래에는 발목을 다친 여자와 수레가 남았다. 그때 비탈 위쪽에서 자갈이 한꺼번에 굴러내렸다.\\n\\n여자가 약 상자를 수레 밖으로 밀며 말했다. \"이건 두고 저만 올리세요.\"\\n\\n\"사람 먼저인 건 맞아요.\" 내가 줄을 다시 잡았다. \"그래도 둘 다 올릴 방법부터—\"\\n\\n\"둘 다는 안 돼요.\"\\n\\n\"한 번은 당겨봅시다.\"\\n\\n한 번 당길 시간은 남아 있다.'+(S.combat?.read?.label==='줄이 하나뿐이라 한 번에 한 사람'?'\\n\\n기울어진 기둥에서 보조줄을 풀어 달구지 쪽 고정점으로 돌렸다. 본줄은 여자에게 둔 채, 빈 보조줄을 수레에 다시 걸었다.': '')",
+        "choices": [
+          {
+            "label": "사람과 수레에 줄을 다시 걸어 나눠 당긴다",
+            "tactic": "분리 인양",
+            "terrainFit": 2,
+            "combatRoll": 0.58,
+            "out": [
+              {
+                "p": 1,
+                "scene": "route-ridge-safe-v2",
+                "text": "구호를 셋에 맞췄다. 사람 줄이 먼저 팽팽해지고, 반 박자 뒤 수레가 돌턱을 넘었다. 여자의 손이 도로 가장자리를 잡자 모두가 그대로 뒤로 넘어졌다.\n\n네 사람이 전부 올라왔다. 해열제 상자도 젖었지만 멀쩡했다. 아이가 달구지 문을 두드렸다. \"이 차, 집인데 힘도 세네요.\"",
+                "fx": {
+                  "time": 20,
+                  "moodAll": 4,
+                  "combatEnd": 1,
+                  "combatResult": "success",
+                  "flag": "route_ridge_saved",
+                  "note": {
+                    "type": "사건",
+                    "title": "능선 아래 네 사람",
+                    "body": "달구지를 닻으로 삼아 네 사람과 문경행 해열제를 함께 올렸다.",
+                    "links": [
+                      "달구지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  {
+                    "who": "passer_child",
+                    "name": "구조된 아이"
+                  }
+                ]
+              },
+              {
+                "p": 1,
+                "scene": "route-ridge-safe-v2",
+                "text": "사람은 도로 위로 올라왔지만 수레 바퀴 하나가 돌망에 걸렸다. 줄을 놓는 순간 수레 절반이 아래로 쏟아졌다. 편지는 건졌고 해열제는 반만 남았다.\n\n여자가 숨을 고르며 말했다. \"사람 넷이 올라왔잖아요. 나머지는 다시 구하면 돼요.\"",
+                "fx": {
+                  "time": 25,
+                  "moodAll": 2,
+                  "combatEnd": 1,
+                  "combatResult": "partial",
+                  "flag": "route_ridge_saved_partial",
+                  "note": {
+                    "type": "사건",
+                    "title": "능선 아래 네 사람",
+                    "body": "네 사람은 모두 구했다. 약 상자는 절반만 건졌지만, 우선순위는 끝까지 바뀌지 않았다.",
+                    "links": [
+                      "달구지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  {
+                    "who": "passer_woman",
+                    "name": "발목을 다친 여자"
+                  }
+                ]
+              },
+              {
+                "p": 1,
+                "scene": "route-ridge-safe-v2",
+                "text": "두 줄을 당기는 박자가 어긋났다. 수레가 먼저 미끄러지며 여자의 줄을 쳤다.\n\n여자는 올라왔다 — 발목이 아니라 무릎까지 다친 채로. 수레와 해열제는 계곡 아래에서 소리를 멈췄다.\n\n\"저 약, 문경 아이들 몫이었는데.\" 여자는 우리 잘못이 아니라고 두 번 말했다. 두 번째에는 여자가 아래를 보지 못했다. 올라온 사람들은 손에서 줄을 놓지 않은 채 한동안 서 있었다.",
+                "fx": {
+                  "time": 35,
+                  "moodAll": -5,
+                  "fatigue": 6,
+                  "combatEnd": 1,
+                  "combatResult": "failure",
+                  "flag": "route_ridge_failed",
+                  "note": {
+                    "type": "사건",
+                    "title": "계곡에 남은 약 상자",
+                    "body": "네 사람은 구했지만 문경행 해열제를 전부 잃었고 부상자의 상태가 나빠졌다. 문경에서 이 이야기를 다시 듣게 될 것이다.",
+                    "links": [
+                      "달구지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  {
+                    "who": "passer_woman",
+                    "name": "발목을 다친 여자"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "label": "수레를 비우고 사람과 약만 릴레이로 올린다",
+            "tactic": "릴레이",
+            "terrainFit": 2,
+            "combatRoll": 0.64,
+            "out": [
+              {
+                "p": 1,
+                "scene": "route-ridge-safe-v2",
+                "text": "편지 다발을 품에 나눠 안고, 약 상자는 줄에 묶었다. 빈 수레는 내려두고 사람과 내용물만 차례로 올렸다. 마지막 여자가 도로에 닿자 비탈이 크게 흘러내렸다.\n\n수레는 잃었지만 사람 넷과 배달할 것은 모두 남았다.",
+                "fx": {
+                  "time": 30,
+                  "fatigue": 3,
+                  "moodAll": 4,
+                  "combatEnd": 1,
+                  "combatResult": "success",
+                  "flag": "route_ridge_saved"
+                },
+                "turnSpeakers": []
+              },
+              {
+                "p": 1,
+                "scene": "route-ridge-safe-v2",
+                "text": "사람 넷과 편지는 모두 올렸다. 약 상자 하나가 진흙에 빠졌지만 더 내려갈 수는 없었다.\n\n\"괜찮아요. 문경에서 나눠 쓰면 돼요.\" 여자가 남은 상자를 꼭 안았다.",
+                "fx": {
+                  "time": 35,
+                  "fatigue": 4,
+                  "moodAll": 2,
+                  "combatEnd": 1,
+                  "combatResult": "partial",
+                  "flag": "route_ridge_saved_partial"
+                },
+                "turnSpeakers": [
+                  {
+                    "who": "passer_woman",
+                    "name": "발목을 다친 여자"
+                  }
+                ]
+              },
+              {
+                "p": 1,
+                "scene": "route-ridge-safe-v2",
+                "text": "릴레이 중간에 비탈이 크게 내려앉았다. 마지막 여자를 끌어올리는 데는 성공했지만, 줄을 잡던 내 손바닥이 길게 찢어졌고 약 상자는 전부 흙더미에 묻혔다.\n\n\"사람은 다 살았어요.\" 여자가 말했다. 맞는 말이었다. 그런데 문경 쪽 하늘을 보는 그녀의 눈은 다른 계산을 하고 있었다.",
+                "fx": {
+                  "time": 40,
+                  "fatigue": 8,
+                  "moodAll": -5,
+                  "injury": {
+                    "who": "driver",
+                    "label": "손바닥 열상",
+                    "days": 2
+                  },
+                  "combatEnd": 1,
+                  "combatResult": "failure",
+                  "flag": "route_ridge_failed",
+                  "note": {
+                    "type": "사건",
+                    "title": "묻힌 약 상자",
+                    "body": "전원 구조에는 성공했지만 해열제를 전부 잃었다. 문경의 겨울이 조금 더 길어졌다.",
+                    "links": [
+                      "달구지"
+                    ]
+                  }
+                },
+                "turnSpeakers": [
+                  {
+                    "who": "passer_woman",
+                    "name": "발목을 다친 여자"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "turnSpeakers": [
+          {
+            "who": "passer_woman",
+            "name": "발목을 다친 여자"
+          },
+          "me",
+          "me",
+          {
+            "who": "passer_woman",
+            "name": "발목을 다친 여자"
+          },
+          "me"
+        ]
+      },
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "사람 셋은 올라왔다. 아래에는 발목을 다친 여자와 수레가 남았다. 그때 비탈 위쪽에서 자갈이 한꺼번에 굴러내렸다."
+          },
+          {
+            "kind": "narration",
+            "text": "여자가 약 상자를 수레 밖으로 밀며 말했다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_woman",
+            "name": "발목을 다친 여자",
+            "text": "이건 두고 저만 올리세요."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "사람 먼저인 건 맞아요."
+          },
+          {
+            "kind": "narration",
+            "text": "내가 줄을 다시 잡았다."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "그래도 둘 다 올릴 방법부터—"
+          },
+          {
+            "kind": "dialogue",
+            "who": "passer_woman",
+            "name": "발목을 다친 여자",
+            "text": "둘 다는 안 돼요."
+          },
+          {
+            "kind": "dialogue",
+            "who": "me",
+            "text": "한 번은 당겨봅시다."
+          },
+          {
+            "kind": "narration",
+            "text": "한 번 당길 시간은 남아 있다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "route-ridge-rigging-v2"
+          ]
+        }
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "file": "route_ridge_extract-0-0-controlled-paid.json",
+          "result": {
+            "text": "구호를 셋에 맞췄다. 사람 줄이 먼저 팽팽해지고, 반 박자 뒤 수레가 돌턱을 넘었다. 여자의 손이 도로 가장자리를 잡자 모두가 그대로 뒤로 넘어졌다.\n\n네 사람이 전부 올라왔다. 해열제 상자도 젖었지만 멀쩡했다. 아이가 달구지 문을 두드렸다. \"이 차, 집인데 힘도 세네요.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "구호를 셋에 맞췄다. 사람 줄이 먼저 팽팽해지고, 반 박자 뒤 수레가 돌턱을 넘었다. 여자의 손이 도로 가장자리를 잡자 모두가 그대로 뒤로 넘어졌다."
+              },
+              {
+                "kind": "narration",
+                "text": "네 사람이 전부 올라왔다. 해열제 상자도 젖었지만 멀쩡했다. 아이가 달구지 문을 두드렸다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이 차, 집인데 힘도 세네요.",
+                "who": "passer_child",
+                "name": "구조된 아이"
+              }
+            ],
+            "chips": [
+              {
+                "t": "20분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 능선 아래 네 사람",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-safe-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 620,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 35.9,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "route_ridge_saved": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "능선 아래 네 사람",
+                "body": "달구지를 닻으로 삼아 네 사람과 문경행 해열제를 함께 올렸다.",
+                "links": [
+                  "달구지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 1,
+          "file": "route_ridge_extract-0-1-controlled-paid.json",
+          "result": {
+            "text": "사람은 도로 위로 올라왔지만 수레 바퀴 하나가 돌망에 걸렸다. 줄을 놓는 순간 수레 절반이 아래로 쏟아졌다. 편지는 건졌고 해열제는 반만 남았다.\n\n여자가 숨을 고르며 말했다. \"사람 넷이 올라왔잖아요. 나머지는 다시 구하면 돼요.\"",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "사람은 도로 위로 올라왔지만 수레 바퀴 하나가 돌망에 걸렸다. 줄을 놓는 순간 수레 절반이 아래로 쏟아졌다. 편지는 건졌고 해열제는 반만 남았다."
+              },
+              {
+                "kind": "narration",
+                "text": "여자가 숨을 고르며 말했다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "사람 넷이 올라왔잖아요. 나머지는 다시 구하면 돼요.",
+                "who": "passer_woman",
+                "name": "발목을 다친 여자"
+              }
+            ],
+            "chips": [
+              {
+                "t": "25분 경과",
+                "c": ""
+              },
+              {
+                "t": "새 기록 · 능선 아래 네 사람",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-safe-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 625,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 36.125,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "route_ridge_saved_partial": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "능선 아래 네 사람",
+                "body": "네 사람은 모두 구했다. 약 상자는 절반만 건졌지만, 우선순위는 끝까지 바뀌지 않았다.",
+                "links": [
+                  "달구지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 0,
+          "oi": 2,
+          "file": "route_ridge_extract-0-2-controlled-paid.json",
+          "result": {
+            "text": "두 줄을 당기는 박자가 어긋났다. 수레가 먼저 미끄러지며 여자의 줄을 쳤다.\n\n여자는 올라왔다 — 발목이 아니라 무릎까지 다친 채로. 수레와 해열제는 계곡 아래에서 소리를 멈췄다.\n\n\"저 약, 문경 아이들 몫이었는데.\" 여자는 우리 잘못이 아니라고 두 번 말했다. 두 번째에는 여자가 아래를 보지 못했다. 올라온 사람들은 손에서 줄을 놓지 않은 채 한동안 서 있었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "두 줄을 당기는 박자가 어긋났다. 수레가 먼저 미끄러지며 여자의 줄을 쳤다."
+              },
+              {
+                "kind": "narration",
+                "text": "여자는 올라왔다 — 발목이 아니라 무릎까지 다친 채로. 수레와 해열제는 계곡 아래에서 소리를 멈췄다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "저 약, 문경 아이들 몫이었는데.",
+                "who": "passer_woman",
+                "name": "발목을 다친 여자"
+              },
+              {
+                "kind": "narration",
+                "text": "여자는 우리 잘못이 아니라고 두 번 말했다. 두 번째에는 여자가 아래를 보지 못했다. 올라온 사람들은 손에서 줄을 놓지 않은 채 한동안 서 있었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "35분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +6",
+                "c": "minus"
+              },
+              {
+                "t": "새 기록 · 계곡에 남은 약 상자",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-safe-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 635,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 42.575,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "route_ridge_failed": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "계곡에 남은 약 상자",
+                "body": "네 사람은 구했지만 문경행 해열제를 전부 잃었고 부상자의 상태가 나빠졌다. 문경에서 이 이야기를 다시 듣게 될 것이다.",
+                "links": [
+                  "달구지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "file": "route_ridge_extract-1-0-controlled-paid.json",
+          "result": {
+            "text": "편지 다발을 품에 나눠 안고, 약 상자는 줄에 묶었다. 빈 수레는 내려두고 사람과 내용물만 차례로 올렸다. 마지막 여자가 도로에 닿자 비탈이 크게 흘러내렸다.\n\n수레는 잃었지만 사람 넷과 배달할 것은 모두 남았다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "편지 다발을 품에 나눠 안고, 약 상자는 줄에 묶었다. 빈 수레는 내려두고 사람과 내용물만 차례로 올렸다. 마지막 여자가 도로에 닿자 비탈이 크게 흘러내렸다."
+              },
+              {
+                "kind": "narration",
+                "text": "수레는 잃었지만 사람 넷과 배달할 것은 모두 남았다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "30분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +3",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-safe-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 630,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 39.35,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "route_ridge_saved": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 1,
+          "file": "route_ridge_extract-1-1-controlled-paid.json",
+          "result": {
+            "text": "사람 넷과 편지는 모두 올렸다. 약 상자 하나가 진흙에 빠졌지만 더 내려갈 수는 없었다.\n\n\"괜찮아요. 문경에서 나눠 쓰면 돼요.\" 여자가 남은 상자를 꼭 안았다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "사람 넷과 편지는 모두 올렸다. 약 상자 하나가 진흙에 빠졌지만 더 내려갈 수는 없었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "괜찮아요. 문경에서 나눠 쓰면 돼요.",
+                "who": "passer_woman",
+                "name": "발목을 다친 여자"
+              },
+              {
+                "kind": "narration",
+                "text": "여자가 남은 상자를 꼭 안았다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "35분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +4",
+                "c": "minus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-safe-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 635,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 40.575,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "route_ridge_saved_partial": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        },
+        {
+          "ci": 1,
+          "oi": 2,
+          "file": "route_ridge_extract-1-2-controlled-paid.json",
+          "result": {
+            "text": "릴레이 중간에 비탈이 크게 내려앉았다. 마지막 여자를 끌어올리는 데는 성공했지만, 줄을 잡던 내 손바닥이 길게 찢어졌고 약 상자는 전부 흙더미에 묻혔다.\n\n\"사람은 다 살았어요.\" 여자가 말했다. 맞는 말이었다. 그런데 문경 쪽 하늘을 보는 그녀의 눈은 다른 계산을 하고 있었다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "릴레이 중간에 비탈이 크게 내려앉았다. 마지막 여자를 끌어올리는 데는 성공했지만, 줄을 잡던 내 손바닥이 길게 찢어졌고 약 상자는 전부 흙더미에 묻혔다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "사람은 다 살았어요.",
+                "who": "passer_woman",
+                "name": "발목을 다친 여자"
+              },
+              {
+                "kind": "narration",
+                "text": "여자가 말했다. 맞는 말이었다. 그런데 문경 쪽 하늘을 보는 그녀의 눈은 다른 계산을 하고 있었다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "40분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 +8",
+                "c": "minus"
+              },
+              {
+                "t": "🩹 상혁 · 손바닥 열상 2일",
+                "c": "minus"
+              },
+              {
+                "t": "새 기록 · 묻힌 약 상자",
+                "c": "item"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "route-ridge-safe-v2"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 640,
+            "food": 19,
+            "water": 19,
+            "fuel": 40,
+            "scrap": 30,
+            "van": 90,
+            "fatigue": 44.8,
+            "party": [],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "route_ridge_failed": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n5",
+                "type": "사건",
+                "title": "묻힌 약 상자",
+                "body": "전원 구조에는 성공했지만 해열제를 전부 잃었다. 문경의 겨울이 조금 더 길어졌다.",
+                "links": [
+                  "달구지"
+                ],
+                "day": 9
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0
+            },
+            "seed": 202020,
+            "impact": null,
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "file": "route_ridge_rescue-natural-unpaid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/normal-unpaid-122-route_ridge_rescue.json",
+      "sha256": "cde6efaadc235db716ffd3d2a53504b0fb848c9d265189623bec6e3b3c88c8b0"
+    },
+    {
+      "file": "route_ridge_rescue-natural-entry.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/entry-after-view-122-route_ridge_rescue.json",
+      "sha256": "8e12bcaa21c1222bed983d708d61fa10b633a9306cee767f29ec72269c782130"
+    },
+    {
+      "file": "route_ridge_rescue-natural-paid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/scene-route_ridge_rescue-result-123.json",
+      "sha256": "d6c1ae24e9642eb5564e6dd827363101d38cdea93685e92bcfd4a00b185343c6"
+    },
+    {
+      "file": "route_ridge_anchor-natural-unpaid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/normal-unpaid-126-route_ridge_anchor.json",
+      "sha256": "d30887f8e8bef443b63c2875882ccfcf4975122977ac5cc229aa3bdc36a58cb2"
+    },
+    {
+      "file": "route_ridge_anchor-natural-entry.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/entry-after-view-126-route_ridge_anchor.json",
+      "sha256": "71d56d254fffba29bc0fc04262f6df892f3eb0a187ba19ed1cb64186cf8f0e15"
+    },
+    {
+      "file": "route_ridge_anchor-natural-paid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/scene-route_ridge_anchor-result-127.json",
+      "sha256": "d7debdea31a7d3272ff65e6a312476af9cd3b54bdeee7b8a8c7c2fd4af30acc0"
+    },
+    {
+      "file": "route_ridge_extract-natural-unpaid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/normal-unpaid-130-route_ridge_extract.json",
+      "sha256": "f89b8146e764a9f99377912334f707f5c3a266f970904cff9af664c68dc55d8e"
+    },
+    {
+      "file": "route_ridge_extract-natural-entry.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/entry-after-view-130-route_ridge_extract.json",
+      "sha256": "cf7070451c29c841c5c30dfb24793a3ab1c636b194f45c9f49881c0fec77a1bf"
+    },
+    {
+      "file": "route_ridge_extract-natural-paid.json",
+      "source": "qa-artifacts/qa-cycle-20261026/cycle96/explorer/agent96/attempt01/scene-route_ridge_extract-result-131.json",
+      "sha256": "48ca7af92c49816fd79dfd630b6c5c5017796286e64e1d8a4a58cb14fb2b20f8"
+    }
+  ]
+}

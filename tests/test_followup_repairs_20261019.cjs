@@ -62,7 +62,7 @@ test('completion receipt includes the actual early bonus once, persists and proj
   assert(h.run('G.save();G.load()'));assert.equal(h.run('G.checkQuest()'),false);
   assert.equal(h.run('S.scrap-before'),10);assert.equal(h.run('S.questLedger.completed.length'),1);
 });
-test('procurement and no-expiry story receipts match payment without changing consumption or reward rules',()=>{
+test('timed procurement keeps its early bonus while no-expiry receipts use the promised fixed reward',()=>{
   const h=setup();h.run(`S.at='suwon';S.day=4;S.items['부품']=3;
     G.acceptQuest({kind:'procure',from:'suwon',to:'suwon',due:10,reward:15,need:{name:'부품',qty:2}});
     globalThis.before=S.scrap;G.checkQuest();`);
@@ -70,7 +70,7 @@ test('procurement and no-expiry story receipts match payment without changing co
   assert.equal(h.run('S.questLedger.completed.at(-1).expected'),'고철 19개를 받았다.');
   h.run(`G.acceptQuest({kind:'express',from:'suwon',to:'suwon',item:'주파수표',due:103,noExpiry:true,reward:20});
     globalThis.before=S.scrap;G.checkQuest();`);
-  assert.equal(h.run('S.scrap-before'),26);assert.equal(h.run('S.questLedger.completed.at(-1).expected'),'고철 26개를 받았다.');
+  assert.equal(h.run('S.scrap-before'),20);assert.equal(h.run('S.questLedger.completed.at(-1).expected'),'고철 20개를 받았다.');
 });
 test('old completion receipts are not silently rewritten or reimbursed on inspection/reload',()=>{
   const h=setup();h.run(`S.questLedger.completed.push({id:'completed_old',expected:'고철 6개를 받았다.',status:'completed'});

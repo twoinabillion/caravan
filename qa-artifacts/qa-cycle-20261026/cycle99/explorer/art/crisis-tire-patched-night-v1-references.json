@@ -1,0 +1,27 @@
+[
+  {
+    "path": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle99/explorer/art/crisis-tire-patched-day-v1-master.png",
+    "role": "edit target",
+    "sha256": "02fccb8b2b27ee70572e2a65a9aee820b0944bb8bc1c4ad1ee631827e206eb77"
+  },
+  {
+    "path": "/Users/sang/caravan/assets/reference/visual-canon-2026-08-11.png",
+    "role": "canonical reference",
+    "sha256": "6a770375346dc8ea6390323369e0f099c7ca6867415765ce15079cb1e713f5cc"
+  },
+  {
+    "path": "/Users/sang/caravan/assets/reference/world-canon-2026-08-11.png",
+    "role": "canonical reference",
+    "sha256": "cbfc5b93b64fc14a6dd4231e53aae243516ee31e2cc70d2a3f3b8d693cb8c6dc"
+  },
+  {
+    "path": "/Users/sang/caravan/assets/reference/people-canon-2026-08-11.png",
+    "role": "canonical reference",
+    "sha256": "350f6e5b2be58e65ed5c2cfd91465e218e1027d2405d84736afad7a5dea8c8a7"
+  },
+  {
+    "path": "/Users/sang/caravan/assets/reference/dalguji-technical-canon-2026-08-11.webp",
+    "role": "canonical reference",
+    "sha256": "3c587602b035c3d75e4fa5dd2027b1851d509e915930646d9d804ae15a454212"
+  }
+]

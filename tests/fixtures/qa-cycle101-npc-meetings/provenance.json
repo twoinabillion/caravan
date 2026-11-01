@@ -1,0 +1,27 @@
+[
+  {
+    "source": "qa-artifacts/qa-cycle-20261026/cycle100/explorer/agent100/attempt01/scene-story_bridge_departure_echo-entry-68.json",
+    "file": "scene-story_bridge_departure_echo-entry-68.json",
+    "sha256": "1309fe4febc019ad03aac12e6347df6c54340d71abd1cba0061de3b7e3c09c91"
+  },
+  {
+    "source": "qa-artifacts/qa-cycle-20261026/cycle100/explorer/agent100/attempt01/scene-story_family_principle-entry-169.json",
+    "file": "scene-story_family_principle-entry-169.json",
+    "sha256": "d9bd43fb1759f4a4e6983ddaad11366351cc02eb28a014176bdc2c751f2c5d74"
+  },
+  {
+    "source": "qa-artifacts/qa-cycle-20261026/cycle100/explorer/agent100/attempt01/scene-story_family_principle-result-169.json",
+    "file": "scene-story_family_principle-result-169.json",
+    "sha256": "fb66b1a480865bc60d00710f4d2722dfb6ad5697975f456ae3e73e2e93843abf"
+  },
+  {
+    "source": "qa-artifacts/qa-cycle-20261026/cycle100/explorer/agent100/attempt01/scene-parents_mother_reunion-result-402.json",
+    "file": "scene-parents_mother_reunion-result-402.json",
+    "sha256": "a98c88c4a059f824138d54ad18ef061d4001b2a2604a9c7b03eb06f9e7b390fd"
+  },
+  {
+    "source": "qa-artifacts/qa-cycle-20261026/cycle100/explorer/agent100/attempt01/scene-seoul_base-result-450.json",
+    "file": "scene-seoul_base-result-450.json",
+    "sha256": "624ce273118b7b7b56fef1c5bfc3615a852d011ac0f64d688a1c98e3f1b3d113"
+  }
+]

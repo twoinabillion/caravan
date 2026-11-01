@@ -327,6 +327,28 @@ G.save = ()=>{ if(!S||S.ended||G.presentationApplying) return false; try{
   }
   return false;
 } };
+/* 직접 대화와 이름 있는 주민 작업은 같은 첫 만남을 소비한다.
+   저장은 각 행동의 호출자가 맡고, 과거 작업 복원에는 명성을 소급 지급하지 않는다. */
+G.markNpcMet = (id,{awardFame=true}={})=>{
+  const st=S?.npcs?.[id];
+  if(!Object.hasOwn(D.npcs,id)||!st||typeof st!=='object'||Array.isArray(st)||st.met) return false;
+  if(awardFame&&G.hasPerk('leo_fame')) st.att=(Number.isFinite(st.att)?st.att:0)+15;
+  st.met=true;
+  return true;
+};
+G.restoreFieldNpcMeetings = ()=>{
+  const state=S?._stlField;
+  if(!state) return;
+  for(const [stlId,stl] of Object.entries(D.stls)) for(const action of stl.field?.actions||[]){
+    if(!action.npc) continue;
+    const key=`${stlId}:${action.id}`,impact=state.impact?.[key];
+    const hadImpact=impact&&typeof impact==='object'&&!Array.isArray(impact)
+      &&Number.isInteger(impact.day)&&impact.day>=1&&Number.isFinite(impact.min)&&impact.min>=0&&impact.min<1440;
+    const hadDaily=Object.entries(state.daily||{}).some(([daily,done])=>done===true
+      &&/^[1-9]\d*:/.test(daily)&&daily.slice(daily.indexOf(':')+1)===key);
+    if(hadImpact||state.once?.[key]===true||hadDaily) G.markNpcMet(action.npc,{awardFame:false});
+  }
+};
 G.load = (raw, {deferDriveReset=false}={})=>{ const previous=S,previousRng=rng; try{ const j = raw===undefined?localStorage.getItem(SAVE_KEY):raw; if(!j) return false;
   const parsed=JSON.parse(j);
   if(!parsed||typeof parsed!=='object'||Array.isArray(parsed)) throw new Error('invalid save root');
@@ -491,13 +513,15 @@ G.load = (raw, {deferDriveReset=false}={})=>{ const previous=S,previousRng=rng; 
   if(S.flags.intro_workshop_left===undefined) S.flags.intro_workshop_left=true;
   /* 구버전은 실행 기록만 있었으므로 남아 있는 기록에서 최초 방문 흔적을 복원한다. */
   for(const entry of S._stlField.log){
-    if(!entry||!entry.stl||!entry.id) continue;
+    if(!entry||!entry.stl||!entry.id||!Number.isInteger(entry.day)||entry.day<1
+      ||!Number.isFinite(entry.min)||entry.min<0||entry.min>=1440) continue;
     const key=`${entry.stl}:${entry.id}`;
     if(!S._stlField.impact[key]) S._stlField.impact[key]={day:entry.day||1,min:entry.min||0};
   }
   for(const [key,done] of Object.entries(S._stlField.once)){
-    if(done&&!S._stlField.impact[key]) S._stlField.impact[key]={day:1,min:0,legacy:true};
+    if(done===true&&!S._stlField.impact[key]) S._stlField.impact[key]={day:1,min:0,legacy:true};
   }
+  G.restoreFieldNpcMeetings();
   /* 즉시 영입이던 구버전에서 만남만 소진하고 합류하지 않은 경우,
      새 '합류 전 과제'를 다시 시작할 수 있도록 첫 만남을 복구한다. */
   const oldRecruitStarts={minji:'meet_scrapyard',parkss:'meet_bus',leo:'meet_hitchhiker',

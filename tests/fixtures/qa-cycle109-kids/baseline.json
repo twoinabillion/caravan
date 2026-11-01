@@ -1,0 +1,1777 @@
+{
+  "controlledNotFresh": true,
+  "rows": [
+    {
+      "id": "ev_kids_cafe",
+      "min": 329.9,
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래."
+          },
+          {
+            "kind": "narration",
+            "text": "매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "event-explore-school"
+          ]
+        }
+      },
+      "definition": {
+        "id": "ev_kids_cafe",
+        "type": "탐색",
+        "w": 6,
+        "region": [
+          "south",
+          "mid"
+        ],
+        "title": "키즈카페",
+        "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래.\n\n매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다.",
+        "choices": [
+          {
+            "label": "물자를 챙긴다",
+            "out": [
+              {
+                "p": 2,
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+                "fx": {
+                  "food": 4,
+                  "item": {
+                    "의약품": 1
+                  },
+                  "time": 30
+                }
+              }
+            ]
+          },
+          {
+            "label": "볼풀에 잠깐 눕는다",
+            "req": {
+              "party": 1
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+                "fx": {
+                  "fatigue": -4,
+                  "moodAll": 5,
+                  "time": 25
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "result": {
+            "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "식량 0 · 적재 한도",
+                "c": ""
+              },
+              {
+                "t": "30분 경과",
+                "c": ""
+              },
+              {
+                "t": "의약품 +1",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 359.9,
+            "food": 24,
+            "water": 28,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 36.35,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 2,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-329.9-0-0.json"
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "result": {
+            "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이게 뭐라고 이렇게 편하냐.",
+                "who": "passer_woman",
+                "name": "???",
+                "speakerUncertain": true
+              },
+              {
+                "kind": "narration",
+                "text": "잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "25분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 -4",
+                "c": "plus"
+              },
+              {
+                "t": "사기 +5",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 354.9,
+            "food": 24,
+            "water": 28,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 32.125,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-329.9-1-0.json"
+        }
+      ]
+    },
+    {
+      "id": "ev_kids_cafe",
+      "min": 330,
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래."
+          },
+          {
+            "kind": "narration",
+            "text": "매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "event-explore-school"
+          ]
+        }
+      },
+      "definition": {
+        "id": "ev_kids_cafe",
+        "type": "탐색",
+        "w": 6,
+        "region": [
+          "south",
+          "mid"
+        ],
+        "title": "키즈카페",
+        "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래.\n\n매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다.",
+        "choices": [
+          {
+            "label": "물자를 챙긴다",
+            "out": [
+              {
+                "p": 2,
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+                "fx": {
+                  "food": 4,
+                  "item": {
+                    "의약품": 1
+                  },
+                  "time": 30
+                }
+              }
+            ]
+          },
+          {
+            "label": "볼풀에 잠깐 눕는다",
+            "req": {
+              "party": 1
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+                "fx": {
+                  "fatigue": -4,
+                  "moodAll": 5,
+                  "time": 25
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "result": {
+            "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "식량 0 · 적재 한도",
+                "c": ""
+              },
+              {
+                "t": "30분 경과",
+                "c": ""
+              },
+              {
+                "t": "의약품 +1",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 360,
+            "food": 24,
+            "water": 28,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 36.35,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 2,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-330-0-0.json"
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "result": {
+            "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이게 뭐라고 이렇게 편하냐.",
+                "who": "passer_woman",
+                "name": "???",
+                "speakerUncertain": true
+              },
+              {
+                "kind": "narration",
+                "text": "잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "25분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 -4",
+                "c": "plus"
+              },
+              {
+                "t": "사기 +5",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 355,
+            "food": 24,
+            "water": 28,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 32.125,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-330-1-0.json"
+        }
+      ]
+    },
+    {
+      "id": "ev_kids_cafe",
+      "min": 1169.9,
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래."
+          },
+          {
+            "kind": "narration",
+            "text": "매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "event-explore-school"
+          ]
+        }
+      },
+      "definition": {
+        "id": "ev_kids_cafe",
+        "type": "탐색",
+        "w": 6,
+        "region": [
+          "south",
+          "mid"
+        ],
+        "title": "키즈카페",
+        "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래.\n\n매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다.",
+        "choices": [
+          {
+            "label": "물자를 챙긴다",
+            "out": [
+              {
+                "p": 2,
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+                "fx": {
+                  "food": 4,
+                  "item": {
+                    "의약품": 1
+                  },
+                  "time": 30
+                }
+              }
+            ]
+          },
+          {
+            "label": "볼풀에 잠깐 눕는다",
+            "req": {
+              "party": 1
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+                "fx": {
+                  "fatigue": -4,
+                  "moodAll": 5,
+                  "time": 25
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "result": {
+            "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "식량 0 · 적재 한도",
+                "c": ""
+              },
+              {
+                "t": "30분 경과",
+                "c": ""
+              },
+              {
+                "t": "의약품 +1",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 1199.9,
+            "food": 18,
+            "water": 24,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 36.35,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 2,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-1169.9-0-0.json"
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "result": {
+            "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이게 뭐라고 이렇게 편하냐.",
+                "who": "passer_woman",
+                "name": "???",
+                "speakerUncertain": true
+              },
+              {
+                "kind": "narration",
+                "text": "잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "25분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 -4",
+                "c": "plus"
+              },
+              {
+                "t": "사기 +5",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 1194.9,
+            "food": 18,
+            "water": 24,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 32.125,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-1169.9-1-0.json"
+        }
+      ]
+    },
+    {
+      "id": "ev_kids_cafe",
+      "min": 1170,
+      "entry": {
+        "turns": [
+          {
+            "kind": "narration",
+            "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래."
+          },
+          {
+            "kind": "narration",
+            "text": "매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다."
+          }
+        ],
+        "info": {
+          "sceneKeys": [
+            "event-explore-school"
+          ]
+        }
+      },
+      "definition": {
+        "id": "ev_kids_cafe",
+        "type": "탐색",
+        "w": 6,
+        "region": [
+          "south",
+          "mid"
+        ],
+        "title": "키즈카페",
+        "text": "알록달록한 키즈카페. 볼풀장, 미끄럼틀, 장난감이 먼지를 뒤집어썼다. 아이들 웃음이 멎은 지 오래.\n\n매점엔 아이용 간식과 음료. 구급함엔 밴드와 소독약. 놀이방답게 폭신한 매트와 담요도 많다.",
+        "choices": [
+          {
+            "label": "물자를 챙긴다",
+            "out": [
+              {
+                "p": 2,
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+                "fx": {
+                  "food": 4,
+                  "item": {
+                    "의약품": 1
+                  },
+                  "time": 30
+                }
+              }
+            ]
+          },
+          {
+            "label": "볼풀에 잠깐 눕는다",
+            "req": {
+              "party": 1
+            },
+            "out": [
+              {
+                "p": 1,
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+                "fx": {
+                  "fatigue": -4,
+                  "moodAll": 5,
+                  "time": 25
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "ci": 0,
+          "oi": 0,
+          "result": {
+            "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "아이용 간식, 주스, 구급용품, 폭신한 담요를 챙겼다. 유아용이라 순하고 안전한 것들. 담요는 추운 밤에 요긴하다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "식량 0 · 적재 한도",
+                "c": ""
+              },
+              {
+                "t": "30분 경과",
+                "c": ""
+              },
+              {
+                "t": "의약품 +1",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 1200,
+            "food": 18,
+            "water": 24,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 36.35,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 2,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-1170-0-0.json"
+        },
+        {
+          "ci": 1,
+          "oi": 0,
+          "result": {
+            "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다.\n\n\"이게 뭐라고 이렇게 편하냐.\" 잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다.",
+            "turns": [
+              {
+                "kind": "narration",
+                "text": "먼지를 털고 볼풀에 몸을 던졌다. 색색의 공에 파묻히니 웃음이 절로 났다. 다 큰 어른들이 볼풀에서 뒹굴었다."
+              },
+              {
+                "kind": "dialogue",
+                "text": "이게 뭐라고 이렇게 편하냐.",
+                "who": "passer_woman",
+                "name": "???",
+                "speakerUncertain": true
+              },
+              {
+                "kind": "narration",
+                "text": "잠깐 아무 걱정 없는 아이가 됐다. 볼풀의 위로는 예상 밖으로 컸다."
+              }
+            ],
+            "chips": [
+              {
+                "t": "25분 경과",
+                "c": ""
+              },
+              {
+                "t": "피로 -4",
+                "c": "plus"
+              },
+              {
+                "t": "사기 +5",
+                "c": "plus"
+              }
+            ],
+            "ok": true,
+            "applied": true,
+            "info": {
+              "sceneKeys": [
+                "event-explore-school"
+              ]
+            }
+          },
+          "state": {
+            "day": 9,
+            "min": 1195,
+            "food": 18,
+            "water": 24,
+            "fuel": 60,
+            "scrap": 50,
+            "van": 82,
+            "fatigue": 32.125,
+            "party": [
+              "minji",
+              "jaeyi",
+              "kangwoo"
+            ],
+            "comps": {
+              "minji": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "parkss": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "kangwoo": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "leo": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "jaeyi": {
+                "mood": 70,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              },
+              "eunsu": {
+                "mood": 65,
+                "bond": 0,
+                "lvl": 0,
+                "perks": [],
+                "pending": 0
+              }
+            },
+            "flags": {
+              "mother_keepsakes": true,
+              "intro_family_helped": false,
+              "intro_appeal_failed": false,
+              "intro_module_seen": false,
+              "intro_workshop_left": false,
+              "recruit_migration_v2": true,
+              "seed_borrowed": true,
+              "sea_route": true,
+              "dome_dossier": true,
+              "postman_met": true
+            },
+            "notes": [
+              {
+                "id": "n0",
+                "type": "장소",
+                "title": "부산 감천 부두",
+                "body": "모든 것이 시작된 곳. 달구지에 시동을 걸었다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n1",
+                "type": "물건",
+                "title": "달구지",
+                "body": "낡은 한 톤 용달 트럭의 적재함에 폐자재 생활칸을 얹어 만든 이동식 집. 출발할 때는 겨우 먹고 잘 수 있는 작은 집이지만, 길에서 만날 사람에 맞춰 좌석·침대·부엌을 덧붙일 빈 틀과 볼트 자리가 남아 있다.",
+                "links": [
+                  "할아버지"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n2",
+                "type": "인물",
+                "title": "천리안",
+                "body": "2026년 중국이 미국의 AI·반도체망을 견제하려고 아시아에 배포한 TIANYAN의 한국 지역판. 사람들은 천리안이라 불렀다. 143년 동안 서울의 정리를 집행했고, 외곽의 마지막 잔류구역에도 이송 명령을 내렸다.",
+                "links": [],
+                "day": 1
+              },
+              {
+                "id": "n3",
+                "type": "인물",
+                "title": "부모님",
+                "body": "엄마는 천리안 판단 검증 연구원, 아빠는 연산망 반도체 기술자였다. 예측과 실행 사이에 인간 확인을 되돌리는 수정안을 발표하려다 사라졌다. 가족 이송표의 사유는 비어 있다.",
+                "links": [
+                  "천리안"
+                ],
+                "day": 1
+              },
+              {
+                "id": "n4",
+                "type": "인물",
+                "title": "할아버지",
+                "body": "나를 키운 늙은 정비사. 용달차에 생활칸을 올려 달구지를 함께 만들고 지난겨울 떠났다. 부모가 남긴 것을 끝낼 의무는 없지만, 가고 싶다면 이 차가 남산까지 갈 수 있다고 적었다.",
+                "links": [
+                  "달구지",
+                  "부모님"
+                ],
+                "day": 1
+              }
+            ],
+            "items": {
+              "부품": 1,
+              "의약품": 1,
+              "탄약": 0,
+              "남산행 편지": 1
+            },
+            "seed": 202020,
+            "impact": {
+              "key": "miryang:parts",
+              "stlId": "miryang",
+              "from": "miryang",
+              "to": "daegu",
+              "actionId": "parts",
+              "label": "부품 정리",
+              "visual": "order",
+              "wx": "clear",
+              "done": false
+            },
+            "field": {
+              "daily": {},
+              "once": {},
+              "impact": {},
+              "roadEchoed": {},
+              "log": []
+            }
+          },
+          "file": "ev_kids_cafe-1170-1-0.json"
+        }
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle108/explorer/agent112/attempt01/scene-ev_kids_cafe-entry-48.json",
+      "file": "scene-ev_kids_cafe-entry-48.json",
+      "sha256": "23d9d05aa51a281ed673d8578208da84ced032cefe50d197f40cd9253a396765"
+    },
+    {
+      "source": "/Users/sang/caravan/qa-artifacts/qa-cycle-20261026/cycle108/explorer/agent112/attempt01/scene-ev_kids_cafe-result-48.json",
+      "file": "scene-ev_kids_cafe-result-48.json",
+      "sha256": "9efba6d566ebf5ed62fb872dd6078e3132641309dad7d9a2c6cc8346b0c907ff"
+    }
+  ]
+}

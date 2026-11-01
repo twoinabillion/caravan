@@ -1,0 +1,5 @@
+# Cycle87 place art immutable baseline
+
+Captured before cycle87 scene registration from actual cycle86 explorer entry saves, whose SHA is recorded in baseline.json. Natural entry bytes are unchanged. Controlled entry copies set day4 10:00, finite supplies and Park companion solely to cover all seven authored outcomes; they are not independent players. Natural-paid files are deterministic continuations of each natural entry choosing the actual86 first outcome, not independently captured user saves. Production prose/effects, old rendered reader and text-only paid receipts are retained. `prepare-place-fixtures.cjs` is provenance, never rerun to bless changed expected values.
+
+Tests cover dawn/dusk boundaries, every authored choice/outcome, 8-hour fishing across midnight and light transitions, current history and reload, old untimed entry/paid reader and text-only receipt behavior. They do not verify actual browser crop/input/audio or infer historical images from absent timed scene evidence.

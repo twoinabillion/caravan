@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "file": "old-active.json",
+      "origin": "qa-artifacts/qa-cycle-20261026/cycle88/explorer/agent88/attempt01/entry-after-view-573-history_six_roads.json",
+      "kind": "natural active before delivery",
+      "sha256": "2c05cc38d0fb2a5d9b18729612f1e8f6315c15e304f41ffc211259689b0a727e"
+    },
+    {
+      "file": "old-final.json",
+      "origin": "qa-artifacts/qa-cycle-20261026/cycle88/explorer/agent88/attempt01/agent88-save.json",
+      "kind": "natural final after paid delivery",
+      "sha256": "a88c12388a30b6ea6f0f16a4c2b4438d7e0afe10fa18e024c9c1d3e3cfc00a09"
+    }
+  ],
+  "traceSource": "qa-artifacts/qa-cycle-20261026/cycle88/explorer/agent88/attempt01/agent88-trace.json",
+  "traceSha256": "ae7beb8e98ed7a2456450d6e729d20dbd8369703a2e8b9791b1abb66606b701b",
+  "reproduction": {
+    "description": "Old88 natural active save + observed595 at/day/min/scrap, pending presentation and driving cleared. Not an actual saved arrival/paid blob.",
+    "sourceSha256": "086f03dd1aefcfd6547d32263b80831080975cadb62069fab844eb7de98a8657",
+    "files": [
+      {
+        "file": "reproduced-before-delivery.json",
+        "sha256": "051da5f778ab626f46174a068d5b5644b080adb532ae0b7c9cbd7347459e22dc"
+      },
+      {
+        "file": "reproduced-old-paid.json",
+        "sha256": "496f046855626f456744d256c528f251e71e7c2fa9e031259daedb5da429d8f5"
+      }
+    ],
+    "observedBefore": 62,
+    "observedAfter": 82
+  }
+}

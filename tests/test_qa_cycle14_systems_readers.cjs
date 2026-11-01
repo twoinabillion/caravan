@@ -22,6 +22,10 @@ const state=h=>h.run('JSON.stringify([S.food,S.water,S.scrap,S.fuel,S.min,S.flag
 const jy04Old='재이의 전리품 자루가 터지기 직전이다. 짐칸 정리 얘기가 나온 지 사흘째다.';
 const jy04New='재이의 전리품 자루가 터지기 직전이다. 짐칸을 정리하자는 얘기가 나왔다.';
 function projectReviewedJy04Entry(id,turns){
+ if(id==='talk_jy_08'){
+  assert.equal(turns[0].kind,'narration');assert.equal(turns[0].text,'재이가 목에 건 열쇠를 만지작거리다가 말을 꺼냈다.');
+  turns[0].text='재이가 목에 건 열쇠를 만지작거리다가, 처음으로 먼저 말을 꺼냈다.';
+ }
  if(id==='talk_jy_04'){
   assert.equal(turns[0].kind,'narration');assert.equal(turns[0].text,jy04New);
   turns[0].text=jy04Old;
@@ -77,7 +81,11 @@ test('all48 audited Jaeyi/Leo personal scenes preserve already-correct entry and
 
 test('all audited prose, gates, choices, costs, probabilities and effects remain unchanged',()=>{
  const h=setup(),clean=x=>JSON.parse(JSON.stringify(x,(k,v)=>k==='turnSpeakers'||k==='turns'?undefined:v));
- for(const old of baseline){const now=h.json(`JSON.parse(JSON.stringify(event('${old.id}'),(k,v)=>typeof v==='function'?v.toString():v))`);assert.deepEqual(clean(projectCycle29(old.id,projectReviewedJy04Prose(old.id,now),old.raw)),clean(old.raw),old.id);}
+ for(const old of baseline){const now=h.json(`JSON.parse(JSON.stringify(event('${old.id}'),(k,v)=>typeof v==='function'?v.toString():v))`);if(old.id==='talk_jy_08'){
+  require('./fixtures/qa-cycle91-jaeyi-address/contract.cjs').assertReviewed(h.run("event('talk_jy_08')"));
+  now.text=old.raw.text;now.choices[0].out[0].text=old.raw.choices[0].out[0].text;
+ }if(old.id==='talk_leo_05'){assert.equal(now.needsDog,true);delete now.needsDog;} // QA99: present sleeping Bori requires the actual dog; immutable old prose/paid fixtures remain unchanged.
+ assert.deepEqual(clean(projectCycle29(old.id,projectReviewedJy04Prose(old.id,now),old.raw)),clean(old.raw),old.id);}
 });
 
 test('all23 frozen paid outcomes retain old reader identities without another payment',()=>{

@@ -1,0 +1,194 @@
+{
+  "scope": "Fresh exact-once cohorts104/106/108/110/112 after resume; earlier102review excluded",
+  "cohorts": [
+    {
+      "cycle": 104,
+      "freshGames": 3,
+      "reviewClosed": true,
+      "choices": 235,
+      "readerTurns": 1829,
+      "notes": 303,
+      "speechMessages": 173,
+      "reloadChecks": 705,
+      "reloadFailures": 0,
+      "reapplied": 0,
+      "closureEvidence": "qa-artifacts/qa-cycle-20261026/cycle104/root/source-after.json"
+    },
+    {
+      "cycle": 106,
+      "freshGames": 3,
+      "reviewClosed": true,
+      "choices": 231,
+      "readerTurns": 1823,
+      "notes": 286,
+      "speechMessages": 202,
+      "reloadChecks": 693,
+      "reloadFailures": 0,
+      "reapplied": 0,
+      "closureEvidence": "qa-artifacts/qa-cycle-20261026/cycle106/root/source-after-final.json"
+    },
+    {
+      "cycle": 108,
+      "freshGames": 3,
+      "reviewClosed": true,
+      "choices": 242,
+      "readerTurns": 1850,
+      "notes": 297,
+      "speechMessages": 196,
+      "reloadChecks": 726,
+      "reloadFailures": 0,
+      "reapplied": 0,
+      "closureEvidence": "qa-artifacts/qa-cycle-20261026/cycle108/root/source-after-final.json"
+    },
+    {
+      "cycle": 110,
+      "freshGames": 3,
+      "reviewClosed": true,
+      "choices": 225,
+      "readerTurns": 1791,
+      "notes": 276,
+      "speechMessages": 175,
+      "reloadChecks": 675,
+      "reloadFailures": 0,
+      "reapplied": 0,
+      "closureEvidence": "qa-artifacts/qa-cycle-20261026/cycle110/root/source-after-final.json"
+    },
+    {
+      "cycle": 112,
+      "freshGames": 3,
+      "reviewClosed": true,
+      "choices": 240,
+      "readerTurns": 1868,
+      "notes": 272,
+      "speechMessages": 191,
+      "reloadChecks": 720,
+      "reloadFailures": 0,
+      "reapplied": 0,
+      "closureEvidence": "qa-artifacts/qa-cycle-20261026/cycle112/root/source-after-final.json"
+    }
+  ],
+  "repairs": [
+    {
+      "cycle": 103,
+      "sourceTests": {
+        "tests": 7982,
+        "pass": 7982,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 240150.830208
+      },
+      "newImages": 9,
+      "newImageBytes": 1325950,
+      "build": {
+        "checkedAt": "2026-11-01T00:43:10.476Z",
+        "bytes": 145299686,
+        "sha256": "9701f1a1f1bbf7c106d9748445beeae57d38799b282667a3872e6bc38f667eb3"
+      }
+    },
+    {
+      "cycle": 105,
+      "sourceTests": {
+        "tests": 8142,
+        "pass": 8142,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 250208.131958
+      },
+      "newImages": 5,
+      "newImageBytes": 960506,
+      "build": {
+        "checkedAt": "2026-11-01T01:39:23.425Z",
+        "bytes": 146503415,
+        "sha256": "74015507ef9acc38e3f059cf784e46328a9a16c2ee61ab73bdbfe73c33332c43"
+      }
+    },
+    {
+      "cycle": 107,
+      "sourceTests": {
+        "tests": 8306,
+        "pass": 8306,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 242138.588292
+      },
+      "newImages": 3,
+      "newImageBytes": 427528,
+      "build": {
+        "checkedAt": "2026-11-01T02:30:17.461Z",
+        "bytes": 147040475,
+        "sha256": "9227eb75408723d33552a235ecc35c77ad766af1b0f4993c5ff34cb60deade76"
+      }
+    },
+    {
+      "cycle": 109,
+      "sourceTests": {
+        "tests": 8570,
+        "pass": 8570,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 244398.726041
+      },
+      "newImages": 3,
+      "newImageBytes": 345388,
+      "build": {
+        "checkedAt": "2026-11-01T03:25:06.066Z",
+        "bytes": 147474622,
+        "sha256": "04ca53b19eef195fb61b6380137f309209afa8901b6788de39e47d9fa1f7e092"
+      }
+    },
+    {
+      "cycle": 111,
+      "sourceTests": {
+        "tests": 8570,
+        "pass": 8570,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 243732.81675
+      },
+      "newImages": 0,
+      "newImageBytes": 0,
+      "build": {
+        "checkedAt": "2026-11-01T04:18:11.392Z",
+        "bytes": 147474598,
+        "sha256": "ec39575d0247a91c3d1d8f3ed3dec1a391443801a5e419baef8e24e9b98bf4b7"
+      }
+    }
+  ],
+  "totals": {
+    "freshGames": 15,
+    "choices": 1173,
+    "readerTurns": 9161,
+    "notes": 1434,
+    "speechMessages": 937,
+    "reloadChecks": 3519,
+    "reloadFailures": 0,
+    "reapplied": 0
+  },
+  "allFiveFreshCohortsReviewed": true,
+  "lastCohortConfirmedDefects": 0,
+  "finalSourceTests": {
+    "tests": 8570,
+    "pass": 8570,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 243732.81675
+  },
+  "finalBuild": {
+    "checkedAt": "2026-11-01T04:18:11.392Z",
+    "bytes": 147474598,
+    "sha256": "ec39575d0247a91c3d1d8f3ed3dec1a391443801a5e419baef8e24e9b98bf4b7"
+  },
+  "newImagesTotal": 20,
+  "newImageBytesTotal": 3059372,
+  "remainingValidation": [
+    "Actual browser viewport/crop/input/audio unverified",
+    "Default AIT packaging4GBheap failed in107; game-only HTML build succeeds"
+  ],
+  "commitPushDeploy": false
+}

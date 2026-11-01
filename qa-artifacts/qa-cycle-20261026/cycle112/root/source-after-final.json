@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-01T04:36:19.781121+00:00",
+  "inputs": 2255,
+  "changes": [],
+  "freezeSHA": "f9efd15dae2cde3d003c18adce1677c95e3c05338cebb0455e153ac18627afce",
+  "allThreeFinalsRead": true,
+  "cohortClosed": true,
+  "freshGames": 3,
+  "choices": 240,
+  "readerTurns": 1868,
+  "notes": 272,
+  "speech": 191,
+  "reloadChecks": 720,
+  "rawViews": 480,
+  "confirmedGameDefects": [],
+  "buildSHA256": "ec39575d0247a91c3d1d8f3ed3dec1a391443801a5e419baef8e24e9b98bf4b7",
+  "browserCropInputAudioVerified": false
+}

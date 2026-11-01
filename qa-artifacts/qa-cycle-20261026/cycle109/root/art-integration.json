@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "key": "explore-kids-cafe-day-v1",
+      "candidate": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-candidate-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-master-v1.png",
+      "width360": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-360-v1.png",
+      "width480": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-day-480-v1.png",
+      "sha256": "d91c342eeec941f9de770ef4c0d88d6c909975d64e95a388847439d4d883d249",
+      "bytes": 135602,
+      "dimensions": [
+        1024,
+        576
+      ],
+      "rootReview": "master/360/480 pass; runtime crop pending",
+      "galleryListed": false,
+      "productionWired": false,
+      "file": "assets/scenes/explore-kids-cafe-day-v1.webp",
+      "independentReview": "qa-artifacts/qa-cycle-20261026/cycle109/explorer/art-review.json"
+    },
+    {
+      "key": "explore-kids-cafe-night-v1",
+      "candidate": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-candidate-v1.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-master-v1.png",
+      "width360": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-360-v1.png",
+      "width480": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/kids-cafe-night-480-v1.png",
+      "sha256": "60508f52e4fd1336b6122761192d01a1ef35d06792b95e874cdf325cc29ff48a",
+      "bytes": 101860,
+      "dimensions": [
+        1024,
+        576
+      ],
+      "rootReview": "master/360/480 pass; runtime crop pending",
+      "galleryListed": false,
+      "productionWired": false,
+      "file": "assets/scenes/explore-kids-cafe-night-v1.webp",
+      "independentReview": "qa-artifacts/qa-cycle-20261026/cycle109/explorer/art-review.json"
+    },
+    {
+      "key": "recruit-eunsu-join-result-night-v2",
+      "candidate": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/eunsu-waiting-night-candidate-v2.webp",
+      "master": "qa-artifacts/qa-cycle-20261026/cycle109/root/art/eunsu-waiting-night-master-v2.png",
+      "sha256": "d13d034d473d2e010040d8157b177b2206cccda144e6e21af6c7b70a47c24836",
+      "bytes": 107926,
+      "file": "assets/scenes/recruit-eunsu-join-result-night-v2.webp",
+      "rootReview": "master/360/480 pass; runtime crop pending",
+      "independentReview": "qa-artifacts/qa-cycle-20261026/cycle109/explorer/eunsu-art-review.json"
+    }
+  ],
+  "totalBytes": 345388,
+  "galleryListed": true,
+  "runtimeCrop": false,
+  "tool": "built-in image_gen",
+  "gallery": "http://127.0.0.1:4319/__live/assets",
+  "galleryAt": "2026-11-01T03:03:31.988827+00:00",
+  "galleryChecks": {
+    "assets/scenes/explore-kids-cafe-day-v1.webp": true,
+    "assets/scenes/explore-kids-cafe-night-v1.webp": true,
+    "assets/scenes/recruit-eunsu-join-result-night-v2.webp": true
+  }
+}

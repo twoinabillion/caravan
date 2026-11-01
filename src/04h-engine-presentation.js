@@ -36,6 +36,10 @@ G.presentationText = value=>typeof value==='string'?value.slice(0,40000):'';
 G.presentationSceneTime = value=>value&&Number.isInteger(value.day)&&value.day>=1
   &&Number.isFinite(value.min)&&value.min>=0&&value.min<1440
   ?{day:value.day,min:value.min}:null;
+// A clock alone cannot distinguish a newly paid picture from an older,
+// text-only receipt whose saved view has been removed.
+G.presentationSceneRevision = value=>typeof value==='string'&&/^[a-z0-9-]{1,64}$/.test(value)?value:null;
+G.newPresentationSceneRevision = event=>G.presentationSceneRevision(D.eventSceneTimeVariantFor(event?.id)?.revision);
 // Fixed scene provenance belongs to the receipt, not the present clock or registry.
 G.presentationFixedScene = value=>value&&typeof value.base==='string'&&typeof value.scene==='string'
   &&D.scenes&&Object.hasOwn(D.scenes,value.base)&&Object.hasOwn(D.scenes,value.scene)
@@ -48,7 +52,25 @@ D.eventSceneTimeVariantFor = id=>D.eventSceneTimeVariants?.[id]
       const match=typeof id==='string'&&/^camp_\d+_(jaeyi|leo|eunsu|parkss|kangwoo)$/.exec(id);
       if(!match)return null;
       const cid=match[1],day=`comp-talk-${cid}-camp-day-v1`,night=`comp-talk-${cid}-camp-v1`;
-      return {byBase:{[`comp-talk-${cid}-road-v1`]:{day,night},[night]:{day,night}}};
+      const record=cid==='eunsu'&&S?.campConversation;
+      if(record?.id===id&&record.sceneContext==='eunsu-records-v1'){
+        // Entry chapter follows the previous choice. Each paid answer has its own visits.
+        const visits=record.choiceId?(record.choiceVisits?.[record.choiceId]||0):(record.chapter||1)-1;
+        const notebook='comp-eunsu-notebook-interior-v1',bare='comp-eunsu-conversation-bare-interior-v1';
+        const scene=visits>=2?bare:notebook;
+        const legacy={byBase:{[notebook]:{day:scene,night:scene},[bare]:{day:scene,night:scene}},
+          outcomeStages:[
+            {afterText:'헤드폰 한쪽을 내게 건네고',day:'comp-eunsu-headphones-shared-interior-v1',night:'comp-eunsu-headphones-shared-interior-v1'},
+            {afterText:'기록지는 그대로 두고, 은수는 소매 안으로 손을 넣었다',day:bare,night:bare}
+          ]};
+        // The folded-paper cut belongs only to new receipts;103 text-only results
+        // retain their original open-notebook selector when no view was saved.
+        return {...legacy,revision:'qa105',legacy,outcomeStages:[...legacy.outcomeStages,
+          {afterText:'은수는 다음 설명을 하려다가 종이를 접었다',day:bare,night:bare}]};
+      }
+      return {byBase:{[`comp-talk-${cid}-road-v1`]:{day,night},[night]:{day,night},
+        ...(cid==='leo'?{'camp-leo-rest-day-v1':{day:'camp-leo-rest-day-v1',night:'camp-leo-rest-night-v1'}}:{}),
+        ...(cid==='parkss'?{'camp-parkss-rest-day-v1':{day:'camp-parkss-rest-day-v1',night:'camp-parkss-rest-night-v1'}}:{})}};
     })());
 G.newPresentationSceneTime = event=>D.eventSceneTimeVariantFor(event?.id)
   ?G.presentationSceneTime({day:S.day,min:S.min}):null;
@@ -108,6 +130,7 @@ G.validatePresentation = value=>{
   const row={version:1,eventId:event.id,phase:value.phase};
   if(value.phase==='transition') return row;
   if(G.presentationSceneTime(value.sceneTime))row.sceneTime=G.presentationSceneTime(value.sceneTime);
+  if(G.presentationSceneRevision(value.sceneRevision))row.sceneRevision=G.presentationSceneRevision(value.sceneRevision);
   if(G.presentationFixedScene(value.fixedScene))row.fixedScene=G.presentationFixedScene(value.fixedScene);
   if(event.roadCheckIn&&value.phase==='event'&&(!S?.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn))) return null;
   row.text=G.presentationText(value.text);
@@ -142,6 +165,7 @@ G.beginPresentation = event=>{
   if(saved&&saved.eventId===event.id&&saved.phase!=='transition') return saved;
   S.pendingPresentation={version:1,eventId:event.id,phase:'event',
     ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
+    ...(G.newPresentationSceneRevision(event)?{sceneRevision:G.newPresentationSceneRevision(event)}:{}),
     ...(G.presentationFixedScene(D.eventSceneFixedVariants?.[event.id])?{fixedScene:G.presentationFixedScene(D.eventSceneFixedVariants[event.id])}:{}),
     text:G.presentationText(typeof event.text==='function'?event.text(S):event.text)};
   G.save();
@@ -179,7 +203,7 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
     const frozen=(saved.reading?.phase==='outcome'&&G.presentationView(saved.reading.view))
       ||G.presentationView(saved.view)||G.presentationView(saved.authoredView);
     return {ok:true,applied:false,out:{...authored,text:saved.text,
-      turns:frozen?.turns||null,frozenTextOnly:!frozen,
+      turns:frozen?Object.assign(frozen.turns,{knownSpeaker:frozen.knownSpeaker}):null,frozenTextOnly:!frozen,
       readingRecord:frozen?frozen.readingRecord:authored.readingRecord?saved.text:undefined},chips:saved.chips,
       combatState:saved.combatState};
   }
@@ -234,9 +258,11 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
     }
     const text=G.presentationText(typeof out.text==='function'?out.text(S):out.text);
     let authoredView=null,authoredFailed=false;
-    if(!own&&out.turns)try{
-      const authoredTurns=typeof out.turns==='function'?out.turns(S):out.turns;
+    if(!own&&(out.turns||G.presentationAuthoredTurns))try{
+      const authoredTurns=out.turns?(typeof out.turns==='function'?out.turns(S):out.turns)
+        :G.presentationAuthoredTurns(event,choice,out,text,historyView);
       authoredView=G.presentationView({turns:authoredTurns,
+        knownSpeaker:!!authoredTurns?.knownSpeaker,
         readingRecord:typeof out.readingRecord==='function'?out.readingRecord(S):out.readingRecord,
         readingRecordLabel:out.readingRecordLabel});
     }catch(error){
@@ -246,6 +272,7 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
     if(!own&&!S.ended){
       S.pendingPresentation=G.validatePresentation({version:1,phase:'result',eventId:event.id,
         ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
+        ...(G.newPresentationSceneRevision(event)?{sceneRevision:G.newPresentationSceneRevision(event)}:{}),
         ...(saved?.eventId===event.id&&G.presentationFixedScene(saved.fixedScene)?{fixedScene:G.presentationFixedScene(saved.fixedScene)}:{}),
         choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState,authoredView});
     }
@@ -258,7 +285,7 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
       if(!options.deferQuestRead) G.clearQuestLedgerUpdates();
     }
     return {ok:true,applied:!own||own.applied,out:{...out,text,...(authoredView?{
-      turns:authoredView.turns,readingRecord:authoredView.readingRecord}
+      turns:Object.assign(authoredView.turns,{knownSpeaker:authoredView.knownSpeaker}),readingRecord:authoredView.readingRecord}
       :authoredFailed?{turns:null,readingRecord:undefined,frozenTextOnly:true}: {})},chips,combatState};
   }finally{ G.presentationApplying=false; G.save(); }
 };

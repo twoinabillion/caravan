@@ -2321,20 +2321,25 @@ test('final homecoming is readable before ending, survives reload, and never pay
     assert(h.S.flags.story_done);assert(!h.S.ended,'final result must be read before terminal screen');
     assert.equal(h.S.pendingPresentation.phase,'result');
     const turns=read(result.out.turns,h.S),before=plain(h.S.flags);
+    const sceneKeys=['seoul-uplink-empty-v2','parents-mother-return-interior-v1'];
+    assert.deepEqual(plain(h.S.pendingPresentation.fixedScene),{
+      base:'parents-mother-reunion-v1',scene:'parents-mother-return-interior-v1'
+    });
     assert.equal(turns.some(t=>t.who==='mother'),mother);
-    assert.equal(turns.some(t=>t.scene==='parents-mother-reunion-v1'),mother);
-    assert(turns.every(t=>!t.scene||e.choices[0].out[0].scenes.includes(t.scene)));
+    assert.equal(turns.some(t=>t.scene==='parents-mother-return-interior-v1'),mother);
+    assert(turns.every(t=>!t.scene||sceneKeys.includes(t.scene)));
     if(mother){
       assert.match(result.out.text,/수원 외곽 중계소/);
       assert.match(result.out.text,/할아버지 얘기부터/);
       assert.doesNotMatch(result.out.text,/용서했|전부 이해|다음 목적지는/);
     }
     h.G.capturePresentationView({eventId:e.id,phase:'outcome',turns,index:2,
-      sceneKeys:e.choices[0].out[0].scenes});
+      sceneKeys});
     h.reload();assert(h.G.resumePresentation());
     assert.equal(h.shown.at(-1),e.id);assert(!h.S.ended);
     const restored={eventId:e.id,phase:'outcome'};h.G.restorePresentationView(restored);
     assert.equal(restored.index,2);
+    assert.deepEqual(plain(restored.sceneKeys),sceneKeys);
     assert.deepEqual(plain(restored.turns),plain(turns),'saved speakers and authored scene markers survive');
     assert.equal(h.G.resolvePresentedChoice(e,e.choices[0]).applied,false);
     assert.deepEqual(plain(h.S.flags),before);
