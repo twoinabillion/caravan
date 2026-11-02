@@ -337,13 +337,14 @@ const BGM = (()=>{
       return;
     }
     resumeSong=false;
+    if(manualPauseKey) return;
     const a=ensure(cur||'title');
     if(a){ a.play().catch(()=>{}); fadeTo(a,mixedVolume()); }
   }
   function applyMix(){
     if(song) SND.setMediaVolume(song, 0.6*SND.level('music'));
     const active=cur?ensure(cur):null;
-    if(active&&on&&!suspended&&(!song||song.paused)) fadeTo(active,mixedVolume());
+    if(active&&on&&!suspended&&!manualPauseKey&&(!song||song.paused)) fadeTo(active,mixedVolume());
   }
   function isSongPlaying(){ return Boolean(song&&!song.paused); }
   function isMusicPaused(){ return Boolean(manualPauseKey); }
@@ -380,6 +381,7 @@ const AMBI = (()=>{
     if(!audio) return;
     clearInterval(audio._fade); audio._fade=null;
     audio.pause(); if(reset) audio.currentTime=0;
+    audio._shotGeneration=(audio._shotGeneration||0)+1;
     shots.delete(audio);
   }
   function pauseAll(){
@@ -447,7 +449,9 @@ const AMBI = (()=>{
     /* Bounded reusable media nodes allow true WebAudio gain on iOS too. */
     SND.setMediaVolume(audio, audio._baseVolume*SND.level('effects'));
     shots.add(audio);
-    const clear=()=>shots.delete(audio);
+    const token=audio._shotGeneration=(audio._shotGeneration||0)+1;
+    // A pooled element may already own a newer play when an old promise rejects.
+    const clear=()=>{if(audio._shotGeneration===token) shots.delete(audio);};
     audio.onended=clear;
     audio.onerror=clear;
     audio.play().catch(clear);

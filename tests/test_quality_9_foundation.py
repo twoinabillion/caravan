@@ -77,11 +77,16 @@ with sync_playwright() as playwright:
       G.newGame('onroad','흐름 테스터','summary');
       G.qualitySessionStart();
       UI.renderAll();
-      const first=document.querySelector('.journey-guide')?.textContent||'';
+      const destinationControl=document.querySelector('.journey-deck [data-trip-destination]');
+      const depart=document.querySelector('.journey-deck [data-nav-depart]');
+      const first={destination:destinationControl?.textContent||'',destinationPicker:destinationControl?.getAttribute('aria-controls'),
+        departure:depart?.dataset.navDepart,enabled:!!depart&&!depart.disabled,actionWired:typeof depart?.onclick==='function',
+        estimate:document.querySelector('.journey-deck .trip-estimate')?.textContent||'',
+        objective:!!document.querySelector('.journey-deck [data-trip-objective]'),stayTab:!!document.querySelector('button[data-journey-mode="local"]')};
       const firstGuide=G.journeyGuide();
-      const departControls=document.querySelectorAll('.nav-destination-card[data-nav-depart]').length;
+      const departControls=document.querySelectorAll('.journey-deck [data-nav-depart]').length;
       G.startTravel('yangsan');
-      const driving=document.querySelector('.journey-guide')?.textContent||'';
+      const driving=Boolean(document.querySelector('.journey-driving'));
       const driveGuide=G.journeyGuide();
       const destination=document.querySelector('[data-destination-remain]')?.textContent||'';
       S.driving.eventCount=1;
@@ -96,7 +101,10 @@ with sync_playwright() as playwright:
     }""")
     check('첫 화면은 길 선택을 한 가지 다음 행동으로 안내한다',
           flow['firstGuide']['step'] == 1 and flow['firstGuide']['focus'] == 'route' and
-          flow['departControls'] > 0 and '목적지 카드' in flow['first'], str(flow))
+          flow['departControls'] == 1 and flow['first']['departure'] == 'yangsan' and
+          flow['first']['enabled'] and flow['first']['actionWired'] and
+          '양산' in flow['first']['destination'] and flow['first']['destinationPicker'] == 'trip-destination-dialog' and
+          'km' in flow['first']['estimate'] and flow['first']['objective'] and flow['first']['stayTab'], str(flow))
     check('출발 뒤 안내가 주행과 첫 사건 규칙으로 전환된다',
           flow['driveGuide']['step'] == 2 and flow['driveGuide']['focus'] == 'drive' and
           flow['driveGuide']['title'] == '달구지는 선택한 길을 따라 달린다' and
@@ -112,16 +120,25 @@ with sync_playwright() as playwright:
       S.at='miryang'; S.driving=null;
       G.qualitySettlementEnter('miryang');
       UI.renderAll();
-      const before=document.querySelector('.journey-guide')?.textContent||'';
+      const guide=G.journeyGuide();
+      const stay=document.querySelector('#journey-mode-local .stay-execute[data-a="stl"]');
+      const before={guide,stayAction:stay?.dataset.a,stayEnabled:!!stay&&!stay.disabled,
+        stayWired:typeof stay?.onclick==='function',stayLabel:stay?.textContent||'',
+        option:document.querySelector('#stay-action-dialog [data-stay-select="stl"]')?.textContent||'',
+        stayTab:document.querySelector('button[data-journey-mode="local"]')?.getAttribute('aria-controls')};
       UI.showStl('miryang');
       const visited=Boolean(G.qualitySummary().milestones.first_settlement_visit);
       document.querySelector('#ovl-stl').classList.remove('on');
       G.qualityMilestone('temporary_companion',{companionId:'minji'});
       UI.renderAll();
-      return {before,visited,finished:!document.querySelector('.journey-guide')};
+      return {before,visited,finished:G.journeyGuide()===null};
     }""")
     check('첫 정착지 도착 뒤 실제 진입 행동을 안내한다',
-          '3/4' in settlement['before'] and '필요한 일부터 하나씩 처리한다' in settlement['before'], str(settlement))
+          settlement['before']['guide']['step'] == 3 and settlement['before']['guide']['focus'] == 'settlement' and
+          settlement['before']['guide']['title'] == '필요한 일부터 하나씩 처리한다' and
+          settlement['before']['stayAction'] == 'stl' and settlement['before']['stayEnabled'] and
+          settlement['before']['stayWired'] and '정착지' in settlement['before']['stayLabel'] and
+          '정착지' in settlement['before']['option'] and settlement['before']['stayTab'] == 'journey-mode-local', str(settlement))
     check('정착지 진입과 임시 동행까지 안내 진행을 계측하고 마친다',
           settlement['visited'] and settlement['finished'], str(settlement))
 
@@ -130,11 +147,13 @@ with sync_playwright() as playwright:
       G.newGame('onroad','두 번째','summary');
       G.qualitySessionStart();
       UI.renderAll();
-      const guide=Boolean(document.querySelector('.journey-guide'));
+      const guide=G.journeyGuide();
+      const departure=document.querySelector('.journey-deck [data-nav-depart]');
+      const routeStillAvailable=!!departure&&!departure.disabled&&typeof departure.onclick==='function';
       document.querySelector('#bt-preview').click();
-      return {guide,previous:document.querySelector('#previous-journey')?.textContent||''};
+      return {guide,routeStillAvailable,previous:document.querySelector('#previous-journey')?.textContent||''};
     }""")
-    check('두 번째 여정은 배운 안내를 자동으로 접는다', not replay['guide'], str(replay))
+    check('두 번째 여정은 배운 안내를 자동으로 접는다', replay['guide'] is None and replay['routeStillAvailable'], str(replay))
     check('새 출발 전 이전 빌드와 다른 노선 소문을 보여 준다',
           '기본 생존형' in replay['previous'] and '이번에는 다른 소문' in replay['previous'], replay['previous'])
 

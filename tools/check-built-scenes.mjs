@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import sharp from 'sharp';
-import {unpackBytes} from './encode-embedded-assets.mjs';
+import {unpackBytes,embeddedAssetBlocks} from './encode-embedded-assets.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 function arrayEnd(s,start){let quote=null,escaped=false,depth=0;for(let i=start;i<s.length;i++){const c=s[i];if(quote){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c===quote)quote=null;continue}if(c==='"'||c==="'"||c==='`'){quote=c;continue}if(c==='[')depth++;else if(c===']'&&!--depth)return i+1}throw Error('Unterminated asset pool');}
@@ -14,7 +14,8 @@ function arrayEnd(s,start){let quote=null,escaped=false,depth=0;for(let i=start;
 export async function inspectBuiltScenes(html,{sceneDir=path.join(root,'assets/scenes'),includeAssets=false}={}){
  const scriptStart=html.indexOf('<script>'),scriptEnd=html.indexOf('</script>',scriptStart);if(scriptStart<0||scriptEnd<0)throw Error('Missing game script');
  const script=html.slice(scriptStart+8,scriptEnd),poolMarker='const CARAVAN_EMBEDDED=',poolAt=script.indexOf(poolMarker),D={dalgujiVisual:{refs:[]},eventScenes:{},eventTurnScenes:{},nodeScenes:{},eventSceneTypes:{},nodePreviewScenes:{},upgradeArt:{},upgradeItemArt:{}};
- const context=vm.createContext({D,CARAVAN_URI:(prefix,encoded,length)=>prefix+Buffer.from(unpackBytes(encoded,length)).toString('base64')});
+ const blocks=embeddedAssetBlocks(html);
+ const context=vm.createContext({D,CARAVAN_ASSET:id=>{if(!blocks.has(id))throw Error('Missing embedded asset '+id);return blocks.get(id);},CARAVAN_URI:(prefix,encoded,length)=>prefix+Buffer.from(unpackBytes(encoded,length)).toString('base64')});
  if(poolAt>=0){const start=poolAt+poolMarker.length,end=arrayEnd(script,start);vm.runInContext(script.slice(poolAt,end)+';globalThis.CARAVAN_EMBEDDED=CARAVAN_EMBEDDED;',context,{timeout:120000})}
  const start=script.indexOf('D.scenes = {'),end=script.indexOf('\nD.offlineFoley=',start);if(start<0||end<0)throw Error('Built scene module boundaries missing');vm.runInContext(script.slice(start,end),context,{timeout:120000});
  const expansion=script.indexOf('(()=>{if(typeof D===`undefined`)return;const sceneAssets=',end),desc=script.indexOf('Object.assign(D.sceneDescriptions,',expansion);if(expansion<0||desc<0)throw Error('Built scene expansion boundaries missing');vm.runInContext(script.slice(expansion,desc)+'})();',context,{timeout:120000});

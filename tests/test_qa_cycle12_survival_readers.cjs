@@ -45,6 +45,7 @@ test('only explicit speaker metadata changes: prose, choices, gates, probabiliti
    assert.equal(old.choices[1].out[0].text.split(previous).length,2);
    current.choices[1].out[0].text=text.replace(revised,previous);
   }
+  require('../tools/choice-experience-contract.cjs')(current);
   assert.deepEqual(projectCycle29(id,current,old),old,id);
  }
 });

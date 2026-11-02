@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {unpackBytes} from './encode-embedded-assets.mjs';
+import {unpackBytes,embeddedAssetBlocks} from './encode-embedded-assets.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const builtPath = path.join(root, '서울까지400km.html');
@@ -13,6 +13,7 @@ if (!fs.existsSync(builtPath)) {
 }
 
 const html = fs.readFileSync(builtPath, 'utf8');
+const blocks=embeddedAssetBlocks(html);
 if (/__PORTRAIT_[a-z0-9_]+__/.test(html)) {
   throw new Error('빌드 결과에 치환되지 않은 주연 초상 플레이스홀더가 남아 있음');
 }
@@ -24,6 +25,11 @@ for (const id of ids) {
     .filter(buffer => buffer.byteLength > 0);
   const encodedPattern=new RegExp(`D\\.portraits\\.${id}\\s*=\\s*CARAVAN_URI\\("data:image/png;base64,","([^"]*)",(\\d+)\\)`,'g');
   for(const match of html.matchAll(encodedPattern))matches.push(Buffer.from(unpackBytes(match[1],Number(match[2]))));
+  const inertPattern=new RegExp(`D\\.portraits\\.${id}\\s*=\\s*CARAVAN_URI\\("data:image/png;base64,",CARAVAN_ASSET\\("(caravan-asset-\\d+)"\\),(\\d+)\\)`,'g');
+  for(const match of html.matchAll(inertPattern)){
+    if(!blocks.has(match[1]))throw Error('Missing embedded portrait '+id);
+    matches.push(Buffer.from(unpackBytes(blocks.get(match[1]),Number(match[2]))));
+  }
   if (matches.length !== 1) {
     throw new Error(`${id}: 실제 내장 초상 수가 1개가 아님 (${matches.length})`);
   }

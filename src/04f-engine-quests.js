@@ -30,6 +30,19 @@ G.questGraphDistance = (from,to,routeAware=false)=>{
   }
   return Infinity;
 };
+/* Same next action in the notebook and route preview; no effects or ready-state writes. */
+G.recruitNextAction = (q=S&&S.recruitQ)=>{
+  if(!q||!D.comps[q.id]) return '';
+  const name=D.comps[q.id].name, target=D.nodes[q.target];
+  if(q.stage==='road') return '다음 목적지를 골라 한 구간 함께 달린다.';
+  if(q.stage==='follow'){
+    if((S.driving?.to||S.at)!==q.target) return `${target?target.name:'약속한 정차 지점'}에서 ${D.withParticle(name,'과','와')} 다시 이야기한다.`;
+    if(Number.isFinite(q.roadDay)&&S.day<=q.roadDay) return `${D.withParticle(name,'과','와')} 하룻밤을 보낸 뒤 다시 이야기한다.`;
+    return `${S.driving?'정차한 뒤 ':''}${name}에게 말을 걸어 합류를 이야기한다.`;
+  }
+  if(q.stage==='ready') return `${S.driving?'정차한 뒤 ':''}${name}에게 말을 걸어 합류를 결정한다.`;
+  return `${target?target.name:'약속한 장소'}에 가서 ${D.withParticle(name,'이','가')} 부탁한 일을 한다.`;
+};
 G.questObjectivePlan = (questId=null)=>{
   if(!S) return null;
   const ledger=G.ensureQuestLedger(), q=S.quest||S.questFollowup;
@@ -40,8 +53,10 @@ G.questObjectivePlan = (questId=null)=>{
       action:target===S.at?'이곳의 의뢰인에게 말을 건다':`${D.nodes[target].name}까지 이동한다`};
   }
   const rq=S.recruitQ;
-  if(rq&&rq.target&&(questId?questId===`companion_${rq.id}`:ledger.tracked.includes(`companion_${rq.id}`)))
-    return {key:`companion_${rq.id}`,kind:'companion',target:rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:`${D.nodes[rq.target].name}에 가서 ${D.withParticle(D.comps[rq.id].name,'이','가')} 부탁한 일을 한다`};
+  // Accepting a passenger's concrete request is enough to suggest that trip.
+  // Explicit tracking/focus wins; never require a second opt-in in the notebook.
+  if(rq&&rq.target&&(questId?questId===`companion_${rq.id}`:ledger.tracked.includes(`companion_${rq.id}`)||(!ledger.tracked.length&&rq.stage==='task')))
+    return {key:`companion_${rq.id}`,kind:'companion',target:['road','ready'].includes(rq.stage)?(S.driving?.to||S.at):rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:G.recruitNextAction(rq)};
   if(questId&&questId!=='main_namsan') return null;
   const main=G.mainQuestEntry();
   const evidence=G.mainEvidenceOpportunity();
@@ -73,6 +88,30 @@ G.routeQuestCue = (nodeId,questId=null)=>{
   const options=G.neighbors(origin).filter(nb=>S.known.includes(nb.id)).map(nb=>({nb}));
   const preferred=G.questPreferredNeighbor(options,questId);
   return preferred&&preferred.nb.id===nodeId?plan:null;
+};
+
+G.destinationPurpose = (nodeId,questId=null)=>{
+  if(!S||!D.nodes[nodeId]||!S.known.includes(nodeId)) return '';
+  const cue=G.routeQuestCue(nodeId,questId);
+  if(!cue) return '';
+  const target=cue.waypoint||cue.target;
+  if(target!==nodeId) return D.nodes[target]?`${D.nodes[target].name} 방면으로 이어지는 길.`:'';
+  if(cue.target!==nodeId) return D.nodes[cue.target]?`${D.nodes[cue.target].name} 방면으로 이어 갈 길.`:'';
+  if(cue.kind==='main'&&nodeId==='yangsan'&&!S.flags.first_order_trace)
+    return '이송표의 발신 흔적을 찾으러 북쪽 길로 간다.';
+  if(cue.kind==='companion'){
+    const q=S.recruitQ,name=q&&D.comps[q.id]?.name;
+    if(!name) return '';
+    if(q.stage==='road') return `${D.withParticle(name,'과','와')} 한 구간을 함께 달린다.`;
+    return q.stage==='task'?`${D.withParticle(name,'이','가')} 부탁한 일을 함께할 곳.`
+      :q.stage==='follow'&&Number.isFinite(q.roadDay)&&S.day<=q.roadDay?`${D.withParticle(name,'과','와')} 하룻밤을 보낸 뒤 이야기한다.`
+        :`${D.withParticle(name,'과','와')} 합류를 이야기할 곳.`;
+  }
+  if(cue.kind==='local'){
+    const q=S.quest||S.questFollowup;
+    return q&&target===q.from?'부탁한 사람에게 돌아가 다음 일을 확인한다.':'맡은 사이드 미션을 이어갈 곳.';
+  }
+  return cue.title&&cue.title.length<=30?cue.title:'';
 };
 
 G.mainQuestEntry = ()=>{
@@ -177,8 +216,7 @@ G.companionQuestEntries = ()=>{
     let next;
     if(completed) next='개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.';
     else if(recruiting){
-      const target=S.recruitQ.target&&D.nodes[S.recruitQ.target];
-      next=target?`${target.name}에 가서 ${D.withParticle(comp.name,'이','가')} 부탁한 일을 한다.`:'이 사람이 함께 타기 전에 부탁한 일을 한다.';
+      next=G.recruitNextAction(S.recruitQ);
     }else if(pending) next=`동료 화면에서 Lv.${pending} 특기를 하나 고른다.`;
     else if(remaining>0) next=`야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 ${remaining} 더 올린다.`;
     else if(storyStage<3) next=`${S.driving?'정차한 뒤 ':''}${comp.name}에게 말을 걸어 다음 이야기를 듣는다.`;

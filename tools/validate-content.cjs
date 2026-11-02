@@ -278,7 +278,7 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
     }
   }
 }
-need(choiceMemoryCount===18, 'choiceMemory', `핵심 선택 기억은 정확히 18개여야 함 (현재 ${choiceMemoryCount})`);
+need(choiceMemoryCount===21, 'choiceMemory', `핵심 선택 기억은 정확히 21개여야 함 (현재 ${choiceMemoryCount})`);
 
 for (const [id, def] of Object.entries(D.knowledge || {})) {
   const where=`knowledge:${id}`;

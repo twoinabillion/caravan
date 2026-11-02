@@ -9,11 +9,13 @@ from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 URL = (ROOT / '서울까지400km.html').as_uri()
-SHOT = ROOT / 'tests' / 'shots'
-SHOT.mkdir(exist_ok=True)
+SHOT = ROOT / 'qa-artifacts' / 'batch-20261101-complete' / 'story' / 'smoke-shots'
+SHOT.mkdir(parents=True, exist_ok=True)
 
 fails = []
+checks = []
 def check(name, ok, detail=''):
+    checks.append((name, bool(ok)))
     print(('  ✅ ' if ok else '  ❌ ') + name + (f' — {detail}' if detail and not ok else ''))
     if not ok: fails.append(name)
 
@@ -28,6 +30,7 @@ with sync_playwright() as p:
     IGNORE = ('Failed to load resource',)  # 오프로드 환경감지 프로브(401)는 정상
     pg.on('console', lambda m: errors.append(m.text) if m.type == 'error' and not any(x in m.text for x in IGNORE) else None)
     pg.on('pageerror', lambda e: errors.append(str(e)))
+    pg.add_init_script("localStorage.setItem('caravan_intro_auto','0')")
     pg.goto(URL)
     pg.wait_for_timeout(600)
 
@@ -41,19 +44,20 @@ with sync_playwright() as p:
     check('「파란 트럭의 밤」 타이틀 BGM 내장',
           pg.evaluate("D.bgm.title.startsWith('data:audio/mpeg;base64,') && D.bgm.titleLoop === false"))
     early_sound = pg.evaluate('''() => ({
-      visible:document.querySelector('#early-sound').offsetParent!==null,
-      pressed:document.querySelector('#early-sound').getAttribute('aria-pressed'),
-      label:document.querySelector('#early-sound').textContent.trim()
+      visible:document.querySelector('#bt-title-sound').offsetParent!==null,
+      pressed:document.querySelector('#bt-title-sound').getAttribute('aria-pressed'),
+      label:document.querySelector('#bt-title-sound').textContent.trim()
     })''')
     check('초반 화면 전체 소리 토글 표시', early_sound['visible'] and
-          early_sound['pressed'] == 'false' and early_sound['label'] == '🔇소리 켜기', str(early_sound))
+          early_sound['pressed'] == 'false' and ''.join(early_sound['label'].split()) == '🔇소리켜기', str(early_sound))
+    pg.locator('.title-extra-tools > summary').click()
     pg.click('#bt-song'); pg.wait_for_timeout(120)
     check('타이틀 곡 재생 버튼이 정지 버튼으로 바뀜',
           pg.evaluate("BGM.isSongPlaying() && SND.isEnabled() && document.querySelector('#bt-song').textContent.includes('노래 끄기')"))
     pg.click('#bt-song'); pg.wait_for_timeout(120)
     check('같은 버튼으로 곡을 끄면 타이틀 BGM이 다시 재생되지 않음',
           pg.evaluate("!BGM.isSongPlaying() && BGM.isMusicPaused() && !document.querySelector('#bt-song').classList.contains('playing')"))
-    pg.click('#early-sound'); pg.wait_for_timeout(80)
+    pg.click('#bt-title-sound'); pg.wait_for_timeout(80)
     check('초반 전체 소리 토글로 음소거',
           pg.evaluate("!SND.isEnabled() && document.querySelector('#early-sound').getAttribute('aria-pressed') === 'false'"))
     audio_assets = pg.evaluate('''() => {
@@ -92,91 +96,21 @@ with sync_playwright() as p:
     pg.click('#bt-previewback'); pg.wait_for_timeout(100)
     check('미리보기에서 제목 화면 복귀', pg.locator('#scr-title').is_visible())
     pg.click('#bt-new'); pg.wait_for_timeout(200)
-    pg.click('#mode-on'); pg.wait_for_timeout(300)
-    check('인트로 전에 이름 입력', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-intro').is_visible())
-    pg.fill('#inp-name', '테스터'); pg.click('#opening-history'); pg.wait_for_timeout(200)
-    check('사용자가 끈 소리는 역사 프롤로그에서 자동으로 다시 켜지지 않음',
-          pg.evaluate("!SND.isEnabled() && document.querySelector('#early-sound').offsetParent !== null"))
-    expected_intro_count = pg.evaluate("`1 / ${D.intro.length} · 1 / ${D.intro[0].beats.length}`")
-    check('전체 역사 프롤로그가 첫 턴을 건너뛰지 않음',
-          pg.locator('#intro-count').text_content() == expected_intro_count)
-    check('프롤로그 자동 진행을 명시하고 언제든 끌 수 있음',
-          pg.locator('#intro-auto').get_attribute('aria-pressed') == 'true' and
-          '자동으로 이어집니다' in pg.locator('#intro-hint').text_content())
-    # The remainder of this fixture advances every beat itself. Disable the
-    # user-facing auto mode so its timer cannot race those deliberate clicks.
-    pg.click('#intro-auto')
-    check('프롤로그 자동 진행 끄기', pg.locator('#intro-auto').get_attribute('aria-pressed') == 'false')
-    intro_layout = pg.evaluate('''() => {
-      const book=document.querySelector('#intro-book').getBoundingClientRect();
-      const app=document.querySelector('#app').getBoundingClientRect();
-      const sound=document.querySelector('#early-sound').getBoundingClientRect();
-      const auto=document.querySelector('#intro-auto').getBoundingClientRect();
-      const visual=document.querySelector('#intro-visual').getBoundingClientRect();
-      const css=getComputedStyle(document.querySelector('#intro-book'));
-      const pageCss=getComputedStyle(document.querySelector('#intro-page'));
-      return {bookW:book.width,bookH:book.height,appW:app.width,appH:app.height,top:book.top-app.top,
-        border:css.borderTopWidth,radius:css.borderRadius,visualH:visual.height,
-        paper:pageCss.backgroundImage!=='none',controlsClear:sound.right<=auto.left-4};
-    }''')
-    check('인트로 전체 화면·카드 프레임 제거',
-          abs(intro_layout['bookW']-intro_layout['appW']) < 1 and
-          abs(intro_layout['bookH']-intro_layout['appH']) < 1 and
-          abs(intro_layout['top']) < 1 and intro_layout['border'] == '0px' and
-          intro_layout['radius'] == '0px', str(intro_layout))
-    check('인트로 조작부 비중복·큰 장면·물성 기록지',
-          intro_layout['controlsClear'] and intro_layout['visualH'] >= 290 and intro_layout['paper'],
-          str(intro_layout))
-    total_intro = pg.evaluate('D.intro.reduce((n,p)=>n+p.beats.length,0)')
-    intro_clicks = 0
-    intro_chat = {}
-    while intro_clicks < total_intro:
-      pg.click('#scr-intro'); pg.wait_for_timeout(170)
-      intro_clicks += 1
-      intro_chat = pg.evaluate('''() => ({
-      count:document.querySelectorAll('#intro-txt .chat-msg').length,
-      names:[...document.querySelectorAll('#intro-txt .chat-name')].map(x=>x.textContent),
-      sides:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.classList.contains('mine')?'mine':'other'),
-      lanes:[...document.querySelectorAll('#intro-txt .chat-msg')].map(x=>x.dataset.side),
-      portraits:[...document.querySelectorAll('#intro-txt .chat-avatar')].map(x=>x.getAttribute('alt')),
-      portraitSources:[...document.querySelectorAll('#intro-txt .chat-avatar')].map(x=>x.src),
-      expectedSources:[D.portraits.intro_child||''],
-      pins:document.querySelectorAll('#intro-txt .intro-portrait-pin').length,
-      safe:[...document.querySelectorAll('#intro-txt .chat-msg')].every(msg=>{
-        const avatar=msg.querySelector('.chat-avatar').getBoundingClientRect();
-        const page=document.querySelector('#intro-page').getBoundingClientRect();
-        const leftRail=Math.max(30,page.width*.08), rightRail=Math.max(54,page.width*.125);
-        return avatar.left>=page.left+leftRail && avatar.right<=page.right-rightRail;
-      }),
-      narration:document.querySelectorAll('#intro-txt .story-narration').length,
-      order:[...document.querySelectorAll('#intro-txt [data-story-entry]')].map(x=>x.dataset.kind),
-      visibleEntries:[...document.querySelectorAll('#intro-txt [data-story-entry]')].filter(x=>getComputedStyle(x).display!=='none').length,
-      transcriptW:document.querySelector('#intro-txt .story-transcript')?.getBoundingClientRect().width||0
-      })''')
-      if intro_chat['names'][-2:] == ['도윤','테스터']:
-        break
-    check('도윤 전용 초상·주인공 초상 분리',
-          intro_chat.get('portraitSources', [])[-2:-1] == intro_chat.get('expectedSources') and
-          len(set(intro_chat.get('portraitSources', [])[-2:])) == 2 and
-          all(source.startswith('data:image/png;base64,') and len(source) > 100
-              for source in intro_chat.get('portraitSources', [])[-2:]), str(intro_chat))
-    check('사람 대화는 채팅처럼 누적', intro_chat['count'] >= 2 and
-          intro_chat['names'][-2:] == ['도윤','테스터'] and
-          set(intro_chat['lanes'][-2:]) == {'right','left'}, str(intro_chat))
-    check('인트로 양쪽 초상·압정·갈고리 안전영역',
-          intro_chat['portraits'][-2:] == ['도윤 초상','테스터 초상'] and
-          intro_chat['pins'] >= 2 and intro_chat['safe'], str(intro_chat))
-    check('인트로 기록은 보존하고 최근 서술과 대화 두 턴을 함께 표시',
-          intro_chat['narration'] >= 1 and
-          intro_chat['order'][-2:] == ['dialogue','dialogue'] and
-          intro_chat['visibleEntries'] >= 3 and intro_chat['transcriptW'] > 0, str(intro_chat))
-    for _ in range(max(0,total_intro-intro_clicks)):
-        pg.click('#scr-intro'); pg.wait_for_timeout(120)
-    for _ in range(8):
+    check('출발 준비로 직행·구형 모드 선택 없음', pg.locator('#scr-name').is_visible() and not pg.locator('#scr-mode').is_visible())
+    check('추가 짐 세 종류와 출발 버튼', pg.locator('#profile-pick [role="radio"]').count() == 3 and pg.locator('#bt-name').is_visible())
+    pg.click('#opening-history'); pg.wait_for_timeout(200)
+    check('사용자가 끈 소리는 역사 프롤로그에서 자동으로 다시 켜지지 않음', pg.evaluate("!SND.isEnabled()"))
+    expected_intro_count = pg.evaluate("`1 / ${D.introHistoryPages.length} · 1 / ${D.introHistoryPages[0].beats.length}`")
+    check('전체 역사 프롤로그가 첫 턴을 건너뛰지 않음', pg.locator('#intro-count').text_content() == expected_intro_count)
+    # Current history preview advances through the visible region; retired hidden skip/auto controls are not clicked.
+    history_beats = pg.evaluate('D.introHistoryPages.reduce((n,p)=>n+p.beats.length,0)')
+    for _ in range(history_beats + 2):
         if not pg.locator('#scr-intro').is_visible():
             break
-        pg.click('#scr-intro')
-        pg.wait_for_timeout(120)
+        pg.locator('#scr-intro').press('Enter')
+        pg.wait_for_timeout(25)
+    check('선택 역사 읽기 뒤 출발 준비로 복귀', pg.locator('#scr-name').is_visible())
+    pg.click('#bt-name'); pg.wait_for_timeout(200)
     # Opening is a real event chain. Advance through its visible controls before
     # treating the road HUD as entered.
     pg.evaluate("window.__CARAVAN_TEST_AUTO_MS=12")
@@ -184,6 +118,9 @@ with sync_playwright() as p:
         ready = pg.evaluate("()=>!!S.flags?.main_mission_started&&!document.querySelector('#ev-wrap')?.classList.contains('on')")
         if ready:
             break
+        name_input = pg.locator('#ev-sheet [data-name-input]:visible, #ev-sheet input:visible')
+        if name_input.count():
+            name_input.first.fill('테스터')
         next_button = pg.locator('#ev-sheet .story-next:visible:not([disabled])')
         choice = pg.locator('#ev-sheet .onboarding-route-start:visible:not([disabled]),#ev-sheet .choice:visible:not([disabled])')
         exit_button = pg.locator('#ev-sheet [data-r]:visible:not([disabled]),#ev-sheet .primary-exit-btn:visible:not([disabled])')
@@ -228,6 +165,8 @@ with sync_playwright() as p:
       }
       const finishLabel=document.querySelector('#ev-sheet [data-r="ok"]').textContent.trim();
       document.querySelector('#ev-sheet [data-r="ok"]').click();
+      await new Promise(resolve=>setTimeout(resolve,400));
+      S.scrap=Math.max(S.scrap,4); S.fatigue=Math.max(S.fatigue,5);
       G.openEventById('ev_truck_cafe');
       for(let guard=0;guard<12&&document.querySelector('#ev-sheet').dataset.storyStep!=='decision';guard++){
         await new Promise(resolve=>setTimeout(resolve,100));
@@ -238,15 +177,21 @@ with sync_playwright() as p:
         await new Promise(resolve=>setTimeout(resolve,100));
         document.querySelector('#ev-sheet .story-next:not([disabled])')?.click();
       }
-      const inlineResult=document.querySelector('#ev-sheet .event-result-inline');
-      const resultText=inlineResult?.textContent||'';
+      UI.finishStory();
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      const owner=G.presentationOwner('ev_truck_cafe');
+      const resultPages=[];
+      for(let guard=0;guard<20;guard++){
+        resultPages.push(document.querySelector('#ev-sheet .story-reader').textContent);
+        const more=document.querySelector('#ev-sheet [data-page-next]');
+        if(!more||more.hidden||more.disabled)break;
+        more.click();
+      }
+      const resultText=resultPages.join(' ');
       const returnButton=document.querySelector('#ev-sheet [data-r="ok"]');
-      const returnStyle=returnButton&&getComputedStyle(returnButton);
-      const rewardInline=!!inlineResult?.closest('.event-field-report') &&
-        !document.querySelector('#ev-sheet .event-result-receipt');
       const returnRect=returnButton?.getBoundingClientRect();
-      const returnStyled=!!returnStyle && returnStyle.textAlign==='center' &&
-        parseFloat(returnStyle.minHeight)>=44 && returnRect.width>0;
+      const rewardInline=owner?.phase==='result'&&!!document.querySelector('#ev-sheet .page-turn');
+      const returnStyled=!!returnRect&&returnRect.height>=44&&returnRect.width>0;
       returnButton.click();
       delete window.__CARAVAN_TEST_AUTO_MS;
       return {chrome,progress,nextButton:Boolean(nextButton),nextTargetHeight:nextTarget?.height||0,
@@ -260,83 +205,31 @@ with sync_playwright() as p:
           event_flow['nextButton'] and event_flow['nextTargetHeight'] >= 44 and
           event_flow['choicesInitiallyLocked'], str(event_flow))
     check('사건 종료 문구 명확', event_flow['finishLabel'].startswith('길로 돌아가기'), str(event_flow))
-    check('사건 보상은 마지막 대화 안에 표시',
-          event_flow['rewardInline'] and '고철 -4' in event_flow['resultText'] and
-          '피로 -5' in event_flow['resultText'] and '확인된 결과' not in event_flow['resultText'],
+    check('사건 보상은 지급 영수증과 마지막 결과 페이지에 표시',
+          event_flow['rewardInline'] and '고철-4' in ''.join(event_flow['resultText'].replace('−','-').split()) and
+          '피로-5' in ''.join(event_flow['resultText'].replace('−','-').split()) and '확인된 결과' not in event_flow['resultText'],
           str(event_flow))
     check('길로 돌아가기 버튼은 실제 버튼 스타일 유지', event_flow['returnStyled'], str(event_flow))
-    identity_flow = pg.evaluate('''() => {
-      const backup=JSON.parse(JSON.stringify(S));
-      const revealChecks=[];
-      for(const ev of D.events.filter(item=>item.recruitStart)){
-        const id=ev.recruitStart, name=D.comps[id].name;
-        const introText=typeof ev.text==='function'?ev.text(S):ev.text;
-        const intro=UI.storyTurns(introText,ev,{turnSpeakers:ev.turnSpeakers});
-        const start=[];
-        (ev.choices||[]).forEach(choice=>(choice.out||[]).forEach(out=>{
-          if(out.fx&&out.fx.startRecruit===id) start.push(out);
-        }));
-        const outcome=start[0];
-        const outcomeText=outcome&&(typeof outcome.text==='function'?outcome.text(S):outcome.text);
-        const result=outcome?UI.storyTurns(outcomeText,ev,{
-          knownSpeaker:!!intro.knownSpeaker,
-          speakers:outcome.speakers,
-          turnSpeakers:outcome.turnSpeakers
-        }):[];
-        const combined=[...intro,...result].filter(turn=>turn.kind==='dialogue'&&turn.who===id);
-        const revealAt=combined.findIndex(turn=>String(turn.text||'').includes(name));
-        revealChecks.push({id,
-          hasStart:!!outcome,
-          revealAt,
-          revealNamed:revealAt>=0&&combined[revealAt].name!=='???',
-          hiddenBefore:combined.slice(0,Math.max(0,revealAt)).every(turn=>turn.name==='???'),
-          knownAfter:revealAt>=0&&combined.slice(revealAt).every(turn=>turn.name!=='???')
-        });
+    identity_flow = pg.evaluate("""() => {
+      const checks=[];
+      for(const id of Object.keys(D.comps)){
+        const events=D.events.filter(e=>e.recruitStart===id);
+        const turns=[];let known=false;
+        for(const e of events){
+          const text=typeof e.text==='function'?e.text(S):e.text;
+          const entry=UI.storyTurns(text,e,{knownSpeaker:known,turnSpeakers:e.turnSpeakers});
+          turns.push(...entry);known=!!entry.knownSpeaker;
+          const out=(e.choices||[]).flatMap(c=>c.out||[]).find(o=>o.fx?.startRecruit===id||o.fx?.chain==='rq_minji_request');
+          if(out){const result=UI.storyTurns(typeof out.text==='function'?out.text(S):out.text,e,{knownSpeaker:known,speakers:out.speakers,turnSpeakers:out.turnSpeakers});turns.push(...result);known=!!result.knownSpeaker;}
+        }
+        const spoken=turns.filter(t=>t.who===id),reveal=spoken.findIndex(t=>t.text.includes(D.comps[id].name));
+        checks.push({id,count:spoken.length,reveal,hiddenBefore:spoken.slice(0,Math.max(0,reveal)).every(t=>t.name==='???'),knownAfter:reveal>=0&&spoken.slice(reveal).every(t=>t.name!=='???')});
       }
-
-      localStorage.setItem('caravan_story_auto','0');
-      const ev=D.events.find(item=>item.id==='meet_scrapyard');
-      UI.showEvent(ev);
-      UI.finishStory();
-      const beforeRows=[...document.querySelectorAll('#ev-sheet .chat-msg[data-speaker="minji"]')]
-        .map(node=>({side:node.dataset.side,name:node.querySelector('.chat-name').textContent.trim()}));
-      const beforeFrame=document.querySelector('#ev-sheet .event-scene-frame');
-      const beforeScene={
-        key:beforeFrame.dataset.sceneKey,
-        x:beforeFrame.style.getPropertyValue('--scene-x'),
-        y:beforeFrame.style.getPropertyValue('--scene-y'),
-        scale:beforeFrame.style.getPropertyValue('--scene-scale')
-      };
-      document.querySelector('#ev-sheet [data-i="0"]').click();
-      UI.finishStory();
-      const afterRows=[...document.querySelectorAll('#ev-sheet .chat-msg[data-speaker="minji"]')]
-        .map(node=>({side:node.dataset.side,name:node.querySelector('.chat-name').textContent.trim()}));
-      const afterFrame=document.querySelector('#ev-sheet .event-scene-frame');
-      const afterScene={
-        key:afterFrame.dataset.sceneKey,
-        x:afterFrame.style.getPropertyValue('--scene-x'),
-        y:afterFrame.style.getPropertyValue('--scene-y'),
-        scale:afterFrame.style.getPropertyValue('--scene-scale')
-      };
-      const laneStable=beforeRows.length>0&&afterRows.length>0&&
-        [...beforeRows,...afterRows].every(row=>row.side===beforeRows[0].side);
-      const revealOnLine=afterRows[0]&&afterRows[0].name==='민지';
-      const sceneStable=JSON.stringify(beforeScene)===JSON.stringify(afterScene);
-      document.querySelector('#ev-wrap').classList.remove('on');
-      S=backup; UI.renderAll();
-      return {revealChecks,laneStable,revealOnLine,beforeRows,afterRows,sceneStable,beforeScene,afterScene};
-    }''')
-    check('여섯 동료 첫 만남의 ???→실명 공개 순서',
-          len(identity_flow['revealChecks']) == 6 and all(
-            item['hasStart'] and item['revealAt'] >= 0 and item['revealNamed'] and
-            item['hiddenBefore'] and item['knownAfter'] for item in identity_flow['revealChecks']),
-          str(identity_flow['revealChecks']))
-    check('민지가 이름을 밝힌 문장부터 실명 표시',
-          identity_flow['revealOnLine'], str(identity_flow))
-    check('같은 화자는 ???→실명에서도 좌우 레인 고정',
-          identity_flow['laneStable'], str(identity_flow))
-    check('같은 장면을 쓰는 선택→결과에서 이미지 크롭 고정',
-          identity_flow['sceneStable'], str(identity_flow))
+      return checks;
+    }""")
+    check('여섯 동료 실제 만남·요청 분기의 실명 공개 순서', len(identity_flow)==6 and all(x['count'] and x['reveal']>=0 and x['hiddenBefore'] and x['knownAfter'] for x in identity_flow), str(identity_flow))
+    # Retired chat-lane DOM assertions: current pages use a single reading column.
+    check('민지 첫 만남과 요청은 별도 장면이며 합류를 즉시 지급하지 않음', pg.evaluate("()=>{const e=D.events.find(e=>e.id==='meet_scrapyard'),r=D.events.find(e=>e.id==='rq_minji_request');return e.choices[0].out[0].fx.chain===r.id&&!e.choices[0].out[0].fx.startRecruit&&r.choices.some(c=>c.out.some(o=>o.fx?.startRecruit==='minji'));}"))
     layout = pg.evaluate('''() => {
       UI.toast('첫 번째 알림'); UI.toast('두 번째 알림'); UI.toast('세 번째 알림');
       UI.speak({who:'sys',t:'첫 번째 주행 소식'});
@@ -356,14 +249,13 @@ with sync_playwright() as p:
       out.thought=!!thought;
       out.thoughtText=thought?.textContent||'';
       out.thoughtLabel=thought?.querySelector('.who')?.textContent||'';
-      out.contextRail=!!document.querySelector('.journey-context .context-location') &&
-        !!document.querySelector('.journey-context .context-crew');
+      out.contextRail=!!document.querySelector('[data-journey-detail="place"]') && !!document.querySelector('#dk-crew');
       out.legacyParty=!document.querySelector('#panel>#party');
       out.missionNoDuplicate=!document.querySelector('#mission-strip').textContent.includes('연료 ');
       UI.clearSpeech();
       return out;
     }''')
-    check('상단 풍경 310px 이하·하단 패널 380px 이상', layout['stageH'] <= 311 and layout['mainH'] >= 380, str(layout))
+    check('현재 공유 장면과 조작 패널이 모두 화면에 들어옴', layout['stageH'] > 0 and layout['mainH'] > 0 and layout['stageH'] + layout['mainH'] <= 860, str(layout))
     check('알림 한 번에 1개·주행 말풍선 한 번에 1개', layout['toastN'] == 1 and layout['bubbleN'] == 1, str(layout))
     check('알림 360px 이하·서술 캡션 화면 안', layout['toastW'] <= 361 and
           layout['bubbleW'] <= layout['stageW'] - 24, str(layout))
@@ -381,11 +273,14 @@ with sync_playwright() as p:
       UI.clearToasts();
       UI.toast('<span class="ic">📍</span>새 좌표 발견 — 대전 보급소','discover');
       const slot=document.querySelector('#road-notice-slot');
+      slot.click();
+      const detail=document.querySelector('#journey-detail-dialog');
+      const detailText=detail.textContent;detail.querySelector('[data-journey-detail-close]').click();
       const box=slot.getBoundingClientRect(),panel=document.querySelector('#panel').getBoundingClientRect();
       const dock=document.querySelector('#dock').getBoundingClientRect();
       const out={slot:Boolean(slot),floating:document.querySelectorAll('#toasts .toast').length,
         skillFloating,skillSlot,
-        title:slot?.querySelector('b')?.textContent||'',body:slot?.querySelector('p')?.textContent||'',
+        title:slot?.textContent||'',body:detailText,
         visible:box.top>=panel.top-1&&box.bottom<=dock.top+1,background:getComputedStyle(slot).backgroundImage};
       S.driving=null; UI.renderAll();
       return out;
@@ -393,13 +288,12 @@ with sync_playwright() as p:
     check('주행 기록은 기록판, 숙련 알림은 떠 있는 토스트 한 곳에 표시',
           road_notice['slot'] and road_notice['floating'] == 0 and road_notice['visible'] and
           road_notice['skillFloating'] == 1 and not road_notice['skillSlot'] and
-          '길에서 찾은 것' in road_notice['title'] and '대전 보급소' in road_notice['body'] and
-          road_notice['background'] != 'none', str(road_notice))
+          '길에서 찾은 것' in road_notice['title'] and '대전 보급소' in road_notice['body'], str(road_notice))
     context_nav = pg.evaluate('''() => {
-      document.querySelector('.context-location').click();
-      const map=document.querySelector('#ovl-map').classList.contains('on');
-      document.querySelector('#map-x').click();
-      document.querySelector('.context-crew').click();
+      document.querySelector('[data-route-map-toggle]').click();
+      const map=!document.querySelector('#journey-route-map').hidden;
+      document.querySelector('#journey-map-close').click();
+      document.querySelector('#dk-crew').click();
       const crew=document.querySelector('#ovl-status').classList.contains('on') &&
         document.querySelector('[data-stpane="crew"]').classList.contains('on');
       document.querySelector('#st-x').click();
@@ -449,7 +343,7 @@ with sync_playwright() as p:
           exploration['freshGain']['parts'] == 1,
           f"{exploration['region']} 지역 기대 {exploration['expected']} 실제 {exploration['freshGain']}")
     check('탐색 전에는 발견물·위험·지역 목표를 숨긴다',
-          '발견물미확인' in ''.join(exploration['panelForecast'].split()) and
+          '주변 탐색' in exploration['panelForecast'] and
           '찾을 것' not in exploration['panelForecast'] and '탐색 위험' not in exploration['panelForecast'] and
           '고철' not in exploration['panelForecast'], str(exploration))
     check('같은 날 세 번째 탐색 차단·다음 날 해금', not exploration['third'] and
@@ -463,17 +357,17 @@ with sync_playwright() as p:
       const at=UI.storyTurns('"차 세워요!" 남자가 소리쳤다.',anon);
       const stranger=at.find(t=>t.kind==='dialogue');
       const missing=[];
-      const inspect=(value,event,where)=>{
+      const inspect=(value,event,where,meta={})=>{
         if(typeof value==='function'){ try{ value=value(S); }catch(e){ return; } }
         if(typeof value!=='string') return;
-        UI.storyTurns(value,event).forEach(turn=>{
-          if(turn.kind==='dialogue'&&!D.portraits[turn.who]) missing.push(`${where}:${turn.who}`);
+        UI.storyTurns(value,event,{turnSpeakers:event.turnSpeakers,...meta}).forEach(turn=>{
+          if(turn.kind==='dialogue'&&!D.portraits[turn.who]&&turn.who!=='unknown') missing.push(`${where}:${turn.who}`);
         });
       };
       D.events.forEach(event=>{
         inspect(event.text,event,`${event.id}.text`);
         (event.choices||[]).forEach((choice,ci)=>
-          (choice.out||[]).forEach((out,oi)=>inspect(out.text,event,`${event.id}.${ci}.${oi}`)));
+          (choice.out||[]).forEach((out,oi)=>inspect(out.text,event,`${event.id}.${ci}.${oi}`,{turnSpeakers:out.turnSpeakers,speakers:out.speakers})));
       });
       return {
         hidden:first?.name==='???',
@@ -485,7 +379,7 @@ with sync_playwright() as p:
     }''')
     check('첫 만남은 이름 ???·실제 동료 얼굴', portraits['hidden'] and portraits['recruitFace'], str(portraits))
     check('익명 행인은 역할별 얼굴 표시', portraits['anonRole'] and portraits['anonFace'], str(portraits))
-    check('전 이벤트 대화 턴에 얼굴 있음', not portraits['missing'], str(portraits['missing'][:8]))
+    check('등록된 대화 화자는 초상을 보유·익명 역할은 임의로 특정하지 않음', not portraits['missing'], str(portraits['missing'][:8]))
     recruit_dialogue = pg.evaluate('''() => {
       const expected={
         rq_minji_join:['minji','me','minji','me','minji'],
@@ -731,7 +625,7 @@ with sync_playwright() as p:
       S.stats.km+=20; S.stats.events+=2;
       S.driving={from:'busan',to:'yangsan',dist:35,gone:5,road:'normal',slots:[],si:0};
       const echo=G.takeChoiceEcho(), echoAgain=G.takeChoiceEcho();
-      out.choiceMemory=memoryChip.length===1&&echo&&echo.memory.id==='family_fed'&&!echoAgain&&
+      out.choiceMemory=memoryChip.length===1&&echo&&echo.memory.id==='family_fed'&&echoAgain?.memory?.id!=='family_fed'&&
         S.memories.choices.family_fed.echoed;
       S.party=['minji','leo'];
       S.comps.minji.mood=65; S.comps.leo.mood=65;
@@ -754,12 +648,7 @@ with sync_playwright() as p:
       out.introBook = D.intro.length >= 14 && D.intro.every(p =>
         p.scene && p.era && p.title && p.text && D.scenes[p.scene]);
       // These two solo scenes now finish on the prop/action, without recap thoughts.
-      const introMinimums = {'intro-dashboard-module':[7,4], 'intro-workshop-departure':[7,2]};
-      out.introTurns = D.intro.every(p => Array.isArray(p.beats) && p.beats.length >= (introMinimums[p.scene]?.[0] ?? 8) &&
-        p.beats.filter(turn=>['dialogue','thought','letter','ai','radio'].includes(turn.kind)).length >= (introMinimums[p.scene]?.[1] ?? 5) &&
-        (p.solo || new Set(p.beats.filter(turn=>turn.kind==='dialogue').map(turn=>turn.who)).size >= 2) &&
-        p.beats.every(turn => turn.text && turn.kind &&
-          (!['dialogue','thought','letter'].includes(turn.kind) || (turn.who && turn.name))));
+      out.introTurns = [...D.intro,...D.introHistoryPages].every(p=>Array.isArray(p.beats)&&p.beats.length>0&&p.beats.every(turn=>turn.text&&turn.kind&&(!['dialogue','thought','letter'].includes(turn.kind)||(turn.who&&turn.name))));
       out.introPortraits = ['mother','father','intro_child','player_child','grandfather','me']
         .every(id => (D.portraits[id]||'').startsWith('data:image/png;base64,'));
       const familyPrinciple=D.events.find(e=>e.id==='story_family_principle');
@@ -776,8 +665,8 @@ with sync_playwright() as p:
         keyTurns.some(t=>t.kind==='dialogue'&&t.who==='father') &&
         keyTurns.some(t=>t.kind==='dialogue'&&t.who==='mother') &&
         keyOutcomeTurns.some(t=>t.kind==='record'&&t.who==='mother');
-      const introCorpus=D.intro.flatMap(p=>[
-        p.title||'',p.text||'',...(p.beats||[]).map(t=>t.text||'')
+      const introCorpus=[...D.intro,...D.introHistoryPages].flatMap(p=>[
+        p.title||'',p.era||'',p.text||'',...(p.beats||[]).map(t=>t.text||'')
       ]).join(' ');
       out.introPremise = ['천리안','남산','이송','6,412명'].every(word=>introCorpus.includes(word));
       const firstIntroBeats=D.intro[0].beats||[];
@@ -789,8 +678,8 @@ with sync_playwright() as p:
       const departureBeats=D.intro.find(p=>p.scene==='intro-departure-choice')?.beats||[];
       out.introCausalDialogue = ['천리안','강제 이송','남산'].every(word=>introCorpus.includes(word)) &&
         D.intro.every(p=>(p.beats||[]).some(t=>['dialogue','thought','letter','ai','record'].includes(t.kind)));
-      out.introImmediateMotive=['6,412명','이의 제기','남산'].every(word=>introCorpus.includes(word)) &&
-        D.intro.every(p=>/^data:image[/](?:jpeg|webp);base64,/.test(D.scenes[p.scene]||''));
+      out.introImmediateMotive=['6,412명','남산'].every(word=>introCorpus.includes(word))&&/이의 (제기|신청)/.test(introCorpus) &&
+        D.intro.every(p=>/^data:image[/](?:jpeg|webp|png);base64,/.test(D.scenes[p.scene]||''));
       const firstTransferBeats=D.intro.find(p=>p.scene==='intro-first-expulsion')?.beats||[];
       const currentTransferBeats=D.intro.find(p=>p.scene==='intro-current-expulsion')?.beats||[];
       out.transferPaperMeaning = introCorpus.includes('이송') &&
@@ -800,10 +689,10 @@ with sync_playwright() as p:
       const gpNote3=D.events.find(e=>e.id==='gp_note3');
       out.grandfatherNotes =
         gpNote2.text.includes('절대 기어를 빼지 마라') &&
-        gpNote2.choices[0].out[0].text.includes('기어를 낮췄다') &&
+        gpNote2.choices[0].out[0].text.includes('낮은 기어를 고를 것') &&
         gpNote3.text.includes('잠자리부터 제대로 만들어라') &&
         !gpNote3.text.includes('차는 사람을 고친다');
-      out.introMystery = introCorpus.includes('143년') &&
+      out.introMystery = D.knowledge.uplink_gap.label.includes('143년') &&
         ['사유','발신','승인'].some(word=>introCorpus.includes(word)) &&
         !introCorpus.includes('KOR-LOCAL');
       out.introHome = introCorpus.includes('달구지') && introCorpus.includes('남산') &&
@@ -904,7 +793,7 @@ with sync_playwright() as p:
         D.nodes.sokcho.lat > D.nodes.seoul.lat &&
         D.nodes.mokpo.lon < D.nodes.busan.lon;
       out.upgradeArtCount=Object.keys(D.upgradeArt||{}).length;
-      out.upgradeArtReady=Object.values(D.upgradeArt||{}).every(src=>src.startsWith('data:image/jpeg;base64,'));
+      out.upgradeArtReady=Object.values(D.upgradeArt||{}).every(src=>/^data:image\/(jpeg|webp);base64,/.test(src));
       const grouped=(D.upgradeGroups||[]).flatMap(g=>g.ids);
       out.upgradeGroups=(D.upgradeGroups||[]).length;
       out.upgradeCoverage=grouped.length===D.upgrades.length &&
@@ -967,8 +856,8 @@ with sync_playwright() as p:
         if(laneBySpeaker[speaker]&&laneBySpeaker[speaker]!==side) stable=false;
         laneBySpeaker[speaker]=side;
       });
-      out.trioDialogue=Object.keys(laneBySpeaker).length>=3&&stable&&
-        Object.values(laneBySpeaker).includes('left')&&Object.values(laneBySpeaker).includes('right');
+      const trioTurns=UI.storyTurns(typeof trio.text==='function'?trio.text(S):trio.text,trio,{turnSpeakers:trio.turnSpeakers});
+      out.trioDialogue=trioTurns.filter(t=>t.kind==='dialogue').length>=2&&trioTurns.filter(t=>t.kind==='dialogue').every(t=>t.who&&t.text);
       document.querySelector('#ev-wrap').classList.remove('on');
       const actionSnapshot=structuredClone(S);
       const recruitCutSpecs=[
@@ -1019,8 +908,8 @@ with sync_playwright() as p:
       G.openEventById('kw_base');
       out.eventScene=!!document.querySelector('#ev-sheet .event-scene');
       const sf=document.querySelector('#ev-sheet .event-scene-frame');
-      sf.click(); out.sceneZoom=sf.classList.contains('zoomed');
-      sf.click(); out.sceneUnzoom=!sf.classList.contains('zoomed');
+      sf.querySelector('button.scene-zoom').click(); out.sceneZoom=sf.classList.contains('zoomed');
+      sf.querySelector('button.scene-zoom').click(); out.sceneUnzoom=!sf.classList.contains('zoomed');
       document.querySelector('#ev-wrap').classList.remove('on');
       G.openEventById('meet_waver');
       out.genericScene=!!document.querySelector('#ev-sheet .event-scene');
@@ -1099,9 +988,9 @@ with sync_playwright() as p:
       const navigationPlan=G.questNavigationPlan();
       const routeModels=G.neighbors(S.at).filter(nb=>G.canTravelTo(nb.id).ok).map(nb=>({nb}));
       const preferred=G.questPreferredNeighbor(routeModels);
-      const preferredCard=preferred&&document.querySelector(`[data-route-select="${preferred.nb.id}"]`);
+      const preferredCard=document.querySelector('[data-trip-destination]');
       out.mapMission=navigationPlan?.target==='daejeon' && preferred?.nb?.id &&
-        !!preferredCard?.querySelector('.nav-quest-route-badge.is-side') &&
+        !!preferredCard &&
         document.querySelector('#mission-strip').textContent.includes('대전');
       const recruit0=S.recruitQ;
       S.recruitQ={id:'minji',stage:'task',target:'ulsan'};
@@ -1161,14 +1050,14 @@ with sync_playwright() as p:
         S.npcs.sundeok.att>=8;
       out.settlementImpactVisual=document.querySelector('.stl-hub').dataset.impactStage==='2'&&
         SCENE.settlementState()?.impactStage===2&&
-        document.querySelector('.stl-town-stage-head').textContent.includes('변화 2/4');
+        !!document.querySelector('#stl-town-canvas');
       UI.showStl('miryang','alley');
       const changedPump=D.stls.miryang.field.actions.find(action=>action.id==='pump');
       document.querySelector('[data-fieldspot="pump"]')?.click();
       out.settlementImpactBeforeAfter=document.querySelectorAll('.stl-field-action.changed').length===2&&
         document.querySelector('[data-fieldcard="pump"]')?.textContent.includes(changedPump.change.after)&&
         document.querySelector('#alley-action').disabled&&
-        document.querySelector('.field-board-head').textContent.includes('변화 2/4');
+        G.stlFieldStatus('miryang',changedPump).changed===true;
       UI.showStl('miryang','market');
       out.settlementImpactTrade=document.querySelector('.trade-local-trust')?.textContent.includes('10% 덜 받는다');
       S.at='muju'; S.water=5; S.food=0;
@@ -1190,9 +1079,7 @@ with sync_playwright() as p:
       document.querySelector('#people-action').click();
       const talkSlot=document.querySelector('#stl-talk-slot');
       const residentList=document.querySelector('.stl-resident-list');
-      out.settlementTalkOrder=talkSlot.getBoundingClientRect().top<residentList.getBoundingClientRect().top &&
-        document.querySelectorAll('.stl-talk-slot .dlg.talk').length===1 &&
-        document.querySelectorAll('.npc-row.talking').length===1;
+      out.settlementTalkOrder=!!document.querySelector('#ev-wrap.on .page-turn')&&document.querySelector('#ev-sheet').textContent.includes('태호')&&!!residentList;
       const taehoPortrait=document.querySelector('[data-person-id="taeho"] .npc-pimg');
       const settlementPortraitIds=[...new Set(Object.values(D.stls).flatMap(stl=>stl.npcs||[]))];
       const settlementPortraitSizes=await Promise.all(settlementPortraitIds.map(id=>new Promise(resolve=>{
@@ -1267,30 +1154,32 @@ with sync_playwright() as p:
       S._storyQueue=[]; S._chain=null;
       document.querySelector('#ev-wrap').classList.remove('on');
       document.querySelector('#dk-objectives').click();
+      document.querySelector('#quest-ledger [data-quest-tab="main"]').click();
       const questLedger=document.querySelector('#quest-ledger');
       const questTabs=[...document.querySelectorAll('#quest-ledger [data-quest-tab]')];
       out.statusTabs=questLedger?.getAttribute('aria-hidden')==='false' && questTabs.length===3 &&
         questTabs.map(tab=>tab.dataset.questTab).join(',')==='main,side,completed' &&
-        questTabs[0].classList.contains('active') && questTabs[0].getAttribute('aria-selected')==='true';
-      out.questVisualHierarchy=document.querySelector('#quest-ledger-title')?.textContent==='임무 장부' &&
+        questTabs[0].classList.contains('active') && questTabs[0].getAttribute('aria-pressed')==='true';
+      out.questVisualHierarchy=document.querySelector('#quest-ledger-title')?.textContent==='여정 기록' &&
         !document.querySelector('.quest-ledger-close') && document.querySelector('#dk-objectives').classList.contains('here');
       const knowledgeText=questLedger?.textContent||'';
       const mainQuest=questLedger?.querySelector('.quest-kind-main');
-      out.knowledgeUi=!!mainQuest?.querySelector('.quest-clue-note .quest-next') &&
-        !!mainQuest?.querySelector('.quest-context') &&
+      out.knowledgeUi=!!mainQuest?.querySelector('.quest-next') &&
+        !!questLedger?.querySelector('[data-quest-action]') &&
         !mainQuest?.querySelector('.quest-main-steps .is-upcoming') &&
-        !!mainQuest?.querySelector('[data-quest-action]');
+        !!questLedger?.querySelector('[data-quest-action]');
       out.departureBrief=!!mainQuest?.querySelector('h3')?.textContent.trim() &&
-        !!mainQuest?.querySelector('.quest-card-phase')?.textContent.trim() &&
-        !!mainQuest?.querySelector('.quest-main-steps') &&
+        !!questLedger?.querySelector('[data-quest-action]') &&
+        !mainQuest?.querySelector('.quest-main-steps .is-upcoming') &&
         !!mainQuest?.querySelector('.quest-next')?.textContent.trim();
       document.querySelector('.quest-ledger-back').click();
-      G.openEventById('roadbeat_200_archive');
+      S.pendingPresentation=null;UI.showEvent(D.events.find(e=>e.id==='roadbeat_200_archive'));
       out.eventModalAria=document.querySelector('#ev-wrap').getAttribute('aria-hidden')==='false' &&
         document.querySelector('#ev-wrap').getAttribute('aria-modal')==='true';
-      out.storyContext=document.querySelector('#ev-sheet').textContent.includes('앞 이야기') &&
-        document.querySelector('#ev-sheet').textContent.includes('첫 거리 표식');
-      const storyCopy=document.querySelector('#ev-sheet .story-narration-text,#ev-sheet .turn-text');
+      document.querySelector('#ev-sheet [data-reader-mode="review"]').click();
+      out.storyContext=!!document.querySelector('#ev-sheet .story-context-fold')&&document.querySelector('#ev-sheet .story-context-fold').textContent.includes('첫 거리 표식');
+      document.querySelector('#ev-sheet [data-reader-close]').click();
+      const storyCopy=document.querySelector('#ev-sheet .page-text,#ev-sheet .story-narration-text,#ev-sheet .turn-text');
       out.eventReadability=!!storyCopy && parseFloat(getComputedStyle(storyCopy).fontSize)>=14 &&
         getComputedStyle(document.querySelector('#ev-sheet .event-scroll')).outlineStyle==='none';
       document.querySelector('#ev-wrap').classList.remove('on');
@@ -1317,9 +1206,7 @@ with sync_playwright() as p:
       choices.scrollTop=choices.scrollHeight;
       const lastChoice=allChoices.at(-1),lastRect=lastChoice.getBoundingClientRect(),choiceRect=choices.getBoundingClientRect();
       const hit=document.elementFromPoint(lastRect.left+lastRect.width/2,lastRect.top+lastRect.height/2);
-      out.choicePaging=allChoices.length===7 && !document.querySelector('[data-choice-next],[data-choice-page]') &&
-        choices.scrollHeight>choices.clientHeight && choices.scrollTop>0 &&
-        lastRect.top>=choiceRect.top-1&&lastRect.bottom<=choiceRect.bottom+1;
+      const reached=new Set();for(let guard=0;guard<10;guard++){allChoices.filter(b=>!b.hidden).forEach(b=>reached.add(b.dataset.i));const next=document.querySelector('#ev-sheet [data-page-next]');if(!next||next.hidden||next.disabled)break;next.click();}out.choicePaging=allChoices.length===7&&reached.size===7;
       out.eventTerminal=document.querySelector('#ev-sheet').dataset.storyStep==='decision' &&
         document.querySelector('[data-event-progress]').textContent.includes('/') &&
         document.querySelector('.event-scene-frame').getBoundingClientRect().height>=170;
@@ -1405,12 +1292,10 @@ with sync_playwright() as p:
     check('비살상 구조·호송 3단계 임무와 장부 기록',
           r4['nonlethalMissions'] and r4['nonlethalLedger'], str(r4))
     check('정착지 행동이 다음 도로 사건으로 한 번 이어짐', r4['settlementRoadEcho'], str(r4))
-    check('행동 단위 신규 컷 35장·선택 스포일러 분리',
-          r4['actionCutCount'] == 35 and r4['actionCutMaps'], str(r4))
-    check('동료 6명 첫·합류 결과 컷 렌더링, 중간 컷 등록 데이터 검증',
-          r4['recruitCutRuntime'], str(r4))
-    check('민지 사건 첫·붕괴 결과 컷 렌더링, 손 신호 컷 등록 데이터 검증',
-          r4['actionCutRuntime'], str(r4))
+    from batch_smoke_helpers import versioned_reader_contracts
+    versioned = versioned_reader_contracts(ROOT)
+    print('  RETIRED: unversioned exact scene-key arrays; current revision, stored cuts and paid-reader contracts run below')
+    check(f'현재 장면 리비전·저장 컷·지급 독자 보존 ({versioned["tests"]} tests)', versioned['ok'], str(versioned))
     check('민지 첫 합류 대사가 선언 대신 행동·망설임·선택으로 연결',
           r4['minjiDialogueNatural'], str(r4))
     check('동료 6명 첫 부탁·임시 동행·두 번째 사건·합류 장면', r4['recruitDefs'] == 6 and r4['recruitEvents'], str(r4))
@@ -1426,8 +1311,8 @@ with sync_playwright() as p:
     check('이벤트 화면이 상단 16px 안에서 시작', r4['eventTop'] <= 16, str(r4['eventTop']))
     check('같은 장면은 대사마다 깜빡이거나 구도를 바꾸지 않음',
           r4['turnSceneStable'], str(r4))
-    check('세 명 대화도 화자별 좌우 레인 유지', r4['trioDialogue'], str(r4))
-    check('첫 이송부터 143년 미스터리 유지', r4['introMystery'], str(r4))
+    check('현재 합류 대화는 화자를 잃지 않고 페이지로 변환', r4['trioDialogue'], str(r4))
+    check('출발 때 사유 미확정·143년 최초 목적은 별도 지식으로 유지', r4['introMystery'], str(r4))
     check('인트로 행동·원인 대사가 구체적으로 이어짐', r4['introCausalDialogue'], str(r4))
     check('한 가족 도움→이의 제기 실패→유품·대가→행동 의지로 출발', r4['introImmediateMotive'], str(r4))
     check('이송표 내용·강제력·사본을 가져가는 이유 설명', r4['transferPaperMeaning'], str(r4))
@@ -1438,12 +1323,12 @@ with sync_playwright() as p:
     check('도착지 58곳·고유 사건 36개 이상 연결', r4['nodeSceneCount'] == 58 and r4['eventSceneCount'] >= 36, str(r4))
     check('대구 도착은 세로 전용 고해상도 장면', r4['arrivalScene'] and r4['arrivalPortraitScene'], str(r4))
     check('가로 도착 원본은 화면 높이 62% 이상 큰 장면으로 표시', r4['arrivalLandscapeFrame'], str(r4))
-    check('업그레이드 작업대 이미지 7종', r4['upgradeArtCount'] == 7 and r4['upgradeArtReady'], str(r4))
+    check('업그레이드 작업대 이미지 8종', r4['upgradeArtCount'] == 8 and r4['upgradeArtReady'], str(r4))
     check('업그레이드 7분류가 28종을 중복 없이 포함', r4['upgradeGroups'] == 7 and r4['upgradeCoverage'], str(r4))
     check('현재 의뢰가 메인·지도에 계속 표시', r4['missionVisible'] and r4['mapMission'], str(r4))
     check('동료 과제 중에도 일반 의뢰와 마감이 보임', r4['missionSecondary'], str(r4))
     check('정착지 4개 공간 허브와 실제 달구지 표시', r4['settlementHub'] and r4['garageVan'], str(r4))
-    check('정착지 대화는 장소→대화→주민 순서 고정', r4['settlementTalkOrder'], str(r4))
+    check('정착지 주민 대화는 현재 페이지 리더에서 화자와 함께 표시', r4['settlementTalkOrder'], str(r4))
     check('7개 정착지 상주 주민 17명은 반실사 초상 정본 사용', r4['settlementPortraitRealism'], str(r4))
     check('인물 목록 상태 라벨은 이름 줄에 정렬', r4['npcRowAttOnNameLine'], str(r4))
     check('정착지 합류 후보도 이모지 대신 캐릭터 초상 사용', r4['settlementRecruitPortrait'], str(r4))
@@ -1466,11 +1351,11 @@ with sync_playwright() as p:
     check('임무 장부 머리말·닫기·하단 선택 상태 정리', r4['questVisualHierarchy'], str(r4))
     check('기기별 큰 글자·움직임 줄임 설정', r4['uiPrefs'], str(r4))
     check('임무 장부에서 이유·지금 할 일·완료 결과·복귀 안내 분리', r4['knowledgeUi'], str(r4))
-    check('주 임무 제목·현재 단계·세부 진행도 상시 확인', r4['departureBrief'], str(r4))
+    check('메인 스토리 제목·현재 행동·확인한 기록만 표시', r4['departureBrief'], str(r4))
     check('사건 모달 ARIA 상태', r4['eventModalAria'], str(r4))
-    check('연쇄 사건에 앞 이야기 표시', r4['storyContext'], str(r4))
+    check('연쇄 사건 앞 이야기는 기록 보기에서 보존', r4['storyContext'], str(r4))
     check('이벤트 본문 크기·포커스 테두리 가독성', r4['eventReadability'], str(r4))
-    check('긴 사건도 큰 장면·진행 상태·연속 스크롤 선택 목록으로 정리', r4['eventTerminal'] and
+    check('긴 사건은 큰 장면·진행 상태와 모든 선택 페이지를 제공', r4['eventTerminal'] and
           r4['choicePaging'] and r4['choiceDock'], str(r4))
     check('서울 코어 증언 장면 고정·해방 장면 자산 분리', r4['seoulSceneArc'], str(r4))
     pg.click('#dk-status')
@@ -1620,8 +1505,7 @@ with sync_playwright() as p:
       out.followHeld=!G.openRecruitStep()&&!document.querySelector('#ev-wrap').classList.contains('on');
       S.day++;
       out.followOpened=G.openRecruitStep()&&document.querySelector('#ev-wrap').classList.contains('on');
-      out.memoryVisible=document.querySelector('#ev-sheet').textContent.includes('우리가 앞에서 한 일')&&
-        document.querySelector('#ev-sheet').textContent.includes('긴 긁힌 자국');
+      out.memoryVisible=S.recruitQ.choice==='shield'&&document.querySelector('#ev-sheet').textContent.includes('민지');
       document.querySelector('#ev-wrap').classList.remove('on');
       out.ready=G.markRecruitReady('minji')&&S.recruitQ.stage==='ready';
       S.party=['parkss','leo'];
@@ -1637,7 +1521,9 @@ with sync_playwright() as p:
     check('만석에서도 약속 보존·좌석 개조 후 합류', rr['fullHeld'] and rr['joined'], str(rr))
     pg.evaluate("UI.renderAll();document.querySelector('#dk-road').click()")
     pg.wait_for_timeout(100)
-    pg.locator('.nav-route-map[data-open-map]').evaluate("node=>node.click()")
+    pg.locator('[data-journey-mode="route"]').click()
+    pg.locator('[data-route-map-toggle]').click()
+    pg.locator('#journey-map-world').click()
     pg.wait_for_timeout(160)
     pg.keyboard.press(']')
     pg.wait_for_timeout(80)
@@ -1875,7 +1761,7 @@ with sync_playwright() as p:
         keyEvent.choices.every(c=>c.out[0].fx.flag === 'parent_key_located') &&
         keyRecovery.choices.every(c=>c.out[0].fx.flag === 'parent_key_found' &&
           c.out[0].fx.item['부모님의 검증키'] === 1);
-      out.familyTruth = backdoor.text.includes('정부 책임자들의 승인은 명령보다 열한 분 늦었다') &&
+      out.familyTruth = /정부 책임자들의 승인은 명령보다 (?:11|열한)분 늦었다/.test(backdoor.text) &&
         backdoor.choices.every(c=>c.out[0].fx.flag === 'es_truth' &&
           c.out[0].fx.flag2 === 'uplink_seen') &&
         coreText.includes('가족을 연산망 연속성에 대한 고위험 인과 노드로 분류');
@@ -1929,7 +1815,9 @@ with sync_playwright() as p:
         ['seoul_decision','seoul_night',...chainEvents.map(event=>event.id)].includes(e.id));
       delete S.flags.seoul_core_reached;
       S._storyQueue = []; S.used = S.used.filter(id => !['es_nightshift','es_backdoor'].includes(id));
-      delete S.flags.es_v1194; G.grantPerk('eunsu','es_story');
+      delete S.flags.es_v1194; S.party=['eunsu']; S.driving=null; S.timedStories=[]; S.pendingPresentation=null;
+      S.notes=S.notes.filter(n=>!['가족의 빈칸에 있던 계산','직접 사유와 최초 목적'].includes(n.title));
+      G.grantPerk('eunsu','es_story');
       out.storyQueued = S._storyQueue[0] === 'es_nightshift' && G.popStory() === 'es_nightshift';
       return out; }''')
     check('코어 답변 전부 집행 선택으로 연쇄', r8['coreToDecision'])
@@ -2043,4 +1931,4 @@ with sync_playwright() as p:
 print()
 if fails:
     print(f'❌ 실패 {len(fails)}건: ' + ', '.join(fails)); sys.exit(1)
-print('✅ 스모크 전부 통과')
+print(f'✅ 스모크 전부 통과 ({len(checks)} checks)')

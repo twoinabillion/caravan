@@ -26,6 +26,7 @@ def arguments():
     p.add_argument('--checkpoint', help='Exact earned save from a prior isolated run; no synthetic state')
     p.add_argument('--camp-only', action='store_true', help='Test solo camp from an earned Miryang checkpoint')
     p.add_argument('--companion', action='store_true', help='Continue earned Miryang save through Minji recruitment')
+    p.add_argument('--request-only', action='store_true', help='With --companion, stop after verifying the accepted guest default route')
     p.add_argument('--choice-index', type=int, choices=(0, 1), default=0)
     p.add_argument('--explorations', type=int, choices=(0, 1, 2), default=1)
     p.add_argument('--read-ms', type=int, default=1500)
@@ -40,6 +41,7 @@ def run(a):
     assert 'rev' not in query and 'infinite-resources' not in query, 'finite resources required'
     assert not a.camp_only or a.checkpoint, 'camp test requires earned checkpoint'
     assert not a.companion or (a.checkpoint and not a.camp_only), 'companion test requires earned checkpoint'
+    assert not a.request_only or a.companion, 'request-only requires companion mode'
     out = Path(a.output).resolve()
     out.mkdir(parents=True, exist_ok=False)
     actions, captures, errors, controls, reloads = [], [], [], [], []
@@ -115,6 +117,10 @@ def run(a):
                              'text': page.locator('#ev-sheet').inner_text(),
                              'buttons': page.locator('#ev-sheet button:visible').all_text_contents()})
             page.wait_for_timeout(max(0, a.read_ms))
+            if available('#opening-name'):
+                page.locator('#opening-name').fill('초반 검수')
+                page.locator('#opening-name').press('Enter')
+                return False
             if available('#ev-sheet [data-r="yes"]'):
                 click('#ev-sheet [data-r="no"]:visible' if decline_offer else '#ev-sheet [data-r="yes"]:visible',
                       'defer-join' if decline_offer else 'accept-join')
@@ -214,6 +220,12 @@ def run(a):
             assert q and q['id'] == 'minji' and q['stage'] == 'task' and q['target'] == 'ulsan'
             assert not observe()['party'], 'temporary passenger became crew early'
             reload_stopped('minji-accepted-request')
+            if a.request_only:
+                click('button[data-journey-mode="route"]:visible', 'route-after-accepted-request')
+                assert available('[data-nav-depart="yangsan"]'), 'accepted passenger request did not suggest the route toward Ulsan'
+                assert '울산' in page.locator('.journey-place-preview').inner_text()
+                screen('accepted-request-default-route')
+                return
             drive_to('yangsan')
             drive_to('ulsan')
             stay('recruitstep')
@@ -308,7 +320,9 @@ def run(a):
             else:
                 # The initial title has no S; start by genuine title/name controls.
                 page.locator('#bt-new').click()
-                page.locator('#inp-name').fill('초반 검수')
+                # Current preparation asks for a pack; Doyun asks the name later.
+                if available('#inp-name'):
+                    page.locator('#inp-name').fill('초반 검수')
                 page.locator('#bt-name').click()
             page.wait_for_selector('#scr-game.on')
             initial = observe()

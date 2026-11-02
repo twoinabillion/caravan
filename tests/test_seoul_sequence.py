@@ -36,14 +36,15 @@ RUN_JS = """({arrivalDay,disposition=0}) => {
       const evd=pending; pending=null;
       const usable=(evd.choices||[]).filter(c=>{
         if(!c.req) return true;
-        const rq=G.reqOk(c.req); return !rq||rq.ok!==false;
+        const rq=G.reqOk(G.choiceReq(c)); return G.reqVisible(G.choiceReq(c))&&rq.ok!==false;
       });
       if(!usable.length) break;
       const choice=evd.id==='seoul_decision'?evd.choices[disposition]:usable[0];
       if(!usable.includes(choice)) throw new Error('Final disposition is unexpectedly locked: '+disposition);
-      const o=G.pickOutcome(evd, choice);
-      G.applyFx(o.fx||{});
-      if(o.fx&&o.fx.chain){ const nx=D.events.find(e=>e.id===o.fx.chain); if(nx) G.openEvent(nx); }
+      const result=G.resolvePresentedChoice(evd,choice);
+      if(!result.ok) throw new Error('Choice rejected: '+evd.id+' '+result.why);
+      const next=G.queuePresentation(result.out?.fx?.chain);
+      if(next) G.openEventById(next);
     }
     pending=null;
   };
@@ -59,6 +60,14 @@ RUN_JS = """({arrivalDay,disposition=0}) => {
   for(const f of ['massacre_known','first_order_trace','parent_key_found','es_truth',
                   'parents_routes_traced','father_fate_known','mother_reunited','mother_broadcast_ready']) S.flags[f]=true;
   for(const f of ['postman_letter','gp_envelope_found']) S.flags[f]=true;
+  // The legacy es_truth flag is not proof of the command author's identity.
+  // Earn the current signed testimony, original command comparison and relay
+  // evidence through their real choices; do not loosen the Seoul gate.
+  for(const [at,id] of [['cheongju','main_transfer_testimony'],
+                       ['cheonan','main_command_ledger'],
+                       ['suwon','main_relay_conference']]){
+    S.at=at; G.openEventById(id); resolve();
+  }
   S.day=arrivalDay;
   if(!G.seoulReady()) return {err:'기둥 미충족', missing:G.seoulMissing()};
 

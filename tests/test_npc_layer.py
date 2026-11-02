@@ -48,39 +48,59 @@ with sync_playwright() as pw:
     check('소문 reveal 노드 전부 유효', not data['badReveal'], str(data['badReveal']))
     check('newGame이 전원 상태 생성', not data['stateMissing'], str(data['stateMissing']))
 
-    flow = page.evaluate(r"""() => new Promise(res=>{
-      S.at='suwon'; UI.showStl('suwon','people');
-      setTimeout(()=>{
-        const row=document.querySelector('[data-person-key="npc-gitae"]');
-        if(!row) return res({err:'기태 행 없음'});
-        row.click();
-        document.querySelector('#people-action')?.click();
-        setTimeout(()=>{
-          const rumorBtn=document.querySelector('[data-r="rumor"]');
-          rumorBtn&&rumorBtn.click();
-          setTimeout(()=>{
-            const rumorShown=(document.querySelector('.dlg.talk .say')||{}).textContent||'';
-            const ok=document.querySelector('[data-r="x2"]'); ok&&ok.click();
-            setTimeout(()=>{
-              const row2=document.querySelector('[data-person-key="npc-gitae"]');
-              row2.click();
-              document.querySelector('#people-action')?.click();
-              setTimeout(()=>{
-                const chatBtn=document.querySelector('[data-r="chat"]');
-                chatBtn&&chatBtn.click();
-                setTimeout(()=>{
-                  const said=((document.querySelector('.dlg.talk .say')||{}).textContent||'').replace(/^기태\s*/,'').trim();
-                  const personal=(D.npcs.gitae.chats||[]).some(c=>said&&c.includes(said.slice(1,20)));
-                  res({rumorShown:rumorShown.includes('편지'), personalChat:personal, said:said.slice(0,40)});
-                },250);
-              },300);
-            },250);
-          },250);
-        },300);
-      },400);
-    })""")
+    flow = page.evaluate(r"""async () => {
+      // Controlled valid visit: the real resident's settlement, daytime, stopped.
+      const npc=D.npcs.gitae;
+      S.at=npc.node; S.driving=null; S.min=600;
+      const resources=()=>JSON.stringify({at:S.at,day:S.day,min:S.min,
+        fuel:S.fuel,food:S.food,water:S.water,scrap:S.scrap,van:S.van,
+        fatigue:S.fatigue,items:S.items,party:S.party});
+      const before=resources(), metBefore=!!S.npcs.gitae.met, attBefore=S.npcs.gitae.att;
+      UI.showStl(D.nodes[npc.node].stl,'people');
+      const tick=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+      const click=async selector=>{
+        const button=document.querySelector(selector);
+        if(!button) throw Error('Missing current NPC control: '+selector);
+        button.click(); await tick();
+      };
+      const readToAction=async label=>{
+        const seen=[];
+        for(let i=0;i<80;i++){
+          const reader=document.querySelector('#ev-sheet .story-reader');
+          const text=reader?.textContent||'';
+          if(text&&seen[seen.length-1]!==text) seen.push(text);
+          const action=[...document.querySelectorAll('#ev-sheet [data-local-choice]')]
+            .find(b=>b.textContent.trim()===label);
+          if(action) return {text:seen.join(''),action};
+          const next=document.querySelector('#ev-sheet .story-next');
+          if(!next) throw Error('NPC reader has no next action: '+label);
+          next.click(); await tick();
+        }
+        throw Error('NPC reader exceeded bounded page count: '+label);
+      };
+      await click('[data-person-key="npc-gitae"]');
+      await click('#people-action');
+      const greet=await readToAction('요즘 소문 들은 거 없어요?');
+      greet.action.click(); await tick();
+      const rumor=await readToAction('고맙습니다');
+      rumor.action.click(); await tick();
+      await click('[data-person-key="npc-gitae"]');
+      await click('#people-action');
+      const reopened=await readToAction('이런저런 얘기를 나눈다');
+      reopened.action.click(); await tick();
+      const chat=await readToAction('그만 일어난다');
+      const normalize=text=>text.replace(/\s/g,'');
+      const personal=(npc.chats||[]).some(text=>normalize(chat.text).includes(normalize(text)));
+      chat.action.click(); await tick();
+      return {rumorShown:normalize(rumor.text).includes(normalize(npc.rumor.text)),
+        personalChat:personal,said:chat.text.slice(0,100),metBefore,metAfter:!!S.npcs.gitae.met,
+        attitudeDelta:S.npcs.gitae.att-attBefore,resourcesUnchanged:resources()===before,
+        rumorFlag:!!S.flags.rumor_gitae,rumorNote:S.notes.some(n=>n.title===npc.name+'의 소문'&&n.body===npc.rumor.text)};
+    }""")
     check('무공개(로어) 소문이 크래시 없이 뜬다', bool(flow.get('rumorShown')), str(flow))
     check('잡담이 그 사람의 문장이다 (공용 풀 아님)', bool(flow.get('personalChat')), str(flow))
+    check('실제 대화로 첫 만남과 소문 기록을 남긴다', not flow.get('metBefore') and flow.get('metAfter') and flow.get('rumorFlag') and flow.get('rumorNote'), str(flow))
+    check('대화는 정당한 호감 +8 외 자원·시간·동료를 바꾸지 않는다', flow.get('attitudeDelta') == 8 and flow.get('resourcesUnchanged'), str(flow))
     check('콘솔 pageerror 없음', not errors, '; '.join(errors[:3]))
     browser.close()
 

@@ -2288,7 +2288,7 @@ function dialogueSide(turn,lanes,opt={}){
     if(cue) return {
       kicker:cue.kind==='main'?'메인 스토리':'사이드 미션',
       title:cue.action,
-      detail:node.stl?'도착하면 지역 활동과 함께 이어갈 수 있다.':'도착하면 이 장소에서 이어갈 수 있다.'
+      detail:cue.target!==nodeId?'이곳을 거쳐 목표가 있는 곳으로 이동한다.':node.stl?'도착하면 지역 활동과 함께 이어갈 수 있다.':'도착하면 이 장소에서 이어갈 수 있다.'
     };
     if(node.stl) return {
       kicker:'도착하면',title:'사람을 만나고 거래할 수 있다',
@@ -2305,6 +2305,9 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function destinationPreview(nodeId){
     const node=D.nodes[nodeId]||{};
+    const purpose=typeof G.destinationPurpose==='function'?G.destinationPurpose(nodeId,questRouteFocus):'';
+    if(purpose) return purpose;
+    if(D.destinationPreviews&&D.destinationPreviews[nodeId]) return D.destinationPreviews[nodeId];
     if(nodeId==='yangsan')return '무너진 고가 아래를 탐색할 수 있다.';
     if(node.stl)return '사람을 만나고 거래할 수 있다.';
     return node.type==='goal'?'모은 기록을 들고 안으로 향한다.':'남은 구조물과 주변을 탐색할 수 있다.';
@@ -2446,6 +2449,7 @@ function dialogueSide(turn,lanes,opt={}){
         :`${Math.round(forecast.minutes)}분 · ${G.isInfiniteResourceMode()?'연료 소모 없음':`연료 ${Math.ceil(model.fuel)}L 필요`}`;
       return `<button type="button" class="trip-route-option" data-trip-route="${esc(nb.id)}" data-availability="${blocked||forecast.shortage?'blocked':'ready'}" aria-pressed="${selected}">
         <span class="trip-option-heading"><b>${esc(D.nodes[nb.id].name)}</b><span>${nb.km}km</span></span>
+        <span class="trip-option-detail">${esc(destinationPreview(nb.id))}</span>
         <span class="trip-option-detail">${esc(detail)}</span>
         <span class="trip-option-status">${status}${selected?' · 선택됨':''}</span>
       </button>`;

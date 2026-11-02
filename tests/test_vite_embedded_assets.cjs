@@ -1,0 +1,10 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const load=()=>import('../tools/vite-embedded-assets.mjs');
+const block=(id,data)=>`<script type="application/octet-stream" id="caravan-asset-${id}">${data}</script>`;
+const html=`<html>${block(0,'a+/=\n')}${block(1,'BBBB')}<script type="module">import './native.js'</script></html>`;
+test('parking keeps native module and restores every original asset byte in order',async()=>{const {parkEmbeddedAssets,restoreEmbeddedAssets}=await load();const p=parkEmbeddedAssets(html);assert.equal(p.blocks.length,2);assert(!p.html.includes('BBBB'));assert(p.html.includes("import './native.js'"));assert.equal(restoreEmbeddedAssets(p.html,p),html);});
+test('missing asset slot fails closed',async()=>{const {parkEmbeddedAssets,restoreEmbeddedAssets}=await load();const p=parkEmbeddedAssets(html);assert.throws(()=>restoreEmbeddedAssets(p.html.replace(p.slots[0],''),p),/slot/);});
+test('duplicate asset slot fails closed',async()=>{const {parkEmbeddedAssets,restoreEmbeddedAssets}=await load();const p=parkEmbeddedAssets(html);assert.throws(()=>restoreEmbeddedAssets(p.html+p.slots[0],p),/slot/);});
+test('reordered asset slots fail closed',async()=>{const {parkEmbeddedAssets,restoreEmbeddedAssets}=await load();const p=parkEmbeddedAssets(html);assert.throws(()=>restoreEmbeddedAssets(p.html.replace(p.slots[0],'TEMP').replace(p.slots[1],p.slots[0]).replace('TEMP',p.slots[1]),p),/order/);});
+test('slot namespace collisions and duplicate authored ids fail closed',async()=>{const {parkEmbeddedAssets}=await load();assert.throws(()=>parkEmbeddedAssets(html+'caravan-vite-slot-'),/reserved/);assert.throws(()=>parkEmbeddedAssets(block(0,'A')+block(0,'B')),/duplicate/i);});
+test('HTML with no embedded blocks roundtrips',async()=>{const {parkEmbeddedAssets,restoreEmbeddedAssets}=await load();const p=parkEmbeddedAssets('<p>small</p>');assert.equal(restoreEmbeddedAssets(p.html,p),p.html);});

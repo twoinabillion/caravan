@@ -67,6 +67,7 @@ with sync_playwright() as playwright:
     installability = cdp.send("Page.getInstallabilityErrors")
     assert not installability.get("installabilityErrors"), installability
     page.screenshot(path=str(OUT / "android-title.png"), full_page=True)
+    page.locator(".title-extra-tools > summary").click()
     install_box = page.locator("#bt-install").bounding_box()
     song_box = page.locator("#bt-song").bounding_box()
     assert install_box and song_box and install_box["x"] + install_box["width"] <= song_box["x"], (
@@ -93,6 +94,7 @@ with sync_playwright() as playwright:
     )
     page = iphone.new_page()
     page.goto(GAME, wait_until="domcontentloaded", timeout=60_000)
+    page.locator(".title-extra-tools > summary").click()
     page.locator("#bt-install").wait_for(state="visible")
     page.locator("#bt-install").click()
     page.locator("#install-guide.on").wait_for(state="visible")

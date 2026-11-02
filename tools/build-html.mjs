@@ -324,7 +324,7 @@ const chunks = [
   })
 ];
 const assetPool = poolEmbeddedAssets(chunks.join('\n'));
-const deliveryEncoding=encodeEmbeddedAssets(assetPool.html);
+const deliveryEncoding=encodeEmbeddedAssets(assetPool.html,{storage:'inert'});
 const html = deliveryEncoding.html;
 const htmlBytes = Buffer.byteLength(html);
 const unresolved = [...new Set(html.match(/__(?:UI|TOWN_WORLD|PORTRAIT|NPC|SCENE|UPGRADE|BGM|SFX|VO|ROAD_CUE)_[A-Z0-9_]+__/g) || [])];
@@ -344,7 +344,7 @@ const categories = assetEntries.reduce((out,item)=>{
 },{});
 const report={generatedAt:new Date().toISOString(),html:{bytes:htmlBytes,warnBytes:WARN_BYTES,maxBytes:MAX_BYTES},
   literalPool:{assets:assetPool.pooled,savedBytes:assetPool.savedBytes},
-  losslessDelivery:{assets:deliveryEncoding.assets,savedBytes:deliveryEncoding.savedBytes},
+  losslessDelivery:{storage:'inert',assets:deliveryEncoding.assets,savedBytes:deliveryEncoding.savedBytes},
   embedded:{files:assetEntries.length,bytes:assetEntries.reduce((sum,item)=>sum+item.bytes,0),categories},
   largest:assetEntries.slice(0,20)};
 fs.mkdirSync(path.dirname(reportOutput),{recursive:true});

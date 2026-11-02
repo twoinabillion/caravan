@@ -99,3 +99,8 @@ test('every place gets a short non-reward preview; full landscape is never cover
  assert.match(css,/.journey-detail-body\{min-height:0;overflow-y:auto;/);
  assert.doesNotMatch(fn('travelDestinationHtml'),/routeThumbnail|<img/);
 });
+test('destination detail treats a corridor release stop as a waypoint, not the distant task location',()=>{
+ const f=fixture();f.ctx.G.routeQuestCue=()=>({kind:'companion',target:'gumi',waypoint:'cheongju',action:'청주까지 간 뒤 구미까지 이동한다'});
+ const action=f.ctx.destinationAction('cheongju',{});
+ assert.match(action.detail,/거쳐/);assert.doesNotMatch(action.detail,/이 장소에서 이어갈/);
+});

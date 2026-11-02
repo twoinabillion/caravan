@@ -415,7 +415,10 @@ G.pickChat = ()=>{
   S._crewChatSeen=S._crewChatSeen||{};
   const night=G.isNight(), region=G.regionOf();
   const pool=D.chats.filter((c,i)=>{
-    if(S._crewChatSeen['daily:'+(c.id||'chat:'+i)]?.day===S.day) return false;
+    const seen=S._crewChatSeen['daily:'+(c.id||'chat:'+i)];
+    // Authored one-time vignettes also honor the daily receipt from older builds.
+    // Recurring meals and other daily routines remain repeatable tomorrow.
+    if(seen&&(seen.day===S.day||c.once)) return false;
     if(c.once&&c.id&&S._crewChatSeen[c.id]) return false;
     const nd=c.need||{};
     if(nd.comp && !G.hasComp(nd.comp)) return false;

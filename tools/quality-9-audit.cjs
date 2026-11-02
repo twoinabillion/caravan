@@ -19,9 +19,9 @@ const pass=(label,ok,detail='')=>{
 };
 
 const memories=Object.values(D.choiceMemories||{}).flat().filter(Boolean);
-pass('17 key choices have immediate memory and near callback data',
-  memories.length===17&&memories.every(memory=>memory.summary&&memory.afterKm>0&&memory.lines?.length),
-  `${memories.length}/17`);
+pass('21 key choices have immediate memory and near callback data',
+  memories.length===21&&memories.every(memory=>memory.summary&&memory.afterKm>0&&memory.lines?.length),
+  `${memories.length}/21`);
 pass('all remembered choices receive a late completion callback',
   /for\(const memory of memories\)/.test(engineSource)&&/qualityChoiceLate\(memory\.id/.test(engineSource));
 

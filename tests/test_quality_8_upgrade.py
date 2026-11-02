@@ -5,12 +5,14 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = (ROOT / '서울까지400km.html').as_uri()
-SHOT = ROOT / 'tests' / 'shots' / 'quality8'
+SHOT = ROOT / 'qa-artifacts/batch-20261101-complete/story/quality8-shots'
 SHOT.mkdir(parents=True, exist_ok=True)
 failures = []
+checks = []
 
 
 def check(label, ok, detail=''):
+    checks.append((label, bool(ok)))
     print(('  ✅ ' if ok else '  ❌ ') + label + (f' — {detail}' if detail and not ok else ''))
     if not ok:
         failures.append(label)
@@ -33,50 +35,53 @@ with sync_playwright() as playwright:
 
     print('― 프롤로그 진입 속도')
     page.click('#bt-new')
-    if page.locator('#scr-mode').is_visible():
-        page.click('#mode-on')
-    page.fill('#inp-name', '테스터')
-    page.click('#bt-name')
-    page.wait_for_timeout(100)
-    check('첫 여행에도 핵심 요약이 보인다', page.locator('#intro-skip').is_visible())
-    page.click('#intro-skip')
-    page.wait_for_timeout(50)
-    summary = page.evaluate("""() => ({
-      open:document.querySelector('#intro-summary').classList.contains('on'),
-      points:document.querySelectorAll('#intro-summary li').length,
-      focus:document.activeElement.id,
-      copy:document.querySelector('#intro-summary').textContent
+    # Retired: hidden legacy name/mode and summary controls. Current preparation
+    # offers optional history; naming belongs to the actual Do-yun dialogue.
+    check('첫 여행은 세 가지 짐 중 하나를 고르는 준비 화면으로 진입한다',
+          page.locator('#scr-name').is_visible() and page.locator('#profile-pick [role="radio"]').count() == 3 and not page.locator('#scr-mode').is_visible())
+    page.locator('#profile-pick [role="radio"]').last.click()
+    selected_pack = page.locator('#profile-pick [role="radio"][aria-checked="true"]').get_attribute('data-pack')
+    page.click('#opening-history')
+    check('과거 이야기는 출발을 강제하지 않는 선택 읽기다',
+          page.locator('#scr-intro').is_visible() and page.evaluate('S===null || !S?.flags?.main_mission_started'))
+    history = page.evaluate("""() => ({
+      count:document.querySelector('#intro-count').textContent,
+      expected:`1 / ${D.introHistoryPages.length} · 1 / ${D.introHistoryPages[0].beats.length}`,
+      pageCount:D.introHistoryPages.length,
+      beats:D.introHistoryPages.reduce((n,p)=>n+p.beats.length,0),
+      hasCurrentRepair:D.introHistoryPages.some(p=>p.beats.some(t=>t.timeKind==='current'))
     })""")
-    check('요약은 네 개의 출발 근거와 직접 출발 선택을 제공한다',
-          summary['open'] and summary['points'] == 4 and summary['focus'] == 'intro-summary-start' and
-          '다음 이송표는 계속 발행된다' in summary['copy'] and '남산' in summary['copy'], str(summary))
-    page.screenshot(path=str(SHOT / '01-intro-summary.png'))
-    page.click('#intro-summary-continue')
-    check('전체 프롤로그로 손실 없이 돌아간다',
-          not page.locator('#intro-summary').is_visible() and page.locator('#intro-book').is_visible())
-    page.click('#intro-skip')
-    page.click('#intro-summary-start')
-    page.wait_for_timeout(150)
-    page.evaluate("""() => {
-      document.querySelector('#arrival-scene')?.classList.remove('on');
-      document.querySelector('#ev-wrap')?.classList.remove('on');
-      for(const id of ['onboarding_main_mission','onboarding_first_road']){
-        const event=D.events.find(item=>item.id===id);
-        if(event && !S.used.includes(event.id)) S.used.push(event.id);
-      }
-      S.flags.onboarding_mission_seen=true;
-      S.flags.onboarding_first_road_seen=true;
-      S._storyQueue=[];
-      S._chain=null;
-    }""")
-    page.wait_for_timeout(900)
-    page.evaluate("""() => {
-      document.querySelector('#ev-wrap')?.classList.remove('on');
-      document.querySelector('#quest-update-ribbon')?.remove();
-      S._storyQueue=[]; S._chain=null;
-    }""")
-    check('요약 경로가 이름을 보존하고 게임으로 진입한다',
-          page.locator('#scr-game').is_visible() and page.evaluate('S.name') == '테스터')
+    check('선택 역사 읽기는 첫 문장부터 시작하고 현재 출발 행동을 대신 결정하지 않는다',
+          history['count'] == history['expected'] and history['pageCount'] > 0 and not history['hasCurrentRepair'], str(history))
+    page.screenshot(path=str(SHOT / '01-optional-history.png'))
+    for _ in range(history['beats'] + 2):
+        if not page.locator('#scr-intro').is_visible():
+            break
+        page.locator('#scr-intro').press('Enter')
+        page.wait_for_timeout(25)
+    check('전체 역사 읽기 뒤 짐 선택을 보존하고 출발 준비로 돌아온다',
+          page.locator('#scr-name').is_visible() and page.locator('#profile-pick [role="radio"][aria-checked="true"]').get_attribute('data-pack') == selected_pack)
+    page.click('#bt-name')
+    for _ in range(300):
+        if page.evaluate("!!S?.flags?.main_mission_started&&!document.querySelector('#ev-wrap')?.classList.contains('on')"):
+            break
+        name = page.locator('#opening-name:visible')
+        if name.count():
+            name.fill('테스터')
+        next_button = page.locator('#ev-sheet .story-next:visible:not([disabled])')
+        choices = page.locator('#ev-sheet .choice:visible:not([disabled])')
+        exits = page.locator('#ev-sheet [data-r]:visible:not([disabled]),#ev-sheet .primary-exit-btn:visible:not([disabled])')
+        if next_button.count():
+            next_button.first.click()
+        elif choices.count():
+            choices.first.click()
+        elif exits.count():
+            exits.first.click()
+        else:
+            page.wait_for_timeout(40)
+        page.wait_for_timeout(25)
+    check('실제 도윤 대화의 이름과 출발 선택을 보존하고 길로 진입한다',
+          page.locator('#scr-game').is_visible() and page.evaluate("S.name==='테스터'&&!!S.flags.main_mission_started&&!document.querySelector('#ev-wrap').classList.contains('on')"))
 
     print('― 단순화한 전체 소리 설정')
     page.click('#dk-menu')
@@ -90,7 +95,7 @@ with sync_playwright() as playwright:
     mixer = page.evaluate("""() => ({
       levels:['music','ambience','effects','voice'].map(key=>SND.level(key)),
       saved:['music','ambience','effects','voice'].map(key=>localStorage.getItem('caravan_audio_'+key)),
-      targets:['#menu-sound-toggle','.menu-volume-row','#menu-save-now','#menu-save-export']
+      targets:['#menu-sound-toggle','.menu-volume-row','#menu-save-now','#menu-save-transfer']
         .map(selector=>document.querySelector(selector).getBoundingClientRect().height)
     })""")
     check('전체 음량이 네 채널에 즉시 반영되고 이 기기에 저장된다',
@@ -107,13 +112,13 @@ with sync_playwright() as playwright:
       UI.showStl('miryang','alley');
     }""")
     switcher = page.evaluate("""() => ({
-      ids:[...document.querySelectorAll('.stl-field-switcher [data-fieldspot]')].map(node=>node.dataset.fieldspot),
-      heights:[...document.querySelectorAll('.stl-field-switcher [data-fieldspot]')].map(node=>node.getBoundingClientRect().height)
+      ids:[...document.querySelectorAll('.field-board-list [data-fieldspot]')].map(node=>node.dataset.fieldspot),
+      heights:[...document.querySelectorAll('.field-board-list [data-fieldspot]')].map(node=>node.getBoundingClientRect().height)
     })""")
-    check('삽화 밖에도 기본 행동 세 곳이 항상 표시된다',
+    check('현재 현장 작업판에 기본 행동 세 곳이 표시된다',
           switcher['ids'] == ['noodles', 'parts', 'pump'], str(switcher))
-    check('현장 선택기는 44px 이상이고 가로 스크롤할 수 있다',
-          all(height >= 44 for height in switcher['heights']), str(switcher['heights']))
+    check('현장 작업판의 세 선택 행은 모두44px 이상이다',
+          len(switcher['heights']) == 3 and all(height >= 44 for height in switcher['heights']), str(switcher['heights']))
     page.click('.stl-field-switcher [data-fieldspot="pump"]')
     field_focus = page.evaluate("""() => ({
       cardVisible:document.querySelector('[data-fieldcard="pump"]').offsetParent!==null,
@@ -122,7 +127,7 @@ with sync_playwright() as playwright:
     })""")
     check('선택기에서 펌프를 고르면 실행 카드와 접근성 상태가 함께 바뀐다',
           all(field_focus.values()), str(field_focus))
-    page.locator('.stl-field-switcher').scroll_into_view_if_needed()
+    page.locator('.field-board-list').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT / '03-miryang-switcher.png'))
 
     print('― 모바일 전투 정보 밀도')
@@ -165,4 +170,4 @@ if failures:
     for failure in failures:
         print(f'- {failure}')
     raise SystemExit(1)
-print('\n✅ 8.0 업그레이드 회귀 전부 통과')
+print(f'\n✅ 8.0 업그레이드 회귀 전부 통과 ({len(checks)} checks)')

@@ -413,6 +413,7 @@
     },
     {
       id: 'daily-me-parkss-patch',
+      once: true,
       need: {comp: 'parkss'},
       lines: [
         ['me', '선생님, 그 파스 어제도 같은 데 붙였죠.'],

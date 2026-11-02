@@ -21,7 +21,7 @@ function fixture(){
   const ctx=vm.createContext({Audio,window:{AudioContext:Context,addEventListener(){}},
     document:{getElementById:()=>null,addEventListener(){},querySelector:()=>null,hidden:false},
     $:()=>null,localStorage:{getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)},
-    D:{bgm:{title:'title',story:'story'},sfx:{sfx_drive_asphalt_loop:'road'},vo:{a:'voice-a',b:'voice-b'}},
+    D:{bgm:{title:'title',story:'story',song:'song'},sfx:{sfx_drive_asphalt_loop:'road'},vo:{a:'voice-a',b:'voice-b'}},
     S:{driving:null},UI:{modalOpen:()=>false},location:{hostname:'127.0.0.1',search:'?caravan-live=1'},
     URLSearchParams,performance:{now:()=>1000},setTimeout:()=>0,clearTimeout(){},
     setInterval:fn=>{timers.set(++timer,fn);return timer;},clearInterval:id=>timers.delete(id)});
@@ -69,4 +69,27 @@ test('all groups share the master headroom; recorded road excludes synthetic mot
   assert.equal(music.master,voice.master);assert(Math.abs(music.master.gain.value-Math.pow(10,-3/20))<1e-8);
   // Source contract verifies no fallback motor is mixed over recorded road.
   const source=fs.readFileSync('src/07e-ui-audio.js','utf8');assert(source.includes('on&&!suspended&&!hasRecorded'));
+});
+
+test('manual song stop stays silent through mixer changes and background resume',()=>{
+  const f=fixture();
+  for(let i=0;i<30;i++)for(const fn of [...f.timers.values()])fn();
+  f.audio.BGM.toggleSong();f.audio.BGM.toggleSong();
+  f.audio.SND.setLevel('music',.7);
+  for(let i=0;i<30;i++)for(const fn of [...f.timers.values()])fn();
+  const title=f.media.find(a=>a.src==='title');
+  assert(title.paused,'mixer change must not cancel the background pause');
+  f.audio.BGM.suspend();f.audio.BGM.resume();
+  assert(title.paused,'resume must respect explicit music pause');
+  f.audio.BGM.tick('story');assert.equal(f.media.find(a=>a.src==='story').paused,false);
+});
+test('late rejected pooled effect cannot escape mute cleanup',async()=>{
+  const f=fixture();const a=f.audio.AMBI.play('sfx_drive_asphalt_loop');const reject=a.rejectPlay;
+  a.ended();
+  // Advance only the family throttle clock, leaving the first play promise pending.
+  f.performance.now=()=>2000;
+  assert.equal(f.audio.AMBI.play('sfx_drive_asphalt_loop'),a);
+  reject(new Error('interrupted old play'));await Promise.resolve();
+  f.audio.AMBI.setOn(false);
+  assert(a.paused,'the current pooled playback must still belong to mute cleanup');
 });

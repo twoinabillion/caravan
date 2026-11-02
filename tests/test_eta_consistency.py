@@ -32,15 +32,25 @@ with sync_playwright() as playwright:
     page.click('#bt-new')
     if page.locator('#scr-mode').is_visible():
         page.click('#mode-on')
-    page.fill('#inp-name', 'ETA')
     page.click('#bt-name')
-    page.wait_for_timeout(100)
-    page.evaluate('UI.skipIntro()')
-    page.wait_for_timeout(200)
-    page.evaluate("""() => {
-      document.querySelector('#arrival-scene')?.classList.remove('on');
-      document.querySelector('#ev-wrap')?.classList.remove('on');
-    }""")
+    # Follow the current interactive opening; the name is answered to Doyun.
+    for _ in range(220):
+        if page.evaluate("!!S?.opening?.completed&&!!S.flags.main_mission_started&&!UI.modalOpen()"):
+            break
+        if page.locator('#opening-name:visible').count():
+            page.locator('#opening-name').fill('ETA')
+            page.locator('#opening-name').press('Enter')
+            continue
+        for selector in ['#ev-sheet .story-next:visible:not([disabled])',
+                         '#ev-sheet [data-i]:visible:not([disabled])',
+                         '#ev-sheet [data-r]:visible:not([disabled])']:
+            button=page.locator(selector)
+            if button.count():
+                button.first.click()
+                break
+        page.wait_for_timeout(40)
+    else:
+        raise AssertionError('current opening did not reach the stopped road')
 
     print('― 표시 시간 vs 실제 경과 (같은 구간)')
     drive = page.evaluate("""() => {

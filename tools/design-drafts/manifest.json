@@ -2,6 +2,14 @@
   "version": 1,
   "drafts": [
     {
+      "id": "first20-purpose-v1",
+      "file": "first20-purpose.html",
+      "title": "첫 여정 · 목적지를 고르는 이유",
+      "revision": "2",
+      "recommended": true,
+      "description": "Sang의 전체 일괄 수정 지시로 목적지 예고를 반영했다. 실제58곳의 고유 소개와 추적 목표/중간 경유지를 구분하는 한 줄을 공유한다. 첫 검문소3선택의 주행 기억도 구현했다. 이 파일은 처음 제시한 문구 비교용 독립 시안이며 실제 HUD나 저장 재현이 아니다. 선택만으로 게임을 적용하거나 저장을 변경하지 않는다."
+    },
+    {
       "id": "route-continuity-v3",
       "file": "route-continuity-v3.html",
       "title": "도시와 길 · 한 공간으로 이어지는 배경",

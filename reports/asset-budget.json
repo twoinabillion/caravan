@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-01T12:06:30.243Z",
+  "generatedAt": "2026-11-01T17:19:36.690Z",
   "html": {
-    "bytes": 167541745,
+    "bytes": 167644371,
     "warnBytes": 160000000,
     "maxBytes": 200000000
   },
@@ -10,8 +10,9 @@
     "savedBytes": 315331
   },
   "losslessDelivery": {
+    "storage": "inert",
     "assets": 910,
-    "savedBytes": 6734217
+    "savedBytes": 6639624
   },
   "embedded": {
     "files": 1223,

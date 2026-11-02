@@ -248,7 +248,20 @@ const QuestLedgerUI={
         this.close(false);
       }
     },true);
-    document.addEventListener('keydown',event=>{ if(event.key==='Escape'&&this.isOpen()) this.close(); });
+    document.addEventListener('keydown',event=>{
+      if(event.key==='Escape'&&this.isOpen()){ this.close(); return; }
+      if(!this.isOpen()) return;
+      if(event.key!=='Tab') return;
+      const ledger=this.root.querySelector('#quest-ledger');
+      const controls=[...ledger.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),summary,[tabindex]:not([tabindex="-1"])')]
+        .filter(node=>node.getClientRects().length&&!node.closest('[hidden],[aria-hidden="true"]'));
+      if(!controls.length) return;
+      const first=controls[0],last=controls[controls.length-1],active=document.activeElement;
+      if(!ledger.contains(active)||(event.shiftKey?active===first:active===last)){
+        event.preventDefault();
+        (event.shiftKey?last:first).focus();
+      }
+    });
     window.addEventListener('questledgerchange',()=>{ this.render(); this.showUpdate(); });
     window.addEventListener('beforeunload',()=>this.captureLiveView());
     window.addEventListener('caravanscreenchange',()=>this.syncAvailability(true));
