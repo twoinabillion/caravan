@@ -25,6 +25,9 @@ with sync_playwright() as playwright:
     page.goto(GAME)
     # 실제 시작 흐름 — camp() 등은 screen==='game'을 요구한다
     page.click('#bt-new')
+    if page.locator('#scr-intro').is_visible():
+        page.click('#intro-skip')
+        page.click('#intro-summary-start')
     if page.locator('#scr-mode').is_visible():
         page.click('#mode-on')
     page.locator('[data-pack]').first.click()

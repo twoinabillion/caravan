@@ -38,6 +38,9 @@ with sync_playwright() as p:
     page.add_init_script("window.ReactNativeWebView={postMessage(){}}; localStorage.setItem('caravan_story_auto','0')")
     page.goto(GAME)
     page.click('#bt-new')
+    if page.locator('#scr-intro').is_visible():
+        page.click('#intro-skip')
+        page.click('#intro-summary-start')
     if page.locator('#scr-mode').is_visible():
         page.click('#mode-on')
     page.locator('[data-pack]').first.click()
