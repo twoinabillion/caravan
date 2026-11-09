@@ -19,10 +19,12 @@ function setup(){
 const renderers=ctx=>[turn=>ctx.storyTurnHtml(turn,{intro:true}),turn=>ctx.storyTurnHtml(turn),turn=>ctx.pagedStoryHtml([turn]),turn=>ctx.pagedStoryHtml([turn],true)];
 test('authored memo, letter and written record have one source, no portrait and unchanged body in every reader',()=>{
   const ctx=setup();
-  const turns=[...ctx.data.intro.flatMap(page=>page.beats||[]),
-    ...permanentEvents(ctx.data).flatMap(event=>[...(Array.isArray(event.turns)?event.turns:[]),
-      ...(event.choices||[]).flatMap(choice=>(choice.out||[]).flatMap(out=>Array.isArray(out.turns)?out.turns:[]))])]
-    .filter(turn=>ctx.storyDocumentTitle(turn));
+  const engine=require('./fixtures/qa-cycle103-eunsu-join/setup.cjs').setup();
+  const turns=engine.json(`(()=>{
+    const get=value=>typeof value==='function'?value(S):value;
+    const events=[...D.events,...D.roadCheckInEvents,...D.seoulStops,D.seoulOpenEvent,D.gateEvent,D.bridgeEvent,D.onboardingMission,...D.openingDeparture].filter(Boolean);
+    return [...D.intro.flatMap(page=>page.beats||[]),...events.flatMap(event=>[...(get(event.turns)||[]),...(event.choices||[]).flatMap(choice=>(choice.out||[]).flatMap(out=>get(out.turns)||[]))])];
+  })()`).filter(turn=>ctx.storyDocumentTitle(turn));
   assert(turns.length>10);assert(turns.some(turn=>turn.name==='엄마의 메모'));
   assert(turns.some(turn=>/남산 유지실/.test(turn.name||'')));
   const before=JSON.stringify(turns);
@@ -79,7 +81,7 @@ test('actual prose parser preserves authored written attribution without changin
   const ctx=setup();
   vm.runInContext(ui.slice(ui.indexOf('  function eventSpeakerCandidates('),ui.indexOf('  function prepareEventAudio(')),ctx);
   const event=ctx.data.events.find(event=>event.id==='parents_father_last_log');assert(event);
-  assert(event.turns.some(turn=>turn.kind==='record'&&ctx.storyDocumentTitle(turn)));
+  assert((typeof event.turns==='function'?event.turns(ctx.S):event.turns).some(turn=>turn.kind==='record'&&ctx.storyDocumentTitle(turn)));
   const written=ctx.buildStoryTurns('종이 쪽지에 적혀 있었다: 「문을 닫아라.」',{parseRecords:true},{});
   assert(written.some(row=>row.kind==='record'));
   for(const turn of written.filter(row=>row.kind==='record'))assert.match(ctx.pagedStoryHtml([turn]),/document-source">기록</);

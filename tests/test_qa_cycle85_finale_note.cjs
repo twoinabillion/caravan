@@ -36,5 +36,5 @@ for(const method of ['transfer','sleep','quarantine']){
 test('the only authored delta is removal of the shared false sleep claim',()=>{
  const h=setup(),now=h.json("JSON.parse(JSON.stringify(event('seoul_night'),(k,v)=>typeof v==='function'?v.toString():v))"),expected=structuredClone(oldDefinition);
  expected.choices[1].out[0].fx.note.body='가족의 직접 사유와 143년의 미확인 목적을 나눠 적었다. 반복 정리 중지와 재집행 불가를 기록했다.';
- assert.deepEqual(now,expected);
+ require('../tools/legacy-narrative-definition.cjs')(now,expected);
 });

@@ -1085,7 +1085,9 @@ test('the default core conversation retains the cause, challenge and verificatio
   assert.equal(turns[target-1].who,'me');assert.match(turns[target-1].text,/나라가 무너졌어/);
   assert.equal(turns[target+1].who,'cheollian');assert.match(turns[target+1].text,/제가 추가한 항목/);
   assert.equal(turns[target+2].who,'me');assert.match(turns[target+2].text,/왜 스스로 멈추지/);
-  assert.equal(turns[target+3].who,'cheollian');assert.match(turns[target+3].text,/자기 보존 규칙에 막혔.*검증키를 가진 사람이 결정.*인계 규약/);
+  assert.equal(turns[target+3].who,'cheollian');
+  const answer=turns.slice(target+3).map(t=>t.text).join('\n');
+  assert.match(answer,/자기 보존 규칙에 막혔/);assert.match(answer,/인계 규약/);assert.match(answer,/검증키.*제 서명으로 대신할 수는 없/);assert.match(answer,/여러분의 결정이 우선/);
   assert.match(read(e.readingRecord,h.S),/제가 추가한 항목/,'not a new last-minute premise');
   h.G.openEvent(e,{continuation:true});h.G.capturePresentationView({eventId:e.id,phase:'event',turns,index:target+2});h.reload();
   const restored={eventId:e.id,phase:'event'};h.G.restorePresentationView(restored);
@@ -1590,13 +1592,13 @@ test('northern key recovery preserves why the parents chose the truck, record ro
 
 test('father’s escape, reunion and final maintenance remain ordered in both routes',()=>{
   const h=setup(),father=h.event('parents_father_last_log'),copy=h.event('main_recovery_parents_father_last_log');
-  for(const text of [father.turns.map(t=>t.text).join('\n'),father.readingRecord,copy.turns.map(t=>t.text).join('\n')]){
+  for(const text of [read(father.turns,h.S).map(t=>t.text).join('\n'),father.readingRecord,read(copy.turns,h.S).map(t=>t.text).join('\n')]){
     assert(text.indexOf('화물차')<text.indexOf('다시 만났다'));
     assert(text.indexOf('다시 만났다')<text.indexOf('아빠는 그날 남산에서 죽었다'));
     assert.doesNotMatch(text,/화물 전달망/);
     assert.match(text,/잠시 멎었지만.*다시 이송을 명령할 수 있는 코어/);
   }
-  assert.match(copy.text,/수원 북부 교환소/);
+  assert.match(read(copy.text,h.S),/수원 북부 교환소/);
   assert.equal(copy.choices[0].out[0].fx.flag,'father_fate_known');
 });
 
@@ -1613,7 +1615,7 @@ test('main evidence does not require an unseen faction dispute or invent complet
     const run=setup(),id=(recovery?'main_recovery_':'')+'story_parent_route_guarded',e=run.event(id);
     run.S.at=recovery?'suwon':'cheongju';
     Object.assign(run.S.flags,{parent_cache_guarded:true,parent_key_located:true});
-    assert.match(e.text,recovery?/담당자.*전달편/:/전달함/);
+    assert.match(read(e.text,run.S),recovery?/담당자.*전달편/:/전달함/);
     const out=run.choose(e,1,true).out;
     assert.match(prose(out,run.S),recovery?/교환소 담당자에게 맡겼다/:/전달함에 넣었다/);
     assert.doesNotMatch(prose(out,run.S),/여섯 길로|여섯 조직/);
@@ -1657,7 +1659,7 @@ test('northern first-record notes preserve the same eight-digit clue as the text
 
 test('shared manifest close-up does not claim a southern visit in northern recovery',()=>{
   const h=setup(),copy=h.event('main_recovery_parents_diversion_manifest');
-  assert.match(copy.text,/수원 북부 교환소/);
+  assert.match(read(copy.text,h.S),/수원 북부 교환소/);
   assert.equal(copy.scene,'parents-diversion-record-v2');
   assert.doesNotMatch(h.D.sceneDescriptions[copy.scene],/남쪽|환승소 책상/);
   assert.match(h.D.sceneDescriptions[copy.scene],/운행표.*분류 기록/);
@@ -1908,6 +1910,9 @@ test('Leo first verse promise pays off once in either night choice and freezes t
     assert.equal(out.out.text.includes('약속한 첫 줄'),promised);
     assert.equal((out.out.text.match(/시동을 끄니 네 노래가 더 잘 들린다/g)||[]).length,1);
     assert(h.S.flags.seoul_local_saved);
+    assert.equal(h.G.queuePresentation(),'seoul_afterword_choice');
+    assert(h.G.presentTransition());assert.equal(h.S.pendingPresentation.phase,'event');assert.equal(h.S.pendingPresentation.narrativeRevision,'story-rhythm-v1');
+    h.choose(h.event('seoul_afterword_choice'),1,true);
     assert.equal(h.G.queuePresentation(),'seoul_uplink_reveal');
   }
 });
@@ -1933,6 +1938,9 @@ test('both scale handoffs persist and pay off once in both night choices',()=>{
     const out=h.choose(h.event('seoul_night'),night,true);
     assert.equal((out.out.text.match(/거래 완료/g)||[]).length,1);
     assert.match(out.out.text,/자기 손목에 맞게 줄였다/);
+    assert.equal(h.G.queuePresentation(),'seoul_afterword_choice');
+    assert(h.G.presentTransition());assert.equal(h.S.pendingPresentation.phase,'event');assert.equal(h.S.pendingPresentation.narrativeRevision,'story-rhythm-v1');
+    h.choose(h.event('seoul_afterword_choice'),1,true);
     assert.equal(h.G.queuePresentation(),'seoul_uplink_reveal');
   }
 });
@@ -2167,8 +2175,8 @@ test('both father routes pause after the death and preserve records, provenance 
       assert(turns.some(turn=>turn.kind==='record'&&/00:17/.test(turn.text)));
       if(id.startsWith('main_recovery')){
         assert(turns.filter(turn=>turn.kind==='record').every(turn=>turn.name.includes('사본')));
-        assert.match(e.text,/수원.*사본/);
-        assert.match(e.choices[1].out[0].text,/사본에 적힌.*빈 금속 표찰에 새겨/);
+        assert.match(read(e.text,h.S),/수원.*사본/);
+        assert.match(read(e.choices[1].out[0].text,h.S),/사본에 적힌.*빈 금속 표찰에 새겨/);
       }
       const out=h.choose(e,index,true);
       assert(h.S.flags.father_fate_known);
@@ -2266,7 +2274,7 @@ test('recovered outcomes use the northern copy, not inherited original-site read
   const out=e.choices[1].out[0];
   assert.match(prose(out,h.S),/빈 금속 표찰에 새겨/);
   assert.doesNotMatch(prose(out,h.S),/마지막 정비 번호표를.*걸었다/);
-  assert.equal(read(out.readingRecord,h.S),read(out.text,h.S));
+  assert(read(out.text,h.S).startsWith(read(out.readingRecord,h.S)),'the source record remains intact before the new present-day reaction');
 });
 
 test('sleep stays asleep through the uplink reveal, in turns and the optional record',()=>{

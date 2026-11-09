@@ -98,7 +98,7 @@ G.queueStory = (id)=>{
 /* 비트 조건. 거리만으로 고르면 동료·상황이 맞아야 성립하는 장면을 예약할 수 없고,
    그래서 그런 장면들이 무작위 풀에 남아 등장률 0%가 됐다(2026-08-06 실측). */
 G.beatReady = (b)=>{
-  if(!b||!G.mainEvidenceLocationReady(b.id)||S.stats.km<b.km||(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(b.id))) return false;
+  if(!b||G.travelMemoryPending?.(b.id)||!G.mainEvidenceLocationReady(b.id)||S.stats.km<b.km||(G.mainEvidenceEventDone&&G.mainEvidenceEventDone(b.id))) return false;
   const w=b.when;
   if(!w) return true;
   if(w.comps && !w.comps.every(id=>G.hasComp(id)&&!G.isInjured(id))) return false;
@@ -742,6 +742,7 @@ G.advance = (mins,options={})=>{
 };
 /* Shared by breakfast/lunch; a meal line cannot invent an absent passenger. */
 G.pickMealBanter = ()=>{
+  if(G.roadStoryQuietRemaining?.()>0) return null;
   if(!S.party.length) return null;
   const pool=(D.mealBanter||[]).filter(b=>{
     const need=b.need||{};

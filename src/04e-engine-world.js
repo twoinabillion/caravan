@@ -415,11 +415,15 @@ G.pickChat = ()=>{
   S._crewChatSeen=S._crewChatSeen||{};
   const night=G.isNight(), region=G.regionOf();
   const pool=D.chats.filter((c,i)=>{
-    const seen=S._crewChatSeen['daily:'+(c.id||'chat:'+i)];
+    const seen=S._crewChatSeen['daily:'+(c.id||'chat:'+i)]
+      ||S.relations?.seenChats?.['chat:'+i];
     // Authored one-time vignettes also honor the daily receipt from older builds.
     // Recurring meals and other daily routines remain repeatable tomorrow.
     if(seen&&(seen.day===S.day||c.once)) return false;
     if(c.once&&c.id&&S._crewChatSeen[c.id]) return false;
+    // Longer vignettes are discoveries, not a question reset every morning.
+    // A recurring routine may have an authored short continuation instead.
+    if(seen&&c.lines.length>3&&!D.roadChatContinuation?.(c)) return false;
     const nd=c.need||{};
     if(nd.comp && !G.hasComp(nd.comp)) return false;
     if(nd.comp2 && !G.hasComp(nd.comp2)) return false;
@@ -444,11 +448,14 @@ G.pickChat = ()=>{
   const storyPool=pool.filter(c=>c.arc&&c.once);
   const source=storyPool.length?storyPool:pool;
   const c=source[Math.floor(rng()*source.length)];
-  S._crewChatSeen['daily:'+(c.id||'chat:'+D.chats.indexOf(c))]={day:S.day,km:Math.round(S.stats.km)};
+  const index=D.chats.indexOf(c),key='daily:'+(c.id||'chat:'+index);
+  const previous=S._crewChatSeen[key]||S.relations?.seenChats?.['chat:'+index];
+  S._crewChatSeen[key]={day:S.day,km:Math.round(S.stats.km)};
   if(c.once&&c.id) S._crewChatSeen[c.id]={day:S.day,km:Math.round(S.stats.km)};
   G.rememberCrewChat(c);
   G.save();
-  return c;
+  const continuation=previous&&D.roadChatContinuation?.(c);
+  return continuation?{...c,lines:continuation}:c;
 };
 G.pickBanter = ()=>{
   const night = G.isNight(), rain = G.isWet(), region = G.regionOf();

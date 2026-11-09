@@ -9,7 +9,10 @@ function setup(){
   UI:new Proxy({modalOpen:()=>false,onArrive:()=>0,toast:t=>messages.push(t)},{get:(o,k)=>o[k]||noop}),
   localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)}});
  const run=s=>vm.runInContext(s,ctx);
- for(const p of engineFiles)run(fs.readFileSync(path.join(root,p),'utf8'));
+ for(const p of engineFiles){
+  try{run(fs.readFileSync(path.join(root,p),'utf8'));}
+  catch(error){if(p==='src/03o-story-refinement.js'&&error.code==='ENOENT')continue;throw error;}
+ }
  const ui=fs.readFileSync(path.join(root,'src/07-ui.js'),'utf8');
  run(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+ui.slice(ui.indexOf('  function eventSpeakerCandidates('),ui.indexOf('  function prepareEventAudio(')));
  const journal=fs.readFileSync(path.join(root,'src/07d-ui-quests.js'),'utf8');run(journal.slice(0,journal.indexOf('const QuestLedgerUI=')));

@@ -33,7 +33,7 @@ for(let i=0;i<ids.length;i++){
   for(const up of [{},Object.fromEntries(context.data.upgrades.map(u=>[u.id,true]))]){
     S.up=up;S.driving={from:'gumi',to:'gimcheon',dist:26,gone:14.43,approach:{...profile,startedAt:100000}};
     const before=JSON.stringify(S),dimensions=[],positions=[];
-    for(const elapsed of [0,300,900,1800,2268,2700]){
+    for(const elapsed of [0,.12,.33,.6,.84,1].map(ratio=>profile.duration*ratio)){
       now=100000+elapsed;calls.length=0;context.cue.roadApproachScene(100,0);
       const draw=calls.find(c=>c[0]==='drawImage'&&c[1]?.src?.includes('cue-'+keys[i]));
       assert(draw,ids[i]+' actually draws its own part');

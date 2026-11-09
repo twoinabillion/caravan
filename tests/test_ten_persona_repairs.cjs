@@ -3,7 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const {setup}=require('../qa-artifacts/ten-persona-repairs-20261020/setup.cjs');
 const baseline=require('../qa-artifacts/ten-persona-repairs-20261020/before.json');
 test('persona repair keeps every observed event gate, probability, cost and effect',()=>{
- const h=setup();assert.deepEqual(h.json(`JSON.parse(JSON.stringify(${JSON.stringify(baseline.ids)}.map(id=>event(id)),(k,v)=>['text','label','turnSpeakers','turns','readingRecord','note','storyOrigin'].includes(k)?undefined:v))`),baseline.mechanics);
+ const h=setup();const rows=h.json(`JSON.parse(JSON.stringify(${JSON.stringify(baseline.ids)}.map(id=>event(id)),(k,v)=>['text','label','turnSpeakers','turns','readingRecord','note','storyOrigin'].includes(k)?undefined:v))`);require('../tools/story-entry-contract.cjs')(rows);assert.deepEqual(rows,baseline.mechanics);
 });
 const lethal=`S.at='yangsan';S.day=7;S.min=1430;S._breakfastDay=7;S._lunchDay=7;S.water=0;S.food=12;S.thirst=3;S.van=60;S.wx='rain';S.wxNext='rain';`;
 test('death stops advance exactly at midnight and blocks the rest of camp',()=>{

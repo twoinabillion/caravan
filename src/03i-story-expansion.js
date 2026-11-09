@@ -933,3 +933,30 @@
     }
   }
 })();
+
+/* Short continuations belong to a conversation already heard on this journey.
+   Original lines and their saved indices remain intact for old chat receipts. */
+(() => {
+  const followups={
+    'daily-minji-parkss-meal':[['parkss','이번엔 내가 말하기 전에 먹는군.'],['minji','매번 들으면 저도 외워요.']],
+    'daily-minji-jaeyi-tools':[['jaeyi','줄칼 쓰고 닦아 놓을게요.'],['minji','제자리에만 놔 주세요.']],
+    'daily-minji-eunsu-sleep':[['minji','어젯밤엔 녹음기 소리 못 들었어요.'],['eunsu','밑에 댄 천이 좀 두꺼웠나 봐요.']],
+    'daily-minji-kangwoo-check':[['kangwoo','다음에 설 때 왼쪽 뒤부터지.'],['minji','네. 표시선부터요.']],
+    'daily-parkss-leo-sleep':[['parkss','졸리면 기타 가방부터 내려놓게.'],['leo','이번엔 담요만 덮을게요.']],
+    'daily-parkss-eunsu-names':[['eunsu','모르는 이름 옆은 비워 둘게요.'],['parkss','그래. 다음 사람한테 물어보면 되지.']],
+    'daily-kangwoo-jaeyi-gear':[['jaeyi','그 조끼, 다른 짐에 눌리지 않게 둘게요.'],['kangwoo','…고맙다.']],
+    'daily-kangwoo-leo-nightmare':[['leo','기타 가방은 반대편에 뒀어요.'],['kangwoo','…이번엔 발 뻗을 데가 있군.']],
+    'daily-kangwoo-eunsu-orders':[['kangwoo','쉬고 싶으면 불러. 라디오는 내가 볼 테니.'],['eunsu','이 줄까지만 정리하고요.']],
+    'daily-leo-jaeyi-pick':[['leo','피크, 이제 안쪽 주머니부터 찾게 돼요.'],['jaeyi','그거 달아 드린 보람 있네요.']],
+    'daily-leo-eunsu-unfinished':[['eunsu','아직 그 끝부분에서 멈춰요?'],['leo','네. 오늘은 한 음만 더 해 볼까 해요.']],
+    'daily-jaeyi-eunsu-unknown':[['jaeyi','이번에도 물음표부터 붙일까요?'],['eunsu','네. 라벨만 보고 채우지는 말고요.']],
+    'daily-me-minji-hands':[['me','손 씻기 전에 걸레부터. 맞지?'],['minji','응. 비누는 그다음.']],
+    'daily-me-kangwoo-seat':[['me','오늘도 조수석이에요?'],['kangwoo','…여기가 편해. 뒤는 비워 둬.']],
+    'daily-me-leo-blanket':[['me','담요는 어디 있어요?'],['leo','이번엔 제 옆이요. 보리한테 양보하기 전에 챙겨요.']],
+    'daily-me-eunsu-offrecord':[['me','이번 얘기도 녹음은 빼고요.'],['eunsu','네. 들을게요.']],
+    'legacy-brake-check':[['kangwoo','브레이크 소리가 달라지면 바로 말하지.'],['minji','네. 다음에 세울 때도 같이 들어 주세요.']]
+  };
+  D.roadChatContinuation=chat=>followups[chat.id]
+    ||(chat.lines?.[0]?.[0]==='kangwoo'&&chat.lines[0][1]==='…민지. 브레이크 밟을 때 소리가 났다.'
+      ?followups['legacy-brake-check']:null);
+})();

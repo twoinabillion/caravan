@@ -9,7 +9,11 @@ function setup(sourceRoot=root){
   UI:new Proxy({modalOpen:()=>false,onArrive:()=>0,toast:t=>messages.push(t)},{get:(o,k)=>o[k]||noop}),
   localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)}});
  const run=s=>vm.runInContext(s,ctx);
- for(const p of engineFiles)run(fs.readFileSync(path.join(sourceRoot,p),'utf8'));
+ for(const p of engineFiles){
+  // This module did not exist in frozen historical source editions.
+  if(p==='src/03o-story-refinement.js'&&sourceRoot!==root&&!fs.existsSync(path.join(sourceRoot,p)))continue;
+  run(fs.readFileSync(path.join(sourceRoot,p),'utf8'));
+ }
  const ui=fs.readFileSync(path.join(sourceRoot,'src/07-ui.js'),'utf8');
  run(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+ui.slice(ui.indexOf('  function eventSpeakerCandidates('),ui.indexOf('  function prepareEventAudio(')));
  const journal=fs.readFileSync(path.join(sourceRoot,'src/07d-ui-quests.js'),'utf8');run(journal.slice(0,journal.indexOf('const QuestLedgerUI=')));

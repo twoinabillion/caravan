@@ -190,7 +190,7 @@ G.newGame = (mode, name, entryMode='full', profile, startPack)=>{
     _stlField:{daily:{},once:{},impact:{},roadEchoed:{},log:[]}, _impactEcho:null,
     _rescues:{}, _stlNights:{}, stopover:null, locationContractVersion:D.eventLocationVersion||1,
     campNight:0, campConversation:null, campMemories:{},
-    opening:interactiveOpening?{version:2,narrativeVersion:1,step:0,pendingResult:null,decisions:{},completed:false,
+    opening:interactiveOpening?{version:2,narrativeVersion:1,proseRevision:'opening-flow-v1',step:0,pendingResult:null,decisions:{},completed:false,
       nameIntroduction:(name||'').trim()?'done':'pending',nameDraft:''}:null,
   };
   /* 출발 구성 — 자원 패치는 얕은 병합, items만 통째 교체 */
@@ -243,7 +243,7 @@ G.openingPending = ()=>{
     return D.openingNameIntroduction;
   const presence=S.opening.narrativeVersion===1;
   if(presence&&step===5)return D.openingFarewell;
-  const steps=presence?D.openingPresence:D.openingDeparture;
+  const steps=presence&&S.opening.proseRevision==='opening-flow-v1'&&Array.isArray(D.openingFlowV1)?D.openingFlowV1:presence?D.openingPresence:D.openingDeparture;
   return Array.isArray(steps)?steps[step]||null:null;
 };
 G.setOpeningNameDraft = value=>{

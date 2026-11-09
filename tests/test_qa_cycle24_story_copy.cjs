@@ -1,7 +1,8 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const dir=path.resolve(__dirname,'../qa-artifacts/qa-cycle-20261026/cycle24/story/repair25');
-const {setup,open,choose,state,frozen}=require(dir+'/setup.cjs');
+const {setup,open,choose,state:rawState,frozen}=require(dir+'/setup.cjs');
 const before=require(dir+'/before.json'),legacy=require(dir+'/legacy.json');
+const state=h=>{const value=rawState(h);if(value.opening?.proseRevision){assert.equal(value.opening.proseRevision,'opening-flow-v1');delete value.opening.proseRevision;}return value;};
 const matrix=require(dir+'/../copy-proposal25/comparison.json').road.matrix;
 const neutral=s=>s.replace(/^(맑음|비|폭풍|안개|황사) 뒤 /,'');
 const namedEntry=turns=>turns.map(t=>t.kind==='dialogue'&&t.name==='???'?(({speakerUncertain,...rest})=>({...rest,name:'정착지에서 온 사람'}))(t):t);

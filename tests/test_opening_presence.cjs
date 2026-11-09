@@ -54,7 +54,8 @@ test('short authored memory returns to the current appeal; immutable pagination 
   const pages=plain(h.run(`(()=>{const turns=G.openingPending().turns;let at={turn:0,offset:0},result=[];while(at.turn<turns.length){const page=StoryPages.take(turns,at,()=>true);result.push(page);at=page.end;}return result;})()`));
   assert.equal(pages.length,3);assert.deepEqual(pages.map(page=>page.rows[0].timeKind),['current','memory','current']);
   assert.deepEqual(event.choices.map(choice=>choice.out[0].fx.time),[15,30]);
-  assert.deepEqual(event.turns.slice(4).map(turn=>turn.text),plain(h.run('D.openingDeparture[2].turns.slice(1).map(turn=>turn.text)')));
+  assert.deepEqual(event.turns.slice(5).map(turn=>turn.text),plain(h.run('D.openingDeparture[2].turns.slice(2).map(turn=>turn.text)')));
+  assert.match(event.turns[4].text,/이의 신청을 열세 번/);
 });
 test('time source, picture, partial cursor and optional-history disclosure survive receipt reload',()=>{
   const h=engine();h.run(`G.newGame('onroad','다온','interactive');S.opening.step=2;
@@ -68,7 +69,7 @@ test('preparation history contains past sources, never today’s repair or depar
   assert.equal(h.run('D.intro.length'),27);assert.equal(pages.length,10);
   for(const page of pages){assert(page.scene&&page.beats.length);assert(['memory','reported'].includes(page.timeKind));assert.doesNotMatch(page.era,/오늘|어제|요즘/);}
   assert(!pages.some(page=>/departure|appeal|dashboard/.test(page.scene)));
-  Object.assign(h.ctx,{introPreview:true});const playlist=helper(h,'introPages');assert.equal(playlist().length,10);
+  Object.assign(h.ctx,{introPreview:true,introPrologue:false});const playlist=helper(h,'introPages');assert.equal(playlist().length,10);
   h.ctx.introPreview=false;assert.equal(playlist().length,27);
 });
 test('reader orientation changes on back/current/result without spending gameplay state',()=>{

@@ -77,3 +77,23 @@ test('past-only summary never claims the upcoming bus repair or module discovery
   h.ctx.introPrologue=false;h.ctx.introPreview=false;h.run('{'+code+'}');
   assert.equal(list.innerHTML,'<li>내가 고친 버스와 계기판 검증 모듈</li>');
 });
+test('new default prologue earns the grandfather farewell with their shared workshop and home',()=>{
+  const h=fixture();h.run('startJourneyPrologue()');
+  const pages=h.run('introPages()'),scenes=Array.from(pages,p=>p.scene);
+  assert(scenes.includes('intro-years-together'));
+  assert(scenes.includes('intro-camper-conversion'));
+  assert(!scenes.includes('intro-socket-memory-v1'),'the socket joke is told once in the fuller scene');
+  const words=Array.from(pages,p=>p.beats.map(b=>b.text).join('\n')).join('\n');
+  assert(!words.includes('돌아오는 길에 수첩 속 표식들이 생각났다'));
+  assert.match(words,/차 말고 우리/);assert.match(words,/두 사람이 겨우 눕는 작은 집/);
+  assert.equal(JSON.parse(h.session.get('caravan-prologue-view-v1')).version,2);
+});
+test('an active old prologue retains its exact playlist, words and cursor across refresh',()=>{
+  const h=fixture();h.session.set('caravan-prologue-view-v1',JSON.stringify({version:1,page:8,turn:4,completed:false}));
+  h.run('startJourneyPrologue()');
+  assert.equal(h.run('introPages()[introIdx].scene'),'intro-socket-memory-v1');
+  assert.equal(h.ctx.introTurnIdx,4);
+  assert.equal(JSON.parse(h.session.get('caravan-prologue-view-v1')).version,1);
+  h.run('rememberJourneyPrologue();startJourneyPrologue()');
+  assert.equal(h.run('introPages()[introIdx].scene'),'intro-socket-memory-v1');
+});

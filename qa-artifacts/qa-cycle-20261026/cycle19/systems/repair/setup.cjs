@@ -11,7 +11,7 @@ exports.setup=(frozen=false)=>{
     UI:new Proxy({modalOpen:()=>false,toast:t=>messages.push(t)},{get:(o,k)=>o[k]||noop}),
     localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)}});
   const run=code=>vm.runInContext(code,ctx);
-  for(const p of [...STATIC_CONTENT_FILES,...fs.readdirSync(source+'/src').filter(f=>/^04[a-h]-.*\.js$/.test(f)).sort().map(f=>'src/'+f)])run(fs.readFileSync(source+'/'+p,'utf8'));
+  for(const p of [...STATIC_CONTENT_FILES.filter(p=>p!=='src/03o-story-refinement.js'||source===root||fs.existsSync(source+'/'+p)),...fs.readdirSync(source+'/src').filter(f=>/^04[a-h]-.*\.js$/.test(f)).sort().map(f=>'src/'+f)])run(fs.readFileSync(source+'/'+p,'utf8'));
   const ui=fs.readFileSync(source+'/src/07-ui.js','utf8');
   run(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+ui.slice(ui.indexOf('  function eventSpeakerCandidates('),ui.indexOf('  function prepareEventAudio(')));
   run("G.seedOverride=181919;G.newGame('onroad','검증','interactive');S.opening.completed=true;globalThis.event=id=>G.presentationEvent(id);");

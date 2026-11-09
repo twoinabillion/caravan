@@ -146,6 +146,12 @@
       <canvas id="minimap" title="지도 열기" role="button" tabindex="-1" aria-label="전체 지도 열기" aria-hidden="true"></canvas>
     </div>
 
+    <section id="travel-memory-notice" aria-label="떠오른 기억" hidden>
+      <p role="status" aria-live="polite"><span data-memory-cue></span><strong data-memory-title></strong></p>
+      <button type="button" data-memory-open>기억 들여다보기</button>
+      <button type="button" data-memory-later>나중에</button>
+    </section>
+
     <section id="pursuit-help" role="region" aria-label="천리안의 추적 위험 설명" hidden>
       <div class="pursuit-help-head"><strong>추적 위험</strong><span class="pursuit-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><button id="pursuit-help-close" type="button" aria-label="추적 위험 설명 닫기">×</button></div>
       <p id="pursuit-description"></p><small>천리안에 쌓인 관측 표식이에요. 지금 누가 쫓아온다는 뜻은 아니에요.</small>

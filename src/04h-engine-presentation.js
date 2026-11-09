@@ -131,6 +131,7 @@ G.validatePresentation = value=>{
   if(value.phase==='transition') return row;
   if(G.presentationSceneTime(value.sceneTime))row.sceneTime=G.presentationSceneTime(value.sceneTime);
   if(G.presentationSceneRevision(value.sceneRevision))row.sceneRevision=G.presentationSceneRevision(value.sceneRevision);
+  if(G.presentationSceneRevision(value.narrativeRevision))row.narrativeRevision=G.presentationSceneRevision(value.narrativeRevision);
   if(G.presentationFixedScene(value.fixedScene))row.fixedScene=G.presentationFixedScene(value.fixedScene);
   if(event.roadCheckIn&&value.phase==='event'&&(!S?.driving||S.driving.checkIn||!S.party.includes(event.roadCheckIn))) return null;
   row.text=G.presentationText(value.text);
@@ -166,6 +167,7 @@ G.beginPresentation = event=>{
   S.pendingPresentation={version:1,eventId:event.id,phase:'event',
     ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
     ...(G.newPresentationSceneRevision(event)?{sceneRevision:G.newPresentationSceneRevision(event)}:{}),
+    ...(G.presentationSceneRevision(event.narrativeRevision)?{narrativeRevision:event.narrativeRevision}:{}),
     ...(G.presentationFixedScene(D.eventSceneFixedVariants?.[event.id])?{fixedScene:G.presentationFixedScene(D.eventSceneFixedVariants[event.id])}:{}),
     text:G.presentationText(typeof event.text==='function'?event.text(S):event.text)};
   G.save();
@@ -216,6 +218,7 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
   // with the result receipt only after every effect and callback has finished.
   const readingBefore=G.presentationReading(G.presentationOwner(event.id)?.reading);
   const historyView=G.presentationView(history)||readingBefore?.view;
+  const narrativeRevision=G.presentationSceneRevision(saved?.eventId===event.id?saved.narrativeRevision:event.narrativeRevision);
   G.presentationApplying=true;
   try{
     const own=event.campConversation?G.resolveCampChoice(event.id,choice.id)
@@ -243,11 +246,12 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
       noteTitle:event.title,
       // The final result is a readable, saved scene. Archive/payment still
       // happen once now; only the terminal screen waits for its Continue.
-      deferJourneyEnd:event.id==='seoul_session_reset'&&!!out.fx?.endJourney
+      deferJourneyEnd:G.isFinaleClosingEvent(event.id)&&!!out.fx?.endJourney
     });
     // A fatal time boundary already owns the ending. No result callback, level
     // reward, memory or chain may modify that archived state afterwards.
     if(S.ended) return {ok:true,applied:true,out:{...out,text:G.presentationText(typeof out.text==='function'?out.text(S):out.text)},chips};
+    if(event.id==='seoul_night'&&narrativeRevision==='story-refinement-v1') S.flags.story_closure_v1=1;
     if(!own&&event.needsComp) G.checkLevel(event.needsComp,{story:true});
     if(!own&&!entry) entry=G.rememberCombatChoice(event,choice,meta);
     if(!own) chips.push(...G.afterChoice(event,choice,out));
@@ -273,6 +277,7 @@ G.resolvePresentedChoice = (event,choice,history=null,options={})=>{
       S.pendingPresentation=G.validatePresentation({version:1,phase:'result',eventId:event.id,
         ...(G.newPresentationSceneTime(event)?{sceneTime:G.newPresentationSceneTime(event)}:{}),
         ...(G.newPresentationSceneRevision(event)?{sceneRevision:G.newPresentationSceneRevision(event)}:{}),
+        ...(narrativeRevision?{narrativeRevision}:{}),
         ...(saved?.eventId===event.id&&G.presentationFixedScene(saved.fixedScene)?{fixedScene:G.presentationFixedScene(saved.fixedScene)}:{}),
         choiceIndex:ci,outcomeIndex:out.presentationOutcomeIndex??choice.out.indexOf(out),text,chips,combatState,authoredView});
     }
@@ -313,15 +318,17 @@ G.popTimedStory = (context='stop')=>{
   }
   return null;
 };
+G.isFinaleClosingEvent = id=>['seoul_session_reset','seoul_afterword_choice'].includes(id);
 G.queuePresentation = id=>{
   const row=G.validatePresentation(S.pendingPresentation);
   const outcome=row?.phase==='result'?G.presentationEvent(row.eventId).choices[row.choiceIndex].out[row.outcomeIndex]:null;
-  if(row?.eventId==='seoul_session_reset'&&outcome?.fx?.endJourney&&S.flags.story_done){
+  if(G.isFinaleClosingEvent(row?.eventId)&&outcome?.fx?.endJourney&&S.flags.story_done){
     S._chain=null;
     G.endGame(G.arrivalEndingKind());
     return null;
   }
-  const requested=outcome?.fx?.chain||id;
+  const requested=row?.phase==='result'&&row.eventId==='seoul_night'&&row.narrativeRevision==='story-refinement-v1'
+    ?'seoul_afterword_choice':outcome?.fx?.chain||id;
   const next=G.deferRouteOpening(requested)||G.deferSkylineOpening(requested)?null:G.resolveMainEvidenceChain(requested);
   S._chain=null;
   if(G.deferTimedStory(next)){
@@ -366,7 +373,8 @@ G.unfinishedSeoulEvent = ()=>{
   if(D.seoulMap.stops.slice(0,4).some(stop=>!f[`seoul_${stop.id}_done`])) return null;
   if(!f.seoul_core_reached) return null; // the map owns choosing each climb stop
   const id=!f.seoul_costs_seen?'seoul_costs':!G.resolvedFinaleMethod()?'seoul_decision':
-    !f.seoul_local_saved?'seoul_night':!f.uplink_scale_seen?'seoul_uplink_reveal':'seoul_session_reset';
+    !f.seoul_local_saved?'seoul_night':f.story_closure_v1&&!f.afterword_requested?'seoul_afterword_choice':
+      !f.uplink_scale_seen?'seoul_uplink_reveal':'seoul_session_reset';
   return G.presentationEvent(id);
 };
 G.resumePresentation = ()=>{
@@ -380,7 +388,8 @@ G.resumePresentation = ()=>{
     if(S._crisis==='crisis_hungry') S._crisis=null;
     G.save();
   }
-  const finalResult=row?.eventId==='seoul_session_reset'&&row.phase==='result';
+  const finalResult=G.isFinaleClosingEvent(row?.eventId)&&row.phase==='result'
+    &&!!G.presentationEvent(row.eventId).choices[row.choiceIndex].out[row.outcomeIndex].fx?.endJourney;
   if(S.flags.story_done&&!finalResult){ G.endGame('story_done'); return true; }
   if(row){
     if(row.phase==='transition') return G.presentTransition();
@@ -408,4 +417,41 @@ G.prepareFinale = ()=>{
   G.applyFx({goto:'suwon',time:60,note:{type:'사건',title:'결정 전에 돌아간 길',
     body:'집행 방식을 고르기 전에 수원으로 내려왔다. 거점 응답과 열쇠 보유자, 동료의 부상과 사기를 다시 준비한다.',links:['남산','수원']}});
   return true;
+};
+
+/* Unread travel recollections are invitations, separate from the event receipt.
+   A notice never claims knowledge, spends effects, or occupies the reader. */
+G.pendingTravelMemories = ()=>{
+  const box=S?.travelMemoryInbox;
+  if(box?.version!==1||!Array.isArray(box.ids))return [];
+  return [...new Set(box.ids)].slice(0,16).map(id=>G.presentationEvent(id))
+    .filter(event=>event?.travelMemory&&!S.used.includes(event.id));
+};
+G.travelMemoryPending = id=>G.pendingTravelMemories().some(event=>event.id===id);
+G.offerTravelMemory = (event,options={})=>{
+  if(!S||S.ended||!event?.travelMemory||options.memoryOpened
+    ||S.pendingPresentation?.eventId===event.id||S.used.includes(event.id))return false;
+  const pending=G.pendingTravelMemories();
+  if(!pending.some(row=>row.id===event.id)){
+    S.travelMemoryInbox={version:1,ids:[...pending.map(row=>row.id),event.id],quiet:false};
+    G.save();
+  }
+  UI.syncTravelMemoryNotice?.();
+  return true;
+};
+G.deferTravelMemoryNotice = ()=>{
+  if(!G.pendingTravelMemories().length)return false;
+  S.travelMemoryInbox.quiet=true;G.save();UI.syncTravelMemoryNotice?.();return true;
+};
+G.openTravelMemory = id=>{
+  if(!S||S.ended||S.pendingPresentation||G.openingPending()||S._crisis||S.combat
+    ||S.driving?.approach||UI.modalOpen())return false;
+  const pending=G.pendingTravelMemories(),event=pending.find(row=>row.id===id);
+  if(!event)return false;
+  // Persist the real reader before removing its invitation. Reload thereafter
+  // belongs to resumePresentation, with the original text/cursor/effects owner.
+  G.beginPresentation(event);
+  S.travelMemoryInbox={version:1,ids:pending.filter(row=>row!==event).map(row=>row.id),quiet:true};
+  G.openEvent(event,{memoryOpened:true,continuation:true});G.save();
+  UI.syncTravelMemoryNotice?.();return true;
 };

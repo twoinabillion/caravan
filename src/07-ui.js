@@ -39,7 +39,7 @@ const UI = (()=>{
   const heldStoryAdvanceKeys=new Set();
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper', introRestart=false;
-  let introPreview=false, introPrologue=false;
+  let introPreview=false, introPrologue=false, introPrologueVersion=2;
   let pendingPack='fuel';
   const preparationKey='caravan-departure-prep-v1';
   function rememberPreparation(active=true){
@@ -1037,17 +1037,18 @@ const UI = (()=>{
     }
   }
   function rememberJourneyPrologue(completed=false){
-    try{sessionStorage.setItem('caravan-prologue-view-v1',JSON.stringify({version:1,page:introIdx,turn:introTurnIdx,completed}));}catch(error){}
+    try{sessionStorage.setItem('caravan-prologue-view-v1',JSON.stringify({version:introPrologueVersion,page:introIdx,turn:introTurnIdx,completed}));}catch(error){}
   }
   function startJourneyPrologue(){
     let saved=null;
-    try{const raw=JSON.parse(sessionStorage.getItem('caravan-prologue-view-v1')||'null');if(raw?.version===1)saved=raw;}catch(error){}
+    try{const raw=JSON.parse(sessionStorage.getItem('caravan-prologue-view-v1')||'null');if([1,2].includes(raw?.version))saved=raw;}catch(error){}
     startNew('onroad');
     if(saved?.completed===true)return;
-    introPrologue=true;introPreview=true;
-    if(Number.isInteger(saved?.page)&&saved.page>=0&&saved.page<D.introHistoryPages.length){
+    introPrologue=true;introPreview=true;introPrologueVersion=saved?.version||2;
+    const pages=introPages();
+    if(Number.isInteger(saved?.page)&&saved.page>=0&&saved.page<pages.length){
       introIdx=saved.page;
-      if(Number.isInteger(saved.turn)&&saved.turn>=0&&saved.turn<D.introHistoryPages[introIdx].beats.length)introTurnIdx=saved.turn;
+      if(Number.isInteger(saved.turn)&&saved.turn>=0&&saved.turn<pages[introIdx].beats.length)introTurnIdx=saved.turn;
     }
     rememberJourneyPrologue();
     show('scr-intro');renderIntro(true);
@@ -1077,7 +1078,7 @@ const UI = (()=>{
     const delay=Math.max(1900,Math.min(5200,800+chars*55));
     introAutoTimer=setTimeout(()=>{ introAutoTimer=0; if(screen==='intro'&&!document.hidden) nextIntro(); },delay);
   }
-  function introPages(){return introPreview?D.introHistoryPages:D.intro;}
+  function introPages(){return introPreview?(introPrologue&&introPrologueVersion!==1?D.journeyProloguePages||D.introHistoryPages:D.introHistoryPages):D.intro;}
   function renderIntro(newPage){
     const pages=introPages(),page=pages[introIdx];
     if(!page)return;
@@ -3111,7 +3112,7 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function renderAll(){
     if(questRouteState!==S){ questRouteFocus=null; questRouteState=S; }
-    renderHud(); renderMission(); renderPanel();
+    renderHud(); renderMission(); renderPanel(); UI.syncTravelMemoryNotice?.();
   }
 
   /* ── travel hooks ── */

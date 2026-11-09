@@ -304,7 +304,10 @@ G.openEventById = (id)=>{
   };
   G.roadApproachProfile = (evd)=>{
     if(!evd || evd.roadApproach === false) return null;
-    const authored=evd.roadApproach&&typeof evd.roadApproach==='object'?evd.roadApproach:{};
+    const authored={...(['meet_postman','postman_again'].includes(evd.id)?{
+      duration:5200,kind:'cyclist',label:evd.id==='meet_postman'?'짐을 실은 자전거가 마주 온다':'익숙한 자전거 방울 소리가 들린다',
+      scene:{motif:'postman',people:1}
+    }:{}),...(evd.roadApproach&&typeof evd.roadApproach==='object'?evd.roadApproach:{})};
     const type = String(evd.type || '');
     if((type === '대화' || type === '동행')&&!authored.force) return null;
     const id = String(evd.id || '').toLowerCase();
@@ -336,7 +339,7 @@ G.openEventById = (id)=>{
     const scene={...roadApproachSceneProfile(evd,kind),...(authored.scene||{})};
     /* Give the player time to see the roadside cue before braking. Crisis
        events stop a little sooner, but never snap directly into the event. */
-    const duration=Math.max(1800,Number(authored.duration)||((type === '위기' || evd.combat) ? 2100 : 2700));
+    const duration=Math.max(1800,Number(authored.duration)||((type === '위기' || evd.combat) ? 2700 : 4200));
     return {kind, title:String(evd.title||''),
       label:authored.label||ROAD_APPROACH_MOTIF_LABELS[scene.motif]||ROAD_APPROACH_LABELS[kind],
       duration,eventKey:key,scene};
@@ -349,6 +352,7 @@ G.openEventById = (id)=>{
   G.openEvent = (evd,options={})=>{
     if(!S||S.ended) return;
     if(G.deferSkylineOpening(evd?.id)) return;
+    if(G.offerTravelMemory?.(evd,options))return;
     const eventKey = evd && (evd.id || `${evd.title || 'road-event'}:${evd.type || ''}`);
     const approach = S.driving&&!options.continuation ? G.roadApproachProfile(evd) : null;
     if(approach && S._roadApproachBypass !== eventKey && !S.driving.approach){
@@ -486,6 +490,8 @@ G.applyFx = (fx,context={})=>{
     }
     S.items[nm]=Math.max(0,(S.items[nm]||0)+v);
     chips.push({t:`${nm} ${v>0?'+':''}${v}`, c:v>0?'plus':'minus'}); } }
+  if(fx.flag==='father_fate_known'&&!S.flags.father_fate_known)
+    S.roadStoryQuiet={source:'father-last-log',remaining:12};
   if(fx.flag) S.flags[fx.flag]=true;
   if(fx.flag2) S.flags[fx.flag2]=true;
   if(fx.flagCount) S.flags[fx.flagCount]=(S.flags[fx.flagCount]||0)+1;

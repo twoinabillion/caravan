@@ -7,7 +7,7 @@ exports.replace=s=>{for(const r of delta.replacements){assert.equal(s.split(r.ol
 exports.load=({draft=false,raw=null,fresh=false,met=true,letter=false,fixed=false}={})=>{
  const source=draft==='production'?root:frozenSource;
  const store=new Map(),noop=()=>{},ctx=vm.createContext({console,Date,URLSearchParams,location:{search:''},setTimeout:()=>0,clearTimeout:noop,document:{readyState:'loading',addEventListener:noop},window:{dispatchEvent:noop},CustomEvent:function(){},UI:new Proxy({modalOpen:()=>false},{get:(o,k)=>o[k]||noop}),localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)}}),run=code=>vm.runInContext(code,ctx);
- for(const p of [...STATIC_CONTENT_FILES,...fs.readdirSync(source+'/src').filter(f=>/^04[a-h]-.*\.js$/.test(f)).sort().map(f=>'src/'+f)]){let text=fs.readFileSync(source+'/'+p,'utf8');if(draft===true&&p==='src/03-data.js')text=exports.replace(text);run(text);}
+ for(const p of [...STATIC_CONTENT_FILES.filter(p=>p!=='src/03o-story-refinement.js'||source===root||fs.existsSync(source+'/'+p)),...fs.readdirSync(source+'/src').filter(f=>/^04[a-h]-.*\.js$/.test(f)).sort().map(f=>'src/'+f)]){let text=fs.readFileSync(source+'/'+p,'utf8');if(draft===true&&p==='src/03-data.js')text=exports.replace(text);run(text);}
  const ui=fs.readFileSync(source+'/src/07-ui.js','utf8');run(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+ui.slice(ui.indexOf('  function eventSpeakerCandidates('),ui.indexOf('  function prepareEventAudio(')));run('(()=>{'+reader.code()+'})()');
  assert(run(`G.load(${JSON.stringify(raw||fs.readFileSync(natural,'utf8'))})`));
  // Only the fresh/boundary fixtures use state setup. All are explicitly excluded

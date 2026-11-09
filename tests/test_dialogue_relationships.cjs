@@ -19,6 +19,7 @@ test('1039 events retain branches, costs, effects and chains; only callsign reca
  }).sort((a,b)=>a.id.localeCompare(b.id));
  // Presentation-only missionBrief excluded against the pre-condensation baseline.
  // Costs, effects, prerequisites and chains remain in the contract.
+ require('../tools/story-entry-contract.cjs')(rows);
  assert.equal(rows.length,1039);
  const jaeyi=rows.find(row=>row.id==='jy_recruit');
  assert.equal(jaeyi.choices.length,3);

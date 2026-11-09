@@ -485,6 +485,17 @@ G.delayBanter = (minSeconds=40,maxSeconds=minSeconds)=>{
   return banterCd;
 };
 G.banterCooldown = ()=>banterCd;
+// Saved seconds of active driving, so reopening the reader or reloading cannot
+// erase the pause after a loss. Events and useful radio keep their own clocks.
+G.roadStoryQuietRemaining = ()=>{
+  const remaining=S?.roadStoryQuiet?.remaining;
+  return Number.isFinite(remaining)&&remaining>0?Math.min(60,remaining):0;
+};
+G.consumeRoadStoryQuiet = dt=>{
+  const remaining=Math.max(0,G.roadStoryQuietRemaining()-(Number.isFinite(dt)?Math.max(0,dt):0));
+  if(S?.roadStoryQuiet) S.roadStoryQuiet.remaining=remaining;
+  return remaining;
+};
 /* 실시간 1초당 진행 거리(km). 테스트·도구가 속도 상수를 복제하지 않도록 엔진이 노출한다. */
 G.tickKmPerSecond = ()=> KMH/60*TIMESCALE;
 /* 현재 날씨/피로 기준의 순수 주행 예보. 앞으로의 날씨 변화·사건·휴식은 제외한다.
@@ -561,8 +572,9 @@ G.tick = (dt)=>{ // dt: real seconds
     G.fireDriveEvent(); return;
   }
   // 중요한 선택은 충분한 거리와 사건이 지난 뒤 한 번만 대화/풍경으로 돌아온다.
-  choiceEchoCd -= dt;
-  if(choiceEchoCd<=0){
+  const storyQuiet=G.consumeRoadStoryQuiet(dt)>0;
+  if(!storyQuiet) choiceEchoCd -= dt;
+  if(!storyQuiet&&choiceEchoCd<=0){
     const echo=G.takeChoiceEcho();
     if(echo){
       UI.playChat(echo.lines);
@@ -571,8 +583,8 @@ G.tick = (dt)=>{ // dt: real seconds
     } else choiceEchoCd=8;
   }
   // banter
-  banterCd -= dt;
-  if(banterCd<=0){ banterCd = 11+R(9);
+  if(!storyQuiet) banterCd -= dt;
+  if(!storyQuiet&&banterCd<=0){ banterCd = 11+R(9);
     if(rng()<0.22){ const c=G.pickChat(); if(c){ UI.playChat(c.lines); banterCd+=c.lines.length*3; } }
     else { const b = G.pickBanter(); if(b) UI.speak(b); } }
   // radio (수리 후에만 수신)

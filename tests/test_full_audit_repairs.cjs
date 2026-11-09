@@ -10,6 +10,7 @@ const reload=h=>{
 };
 test('only individually approved gates, disclosed costs and free exits change the 30 available baseline rows (Seoul opening has its own owner)',()=>{
  const h=setup(),rows=h.json(`JSON.parse(JSON.stringify(${JSON.stringify(baseline.ids)}.map(id=>event(id)),(k,v)=>['text','label','title','turnSpeakers','turns','readingRecord','note'].includes(k)?undefined:v))`);
+ require('../tools/story-entry-contract.cjs')(rows);
  for(const row of rows){
   if(!row)continue; // seoul_open has a dedicated owner, not D.events/seoulStops.
   if(row.id==='comp_rps'){

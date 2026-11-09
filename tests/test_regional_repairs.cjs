@@ -100,13 +100,13 @@ test('old paid receipts bypass new spending gates and retain text, chips and rea
 });
 test('clarifications do not assert current direction, earlier visits, contact or a new six-second reset; crisis hints retain uncertain rescue',()=>{
  const h=setup();
- assert.doesNotMatch(h.run("event('memory_busan_terminal').choices[1].out[0].text"),/여전히 북쪽/);
+ assert.doesNotMatch(h.run("prose(event('memory_busan_terminal').choices[1].out[0].text)"),/여전히 북쪽/);
  assert.doesNotMatch(h.run("event('parents_diversion_manifest').text"),/환승소에서 찾은/);
  assert.doesNotMatch(h.run("event('meet_postman').choices[0].out[0].text"),/우리가 스친/);
  assert.doesNotMatch(h.run("event('combat_toll_breach').text"),/아직 사이렌|지금부터/);
  assert.doesNotMatch(h.run("event('combat_toll_breach').choices[3].out[0].text"),/손댄 채|손댄 흔적/);
  assert.doesNotMatch(h.run("event('story_bridge_departure_echo').text"),/멀어질 즈음/);
- assert.match(h.run("event('story_parent_route_shared').text"),/전달자 서진/);
+ assert.match(h.run("prose(event('story_parent_route_shared').text)"),/전달자 서진/);
  for(const id of ['crisis_nofuel','crisis_nofuel2']){
   assert.match(h.run(`JSON.stringify(G.choiceForeseeable(event('${id}').choices[1]))`),/유료 지원 시|지원이 없으면/);
   assert.equal(h.run(`G.choiceReq(event('${id}').choices[1])`),null);
@@ -130,6 +130,7 @@ test('only declared resource gates, free exits, tactical disclosure and prose me
  const rows=h.json(`JSON.parse(JSON.stringify(${JSON.stringify(Object.keys(before.events))}.map(id=>event(id))))`);
  const base=Object.values(before.events);
  require('../tools/story-review-contract.cjs').expedition(rows);
+ require('../tools/story-entry-contract.cjs')(rows);
  for(const row of rows){
   if(row.id==='lc_gunsan_bakery'||row.id==='near_hapcheon_sutra'){
    const exit=row.choices.pop();assert.deepEqual(strip(exit),{out:[{p:1,fx:{}}]});

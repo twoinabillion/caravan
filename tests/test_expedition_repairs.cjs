@@ -113,7 +113,7 @@ test('C01-C04/C06/C10-C12: revised wording keeps authored effects and grounded c
  const h=setup();
  assert.match(h.run("prose(event('wx_bigwash').choices[0].out[0].text)"),/두 시간 반/);
  assert.match(h.run("prose(event('roadbeat_200_archive').choices[1].out[0].text)"),/옆판.*긁/);
- assert.match(h.run("prose(event('story_parent_route_guarded').text)"),/이 지역 보관함/);
+ assert.match(h.run("prose(event('story_parent_route_guarded').text)"),/이 지역 보관함|산지기 보관함/);
  assert.match(h.run("event('crisis_drowsy').choices[2].label"),/부르며/);
  assert.match(h.run("prose(event('loc_icheon').choices[1].out[0].text)"),/옆에 놓아둔 그릇/);
  assert.doesNotMatch(h.run("prose(event('loc_icheon').choices[1].out[0].text)"),/하룻밤|새벽|아침/);
@@ -122,6 +122,7 @@ test('C01-C04/C06/C10-C12: revised wording keeps authored effects and grounded c
  for(const [id,old]of Object.entries(before.events)){
   const strip=v=>JSON.parse(JSON.stringify(v,(k,x)=>['text','label','note','maxRemain','foreseeable','sleep'].includes(k)?undefined:x));
   const current=h.json(`event('${id}')`);
+  if(['story_parent_route_guarded','main_recovery_story_parent_route_guarded'].includes(id)){assert.equal(current.narrativeRevision,'story-rhythm-v1');delete current.narrativeRevision;delete current.turns;old.turns=undefined;}
   if(id==='loc_lake'){
    assert.deepEqual(current.turnSpeakers,[{who:'passer_elder',name:'낚시꾼'}]);
    assert.equal(old.turnSpeakers,undefined);

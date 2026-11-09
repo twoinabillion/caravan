@@ -5,9 +5,9 @@ const fs=require('node:fs'),vm=require('node:vm'),crypto=require('node:crypto');
 const {STATIC_CONTENT_FILES,permanentEvents}=require('./content-registry.cjs');
 const {archaicHumanRegister,hasInformalSentence,inspectAdultPlayerRegister}=require('./dialogue-register.cjs');
 const hash=value=>crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
-function setup(){
+function setup(includeRefinement=true){
   const ctx=vm.createContext({console});
-  for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),ctx);
+  for(const file of STATIC_CONTENT_FILES.filter(file=>includeRefinement||file!=='src/03o-story-refinement.js'))vm.runInContext(fs.readFileSync(file,'utf8'),ctx);
   return vm.runInContext('D',ctx);
 }
 const D=setup(),events=require('./reunion-contract.cjs')(permanentEvents(D));
@@ -19,6 +19,7 @@ test('modernization preserves all 1039 event gates, costs, effects and chains',(
   const omit=new Set(['text','body','title','label','turnSpeakers','turns','readingRecord','note','missionBrief']);
   const rows=events.map(e=>JSON.parse(JSON.stringify(e,(k,v)=>omit.has(k)?undefined:v)))
     .sort((a,b)=>a.id.localeCompare(b.id));
+  require('./story-entry-contract.cjs')(rows);
   assert.equal(rows.length,1039);
   const jaeyi=rows.find(row=>row.id==='jy_recruit');
   assert.equal(jaeyi.choices.length,3);
@@ -32,6 +33,8 @@ test('modernization preserves all 1039 event gates, costs, effects and chains',(
   assert.equal(hash(rows),'df40ae877d70b811a8079d3845132af9964ddb78e5e63660c48df06197ecf2a4');
 });
 test('quote roles retain the pre-edit corpus except the explicitly reviewed continuity fixes',()=>{
+  // Freeze this old corpus at its own edition. Current-version and unmarked paid readers are covered by story-rhythm and retained-receipt suites.
+  const D=setup(false),events=require('./reunion-contract.cjs')(permanentEvents(D)),event=id=>events.find(e=>e.id===id);
   const rows=events.map(e=>({id:e.id,q:quotes(e.text),speakers:e.turnSpeakers,turns:turns(e.turns),
     choices:(e.choices||[]).map(c=>({q:quotes(c.label),out:(c.out||[]).map(o=>({
       q:quotes(o.text),speakers:o.turnSpeakers,turns:turns(o.turns)}))}))}))
