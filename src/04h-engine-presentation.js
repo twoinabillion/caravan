@@ -424,7 +424,7 @@ G.prepareFinale = ()=>{
 G.pendingTravelMemories = ()=>{
   const box=S?.travelMemoryInbox;
   if(box?.version!==1||!Array.isArray(box.ids))return [];
-  return [...new Set(box.ids)].slice(0,16).map(id=>G.presentationEvent(id))
+  return [...new Set(box.ids)].map(id=>typeof id==='string'?G.presentationEvent(id):null)
     .filter(event=>event?.travelMemory&&!S.used.includes(event.id));
 };
 G.travelMemoryPending = id=>G.pendingTravelMemories().some(event=>event.id===id);
@@ -433,7 +433,10 @@ G.offerTravelMemory = (event,options={})=>{
     ||S.pendingPresentation?.eventId===event.id||S.used.includes(event.id))return false;
   const pending=G.pendingTravelMemories();
   if(!pending.some(row=>row.id===event.id)){
-    S.travelMemoryInbox={version:1,ids:[...pending.map(row=>row.id),event.id],quiet:false};
+    // One invitation per uninterrupted batch. New arrivals must not expand a
+    // deferred backlog or announce themselves over another activity.
+    const quiet=pending.length>0||!!S.pendingPresentation||UI.modalOpen();
+    S.travelMemoryInbox={version:1,ids:[...pending.map(row=>row.id),event.id],quiet};
     G.save();
   }
   UI.syncTravelMemoryNotice?.();

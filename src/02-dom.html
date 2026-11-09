@@ -152,6 +152,13 @@
       <button type="button" data-memory-later>나중에</button>
     </section>
 
+    <dialog id="travel-memory-dialog" aria-modal="true" aria-hidden="true" aria-labelledby="travel-memory-title">
+      <header><h2 id="travel-memory-title">떠오른 기억</h2><button type="button" data-memory-list-close aria-label="기억 목록 닫기">×</button></header>
+      <p data-memory-list-count></p>
+      <div data-memory-list aria-label="읽을 기억 고르기"></div>
+      <footer><button type="button" data-memory-list-close>길로 돌아가기</button></footer>
+    </dialog>
+
     <section id="pursuit-help" role="region" aria-label="천리안의 추적 위험 설명" hidden>
       <div class="pursuit-help-head"><strong>추적 위험</strong><span class="pursuit-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><button id="pursuit-help-close" type="button" aria-label="추적 위험 설명 닫기">×</button></div>
       <p id="pursuit-description"></p><small>천리안에 쌓인 관측 표식이에요. 지금 누가 쫓아온다는 뜻은 아니에요.</small>

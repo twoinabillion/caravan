@@ -6247,6 +6247,24 @@ html.ui-large-text #travel-memory-notice::before{display:block;flex:1;content:'ë
 html.ui-large-text #travel-memory-notice button{white-space:nowrap;padding-inline:7px}
 html.ui-large-text #travel-memory-notice :is(strong,button){font-size:18px}
 
+/* Multiple pending recollections use one native list and one scroll owner. */
+#travel-memory-dialog{width:min(440px,calc(100% - 24px));max-width:none;max-height:min(72dvh,560px);margin:auto;padding:0;border:1px solid #969b7f;border-radius:8px;background:#e4ddc8;color:#303b2f;font:16px/1.5 var(--sans);box-shadow:0 16px 50px #07110c80;overflow:hidden}
+#travel-memory-dialog[open]{display:flex;flex-direction:column}
+#travel-memory-dialog::backdrop{background:#071210a6}
+#travel-memory-dialog header{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 0 18px}
+#travel-memory-dialog h2{margin:0;font-size:19px;font-weight:600}
+#travel-memory-dialog button{font:inherit;cursor:pointer;min-height:44px}
+#travel-memory-dialog header button{width:44px;border:0;border-radius:5px;background:transparent;color:#49583e;font-size:24px}
+#travel-memory-dialog [data-memory-list-count]{margin:3px 18px 12px;flex:0 0 auto;color:#626f54;font-size:13px}
+#travel-memory-dialog [data-memory-list]{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;gap:8px;overflow-y:auto;overscroll-behavior:contain;padding:0 14px 12px;scrollbar-gutter:stable}
+#travel-memory-dialog [data-memory-list]>button{display:flex;flex:0 0 auto;flex-direction:column;align-items:flex-start;gap:4px;width:100%;padding:13px 14px;text-align:left;border:1px solid #a9ad91;border-radius:5px;background:#f0ead9;color:#303d2c;white-space:normal;overflow-wrap:anywhere}
+#travel-memory-dialog [data-memory-list] strong{font-size:16px;font-weight:600;line-height:1.5}
+#travel-memory-dialog [data-memory-list] span{font-size:12px;color:#69735c;line-height:1.5}
+#travel-memory-dialog footer{flex:0 0 auto;padding:8px 14px 12px;border-top:1px solid #b8bea1}
+#travel-memory-dialog footer button{width:100%;padding:9px 12px;border:1px solid #7d8d6c;border-radius:5px;background:#40553c;color:#efecdd;font-size:15px}
+#travel-memory-dialog button:focus-visible{outline:2px solid #5a6f43;outline-offset:2px}
+html.ui-large-text #travel-memory-dialog :is(button,strong){font-size:18px}
+
 /* Journey scene/deck owner â€” approved calm + driving continuity v2, 2026-10-04.
    Legacy geometry remains mounted until the structural live apply. */
 html[data-journey-layout="scene"]{--journey-deck-height:292px;--trip-destination-height:67px;--trip-forecast-height:56px;--trip-depart-gap:2px}

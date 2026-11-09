@@ -490,7 +490,7 @@ const UI = (()=>{
     || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on') || $('#ovl-menu').classList.contains('on')
     || $('#ovl-seoul').classList.contains('on') || $('#ovl-camp').classList.contains('on')
     || $('#ovl-local-actions').classList.contains('on') || !!$('#trip-destination-dialog')?.open
-    || !!$('#journey-detail-dialog')?.open || !!$('#save-transfer-dialog')?.open;
+    || !!$('#journey-detail-dialog')?.open || !!$('#save-transfer-dialog')?.open || !!$('#travel-memory-dialog')?.open;
 
   /* ── screens ── */
   function show(id){
