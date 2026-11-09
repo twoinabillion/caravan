@@ -17,15 +17,27 @@ def check(label, ok, detail=''):
         failures.append(f'{label}: {detail}')
 
 
+def click_story_control(page, selector):
+    control = page.locator(selector)
+    assert control.count() == 1, f'이야기 행동이 없거나 중복됨: {selector}'
+    # Small mobile readers may put this choice/result on a later action page.
+    # Follow the real page control; never reveal or force-click a hidden choice.
+    for _ in range(32):
+        if control.is_visible():
+            break
+        next_page = page.locator('#ev-sheet [data-page-next]')
+        assert next_page.count() == 1 and next_page.is_visible() and next_page.is_enabled(), \
+            f'다음 페이지로 접근할 수 없는 행동: {selector}'
+        next_page.click()
+    assert control.is_visible() and control.is_enabled(), f'이야기 행동 사용 불가: {selector}'
+    control.click()
+
+
 def finish_open_event(page, choice_index, action='ok'):
     page.evaluate('UI.finishStory()')
-    choice = page.locator(f'#ev-sheet [data-i="{choice_index}"]')
-    assert choice.count() == 1 and choice.is_enabled(), f'선택지 {choice_index} 사용 불가'
-    choice.click()
+    click_story_control(page, f'#ev-sheet [data-i="{choice_index}"]')
     page.evaluate('UI.finishStory()')
-    action_btn = page.locator(f'#ev-sheet [data-r="{action}"]')
-    assert action_btn.count() == 1 and action_btn.is_enabled(), f'결과 행동 {action} 사용 불가'
-    action_btn.click()
+    click_story_control(page, f'#ev-sheet [data-r="{action}"]')
 
 
 with sync_playwright() as p:
