@@ -79,7 +79,7 @@ test('old named/unnamed v1 openings and current named starts do not receive a ne
 });
 test('historical preview exits to the same preparation, never recreating a journey or replaying repair',()=>{
   for(const action of ['nextIntro()','skipIntro()']){
-    const calls=[],ctx=vm.createContext({screen:'intro',introIdx:0,introTurnIdx:0,introRestart:false,introPreview:true,pendingMode:'onroad',
+    const calls=[],ctx=vm.createContext({screen:'intro',introIdx:0,introTurnIdx:0,introRestart:false,introPreview:true,introPrologue:false,pendingMode:'onroad',
       D:{intro:[],introHistoryPages:[{beats:[{text:'끝'}]}]},clearIntroAuto(){},closeModal(){},localStorage:{setItem(){}},AMBI:{setLoop(){}},
       $:()=>({classList:{contains:()=>true},focus(){calls.push('focus');}}),
       startNew:mode=>{calls.push('prep:'+mode);ctx.screen='name';},G:{newGame(){throw new Error('preview cannot replace save');}},renderIntro(){}});

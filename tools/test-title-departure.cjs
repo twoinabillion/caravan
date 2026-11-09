@@ -83,13 +83,13 @@ test('title hero reuses existing offline asset sources and never initializes old
 });
 test('existing entry and return actions are preserved; title sound toggles actual SND',()=>{
   const actions=[];const els=Object.fromEntries(['bt-new','bt-continue','bt-preview','bt-previewback','early-sound','bt-title-sound'].map(k=>[k,{}]));
-  const c={$:s=>els[s.slice(1)],startNew:mode=>actions.push('name:'+mode),show:s=>actions.push(s),
+  const c={$:s=>els[s.slice(1)],startJourneyPrologue:()=>actions.push('prologue'),show:s=>actions.push(s),
     renderPreview:()=>actions.push('preview'),SND:{enable:()=>actions.push('enable'),toggle:()=>actions.push('toggle')},
     G:{load:()=>true},screen:'title',S:{ended:false},refreshTitle(){},enterGame:()=>actions.push('game')};
   const lines=ui.split('\n').filter(l=>/^\s*\$\('#bt-(new|continue|previewback)'\)\.onclick=/.test(l));
   vm.runInNewContext(between(ui,'  function continueSavedJourney(','  function previousJourneyHtml(')+lines.join('\n')+"\nconst titleSound=$('#bt-title-sound');if(titleSound)titleSound.onclick=()=>SND.toggle();",c);
   els['bt-new'].onclick();els['bt-continue'].onclick();els['bt-previewback'].onclick();els['bt-title-sound'].onclick();
-  assert.deepEqual(actions,['name:onroad','enable','game','scr-title','toggle']);
+  assert.deepEqual(actions,['enable','prologue','enable','game','scr-title','toggle']);
   assert.match(ui,/\$\('#bt-preview'\)\.onclick=\(\)=>\{ renderPreview\(\); show\('scr-preview'\)/);
   assert.doesNotMatch(between(ui,'  function startNew(mode){','  function introName()'),/G\.newGame|localStorage\.setItem/);
 });

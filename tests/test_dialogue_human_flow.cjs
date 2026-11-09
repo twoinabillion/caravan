@@ -6,7 +6,7 @@ const {STATIC_CONTENT_FILES,permanentEvents}=require('../tools/content-registry.
 const plain=x=>JSON.parse(JSON.stringify(x));
 const ui=fs.readFileSync('src/07-ui.js','utf8');
 function setup(){
-  const ctx=vm.createContext({console,introPreview:false,S:{party:[],flags:{},comps:{}},G:{myName:()=> '검수 이름'}});
+  const ctx=vm.createContext({console,introPreview:false,introPrologue:false,S:{party:[],flags:{},comps:{}},G:{myName:()=> '검수 이름'}});
   for(const file of STATIC_CONTENT_FILES)vm.runInContext(fs.readFileSync(file,'utf8'),ctx);
   ctx.data=vm.runInContext('D',ctx);
   vm.runInContext(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+
@@ -233,6 +233,10 @@ test('the actual intro renderer cuts at authored beats and restores the right st
   check('intro-envelope-signal',4,'intro-envelope-signal');
   check('intro-dashboard-module',0,'intro-keepsakes-return-v1');
   check('intro-dashboard-module',1,'intro-dashboard-module');
+  // A postponed animation frame must not hide the entire manuscript.
+  ctx.requestAnimationFrame=()=>{};
+  render(true);
+  assert.equal(nodes.get('#intro-book').style.opacity,1);
 });
 test('seven delivered cinematic stills retain masters, canonical references and truthful review status',async()=>{
   const sharp=require('sharp'),ctx=setup();

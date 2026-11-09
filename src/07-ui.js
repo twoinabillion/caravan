@@ -39,7 +39,7 @@ const UI = (()=>{
   const heldStoryAdvanceKeys=new Set();
   let bgmEvKey=null;           // 현재 이벤트의 BGM 힌트 (tension/story)
   let introIdx=0, introTurnIdx=0, pendingMode='onroad', pendingName='', pendingProfile='keeper', introRestart=false;
-  let introPreview=false;
+  let introPreview=false, introPrologue=false;
   let pendingPack='fuel';
   const preparationKey='caravan-departure-prep-v1';
   function rememberPreparation(active=true){
@@ -52,7 +52,7 @@ const UI = (()=>{
   function readPreparation(){
     try{const view=JSON.parse(sessionStorage.getItem(preparationKey)||'null');return view&&typeof view.name==='string'&&Object.hasOwn(D.departurePacks,view.pack)?view:null;}catch(error){return null;}
   }
-  function clearPreparation(){try{sessionStorage.removeItem(preparationKey);}catch(error){}}
+  function clearPreparation(){try{sessionStorage.removeItem(preparationKey);sessionStorage.removeItem('caravan-prologue-view-v1');}catch(error){}}
   function togglePreparationInventory(event){
     event.preventDefault();
     if(screen!=='name')return;
@@ -588,7 +588,7 @@ const UI = (()=>{
         finishStory();
       });
     }else if(readPreparation()?.active){
-      startNew('onroad');
+      startJourneyPrologue();
     }else if(bootParams.has('caravan-live')&&G.hasSave()){
       requestAnimationFrame(()=>continueSavedJourney(false));
     }
@@ -848,7 +848,7 @@ const UI = (()=>{
       if(!b||b.tagName==='BUTTON'||(e.key!=='Enter'&&e.key!==' ')) return;
       e.preventDefault(); b.click();
     });
-    $('#bt-new').onclick=()=>startNew('onroad');
+    $('#bt-new').onclick=()=>{SND.enable();startJourneyPrologue();};
     $('#bt-install').onclick=()=>requestAppInstall();
     $('#install-x').onclick=()=>closeModal('#install-guide');
     $('#install-action').onclick=()=>{
@@ -865,7 +865,7 @@ const UI = (()=>{
     wireSaveTransfer();
     $('#bt-preview').onclick=()=>{ renderPreview(); show('scr-preview'); $('#preview-scroll').scrollTop=0; };
     $('#bt-previewback').onclick=()=>show('scr-title');
-    $('#bt-previewnew').onclick=()=>startNew('onroad');
+    $('#bt-previewnew').onclick=()=>{SND.enable();startJourneyPrologue();};
     const nameGo=()=>{
       if(screen!=='name') return;
       rememberPreparation();
@@ -1023,7 +1023,7 @@ const UI = (()=>{
   }
   function startNew(mode){
     const view=readPreparation();
-    introRestart=false; introPreview=false; pendingMode='onroad'; pendingName=view?.name||''; pendingProfile='keeper'; pendingPack=view?.pack||'fuel'; introIdx=0; introTurnIdx=0;
+    introRestart=false; introPreview=false; introPrologue=false; pendingMode='onroad'; pendingName=view?.name||''; pendingProfile='keeper'; pendingPack=view?.pack||'fuel'; introIdx=0; introTurnIdx=0;
     const nameInput=$('#inp-name');
     if(nameInput) nameInput.value=pendingName;
     show('scr-name'); renderProfilePick();
@@ -1035,6 +1035,22 @@ const UI = (()=>{
       skip.hidden=false;
       skip.textContent=localStorage.getItem('caravan_intro_seen')?'이미 본 프롤로그 요약':'프롤로그 핵심 요약';
     }
+  }
+  function rememberJourneyPrologue(completed=false){
+    try{sessionStorage.setItem('caravan-prologue-view-v1',JSON.stringify({version:1,page:introIdx,turn:introTurnIdx,completed}));}catch(error){}
+  }
+  function startJourneyPrologue(){
+    let saved=null;
+    try{const raw=JSON.parse(sessionStorage.getItem('caravan-prologue-view-v1')||'null');if(raw?.version===1)saved=raw;}catch(error){}
+    startNew('onroad');
+    if(saved?.completed===true)return;
+    introPrologue=true;introPreview=true;
+    if(Number.isInteger(saved?.page)&&saved.page>=0&&saved.page<D.introHistoryPages.length){
+      introIdx=saved.page;
+      if(Number.isInteger(saved.turn)&&saved.turn>=0&&saved.turn<D.introHistoryPages[introIdx].beats.length)introTurnIdx=saved.turn;
+    }
+    rememberJourneyPrologue();
+    show('scr-intro');renderIntro(true);
   }
   function introName(){ return pendingName||'나'; }
   function personalizedIntroBeat(raw){
@@ -1065,6 +1081,7 @@ const UI = (()=>{
   function renderIntro(newPage){
     const pages=introPages(),page=pages[introIdx];
     if(!page)return;
+    if(introPrologue)rememberJourneyPrologue();
     const book=$('#intro-book');
     book.dataset.readerDensity='quiet';
     const timeKind=page.timeKind||D.introHistoryPages.find(item=>item.scene===page.scene)?.timeKind||'current';
@@ -1117,17 +1134,27 @@ const UI = (()=>{
     const live=$('#story-live'), current=introBeats[Math.min(introTurnIdx,introBeats.length-1)];
     AMBI.introTurn(page.scene,introTurnIdx,current,activeSceneKey);
     if(live&&current) live.textContent=`${current.kind==='dialogue'?(current.name||speakerInfo(current.who).name)+'의 말: ':'장면 설명: '}${stripTags(current.text)}`;
-    $('#intro-hint').textContent=introPreview?'미리 읽기 · 마치면 짐 선택으로 돌아간다':'탭하면 다음 말풍선';
+    $('#intro-hint').textContent=introPrologue?'프롤로그 · 이야기를 마치면 출발 준비':introPreview?'미리 읽기 · 마치면 짐 선택으로 돌아간다':'탭하면 다음 말풍선';
     const summaryLead=$('#intro-summary .intro-summary-lead'),summaryStart=$('#intro-summary-start');
-    if(summaryLead)summaryLead.textContent=introPreview?'어린 시절의 기억과 할아버지에게 들은 이야기입니다. 오늘의 일은 짐을 고른 뒤 직접 겪습니다. 현재 여정과 저장은 바뀌지 않습니다.':'긴 프롤로그를 계속 읽거나, 출발에 필요한 사실만 일지에 남길 수 있습니다.';
-    const summaryList=$('#intro-summary ol');if(summaryList)summaryList.hidden=introPreview;
-    $('#intro-summary-title').textContent=introPreview?'과거 이야기 미리 읽기':'왜 서울로 가는가';
-    if(summaryStart)summaryStart.textContent=introPreview?'짐 선택으로 돌아가기':'핵심을 기록하고 출발';
+    if(summaryLead)summaryLead.textContent=introPrologue?'천리안과 우리 가족, 할아버지와 달구지의 이야기입니다. 계속 읽거나, 아래의 핵심을 확인하고 출발 준비로 갈 수 있습니다.':introPreview?'어린 시절의 기억과 할아버지에게 들은 이야기입니다. 오늘의 일은 짐을 고른 뒤 직접 겪습니다. 현재 여정과 저장은 바뀌지 않습니다.':'긴 프롤로그를 계속 읽거나, 출발에 필요한 사실만 일지에 남길 수 있습니다.';
+    const summaryList=$('#intro-summary ol');
+    if(summaryList){
+      summaryList._fullIntroSummary??=summaryList.innerHTML;
+      summaryList.hidden=introPreview&&!introPrologue;
+      summaryList.innerHTML=introPrologue?[
+        ['사람을 돕던 천리안이 이송 명령까지 내리기 시작했다.','길과 병원, 전력망을 맡겼지만 사람의 확인과 이의를 받을 창구가 사라졌다.'],
+        ['엄마와 아빠는 사람의 확인 절차를 되돌리려 했다.','발표가 막힌 뒤 나는 할아버지의 차에 탔다. 다음 차로 오겠다던 부모님은 돌아오지 않았다.'],
+        ['할아버지와 함께 만든 달구지가 남았다.','부산에서 자라며 함께 차를 고쳤다. 할아버지가 떠난 뒤에도 가족의 빈 이송 사유와 서울로 가는 길이 남아 있다.']
+      ].map(([title,body],index)=>`<li><i>0${index+1}</i><span><b>${title}</b><small>${body}</small></span></li>`).join(''):summaryList._fullIntroSummary;
+    }
+    $('#intro-summary-title').textContent=introPreview&&!introPrologue?'과거 이야기 미리 읽기':'왜 서울로 가는가';
+    if(summaryStart)summaryStart.textContent=introPrologue?'핵심을 확인하고 출발 준비':introPreview?'짐 선택으로 돌아가기':'핵심을 기록하고 출발';
     if(newPage){
-      book.style.opacity=0;
+      // Keep the manuscript readable even when a background WebView postpones
+      // animation frames. The picture retains its own authored cut animation.
+      book.style.opacity=1;
       $('#intro-page').scrollTop=0;
       if(introText) introText.scrollTop=0;
-      requestAnimationFrame(()=>{ book.style.transition='opacity .45s'; book.style.opacity=1; });
     } else {
       const turn=$('#intro-txt [data-story-entry]:last-child');
       if(turn){
@@ -1174,7 +1201,7 @@ const UI = (()=>{
     if(introIdx>=introPages().length){
       localStorage.setItem('caravan_intro_seen','1');
       AMBI.setLoop(null);
-      if(introPreview){introPreview=false;startNew(pendingMode);$('#bt-name')?.focus({preventScroll:true});return;}
+      if(introPreview){finishIntroPreview();return;}
       if(introRestart){
         introRestart=false;
         G.save();
@@ -1194,7 +1221,7 @@ const UI = (()=>{
     introTurnIdx=0;
     localStorage.setItem('caravan_intro_seen','1');
     AMBI.setLoop(null);
-    if(introPreview){introPreview=false;startNew(pendingMode);$('#bt-name')?.focus({preventScroll:true});return;}
+    if(introPreview){finishIntroPreview();return;}
     if(introRestart){
       introRestart=false;
       S.entryMode=entryMode;
@@ -1204,6 +1231,11 @@ const UI = (()=>{
     }
     G.newGame(pendingMode,pendingName,entryMode,pendingProfile,pendingPack);
     enterGame();
+  }
+  function finishIntroPreview(){
+    if(introPrologue)rememberJourneyPrologue(true);
+    introPrologue=false;introPreview=false;
+    startNew(pendingMode);$('#bt-name')?.focus({preventScroll:true});
   }
   function enterGame(){
     clearPreparation();
