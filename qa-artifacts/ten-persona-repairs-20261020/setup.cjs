@@ -11,7 +11,12 @@ function setup(){
  const run=s=>vm.runInContext(s,ctx);
  for(const p of engineFiles){
   try{run(fs.readFileSync(path.join(root,p),'utf8'));}
-  catch(error){if(p==='src/03o-story-refinement.js'&&error.code==='ENOENT')continue;throw error;}
+  catch(error){
+   // Some historical replay adapters replace only the read path above with
+   // an archived source directory. That archive predates this edition.
+   if(p==='src/03o-story-refinement.js'&&error.code==='ENOENT'&&error.path!==path.join(root,p))continue;
+   throw error;
+  }
  }
  const ui=fs.readFileSync(path.join(root,'src/07-ui.js'),'utf8');
  run(ui.match(/  const stripTags=.*;/)[0]+ui.match(/  const playerSpeaker=.*;/)[0]+ui.slice(ui.indexOf('  function eventSpeakerCandidates('),ui.indexOf('  function prepareEventAudio(')));

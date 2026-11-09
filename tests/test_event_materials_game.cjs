@@ -9,7 +9,7 @@ test('one reader owner stages the entire materials skin, excluding combat and th
   for(const rule of rules)assert(rule.selector.includes('.passenger-reader[data-reader-layout="pages"][data-reader-skin="materials"]'));
   const rest=css.replace(/<style id="passenger-story-reader">[\s\S]*?<\/style>/,'');
   assert(!rest.includes('data-reader-skin="materials"'));
-  assert.match(ui,/readerSkin=!evd\.combat&&!missionOnly\?'materials':''/);
+  assert.match(ui,/readerSkin=!evd\.combat&&!missionOnly\?storyReaderSkin\(evd\):''/);
   assert.match(ui,/readerLayout:'pages',readerSkin:'materials'/);
   assert.match(ui,/delete \$\('#ev-sheet'\)\.dataset\.readerSkin/);
   for(const part of ['.event-head h2','.event-scene-frame:not(.zoomed)','.event-field-report','.page-speaker b','.page-turn[data-kind="ai"]','.event-choice-dock','.story-changes'])assert(rules.some(r=>r.selector.endsWith(part)),part);

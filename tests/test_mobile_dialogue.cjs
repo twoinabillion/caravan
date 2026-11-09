@@ -18,23 +18,25 @@ function load(ctx,name){const start=source.indexOf('  function '+name+'(');asser
 let passed=0;
 function test(name,fn){fn();passed++;console.log('PASS '+name);}
 class Node{
- constructor(kind='div'){this.kind=kind;this.children=[];this.dataset={};this.attributes={};this.style={setProperty:()=>{}};this.classes=new Set();this.classList={contains:c=>this.classes.has(c),toggle:(c,on)=>{on??=!this.classes.has(c);on?this.classes.add(c):this.classes.delete(c);return on;}};}
+ constructor(kind='div'){this.kind=kind;this.children=[];this.dataset={};this.attributes={};this.style={setProperty:()=>{}};this.isConnected=true;this.open=false;this.classes=new Set();this.classList={contains:c=>this.classes.has(c),toggle:(c,on)=>{on??=!this.classes.has(c);on?this.classes.add(c):this.classes.delete(c);return on;}};}
  set className(value){this.classes=new Set(value.split(' '));}get className(){return [...this.classes].join(' ');}
  setAttribute(k,v){this.attributes[k]=v;}removeAttribute(k){delete this.attributes[k];}
  appendChild(n){n.parentElement=this;this.children.push(n);}insertBefore(n,b){n.parentElement=this;this.children.splice(this.children.indexOf(b),0,n);}
  remove(){this.parentElement.children=this.parentElement.children.filter(n=>n!==this);}
  focus(){this.focused=true;}
+ showModal(){this.open=true;}
+ close(){if(!this.open)return;this.open=false;this.onclose?.();}
  setPointerCapture(id){this.capturedPointer=id;}
- querySelector(s){return this.children.find(n=>s==='button.scene-zoom'?n.kind==='button'&&n.classes.has('scene-zoom'):s==='[data-story-scene-next]'?'storySceneNext'in n.dataset:n.classes.has(s.slice(1)))||null;}
+ querySelector(s){for(const n of this.children){if(s==='button.scene-zoom'?n.kind==='button'&&n.classes.has('scene-zoom'):s==='[data-story-scene-next]'?'storySceneNext'in n.dataset:n.classes.has(s.slice(1)))return n;const nested=n.querySelector(s);if(nested)return nested;}return null;}
 }
 function fixture(){
  const frame=new Node(),img=new Node('img'),oldZoom=new Node('span');img.className='event-scene';img.complete=true;img.naturalWidth=1280;img.naturalHeight=720;oldZoom.className='scene-zoom';frame.appendChild(img);frame.appendChild(oldZoom);
- const sheet={classList:{contains:()=>true},querySelector:s=>s==='.event-scene-frame'?frame:null};
+ const sheet=new Node();sheet.classes.add('passenger-reader');frame.className='event-scene-frame';sheet.appendChild(frame);
  const state={index:0,turns:[1,2,3],readerMode:'current'};
  const reader={scrollHeight:100,scrollTop:0,clientHeight:100,closest:()=>sheet,scrollBy:({top})=>{reader.scrollTop=Math.min(reader.scrollHeight-reader.clientHeight,reader.scrollTop+top);}};
  let rendered=0,auto=0;
  const ctx=vm.createContext({curStory:state,Element:Node,setTimeout:()=>0,document:{createElement:t=>new Node(t)},heldStoryAdvanceKeys:new Set(),clearStoryAuto:()=>{},scheduleStoryAuto:()=>auto++,renderStoryState:()=>rendered++,requestAnimationFrame:fn=>fn(),alignStoryLatest:()=>{},$:s=>s==='#ev-sheet .story-reader'?reader:sheet});
- load(ctx,'advanceStory');load(ctx,'wireSceneZoom')(sheet);
+ load(ctx,'fitSceneEvidence');load(ctx,'storyArtLightbox');load(ctx,'advanceStory');load(ctx,'wireSceneZoom')(sheet);
  return {ctx,sheet,state,frame,reader,next:frame.querySelector('[data-story-scene-next]'),zoom:frame.querySelector('button.scene-zoom'),rendered:()=>rendered};
 }
 const event=(props={})=>({preventDefault(){this.prevented=true;},stopPropagation(){this.stopped=true;},...props});
@@ -60,4 +62,15 @@ test('body tap and Enter reveal unread text too; a scroll gesture never advances
 test('combat retains its existing tap-to-zoom frame and scrolling behavior',()=>{const f=fixture();f.sheet.classList.contains=()=>false;f.ctx.wireSceneZoom(f.sheet);f.frame.onclick();assert(f.frame.classList.contains('zoomed'));f.reader.closest=()=>null;f.reader.scrollHeight=1000;f.ctx.advanceStory(f.state);assert.equal(f.state.index,1);});
 test('reading earlier combat transcript by scrolling never advances on tap or Enter',()=>{const f=fixture();f.reader.closest=()=>null;f.reader.scrollHeight=480;f.reader.clientHeight=200;load(f.ctx,'wireStoryReviewPause')(f.state,1);f.reader.onpointerdown(event({clientX:90,clientY:70}));f.reader.onpointerup(event({clientX:91,clientY:71}));f.reader.onkeydown(event({key:'Enter',code:'Enter',repeat:false}));assert.equal(f.state.index,0);assert.equal(f.reader.scrollTop,0);f.reader.scrollTop=280;f.reader.onpointerdown(event({clientX:90,clientY:70}));f.reader.onpointerup(event({clientX:91,clientY:71}));assert.equal(f.state.index,1);});
 test('repeated scene setup has one advance control and one zoom control',()=>{const f=fixture();for(let i=0;i<4;i++)f.ctx.wireSceneZoom(f.sheet);assert.equal(f.frame.children.filter(n=>'storySceneNext'in n.dataset).length,1);assert.equal(f.frame.children.filter(n=>n.kind==='button'&&n.classes.has('scene-zoom')).length,1);});
+test('art modal uses the requested current scene even before the previous image decode is replaced',()=>{
+ const f=fixture(),image=f.frame.querySelector('.event-scene');image.src='new-scene.webp';image.currentSrc='previous-scene.webp';image.alt='현재 장면';
+ f.zoom.onclick(event());const modal=f.sheet.querySelector('.story-art-lightbox');assert(modal.open);assert.equal(modal.__art.picture.src,'new-scene.webp');assert.equal(modal.__art.picture.alt,'현재 장면');
+});
+test('detail controls, Escape and numeric keys keep the manuscript and active choice untouched',()=>{
+ const f=fixture();f.zoom.onclick(event());const modal=f.sheet.querySelector('.story-art-lightbox'),a=modal.__art;
+ a.viewport.clientWidth=400;a.viewport.scrollWidth=800;a.viewport.clientHeight=300;a.viewport.scrollHeight=600;
+ a.detail.onclick();assert.equal(a.detail.attributes['aria-pressed'],'true');assert.equal(a.viewport.scrollLeft,200);assert.equal(a.viewport.scrollTop,150);assert.equal(f.state.index,0);
+ const number=event({key:'1'});modal.onkeydown(number);assert(number.stopped);
+ const cancel=event({key:'Escape'});modal.oncancel(cancel);assert(cancel.prevented);assert(!modal.open);assert(!f.frame.classList.contains('zoomed'));assert.equal(f.state.index,0);assert(f.zoom.focused);
+});
 console.log(`${passed} interaction checks passed`);

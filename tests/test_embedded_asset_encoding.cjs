@@ -1,4 +1,29 @@
 const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm');
+const deliveryCases=()=>[1020,1021,1022,1023,1024,1025,8191,8192,8193,130000,130001,130002,130003]
+ .map(n=>'data:image/webp;base64,'+Buffer.from(Array.from({length:n},(_,i)=>(i*193+n)%256)).toString('base64'));
+async function runDeliveryCases(context){
+ const {encodeEmbeddedAssets}=await import('../tools/encode-embedded-assets.mjs');
+ const uris=deliveryCases();
+ const result=encodeEmbeddedAssets('<script>"use strict";globalThis.results='+JSON.stringify(uris)+';globalThis.strictThis=(function(){return this;})();</script>');
+ vm.runInNewContext(result.html.slice(result.html.indexOf('<script>')+8,result.html.indexOf('</script>')),context);
+ assert.deepEqual(Array.from(context.results),uris);
+ assert.equal(context.strictThis,undefined);
+}
+test('available byte Base64 method bypasses legacy btoa without changing URI bytes',async()=>{
+ // A controlled capability boundary also exercises this branch on older Node.
+ class AvailableBytes extends Uint8Array{toBase64(){return Buffer.from(this).toString('base64');}}
+ await runDeliveryCases({Uint8Array:AvailableBytes,btoa(){throw Error('legacy btoa must not run when byte Base64 is available');}});
+});
+test('native byte Base64 preserves URI bytes and padding for every tail and large payload',{
+ skip:typeof Uint8Array.prototype.toBase64!=='function'
+},async()=>{
+ await runDeliveryCases({Uint8Array,btoa(){throw Error('native byte Base64 must bypass legacy btoa');}});
+});
+test('missing byte Base64 keeps the legacy decoder byte-identical across tails and chunk boundaries',async()=>{
+ class LegacyBytes extends Uint8Array{}
+ Object.defineProperty(LegacyBytes.prototype,'toBase64',{value:undefined});
+ await runDeliveryCases({Uint8Array:LegacyBytes,btoa:v=>Buffer.from(v,'binary').toString('base64')});
+});
 test('delivery encoding is byte-identical for all tail lengths and native browser decoder',async()=>{
  const {packBytes,unpackBytes,encodeEmbeddedAssets}=await import('../tools/encode-embedded-assets.mjs');
  for(let n=0;n<513;n++){const bytes=Buffer.from(Array.from({length:n},(_,i)=>(i*193+n)%256));assert.deepEqual(Buffer.from(unpackBytes(packBytes(bytes),n)),bytes);}

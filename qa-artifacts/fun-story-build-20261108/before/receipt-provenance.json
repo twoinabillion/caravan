@@ -1,0 +1,148 @@
+{
+  "rows": [
+    {
+      "eventId": "parents_father_last_log",
+      "provenance": "actual save from a completed finite journey; no state generated for this suite",
+      "files": {
+        "entry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/normal-unpaid-259-parents_father_last_log.json",
+          "sha256": "0f500d9adf4fdfc4fc6bbbc7fda88b7c46b42c1747e6ceb1e40149dc2895f5f3",
+          "bytes": 70285,
+          "narrativeRevision": null
+        },
+        "viewedEntry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-parents_father_last_log-entry-260.json",
+          "sha256": "d3ae8bbde95333a32a9e9438f949d663daf8c790efc8f069fceb28c2184d673b",
+          "bytes": 72979,
+          "narrativeRevision": null
+        },
+        "paid": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-parents_father_last_log-result-260.json",
+          "sha256": "0ea0abf19cd54b315e40076a74c5580258fafcaa00bcac48bd8e0b759d544ab6",
+          "bytes": 75579,
+          "narrativeRevision": null
+        }
+      }
+    },
+    {
+      "eventId": "parents_separated_work",
+      "provenance": "actual save from a completed finite journey; no state generated for this suite",
+      "files": {
+        "entry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/normal-unpaid-188-parents_separated_work.json",
+          "sha256": "f128ec7c67f237e5b471fd7d6ffa3b5707c2397079b9f2676d6f9c073439085d",
+          "bytes": 52225,
+          "narrativeRevision": "family-records-v1"
+        },
+        "viewedEntry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-parents_separated_work-entry-189.json",
+          "sha256": "207d52fbcc4cb5be872bf2917d0d3b79570f91e005f2a0b974fba669a88f70d5",
+          "bytes": 53581,
+          "narrativeRevision": "family-records-v1"
+        },
+        "paid": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-parents_separated_work-result-189.json",
+          "sha256": "f1078e6993c405b189c5c44ca1c0e542cd3e14deb044cfa66e9ee50000524f40",
+          "bytes": 55660,
+          "narrativeRevision": "family-records-v1"
+        }
+      }
+    },
+    {
+      "eventId": "story_parent_route_shared",
+      "provenance": "actual save from a completed finite journey; no state generated for this suite",
+      "files": {
+        "entry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/normal-unpaid-220-story_parent_route_shared.json",
+          "sha256": "b1f63e05e311bcb0c6e8bd8d2c948e7fab737a6779b939c1161fc44d9c8ed606",
+          "bytes": 61210,
+          "narrativeRevision": "family-records-v1"
+        },
+        "viewedEntry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-story_parent_route_shared-entry-221.json",
+          "sha256": "1263627c97d505a53f4864d727586ed06be6b64368958ca7233a9319e6657d1f",
+          "bytes": 62655,
+          "narrativeRevision": "family-records-v1"
+        },
+        "paid": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-story_parent_route_shared-result-221.json",
+          "sha256": "a4c48ad9bab361e39584171cb0a7478678fd7880aa559d1cb93a1760e9e6f53f",
+          "bytes": 65239,
+          "narrativeRevision": "family-records-v1"
+        }
+      }
+    },
+    {
+      "eventId": "story_bridge_departure_echo",
+      "provenance": "actual save from a completed finite journey; no state generated for this suite",
+      "files": {
+        "entry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/normal-unpaid-71-story_bridge_departure_echo.json",
+          "sha256": "88b5d1493dc3ddd2eda1b1fde8ce15578adb52aa7ff784c7b2192dfcc5090318",
+          "bytes": 25377,
+          "narrativeRevision": null
+        },
+        "viewedEntry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-story_bridge_departure_echo-entry-72.json",
+          "sha256": "d06908eaa65f1f54d05d99b9a72391a38179a32aada07d8f5eed9a12046e1c7f",
+          "bytes": 26164,
+          "narrativeRevision": null
+        },
+        "paid": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-story_bridge_departure_echo-result-72.json",
+          "sha256": "e0b84b9ccf43b66f430607475660e6c45e988a64874ddbccc167573862fda039",
+          "bytes": 27246,
+          "narrativeRevision": null
+        }
+      }
+    },
+    {
+      "eventId": "seoul_core",
+      "provenance": "actual save from a completed finite journey; no state generated for this suite",
+      "files": {
+        "entry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/normal-unpaid-339-seoul_core.json",
+          "sha256": "cc157c0c7e7e7dc2bb9981b4d7debe298a05d87092e8de7f997a4cf9ca0b19fb",
+          "bytes": 89511,
+          "narrativeRevision": "story-refinement-v1"
+        },
+        "viewedEntry": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-seoul_core-entry-340.json",
+          "sha256": "9a5061f11b5929633b517a233ea9f571fafdb8c0ddcea253449f5e9bbccd2c91",
+          "bytes": 96717,
+          "narrativeRevision": "story-refinement-v1"
+        },
+        "paid": {
+          "path": "qa-artifacts/opening-flow-20261108/cohort02/explorer/agent223/attempt01/scene-seoul_core-result-340.json",
+          "sha256": "7c15bb242cd61e4c5a7c434f4c9b490ae1cf16a3b49d93bca864ed8d2ebad5d3",
+          "bytes": 95778,
+          "narrativeRevision": "story-refinement-v1"
+        }
+      }
+    },
+    {
+      "eventId": "story_parent_route_guarded",
+      "provenance": "actual save from a completed finite journey; no state generated for this suite",
+      "files": {
+        "entry": {
+          "path": "qa-artifacts/continuous-20261107/cohort01/story/agent201/attempt01/normal-unpaid-209-story_parent_route_guarded.json",
+          "sha256": "4c3fd6687aa6f85125dd69b672d97f74764d850bffe86eb5547812e33ddd403f",
+          "bytes": 62017,
+          "narrativeRevision": "family-records-v1"
+        },
+        "viewedEntry": {
+          "path": "qa-artifacts/continuous-20261107/cohort01/story/agent201/attempt01/scene-story_parent_route_guarded-entry-210.json",
+          "sha256": "5fcc357109e1d4e95a80dc49a0a4ec32d3848924c34f885c743d5df0523e058e",
+          "bytes": 63434,
+          "narrativeRevision": "family-records-v1"
+        },
+        "paid": {
+          "path": "qa-artifacts/continuous-20261107/cohort01/story/agent201/attempt01/scene-story_parent_route_guarded-result-210.json",
+          "sha256": "55ccc437cac7b9bc7ed2b7ed2499cc9c27b7863334b18533dae372a858df62d6",
+          "bytes": 65804,
+          "narrativeRevision": "family-records-v1"
+        }
+      }
+    }
+  ]
+}

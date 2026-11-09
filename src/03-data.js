@@ -3008,11 +3008,11 @@ D.finaleJourneyRecall = S=>{
   else if(D.familyOrderKnown(S)) lines.push('은수가 전한 내부 기록과 고백을 명령 취소 기록 곁에 보관했다. 자기 책임까지 밝힌 증언을 지우지 않았다.');
   for(const [cid,row] of Object.entries(S.campMemories||{})){
     const choice=D.campConversations?.[cid]?.choices.find(choice=>choice.id===row.choiceId);
-    if(choice) lines.push(D.comps[cid].name+'와 나눈 밤이 차 안에 남았다. '+(typeof row.home==='string'&&row.home.trim()?row.home:choice.home));
+    if(choice) lines.push(D.withParticle(D.comps[cid].name,'과','와')+' 나눈 밤이 차 안에 남았다. '+(typeof row.home==='string'&&row.home.trim()?row.home:choice.home));
   }
   for(const cid of S.party||[]){
     const approach=D.recruitQuests[cid]?.approaches?.[S.comps?.[cid]?.approach];
-    if(approach) lines.push(D.comps[cid].name+'와 처음 손을 맞췄던 일도 적었다. '+approach.label+'. '+approach.memory);
+    if(approach) lines.push(D.withParticle(D.comps[cid].name,'과','와')+' 처음 손을 맞췄던 일도 적었다. '+approach.label+'. '+approach.memory);
   }
   const impacts=S._stlField?.impact||{};
   for(const [id,stl] of Object.entries(D.stls)){

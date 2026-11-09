@@ -3,6 +3,8 @@
   if (typeof D === 'undefined') return;
 
   const sceneAssets = {
+    'explore-glasshouse-tomatoes-night-v1': 'assets/scenes/explore-glasshouse-tomatoes-night-v1.webp',
+    'explore-seed-warehouse-night-v1': 'assets/scenes/explore-seed-warehouse-night-v1.webp',
     'intro-busan-water-line-v1': 'assets/scenes/intro-busan-water-line-v1.jpg',
     'intro-busan-cold-storage-v1': 'assets/scenes/intro-busan-cold-storage-v1.jpg',
     'intro-busan-generator-night-v1': 'assets/scenes/intro-busan-generator-night-v1.jpg'
@@ -79,6 +81,24 @@
     'intro-busan-cold-storage-v1': '생선 상자와 약품 보관함을 지키려고 사람들이 기다리는 동안, 나는 공동 냉동기의 호스를 고친다.',
     'intro-busan-generator-night-v1': '발전기를 끄기 전 이웃들이 늦은 밥을 나눈다. 나는 달구지 옆에 조금 떨어져 앉아 그 소리를 듣는다.'
   });
+
+  // New scene owners use the actual entry/result clock. Old paid views and
+  // unmarked owners retain their original daylight plate through legacy lookup.
+  for (const [id, base, night, description] of [
+    ['exp_glasshouse', 'explore-glasshouse-tomatoes-v1', 'explore-glasshouse-tomatoes-night-v1',
+      '밤의 유리 온실. 어두운 지붕 아래 토마토 덩굴과 작동하는 스프링클러가 보이고, 작은 생활등이 젖은 통로를 비춘다. 사람은 없다.'],
+    ['ev_seed_warehouse', 'explore-seed-warehouse-v1', 'explore-seed-warehouse-night-v1',
+      '밤의 농협 창고. 닫힌 셔터와 열린 옆문 너머는 어둡고, 기존 선반등 아래 밀봉된 씨앗과 농기구가 남아 있다. 사람은 없다.']
+  ]) {
+    D.sceneDescriptions[night] = description;
+    D.sceneAssetMeta[night] = {...D.sceneAssetMeta[base], time:'밤', description,
+      references:[...D.sceneAssetMeta[base].references, D.scenes[base]],
+      status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+      provenance:'qa-artifacts/opening-flow-20261108/repair03/art/manifest.json'};
+    const legacy = D.eventSceneTimeVariants[id];
+    D.eventSceneTimeVariants[id] = {base, day:base, night,
+      revision:'night-exploration-v1', legacy:legacy || null};
+  }
 
   const introPages = {
     water: {
@@ -681,6 +701,13 @@
       needFlag: 'bridge_departure_echo',
       scene: 'story-bridge-trace-gap-v1',
       title: '11분의 빈칸',
+      inspection:{title:'요금소의 출력 기록지',sceneLabel:'출력 기록지 살펴보기',prompt:'출력지의 시각과 비어 있는 칸을 직접 살핀다.',items:[
+        {id:'trace-bus-log',label:'운행 기록지',text:'세 시각과 비어 있는 확인자 칸이 남아 있다.',
+          document:{kind:'printout',title:'운행 기록지',source:'폐쇄 요금소 제어실 · 출력 기록',rows:[
+            {label:'자동 명령 발행',value:'03:12'},{label:'버스 출발',value:'03:16'},
+            {label:'사람 확인',value:'03:23'},{label:'확인자',value:'',blank:true}
+          ]}}
+      ]},
       text: '폐쇄된 요금소 제어실에서 기록지가 아직도 조금씩 밀려 나오고 있었다. 자동 명령 발행 03:12. 버스 출발 03:16. 사람 확인 03:23. 확인자 칸은 비어 있었다. 버스가 떠난 뒤에야 사람이 승인한 셈이었다.',
       choices: [
         {

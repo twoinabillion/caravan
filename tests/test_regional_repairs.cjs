@@ -129,6 +129,7 @@ test('only declared resource gates, free exits, tactical disclosure and prose me
  const h=setup(),strip=rows=>JSON.parse(JSON.stringify(rows,(k,v)=>['text','label','title','turnSpeakers','turns','readingRecord','note'].includes(k)?undefined:v));
  const rows=h.json(`JSON.parse(JSON.stringify(${JSON.stringify(Object.keys(before.events))}.map(id=>event(id))))`);
  const base=Object.values(before.events);
+ require('../tools/story-refinement-contract.cjs')(rows);
  require('../tools/story-review-contract.cjs').expedition(rows);
  require('../tools/story-entry-contract.cjs')(rows);
  for(const row of rows){

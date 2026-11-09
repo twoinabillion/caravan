@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "sprites": {
+    "pine": {"source": "kenney-roguelike-sheet.png", "rect": [306, 170, 16, 32], "palette": {"409c62": "leaf", "307e4d": "leafDark", "4ba86d": "leafLight", "3d905b": "leaf", "b48355": "woodDark", "997048": "shade"}},
+    "bench": {"source": "kenney-roguelike-sheet.png", "rect": [306, 68, 16, 16], "palette": {"8f673f": "woodDark", "c8a480": "woodLight", "b98b5e": "wood"}},
+    "crate": {"source": "kenney-roguelike-sheet.png", "rect": [289, 0, 16, 16], "palette": {"b98b5e": "wood", "8f673f": "woodDark", "c8a480": "woodLight", "a8b6b7": "metal"}},
+    "barrel": {"source": "kenney-roguelike-sheet.png", "rect": [391, 0, 16, 16], "palette": {"b98b5e": "wood", "8f673f": "woodDark", "c8a480": "woodLight", "a8b6b7": "metal"}},
+    "campfire": {"source": "krial-campfire.png", "rect": [0, 0, 16, 16], "frames": 4, "stride": [16, 0], "durationMs": 700, "palette": {"d04648": "fire", "d27d2c": "fireLight", "442434": "fireDark", "854c30": "woodDark", "757161": "wood", "4e4a4e": "shade", "dad45e": "light"}}
+  }
+}

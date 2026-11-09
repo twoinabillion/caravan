@@ -209,7 +209,7 @@ test('the actual intro renderer cuts at authored beats and restores the right st
   Object.assign(ctx,{$:selector=>{
     if(!nodes.has(selector))nodes.set(selector,node());return nodes.get(selector);
   },VO:{stop(){},play(){}},AMBI:{intro(){},introTurn(){}},introIdx:0,introTurnIdx:0,
-    personalizedIntroBeat:b=>b,storyPresentationOptions:()=>({}),storyReaderHtml:()=>'',
+    introPrologue:false,personalizedIntroBeat:b=>b,storyPresentationOptions:()=>({}),storyReaderHtml:()=>'',
     storyRecordHtml:()=>'',requestAnimationFrame:fn=>fn(),scheduleIntroAuto(){}});
   // A record node exists only to exercise the existing last-turn branch.
   const record=node();nodes.set('#intro-txt',{...node(),querySelector:s=>s==='.story-reading-record'?record:null});
@@ -233,7 +233,8 @@ test('the actual intro renderer cuts at authored beats and restores the right st
   check('intro-envelope-signal',4,'intro-envelope-signal');
   check('intro-dashboard-module',0,'intro-keepsakes-return-v1');
   check('intro-dashboard-module',1,'intro-dashboard-module');
-  // A postponed animation frame must not hide the entire manuscript.
+  // Background/occluded WebViews may postpone the next animation frame.
+  // Reading a page must not depend on that callback to unhide the entire book.
   ctx.requestAnimationFrame=()=>{};
   render(true);
   assert.equal(nodes.get('#intro-book').style.opacity,1);

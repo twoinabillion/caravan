@@ -18,12 +18,12 @@ const QuestJournal={
     records:['남산에 가져갈 기록','남산에 가져갈 기록을 챙기는 중. 길에서 맡은 게 빠지진 않았나, 한 번 더 보자.','남산에 가져갈 실물 기록은 챙겨 뒀다. 필요할 때 바로 꺼낼 수 있게, 한데 모아서.'],
   },
   companionRecords:{
-    minji:['같이 일할 방식은 민지랑 맞춰 놨다.','민지랑 같이 따라간 민규의 신호.','민지가 왜 혼자 남았는지, 이제 끝까지 들었다.'],
-    parkss:['서로 몸 상태부터 살펴봤다.','명단의 이름들. 그 사람들이 어떻게 살았는지 같이 되짚어 봤지.','남겨진 이름들은 증언으로 정리해 뒀다. 잊지 않으려고.'],
-    kangwoo:['차 안에서 서로 지킬 선은 정해 놨고.','후임이 고친 경계선은 같이 따라가 봤다.','수비대에서 무슨 일이 있었는지 끝까지 들었다. 그랬던 거구나.'],
-    leo:['농담을 하다가도 레오가 말을 멈출 때가 있네.','레오가 끝내지 못한 노래. 이번엔 같이 이어 가 봤다.','길에서 만난 사람들의 목소리로 두 절을 만들었다. 마지막 절은 서울에서 쓰기로 했다.'],
-    jaeyi:['재이 아버지의 상자에 뭘 남길지 같이 골랐다.','열쇠가 가리키는 곳까지 같이 가 봤지.','재이가 떠나왔던 곳에 다시 갔다. 이번엔 함께.'],
-    eunsu:['녹음기를 끄고 나눈 얘기. 차 안에서 은수랑.','관제실에서 놓친 신호는 다시 열어 봤고.','은수가 남긴 접속 코드와 그 책임. 같이 얘기해 봤다.']
+    minji:['민지랑 함께 지내는 법을 조금 익혔다.','민지와 조금 더 편하게 말을 나누게 됐다.','민지와 깊은 이야기도 나눌 만큼 가까워졌다.'],
+    parkss:['박 선생과 함께 지내는 법을 조금 익혔다.','박 선생과 조금 더 편하게 말을 나누게 됐다.','박 선생과 깊은 이야기도 나눌 만큼 가까워졌다.'],
+    kangwoo:['강우와 함께 지내는 법을 조금 익혔다.','강우와 조금 더 편하게 말을 나누게 됐다.','강우와 깊은 이야기도 나눌 만큼 가까워졌다.'],
+    leo:['레오와 함께 지내는 법을 조금 익혔다.','레오와 조금 더 편하게 말을 나누게 됐다.','레오와 깊은 이야기도 나눌 만큼 가까워졌다.'],
+    jaeyi:['재이와 함께 지내는 법을 조금 익혔다.','재이와 조금 더 편하게 말을 나누게 됐다.','재이와 깊은 이야기도 나눌 만큼 가까워졌다.'],
+    eunsu:['은수와 함께 지내는 법을 조금 익혔다.','은수와 조금 더 편하게 말을 나누게 됐다.','은수와 깊은 이야기도 나눌 만큼 가까워졌다.']
   },
   recruitNotes:{
     minji:'민지 오빠가 남긴 물건이 울산에 있다. 혼자 못 꺼내는 거라니 같이 가 봐야겠다.',
@@ -41,6 +41,7 @@ const QuestJournal={
   },
   steps(row){
     return (row.steps||[]).map((step,index)=>{
+      if(step.recordType==='personal') return step;
       const copy=row.kind==='main'&&this.main[step.id];
       const companion=row.companion&&this.companionRecords[row.companion]?.[index];
       return copy?{...step,label:copy[0],detail:copy[2]}:companion?{...step,label:companion,detail:''}:step;
@@ -107,7 +108,8 @@ const QuestJournal={
       const name=D.comps?.[row.companion]?.name||row.title,state=S.comps?.[row.companion]||{};
       const rq=S.recruitQ?.id===row.companion?S.recruitQ:null;
       result.title=`${this.withName(name)} 나눈 이야기`;
-      if(completed) result.next=this.companionRecords[row.companion]?.[2]||`${name}의 이야기도 끝까지 들었네.`;
+      if(completed) result.next=row.personal?.done?row.personal.record:
+        this.companionRecords[row.companion]?.[2]||`${this.withName(name)} 이야기를 나눌 만큼 가까워졌다.`;
       else if(rq){
         result.title=`${this.withName(name)} 함께 가는 길`;
         result.next=rq.stage==='task'?(this.recruitNotes[row.companion]||`${name}의 부탁은 돕기로 했으니, 가서 살펴보자.`)
@@ -123,6 +125,10 @@ const QuestJournal={
           if(rq.choice==='shield'&&S.flags?.minji_approach_drive) result.pencil='밖의 흠집은 남았다. 안쪽은 민지가 잡아 줬다.';
         }
       }else if(state.pending){result.next=`${name}도 손에 익은 일이 늘었네. 앞으로 뭘 맡을지 같이 정해 보자.`;result.guide=`동료 · Lv.${state.pending} 특기 선택`;}
+      else if(row.relationship?.done&&row.personal?.available&&!row.personal.done){
+        result.next=`${this.withName(name)} 편하게 이야기를 나누게 됐다. 그래도 함께 확인할 일은 남아 있다.`;
+        result.guide=row.personal.next;
+      }
       else {result.next=`${name}에 대해선 아직 모르는 게 많네. 쉴 때 이야기를 더 나눠 보면 어떨까.`;result.guide=row.next;}
     }else if(row.kind==='local'){
       const q=S.quest?.ledgerId===row.id?S.quest:S.questFollowup?.ledgerId===row.id?S.questFollowup:null;

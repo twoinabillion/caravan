@@ -1,0 +1,175 @@
+{
+  "date": "2026-11-06",
+  "status": "direction-study",
+  "userDecision": "우편부 시각 방향 긍정, 전체 생동감/미감 활용 검토와 계속 진행 요청. 새 전체 화면 디자인이나 새 서사/밸런스의 개별 승인은 아님.",
+  "northStar": "길=이동감, 도시=생활감, 야영=온기, 대화=얼굴, 선택=흔적",
+  "observedExistingCode": [
+    {
+      "file": "src/05-scene.js",
+      "features": [
+        "거리 기반 바퀴 회전",
+        "속도 연속값 기반 차체 진동",
+        "smootherstep 제동",
+        "먼지와 날씨",
+        "조건부 동료 졸기/정차 식사",
+        "정착지 인물·시설 접근",
+        "정적 시네마틱 배경 변경 시에만 재렌더"
+      ]
+    },
+    {
+      "file": "src/05c-road-cue-kit.js",
+      "features": [
+        "인물과 차량 독립 레이어",
+        "개별 발 기준점과 실제 크기",
+        "사건별 인물 매핑"
+      ]
+    },
+    {
+      "file": "src/07g-ui-home.js",
+      "features": [
+        "실제 동료/업그레이드 물건",
+        "떠난 동료는 기록으로 구분",
+        "저장된 기억과 구역별 탐색"
+      ]
+    }
+  ],
+  "production": {
+    "primaryCandidate": {
+      "tool": "Pixelorama",
+      "role": "첫 동작 세트 제작과 스프라이트 시트 내보내기 워크플로 검증",
+      "verifiedInstalled": false,
+      "source": "https://github.com/Orama-Interactive/Pixelorama"
+    },
+    "alternative": {
+      "tool": "Aseprite",
+      "role": "Lua/명령줄 자동화가 제작 비용을 줄일 때 선택",
+      "verifiedInstalled": false,
+      "source": "https://www.aseprite.org/docs/cli/"
+    },
+    "specialistCandidate": [
+      "PixiEditor: 합성/효과 연구"
+    ],
+    "authoringAlternatives": [
+      "Piskel",
+      "LibreSprite",
+      "PixelCraft"
+    ],
+    "implementationReferences": [
+      "pixel-art-react",
+      "Data-Pixels",
+      "pixel8"
+    ],
+    "deferredReferences": [
+      "poxi",
+      "goya",
+      "rx",
+      "Lospec Pixel Editor",
+      "pixel-paint",
+      "Pixa.Pics",
+      "Pixed",
+      "voidsprite"
+    ],
+    "runtime": "기존 Canvas + CSS. 편집기/React renderer를 게임 번들에 추가하지 않음."
+  },
+  "motionContract": {
+    "states": [
+      "idle",
+      "noticed",
+      "greet",
+      "approach",
+      "interact",
+      "leave"
+    ],
+    "initialFrameTargets": {
+      "idle": {
+        "frames": 3,
+        "fps": 4
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 8
+      },
+      "greet": {
+        "frames": 4,
+        "fps": 6
+      },
+      "work": {
+        "frames": 6,
+        "fps": 6
+      }
+    },
+    "frameTargetStatus": "제작 시작을 위한 제안값, 아직 제작/측정하지 않음",
+    "metadata": [
+      "nativeWidth",
+      "nativeHeight",
+      "footPivot",
+      "frameDurationMs",
+      "loop",
+      "exitPose",
+      "eventPhase",
+      "source",
+      "license"
+    ],
+    "principles": [
+      "실제 발 기준점/바퀴 접지 보존",
+      "중심 행동 한 개에 배경 움직임 소수만 배치",
+      "표현은 실제 사건/자원/멤버/날씨 상태를 읽기만 함",
+      "재개/모달/탭 복귀 때 행동 중복 실행 없음",
+      "reduced-motion은 정지 포즈로 같은 정보 전달",
+      "정적 고해상도 배경은 매 프레임 재래스터하지 않음",
+      "기존 내러티브 그림에서 얼굴/팔을 CSS로 억지 변형하지 않음"
+    ]
+  },
+  "deliveryOrder": [
+    {
+      "phase": 1,
+      "target": "우편부 완성 구간",
+      "deliverable": "인사/접근/이별의 실제 동작 세트 + 승인 대화 방향 + 기존 선택별 기록",
+      "exitCheck": "새 플레이어가 대상을 알아보고 선택과 기록 관계를 자기 말로 설명"
+    },
+    {
+      "phase": 2,
+      "target": "밀양 장터",
+      "deliverable": "한 가게의 생활 동작·증기와 기존 시설 진입 연계",
+      "exitCheck": "실명 NPC/시설 목적지가 읽히고 익명 그림 인물과 혼동 없음"
+    },
+    {
+      "phase": 3,
+      "target": "첫 동료와 야영",
+      "deliverable": "기존 동료 역할·소지품에 근거한 짧은 생활 동작",
+      "exitCheck": "소유/동행 조건·시간대 일치, 정차/취침/다음 출발 유지"
+    },
+    {
+      "phase": 4,
+      "target": "공통 확장",
+      "deliverable": "일반 대화와 사건 공용 동작 적용, 긴 문서/전투는 별도 보존",
+      "exitCheck": "작은 화면/큰 글씨/읽던 위치/중복지급 없음/실물폰 프레임 시간"
+    }
+  ],
+  "notCompleted": [
+    "새 보행/작업 프레임 제작과 Pixelorama 제작 흐름 검증",
+    "밀양 장터/다른 동료로 확장",
+    "별도 이별/자전거 탑승 동작",
+    "실물폰 성능",
+    "음향 청취",
+    "초심자 재미 평가"
+  ],
+  "artifacts": {
+    "board": "tools/design-drafts/living-world-direction.html",
+    "approvedDirectionSample": "tools/design-drafts/postman-living-journey.html",
+    "verification": "qa-artifacts/living-world-direction-20261106/verification.json"
+  },
+  "runtimeImplementation": {
+    "date": "2026-11-06",
+    "status": "first-slice-built",
+    "details": [
+      "postman cutout greeting and short approach steps",
+      "single bicycle bell and brake cue",
+      "cinematic paged reader for postman, meet_scrapyard, rq_minji_* and actual Minji camps",
+      "actual postman record title in result",
+      "backdrop-owned lamp and earned object selection highlight"
+    ],
+    "tools": "기존 투명 정본의 native canvas cutout articulation. Pixelorama/Aseprite 설치 또는 새 프레임 제작을 했다는 뜻은 아님.",
+    "verification": "qa-artifacts/living-encounters-20261106/implementation.json"
+  }
+}

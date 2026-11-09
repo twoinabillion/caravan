@@ -337,23 +337,27 @@ const SCENE = (()=>{
     const bnc2=Math.sin(t*11+1.2)*0.8*motion+Math.sin(t*1.6+0.6)*0.3*idle;
     const ride=up.susp?1.5:0;
     const vy=P(baseY+bnc-ride);
+    const detailed=vanBodyArt.complete&&vanBodyArt.naturalWidth>0;
+    // The HD cab's lamp is above the front bumper. Share its visible bounds
+    // with the beam so suspension, bounce, zoom and facing move them together.
+    const headlight={x:cabX+cabL-(detailed?1:2),y:vy-(detailed?4:3),w:2,h:detailed?2:3};
+    const lightX=headlight.x+headlight.w,lightY=headlight.y+headlight.h/2;
     /* 그림자 */
     ctx.fillStyle='rgba(0,0,0,0.5)';
     ctx.beginPath(); ctx.ellipse(vx+bodyL*0.55,baseY+9,bodyL*0.6,2.5,0,0,7); ctx.fill();
     /* 헤드라이트 콘 */
     if(dark>0.25){
-      const hg=ctx.createLinearGradient(vx+bodyL+cabL-2,0,vx+bodyL+cabL+95,0);
+      const hg=ctx.createLinearGradient(lightX,0,lightX+100,0);
       hg.addColorStop(0,`rgba(255,220,150,${0.3*dark*(wx==='fog'?1.6:1)})`); hg.addColorStop(1,'rgba(255,220,150,0)');
       ctx.fillStyle=hg;
-      ctx.beginPath(); ctx.moveTo(vx+bodyL+cabL-3,vy+8);
-      ctx.lineTo(vx+bodyL+cabL+100,vy);
-      ctx.lineTo(vx+bodyL+cabL+100,vy+26); ctx.lineTo(vx+bodyL+cabL-3,vy+13);
+      ctx.beginPath(); ctx.moveTo(lightX,lightY-.5);
+      ctx.lineTo(lightX+100,lightY-6);
+      ctx.lineTo(lightX+100,lightY+24); ctx.lineTo(lightX,lightY+.5);
       ctx.closePath(); ctx.fill();
       /* 라이트 콘 안 먼지 */
-      for(let i=0;i<5;i++){ const dx=vx+bodyL+cabL+((t*30+i*23)%80), dy=vy+6+hash(i*7)*12;
+      for(let i=0;i<5;i++){ const distance=(t*30+i*23)%80,dx=lightX+distance,dy=lightY+distance/100*(-6+hash(i*7)*30);
         ctx.fillStyle=`rgba(255,230,180,${0.25*dark})`; ctx.fillRect(P(dx),P(dy),1,1); }
     }
-    const detailed=vanBodyArt.complete&&vanBodyArt.naturalWidth>0;
     const kit=typeof VEHICLE_KIT!=='undefined'&&VEHICLE_KIT.draw(ctx,{up,build,base:vanBodyArt,vx,cabX,vy,bodyL,bodyH,dark,speed,spin:worldX*.3,time:t});
     if(detailed&&!kit){
       const sw=vanBodyArt.naturalWidth,sh=vanBodyArt.naturalHeight;
@@ -815,7 +819,7 @@ const SCENE = (()=>{
     ctx.fillRect(rearAxle-6,P(baseY+3),3,4); ctx.fillRect(frontAxle+6,P(baseY+3),3,4);
     /* 라이트 */
     ctx.fillStyle= dark>0.25?'#ffe9b0':'#d8d2be';
-    ctx.fillRect(vx+bodyL+cabL-2,vy-3,2,3);
+    ctx.fillRect(headlight.x,headlight.y,headlight.w,headlight.h);
     const braking=S&&S.driving&&speed===0;
     ctx.fillStyle= braking?'#ff6055': speed>0?'#c74138':'#6e2620';
     ctx.fillRect(vx-2,vy-3,2,3);
@@ -824,7 +828,7 @@ const SCENE = (()=>{
     if(wx==='rain'){
       ctx.globalAlpha=0.18;
       ctx.fillStyle= dark>0.25?'#ffe9b0':'#d8d2be';
-      ctx.fillRect(vx+bodyL+cabL-2,baseY+9,2,5);
+      ctx.fillRect(headlight.x,baseY+9,headlight.w,5);
       ctx.fillStyle='#ff6055'; ctx.fillRect(vx-2,baseY+9,2,5);
       if(dark>0.35){ ctx.fillStyle='#f5b869'; ctx.fillRect(vx+7,baseY+9,bodyL-16,2); }
       ctx.globalAlpha=1;
@@ -1258,7 +1262,12 @@ const SCENE = (()=>{
         const image=approachSprite(layer.key);
         if(image?.complete&&image.naturalWidth){
           ctx.save();
-          if(layer.flip){ctx.translate(x+layer.x+layer.width,ground+layer.y);ctx.scale(-1,1);ctx.drawImage(image,0,0,layer.width,layer.height);}
+          const pose=layer.key==='postman-standing'?G.roadCueKit.actorPose(ap,elapsed,document.documentElement.dataset.uiMotion==='reduced'):null;
+          if(pose){
+            ctx.translate(x+pose.offset*detailed.adultHeight,ground);
+            G.roadCueKit.drawActor(ctx,image,layer,pose);
+          }
+          else if(layer.flip){ctx.translate(x+layer.x+layer.width,ground+layer.y);ctx.scale(-1,1);ctx.drawImage(image,0,0,layer.width,layer.height);}
           else ctx.drawImage(image,x+layer.x,ground+layer.y,layer.width,layer.height);
           ctx.restore();
         }else if(layer.person){

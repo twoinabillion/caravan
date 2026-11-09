@@ -1608,6 +1608,14 @@ D.eventSceneTimeVariants.loc_spring={base:'arrival-spring',day:'event-spring-day
   D.eventSceneTimeVariants[id]={base:inherited,day:key,night:key};
 }
 
+// Reuse the same reviewed asset metadata without growing the legacy registry.
+function registerReviewedScene(key,file,format,description,provenance){
+ D.scenes[key]=file;D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance,description};
+}
+
 // Cycle 47: depict the current room or settlement without rewriting untimed history.
 for(const [key,file,description] of [
  ['event-drhan-board-v1','assets/scenes/event-drhan-board-v1.webp','연구실의 실험 기구와 수식이 반쯤 지워진 화이트보드.'],
@@ -1617,12 +1625,7 @@ for(const [key,file,description] of [
  ['event-daegu-dome-day-v1','assets/scenes/event-daegu-dome-day-v1.webp','흐린 낮, 지붕 틈으로 빛이 들어오는 대구 돔 시장 내부.'],
  ['event-suwon-fortress-day-v1','assets/scenes/event-suwon-fortress-day-v1.webp','흐린 낮, 수원 성벽 위 보초와 성문 아래의 생활 터전.'],
  ['event-bus-stop-timetable-v1','assets/scenes/event-bus-stop-timetable-v1.webp','낡은 정류장 안의 시간표 게시판과 벤치에 남은 접힌 우산.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'place',
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle47/README.md',description};
-}
+])registerReviewedScene(key,file,'place',description,'qa-artifacts/qa-cycle-20261026/cycle47/README.md');
 for(const [id,base,day,night] of [
  ['npc_drhan_2','event-meet-community','event-drhan-board-v1','event-drhan-board-v1'],
  ['npc_taeho_2','event-meet-community','event-daegu-dome-day-v1','daegu-dome'],
@@ -1632,6 +1635,21 @@ for(const [id,base,day,night] of [
  ['ev_used_bookstore','event-meet-trader','event-used-bookstore-v1','event-used-bookstore-v1'],
  ['ev_bus_timetable','event-vista-remnant','event-bus-stop-timetable-v1','event-bus-stop-timetable-v1']
 ])D.eventSceneTimeVariants[id]={base,day,night};
+
+// Dome conversations now share reviewed HD light plates. Keep the previous
+// selector as a separate legacy layer so old paid/text-only readers stay put.
+{
+ const key='event-daegu-dome-night-v2',description='밤, 손상된 경기장 지붕 아래 등불이 밝힌 대구 돔 시장과 검문선.';
+ D.scenes[key]='assets/scenes/event-daegu-dome-night-v2.webp';D.sceneDescriptions[key]=description;
+ D.sceneAssetMeta[key]={...D.sceneAssetMeta['event-daegu-dome-day-v1'],format:'place',description,
+  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
+  provenance:'qa-artifacts/continuous-20261107/repair01/art/REVIEW.md'};
+ for(const id of ['cell_dome_meet','npc_taeho_2']){
+  const legacy=D.eventSceneTimeVariants[id];
+  D.eventSceneTimeVariants[id]={base:legacy?.base||'daegu-dome',
+   day:'event-daegu-dome-day-v1',night:key,revision:'dome-light-v2',...(legacy?{legacy}:{})};
+ }
+}
 
 // A reunion is another invitation, with the same person and current-light plates.
 for(const id of ['parkss','leo','jaeyi','eunsu','kangwoo']){
@@ -1652,12 +1670,7 @@ for(const [key,file,format,description] of [
  ['explore-abandoned-gas-night-v1','assets/scenes/explore-abandoned-gas-night-v1.webp','place','밤, 꺼진 펌프와 지하 탱크 덮개가 남은 폐주유소.'],
  ['explore-solar-battery-day-v1','assets/scenes/explore-solar-battery-day-v1.webp','place','낮, 도로변 태양광 패널·배터리 설비와 이어진 케이블.'],
  ['explore-solar-battery-night-v1','assets/scenes/explore-solar-battery-night-v1.webp','place','밤, 도로변 태양광 패널·배터리 설비와 이어진 케이블.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle51/README.md',description};
-}
+])registerReviewedScene(key,file,format,description,'qa-artifacts/qa-cycle-20261026/cycle51/README.md');
 for(const [id,base,day,night] of [
  ['levy_office','event-meet-guard','event-levy-office-day-v1','event-levy-office-night-v1'],
  ['salvage_claim','event-meet-roadside','event-salvage-warehouse-day-v1','event-salvage-warehouse-night-v1'],
@@ -1677,12 +1690,7 @@ for(const [key,file,format,description] of [
  ['explore-mart-loading-day-v1','assets/scenes/explore-mart-loading-day-v1.webp','place','낮, 마트 뒤 하역장의 닫힌 컨테이너와 짐을 든 채 멈춘 지게차.'],
  ['explore-mart-loading-night-v1','assets/scenes/explore-mart-loading-night-v1.webp','place','밤, 마트 뒤 하역장의 닫힌 컨테이너와 짐을 든 채 멈춘 지게차.'],
  ['explore-laundry-room-v1','assets/scenes/explore-laundry-room-v1.webp','place','꺼진 세탁기와 대야·빨래판·세제가 남은 코인 빨래방.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle53/README.md',description};
-}
+])registerReviewedScene(key,file,format,description,'qa-artifacts/qa-cycle-20261026/cycle53/README.md');
 for(const [id,base,day,night] of [
  ['water_toll','event-meet-guard','event-water-toll-day-v1','event-water-toll-night-v1'],
  ['exp_chalkwall','event-find-document','explore-chalkwall-day-v1','explore-chalkwall-night-v1'],
@@ -1698,12 +1706,7 @@ for(const [key,file,format,description] of [
  ['parents-diversion-record-day-v1','assets/scenes/parents-diversion-record-day-v1.webp','detail','낮, 환승소 창구에서 장갑 낀 손이 운행표와 두 장의 분류 기록을 대조한다. 창밖에는 멈춘 버스가 있다.'],
  ['story-bridge-trace-gap-day-v1','assets/scenes/story-bridge-trace-gap-day-v1.webp','detail','낮, 폐쇄 요금소 제어실에서 긴 출력 기록지를 살핀다. 창밖에는 멈춘 달구지가 있다.'],
  ['explore-golf-clubhouse-v1','assets/scenes/explore-golf-clubhouse-v1.webp','place','커튼을 닫은 골프 클럽하우스 라운지의 먼지 쌓인 소파와 병이 남은 바.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle55/README.md',description};
-}
+])registerReviewedScene(key,file,format,description,'qa-artifacts/qa-cycle-20261026/cycle55/README.md');
 for(const [id,base,day,night] of [
  ['rq_minji_request','recruit-minji','recruit-minji-market-day-v1','recruit-minji-market-night-v1'],
  ['parents_diversion_manifest','parents-diversion-record-v2','parents-diversion-record-day-v1','parents-diversion-record-v2'],
@@ -1715,12 +1718,7 @@ for(const [id,base,day,night] of [
 for(const [key,file,description] of [
  ['route-market-checkpoint-night-v1','assets/scenes/route-market-checkpoint-night-v1.webp','밤, 무주 장터 끝의 검문 차단봉과 센서 앞에 정차한 달구지와 짐수레 행렬.'],
  ['event-fire-station-v1','assets/scenes/event-fire-station-v1.webp','반쯤 열린 셔터가 있는 소방서 차고. 멈춘 소방차와 방화복·공기통·절단 도구·비상 물탱크가 남아 있다.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'place',
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle57/README.md',description};
-}
+])registerReviewedScene(key,file,'place',description,'qa-artifacts/qa-cycle-20261026/cycle57/README.md');
 for(const id of ['route_market_convoy','route_market_mask','route_market_pass'])
  D.eventSceneTimeVariants[id]={base:'route-market-convoy',day:'route-market-convoy',night:'route-market-checkpoint-night-v1'};
 D.eventSceneTimeVariants.ev_fire_station={base:'event-explore-civic',day:'event-fire-station-v1',night:'event-fire-station-v1'};
@@ -1743,12 +1741,7 @@ D.eventSceneTimeVariants.ev_fire_station={base:'event-explore-civic',day:'event-
 for(const [key,file,description] of [
  ['explore-woodshop-v1','assets/scenes/explore-woodshop-v1.webp','목공 작업대의 대패밥과 연장, 세 다리를 단 미완성 의자, 문짝 없는 장과 리본 목마.'],
  ['explore-photo-studio-v1','assets/scenes/explore-photo-studio-v1.webp','사진관 배경지와 꺼진 촬영 조명, 빈 촬영 자리와 서랍 옆 즉석카메라·필름 포장.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format:'place',
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle62/README.md',description};
-}
+])registerReviewedScene(key,file,'place',description,'qa-artifacts/qa-cycle-20261026/cycle62/README.md');
 D.eventSceneTimeVariants.exp_woodshop={base:'event-explore-retail',day:'explore-woodshop-v1',night:'explore-woodshop-v1'};
 D.eventSceneTimeVariants.exp_photostudio={base:'event-find-document',day:'explore-photo-studio-v1',night:'explore-photo-studio-v1'};
 
@@ -1756,12 +1749,7 @@ D.eventSceneTimeVariants.exp_photostudio={base:'event-find-document',day:'explor
 for(const [key,file,format,description] of [
  ['camp-visitor-night-v1','assets/scenes/camp-visitor-night-v1.webp','character','지난밤, 작은 모닥불 곁에 배낭을 멘 노인이 조심스레 서 있다.'],
  ['event-mungyeong-omija-v1','assets/scenes/event-mungyeong-omija-v1.webp','detail','평상 나무판 위의 붉은 오미자청 병과 열매, 병을 쥔 노인의 손.']
-]){
- D.scenes[key]=file;D.sceneDescriptions[key]=description;
- D.sceneAssetMeta[key]={...D.sceneAssetMeta['explore-rice-mill-paddy-v1'],format,
-  status:'source-independently-reviewed; active-gallery-listed; runtime-crop-pending',
-  provenance:'qa-artifacts/qa-cycle-20261026/cycle64/README.md',description};
-}
+])registerReviewedScene(key,file,format,description,'qa-artifacts/qa-cycle-20261026/cycle64/README.md');
 D.eventSceneFixedVariants={...(D.eventSceneFixedVariants||{}),
  camp_visitor:{base:'event-meet-community',scene:'camp-visitor-night-v1'}};
 D.eventSceneTimeVariants.near_mungyeong_omija={base:'event-meet-family',day:'event-mungyeong-omija-v1',night:'event-mungyeong-omija-v1'};
@@ -1955,6 +1943,9 @@ for(const [id,base,prefix] of [
 ])D.eventSceneTimeVariants[id]={base,day:prefix+'-day-v1',night:prefix+'-night-v1'};
 // The return is an authored epilogue, not a clock-derived travel arrival.
 D.eventSceneFixedVariants.seoul_session_reset={base:'parents-mother-reunion-v1',scene:'parents-mother-return-interior-v1'};
+// Only new main-closure receipts adopt their actually authored epilogue cuts.
+D.eventSceneTimeVariants.seoul_afterword_choice={base:'seoul-home-dawn-v2',
+ day:'seoul-home-dawn-v2',night:'seoul-home-dawn-v2',revision:'afterword-return-v3',authoredEpilogue:true};
 
 // Current discoveries use their own place and light without revealing a choice's reward.
 for(const [key,file,format,description] of [
@@ -2552,3 +2543,12 @@ for(const [key,file,base,format,description] of [
   'recruit-eunsu-join-decision':{...legacy.byBase['recruit-eunsu-join-decision'],
    night:'recruit-eunsu-join-result-night-v2'}},revision:'qa109',legacy};
 }
+// Current local speech shares the place's reviewed plates, including new NPCs.
+D.localConversationSceneTimeVariants={byBase:{
+ 'daegu-dome':{day:D.eventSceneTimeVariants.cell_dome_meet.day,night:D.eventSceneTimeVariants.cell_dome_meet.night},
+ 'suwon-fortress':{day:D.eventSceneTimeVariants.npc_deokgu_2.day,night:D.eventSceneTimeVariants.npc_deokgu_2.night}
+}};
+registerReviewedScene('explore-abandoned-greenhouse-day-v1','assets/scenes/explore-abandoned-greenhouse-day-v1.webp','place','낮의 버려진 비닐하우스와 스스로 번진 작물. 달구지가 멈춰 있고 사람이나 동물은 보이지 않는다.','qa-artifacts/remaining-20261108/repair02/art/manifest.json');
+registerReviewedScene('explore-abandoned-greenhouse-night-v1','assets/scenes/explore-abandoned-greenhouse-night-v1.webp','place','밤의 버려진 비닐하우스와 스스로 번진 작물. 달구지 창의 생활등만 따뜻하게 비치며 사람이나 동물은 보이지 않는다.','qa-artifacts/remaining-20261108/repair02/art/manifest.json');
+{const old=D.eventSceneTimeVariants.exp_greenhouse;D.eventSceneTimeVariants.exp_greenhouse={base:'event-explore-farm',day:'explore-abandoned-greenhouse-day-v1',night:'explore-abandoned-greenhouse-night-v1',revision:'greenhouse-presence-v1',legacy:old||null};}
+for(const key of ['explore-abandoned-greenhouse-day-v1','explore-abandoned-greenhouse-night-v1'])D.sceneAssetMeta[key].vehicleReference=['assets/reference/dalguji-technical-canon-2026-08-11.webp'];

@@ -1,0 +1,229 @@
+{
+  "capturedAt": "2026-11-08T03:32:12.256735+00:00",
+  "purpose": "pre-edit read-only baseline; retained dirty workspace source, not git HEAD",
+  "backups": {
+    "src/03o-story-refinement.js": {
+      "sha256": "1bc50bb7bca65ad56c41db17b0885733457da41dcd6033f662fdddc6121ed421",
+      "bytes": 18808,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/03o-story-refinement.js"
+    },
+    "src/04e-engine-world.js": {
+      "sha256": "ab10bc3b8e9fd687bf0f9c6b2d8a7b4f5d761c93af599d4000a35e93f6cb2e02",
+      "bytes": 58891,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/04e-engine-world.js"
+    },
+    "src/04c-engine-travel.js": {
+      "sha256": "bb3744e3ffdb591182499ceb50880cc2fc0212626e9967816503dc9afce0b7cd",
+      "bytes": 38916,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/04c-engine-travel.js"
+    },
+    "src/04h-engine-presentation.js": {
+      "sha256": "c7e72d2f26389025962ea65f5576bdf27ee74ae9822dc4d10f5671d5ef1c3e09",
+      "bytes": 26334,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/04h-engine-presentation.js"
+    },
+    "src/04f-engine-quests.js": {
+      "sha256": "d2a04331fcccb2e911d2d775504508506599d12f8b1ddb9268ecbcd8bef6664a",
+      "bytes": 35770,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/04f-engine-quests.js"
+    },
+    "src/07d-ui-quests.js": {
+      "sha256": "45e9fa3436def148931c5dc21a40b8dd729b65418f0dbb8c59f4bf207b66cbcd",
+      "bytes": 37165,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/07d-ui-quests.js"
+    },
+    "src/03i-story-expansion.js": {
+      "sha256": "daeb5b992fc4bd7e792ceb65d82acb60086556326d6c71b50ffd7844905d2894",
+      "bytes": 58818,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/03i-story-expansion.js"
+    },
+    "src/04d-engine-director.js": {
+      "sha256": "9c069263b7dfba29648576fbd1c837eec3f662f13a78dfffb8e787f74be0e358",
+      "bytes": 58445,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/04d-engine-director.js"
+    },
+    "src/04b-engine-crew.js": {
+      "sha256": "4938a3d74062158646e68cbe86b7d74c9c050dd12ada0e55dcdaeea82a44ef51",
+      "bytes": 46462,
+      "backup": "qa-artifacts/fun-story-build-20261108/before/04b-engine-crew.js"
+    }
+  },
+  "runtimeHashes": {
+    "src/01-style.html": {
+      "sha256": "d7fcb8c3dc2cd0b17d3791464a925488c25c586a964d2c0288971abd92568d15",
+      "bytes": 822506
+    },
+    "src/01b-quest-style.html": {
+      "sha256": "9d03f07188652cb026214f5a544c37a57040c46e5f509d13b6775ff481cdcff5",
+      "bytes": 11261
+    },
+    "src/02-dom.html": {
+      "sha256": "ed21acf228364f6abfb2ed6ee4b22b55ceb8648c4b7bfe7db4296165bb2a06f5",
+      "bytes": 21322
+    },
+    "src/03-data.js": {
+      "sha256": "25f0d4796610855ef18bba7bb25c4716f670950c7017f7b138fa5908f3856362",
+      "bytes": 1940534
+    },
+    "src/03b-portraits.js": {
+      "sha256": "1be24a24f8a55c05c241a31ac8d629a7b95346f8b020b401a2587d08a28ac450",
+      "bytes": 491
+    },
+    "src/03c-icons.js": {
+      "sha256": "43c35b0eae246755a8703ac12ba117d9e3805c2af65991ae396391066a05e370",
+      "bytes": 101213
+    },
+    "src/03d-bgm.js": {
+      "sha256": "21040addf53954219257ec72dac46679d609929dcc185e5a7bee7fe74880245e",
+      "bytes": 4708365
+    },
+    "src/03e-bgm-title.js": {
+      "sha256": "f615bed831348a698ceb9b8715f86c969337c229ca4e89f66a9a21534bf1aebf",
+      "bytes": 236
+    },
+    "src/03f-npc-portraits.js": {
+      "sha256": "83d6d84750f1180139a91edc03128a7d1002d5a4af4970d08d6d06b930296555",
+      "bytes": 3717
+    },
+    "src/03g-scenes.js": {
+      "sha256": "4bfa971c1c2be8aa3b6503f191dba9dc143ecc49ee9a929018b3cc58c5771161",
+      "bytes": 210123
+    },
+    "src/03h-audio.js": {
+      "sha256": "957e6637474c0777b03b6fc7e834541dedb94df3c98004651972884be5ee1b01",
+      "bytes": 6573
+    },
+    "src/03i-story-expansion.js": {
+      "sha256": "daeb5b992fc4bd7e792ceb65d82acb60086556326d6c71b50ffd7844905d2894",
+      "bytes": 58818
+    },
+    "src/03j-camp-conversations.js": {
+      "sha256": "53990752c074c5fff01bc28bb9ea575e75a66c017f43c9d6edfb3a7d070a9a79",
+      "bytes": 34176
+    },
+    "src/03k-main-evidence.js": {
+      "sha256": "552f415da304e7953f8928cc6b7f24ed59b509b9c2dda5964c8060617de565df",
+      "bytes": 16942
+    },
+    "src/03l-main-recovery.js": {
+      "sha256": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+      "bytes": 11797
+    },
+    "src/03m-finale-reading.js": {
+      "sha256": "85f7976006a622ac1ada8e91dfe5c841fb7288a943f1137bc464a7e4920852a3",
+      "bytes": 15577
+    },
+    "src/03n-offline-foley.js": {
+      "sha256": "325e4ec7781b000e5c97d5a9884858d182d9c04f8deb2494cc4004deee9df40b",
+      "bytes": 4383
+    },
+    "src/03o-story-refinement.js": {
+      "sha256": "1bc50bb7bca65ad56c41db17b0885733457da41dcd6033f662fdddc6121ed421",
+      "bytes": 18808
+    },
+    "src/04a-engine-core.js": {
+      "sha256": "1fc4c72d3ad78b9b8acd20159a46957044cc2fc6b9156a4971d286d71dad158c",
+      "bytes": 74163
+    },
+    "src/04b-engine-crew.js": {
+      "sha256": "4938a3d74062158646e68cbe86b7d74c9c050dd12ada0e55dcdaeea82a44ef51",
+      "bytes": 46462
+    },
+    "src/04c-engine-travel.js": {
+      "sha256": "bb3744e3ffdb591182499ceb50880cc2fc0212626e9967816503dc9afce0b7cd",
+      "bytes": 38916
+    },
+    "src/04d-engine-director.js": {
+      "sha256": "9c069263b7dfba29648576fbd1c837eec3f662f13a78dfffb8e787f74be0e358",
+      "bytes": 58445
+    },
+    "src/04e-engine-world.js": {
+      "sha256": "ab10bc3b8e9fd687bf0f9c6b2d8a7b4f5d761c93af599d4000a35e93f6cb2e02",
+      "bytes": 58891
+    },
+    "src/04f-engine-quests.js": {
+      "sha256": "d2a04331fcccb2e911d2d775504508506599d12f8b1ddb9268ecbcd8bef6664a",
+      "bytes": 35770
+    },
+    "src/04g-engine-evidence.js": {
+      "sha256": "82591b69185615a7e03db7386600923348a314755760d682a5d6ca63fdceff34",
+      "bytes": 13254
+    },
+    "src/04h-engine-presentation.js": {
+      "sha256": "c7e72d2f26389025962ea65f5576bdf27ee74ae9822dc4d10f5671d5ef1c3e09",
+      "bytes": 26334
+    },
+    "src/05-scene.js": {
+      "sha256": "92d8efb990bada46e47c0afc6aeec2235cc39597d299f3eea9b364374d832118",
+      "bytes": 124424
+    },
+    "src/05a-road-environment.js": {
+      "sha256": "de8acf7dc85c76ec9ed5efbf55428c3336b8abc1aaaed93a0a426ae742719e1d",
+      "bytes": 5353
+    },
+    "src/05b-vehicle-kit.js": {
+      "sha256": "3354ea777e00f1a8eabbd3e3795b4d2ea2e00d2aca7ba04a9b19c5e81d37a1ff",
+      "bytes": 7874
+    },
+    "src/05c-road-cue-kit.js": {
+      "sha256": "7ee23e785d74cba266c5c6361f977dd29fe21bf6ec2956253235755b26d2d467",
+      "bytes": 8140
+    },
+    "src/05d-route-panorama.js": {
+      "sha256": "72fed40558aa9db85cc0fd2f0c69ffedabf574472dfe47cd3dfa88131f759e84",
+      "bytes": 4773
+    },
+    "src/05e-road-continuity.js": {
+      "sha256": "9705ec95712411f5fcc5ab222e8b5a38deb1473a21d3a1c7a986dcf2f3697f1e",
+      "bytes": 18205
+    },
+    "src/05f-continuous-terrain.js": {
+      "sha256": "492a149acdc108af1c709fa3ea3877d7fe323fa388e95eb3520d7898e5565e30",
+      "bytes": 9096
+    },
+    "src/06-mapgraph.js": {
+      "sha256": "8c87a68afebd1379a6154a30b9db4be05fb2f66931a92c2beaa50081dd66c2a6",
+      "bytes": 28349
+    },
+    "src/07-ui.js": {
+      "sha256": "61123970537fe19fd3bbf18fc5f8788b7b31a739c234325ac8ad5790f673723b",
+      "bytes": 499088
+    },
+    "src/07d-ui-quests.js": {
+      "sha256": "45e9fa3436def148931c5dc21a40b8dd729b65418f0dbb8c59f4bf207b66cbcd",
+      "bytes": 37165
+    },
+    "src/07e-ui-audio.js": {
+      "sha256": "777b5b34c27f94c142cb3ae9a71ba156d98446ca3de4c47ff0e9a7bc981a197a",
+      "bytes": 34025
+    },
+    "src/07f-ui-road-thoughts.js": {
+      "sha256": "2aed97a5830fec6bbbad1e736da5f50c4d11e91a569fd4316a9c3da9aca79f78",
+      "bytes": 6928
+    },
+    "src/07g-ui-home.js": {
+      "sha256": "7f0347b3a1a46a9cdbc8873276ba480a6642ec5955d37ab5f025ba705c78f57b",
+      "bytes": 8411
+    },
+    "src/07h-story-pages.js": {
+      "sha256": "b60b537b29aee726fe67924666eba6693b090837f079f52893d009f9a7c0b1e7",
+      "bytes": 3977
+    },
+    "src/07i-evidence-scenes.js": {
+      "sha256": "d43bba02b0569d6ec3cde0af1047f1ba879310ac3da4c930edd6b9895e69365e",
+      "bytes": 14200
+    },
+    "src/07j-mobile-reader.js": {
+      "sha256": "a48d662e7d022174223c52d3ec3ab5739b8c0f4c81daad793d2cfa9d4927ef92",
+      "bytes": 5779
+    },
+    "src/08-offroad.js": {
+      "sha256": "26097b4830734a01bab583f4b8ce6e84c3990a3a8a55f5cfd0ccd5656942b9d0",
+      "bytes": 867
+    },
+    "src/09-close.html": {
+      "sha256": "ce9c8226d4294cda7cbb1cdf76f2cab539d36de464e8abffec7136ace8f1b6a9",
+      "bytes": 1406
+    }
+  }
+}

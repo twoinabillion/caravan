@@ -1,0 +1,20 @@
+{
+  "scope": "Exact natural cohort02 originals; no synthetic player count",
+  "rows": [
+    {
+      "fixture": "main-entry-v2.json",
+      "source": "qa-artifacts/continuous-20261107/cohort02/story/agent204/attempt01/scene-seoul_afterword_choice-entry-425.json",
+      "sha256": "dc898162634f45546700ff9c7f2fc1a9793cae85c0f3e51cae951daf68ca8387"
+    },
+    {
+      "fixture": "main-paid-v2.json",
+      "source": "qa-artifacts/continuous-20261107/cohort02/story/agent204/attempt01/scene-seoul_afterword_choice-result-425.json",
+      "sha256": "513722c282ce92cfeafc855e0b8b6f0d3e23f95651a9b344c3b136ac48da4184"
+    },
+    {
+      "fixture": "night-paid-parkss.json",
+      "source": "qa-artifacts/continuous-20261107/cohort02/survival/agent205/attempt01/scene-seoul_night-result-446.json",
+      "sha256": "387e77dc26da272b5314a8aefead18a9e1046b311b8ce11847625ec17789fb20"
+    }
+  ]
+}

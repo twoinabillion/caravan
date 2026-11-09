@@ -30,6 +30,7 @@ test('1039 events retain branches, costs, effects and chains; only callsign reca
  const busRecord=rows.find(row=>row.id==='ev_bus_timetable');assert.equal(busRecord.parseRecords,true);delete busRecord.parseRecords;
  rows.forEach(require('../tools/choice-experience-contract.cjs'));
  require('../tools/story-review-contract.cjs')(rows);
+ assert.equal(rows.length,1039);
  assert.equal(hash(rows),'abf633951b873662bf81e42ac1fc75a1e47b0ec6450a11b98371970626543f38');
  assert.equal(event(D,'talkr_es_2').needFlag,'eunsu_callsign_held');
  assert.equal(event(D,'talk_es_02').choices[0].out[0].fx.flag,'eunsu_callsign_held');

@@ -2,12 +2,124 @@
   "version": 1,
   "drafts": [
     {
+      "id": "story-memory-shelf-v2",
+      "file": "story-memory-shelf-v2.html",
+      "title": "풍경 곁의 기억 · 책갈피와 열람 화면",
+      "revision": "2",
+      "recommended": true,
+      "description": "Sang의 여백·찾을 자리·자연스러운 노출 요청을 구체화한 독립 시안. 풍경 우측 책갈피(추천)와 풍경 아래 한 줄을 비교하고 예고→나중에→기억 목록→열람→길 복귀→재열람을 스크립트 없이 눌러볼 수 있다. 기존 HD 원본/발췌만 사용한 정차 배치이며 실제 게임·저장·시간·자원·효과와 분리된다. 읽은 기억 보관함은 새 제안이고 기본 프롤로그 자동 재생은 유지한다. 선택만으로 게임에 적용되지 않는다."
+    },
+    {
       "id": "story-entry-v1",
       "file": "story-entry-v1.html",
       "title": "떠오른 기억과 길 위의 예고",
       "revision": "1",
       "recommended": true,
       "description": "Sang의 요청: 기본 프롤로그는 유지하고 여행 중 회상은 알림→직접 펼치기/나중에, 현재 사건은 눈치챌 단서→감속→장면으로 연결한다. 기억 열기·돌아오기와 3초 사건 예고를 비교하는 스크립트 없는 독립 시안. 실제 게임/저장/시간/자원에 접근하지 않으며 선택만으로 본게임에 적용하지 않는다."
+    },
+    {
+      "id": "mobile-adventure-v1",
+      "file": "mobile-adventure.html",
+      "title": "서울까지 400km · 모바일 어드벤처",
+      "revision": "1",
+      "recommended": true,
+      "description": "일반 모바일 게임처럼 해달라는 Sang의 요청을 반영한 전체 배경+하단 대화 카드+상단 아이콘 시안. 기존 원본/프로필과 고정 대사 사용, 실제 저장과 분리되며 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "mobile-reading-v1",
+      "file": "mobile-reading.html",
+      "title": "손안의 여정 · 풍경과 엄지 조작",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang이 승인한 모바일 개선 방향: 원본 전체 그림을 유지하며 여백에 같은 풍경을 잇고, 보조 도구를 하단 더 보기로 모읍니다. 고정 예시 독립 시안, 실제 게임/시간/저장과 분리되며 선택만으로 적용되지 않습니다."
+    },
+    {
+      "id": "quiet-dialogue-v1",
+      "file": "quiet-dialogue.html",
+      "title": "풍경 곁의 대화 · 여백과 확대 개선",
+      "revision": "1",
+      "recommended": true,
+      "description": "현재 UI 검토 뒤 Sang이 승인한 개선 방향. 고화질 원본을 유지하고 짧은 본문과 선택지를 가까이, 금속 질감은 차분하게, 전체 화면 원본과 세부 확대/이동을 제공합니다. 고정 원문 독립 시안이며 게임 자원·시간·저장을 변경하지 않습니다."
+    },
+    {
+      "id": "evidence-presence-v1",
+      "file": "evidence-presence.html",
+      "title": "이야기가 가리키는 사물 · 현장→기록지→현장",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang의 “종이나 무언가가 보였다면 그 이미지가 보여야” 지시를 반영한 수동3대목 독립 초안. 기존 고화질 요금소 위에 기록지가 그 대목에 나타나며 누르면 크게 읽습니다. 실제 게임에서는 페이지 cursor/본문 anchor로 연결할 계획이며 시간/RNG/효과/저장과 분리합니다. 초안 선택은 자동 적용하지 않습니다."
+    },
+    {
+      "id": "evidence-documents-v1",
+      "file": "evidence-documents.html",
+      "title": "기록지의 빈칸 · 직접 읽는 단서와 버튼 중심",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang의 시간/확인자 빈칸을 직접 보여달라는 방향을 반영한 고화질 현장+선명한 출력 기록지 시안. 기존 원문의 세 시각과 빈칸만 사용하며 대화 선택지 문구를 중앙에 둡니다. 실제 게임·자원·시간·저장과 분리한 고정 시안, 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "hd-action-flow-v1",
+      "file": "hd-action-flow.html",
+      "title": "고화질 여정 · 보고 고르고 달라진 차로",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang의 개선 실행 지시를 반영한 정비·야영 배치 시안. 기존 고화질 부품/야영 그림을 유지하고 부품 미리보기→명시 결제→완료 전후/내역, 식사 완료/취침 후 점검 효과를 구분합니다. 고정 가상 예시이며 실제 게임·시간·자원·저장과 분리돼 있습니다. 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "pixel-characters-v1",
+      "file": "pixel-characters.html",
+      "title": "이름 없이도 같은 사람 · 여섯 동료",
+      "revision": "1",
+      "recommended": true,
+      "description": "캐릭터가 서로 비슷하다는 피드백을 반영한 수정 시안. 실제 정본 여섯 초상을 확인해 머리/얼굴/체형/고유 소품/활동 동작을 구분했습니다. 이름 숨김·작업복 색 통일·몸 소품 숨김·실루엣·걷기 비교, 같은 부품의 확대 얼굴과 실제 야영 원문 대사를 제공합니다. 키/몸 비율은 초안이며 실제게임/동행명단/시간/자원/저장과 분리했습니다. 자동 적용하지 않습니다."
+    },
+    {
+      "id": "pixel-workshop-v1",
+      "file": "pixel-workshop.html",
+      "title": "함께 만드는 픽셀 세계 · 외형·도구·대화",
+      "revision": "1",
+      "recommended": true,
+      "description": "외부 CC0 나무/소품/4프레임 모닥불과 직접 확장한 인물/주전자/동작을 같은 색상표와 픽셀 규격으로 통합. 새 동료의 머리·옷·도구·걷기/작업, 밤/낮 배경과 말풍선→하단 대화→선택→작업 종료/표정 전환을 비교합니다. 실제 게임·저장과 분리한 방향 검토용이며 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "pixel-journey-v1",
+      "file": "pixel-journey.html",
+      "title": "픽셀로 이어지는 하루 · 이동·마을·야영·차 안",
+      "revision": "1",
+      "recommended": true,
+      "description": "전체 픽셀 전환과 말풍선 대화를 검토하는 독립 시안. 이동/밀양장터/야영/달구지내부 네 배경을 모두 코드 픽셀로 제작했습니다. 계속 움직이는 세계 안에서 세 번의 말풍선 대화를 진행하고, 하단 대화창으로 전환해 비교할 수 있습니다. 고화질 정본 그림은 별도 펼쳐 보는 대안으로 보존했습니다. 예문·가상 고정 상황이며 실제 게임의 자원/시간/저장·전체58도시 변경은 아닙니다. 초안 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "pixel-camp-life-v1",
+      "file": "pixel-camp-life.html",
+      "title": "야영 중 · 민지와 모닥불 픽셀 동작",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang의 “진행 중인 일은 자동으로 보이게, 픽셀이어도 된다”는 설명에 맞춘 독립 샘플. 민지 특징/달구지 외형을 코드 픽셀 도형으로 구성하고 공구질·몸의 작은 움직임·모닥불·연기·불씨·작업등을 자동 재생합니다. 정지/일시정지 비교 지원. 새 생성 이미지·외부 캐릭터 도입·편집기 설치 없음. 무음, 실제 시간/자원/상태 미연결, 게임/저장 미변경. 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "living-world-direction-v1",
+      "file": "living-world-direction.html",
+      "title": "살아 있는 여정 · 길·도시·야영 연출 방향",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang이 승인한 우편부 방향을 전체 게임으로 확장하는 검토판. 기존 밀양 원경·시장·빈 차 안 정본에 CSS 움직임을 더해 정적/작은 움직임/일시정지를 비교합니다. 길=이동감, 도시=생활감, 야영=온기. 도구 역할과 제작 우선순위를 함께 표시합니다. 새 보행/작업 프레임, 소리, 실제 상태·게임 연결은 미구현. 게임/저장 미변경, 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "postman-living-journey-v1",
+      "file": "postman-living-journey.html",
+      "title": "길 위의 사람 · 발견에서 공책까지",
+      "revision": "1",
+      "recommended": true,
+      "description": "2026-11-06 Sang 승인 후 본게임 우편부·민지 대화의 cinematic skin, 우편부 캔버스 관절 동작/방울/제동, 실제 기록 제목과 HOME 조명/선택 강조를 로컬 구현·검수했습니다. 이 파일은 승인한 독립 시안의 보존본으로 게임/저장을 직접 읽거나 변경하지 않습니다. 명단은 실제 두 확률 결과 중 하나의 고정 예시입니다. 검수: qa-artifacts/living-encounters-20261106/. 초안 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "road-encounter-motion-v1",
+      "file": "road-encounter-motion.html",
+      "title": "길 위의 만남 · 감속과 작은 움직임",
+      "revision": "1",
+      "recommended": true,
+      "description": "18초 독립 움직임 시안. 주행→발견→감속→정차 잔흔→사람 접근을 기존 달구지·밀양 원경·우편 배달부 그림으로 비교합니다. 재생/일시정지/잔움직임 비교 지원. CSS 위치·기울기 시안이며 보행 프레임·바퀴 회전·게임 캔버스 연결은 미구현. 무음, 실제 게임·저장 미변경. 선택은 요청만 준비하며 자동 적용하지 않습니다."
     },
     {
       "id": "first20-purpose-v1",

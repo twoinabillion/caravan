@@ -132,7 +132,8 @@ const UI = (()=>{
     const fields=[['fuel','연료','L'],['scrap','고철',''],['water','물',''],['food','식량',''],['parts','부품',''],['van','차체','%']];
     detail.innerHTML=`<dl>${fields.map(([key,label,unit])=>`<div><dt>${label}</dt><dd${selected.delta[key]?' class="added"':''}>${supplies[key]}${unit}</dd></div>`).join('')}</dl><p>의약품 ${supplies.medicine}개도 기본 짐에 들어 있다.</p>`;
   }
-  let introAuto=localStorage.getItem('caravan_intro_auto')!=='0', introAutoTimer=0;
+  let introAuto=localStorage.getItem('caravan_intro_auto')==='1', introAutoTimer=0;
+  let introAutoGeneration=0;
   const toastQueue=[];
   let toastActive=false, toastTimer=0;
   let roadNotice=null;
@@ -480,6 +481,24 @@ const UI = (()=>{
     node._returnFocus=null;
     if(restore&&back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
   }
+  function appBack(){
+    const dialogs=[...document.querySelectorAll('dialog[open]')],dialog=dialogs.at(-1);
+    if(dialog){const cancel=new Event('cancel',{cancelable:true});dialog.dispatchEvent(cancel);if(!cancel.defaultPrevented)dialog.close();return true;}
+    const installation=document.querySelector('#ovl-stl.on .upgrade-install #upgrade-install-done');
+    if(installation?.isConnected){installation.click();return true;}
+    const modal=activeModal();
+    if(modal?.id==='ev-wrap'&&curStory){
+      if(['review','inspection'].includes(curStory.readerMode))setStoryReaderMode(curStory,'current');
+      else if(typeof MobileReader!=='undefined')MobileReader.openTools($('#ev-sheet'));
+      return true;
+    }
+    if(modal){
+      if(!['arrival-scene','ovl-seoul'].includes(modal.id))closeOvl('#'+modal.id);
+      return true;
+    }
+    if(screen==='game'){$('#dk-menu')?.click();return true;}
+    return false;
+  }
   function activeModal(){
     return ['#install-guide','#intro-summary','#arrival-scene','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp','#ovl-local-actions']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
@@ -669,6 +688,7 @@ const UI = (()=>{
     }
     if(enableSound)SND.enable();
     if(S.ended)showEnding(S.endKind||'stranded');else enterGame();
+    if(typeof MobileReader!=='undefined'&&curStory&&$('#ev-wrap')?.classList.contains('on'))MobileReader.note($('#ev-sheet'),curEv?.title,curStory.phase);
     return true;
   }
   function previousJourneyHtml(last,compact=false){
@@ -728,7 +748,14 @@ const UI = (()=>{
     lifecyclePaused=paused;
     // No catch-up frame after a hidden WebView, including when RAF stopped entirely.
     last=null; lastVisual=0;
-    if(paused) pauseArrivalCountdown(); else resumeArrivalCountdown();
+    if(paused){
+      pauseArrivalCountdown();clearIntroAuto();clearStoryAuto();
+    }else{
+      resumeArrivalCountdown();
+      if(screen==='intro')scheduleIntroAuto();
+      else if(screen==='game'&&curStory?.turns?.length&&$('#ev-wrap')?.classList.contains('on'))
+        scheduleStoryAuto(curStory,curStory.turns[curStory.index]);
+    }
   }
   function bgmKey(){
     if(screen==='title'||screen==='mode'||screen==='intro') return 'title';
@@ -771,6 +798,9 @@ const UI = (()=>{
 
   /* ── wiring ── */
   function wire(){
+    if(typeof MobileReader!=='undefined')MobileReader.bind(()=>{
+      if(curStory&&$('#ev-wrap')?.classList.contains('on'))MobileReader.note($('#ev-sheet'),curEv?.title,curStory.phase);
+    });
     const saveForLifecycle=()=>{ if(S) G.save(); };
     document.addEventListener('visibilitychange',()=>{ if(document.hidden) saveForLifecycle(); });
     window.addEventListener('pagehide',saveForLifecycle);
@@ -891,8 +921,8 @@ const UI = (()=>{
       introPreview=true;
       introIdx=0; introTurnIdx=0;
       SND.enable();
-      renderIntro(true);
       show('scr-intro');
+      renderIntro(true);
     };
     let introPointer=null;
     $('#scr-intro').addEventListener('pointerdown',e=>{
@@ -1061,6 +1091,7 @@ const UI = (()=>{
     return beat;
   }
   function clearIntroAuto(){
+    introAutoGeneration++;
     if(introAutoTimer){ clearTimeout(introAutoTimer); introAutoTimer=0; }
   }
   function updateIntroAuto(){
@@ -1071,12 +1102,19 @@ const UI = (()=>{
   }
   function scheduleIntroAuto(){
     clearIntroAuto(); updateIntroAuto();
-    if(!introAuto||introIdx>=introPages().length) return;
+    const readingPaused=()=>!!$('#intro-summary')?.classList.contains('on')
+      ||!!$('#intro-txt .story-reading-record[open]');
+    if(lifecyclePaused||document.hidden||screen!=='intro'||!introAuto||introIdx>=introPages().length||readingPaused()) return;
     const page=introPages()[introIdx], beats=page&&page.beats||[];
     const beat=beats[Math.min(introTurnIdx,Math.max(0,beats.length-1))];
     const chars=stripTags(beat&&beat.text||'').length;
     const delay=Math.max(1900,Math.min(5200,800+chars*55));
-    introAutoTimer=setTimeout(()=>{ introAutoTimer=0; if(screen==='intro'&&!document.hidden) nextIntro(); },delay);
+    const generation=introAutoGeneration;
+    introAutoTimer=setTimeout(()=>{
+      if(generation!==introAutoGeneration)return;
+      introAutoTimer=0;
+      if(screen==='intro'&&introAuto&&!lifecyclePaused&&!document.hidden&&!readingPaused())nextIntro();
+    },delay);
   }
   function introPages(){return introPreview?(introPrologue&&introPrologueVersion!==1?D.journeyProloguePages||D.introHistoryPages:D.introHistoryPages):D.intro;}
   function renderIntro(newPage){
@@ -1827,18 +1865,77 @@ function dialogueSide(turn,lanes,opt={}){
   function setStoryReaderMode(state,mode){
     if(curStory!==state) return;
     state.readerMode=['review','inspection'].includes(mode)?mode:'current';
+    if(state.readerMode==='inspection'&&!state.inspection?.items?.some(item=>item.id===state.inspectionId))
+      state.inspectionId=state.inspection?.items?.[0]?.id||'';
     state.reviewing=state.readerMode!=='current';
     renderStoryState();
-    requestAnimationFrame(()=>$('#ev-sheet .story-reader')?.focus({preventScroll:true}));
+    if(curStory===state) $('#ev-sheet .story-reader')?.focus({preventScroll:true});
+  }
+  function storyDocumentHtml(doc){
+    if(!doc||!Array.isArray(doc.rows)||!doc.rows.length) return '';
+    const kind=['printout','form','terminal','sign'].includes(doc.kind)?doc.kind:'form';
+    return `<article class="story-document" data-document-kind="${kind}" aria-label="${esc(doc.title||'기록 원본')}">
+      <header><small>${esc(doc.source||'')}</small><h4>${esc(doc.title||'기록 원본')}</h4></header>
+      <dl>${doc.rows.map(row=>{const blank=row.blank===true&&!row.value;
+        return `<div><dt>${esc(row.label||'')}</dt><dd${blank?' class="document-blank"':''}>${blank?'<span aria-hidden="true">________</span><span class="sr-only">기재 없음</span>':esc(row.value||'')}</dd></div>`;
+      }).join('')}</dl></article>`;
   }
   function storyInspectionHtml(state){
     const evidence=state.inspection;
     if(!evidence?.items?.length) return '';
     const chosen=evidence.items.find(item=>item.id===state.inspectionId);
     return `<section class="story-evidence"><h3>${esc(evidence.title)}</h3><p>${esc(evidence.prompt||'')}</p>
-      <div class="story-evidence-sources" role="group" aria-label="살펴볼 자료">${evidence.items.map(item=>
-        `<button type="button" data-inspect="${esc(item.id)}" aria-pressed="${item.id===chosen?.id}"><span aria-hidden="true">▱</span><b>${esc(item.label)}</b><small>${state.inspectedIds?.includes(item.id)?'살펴봄':'펼쳐 보기'}</small></button>`).join('')}</div>
-      <div class="story-evidence-detail" role="status" aria-live="polite">${chosen?`<h4>${esc(chosen.label)}</h4><p>${fmt(chosen.text)}</p>`:'<p>자료를 하나 골라 펼쳐 본다. 언제든 이야기로 돌아갈 수 있다.</p>'}</div></section>`;
+      ${evidence.items.length===1&&chosen?.document?'':`<div class="story-evidence-sources" role="group" aria-label="살펴볼 자료">${evidence.items.map(item=>
+        `<button type="button" data-inspect="${esc(item.id)}" aria-pressed="${item.id===chosen?.id}"><span aria-hidden="true">▱</span><b>${esc(item.label)}</b><small>${item.id===chosen?.id?'펼쳐 보는 중':state.inspectedIds?.includes(item.id)?'살펴봄':'펼쳐 보기'}</small></button>`).join('')}</div>`}
+      <div class="story-evidence-detail" role="status" aria-live="polite">${chosen?`${chosen.document?storyDocumentHtml(chosen.document):`<h4>${esc(chosen.label)}</h4>`}<p>${fmt(chosen.text)}</p>`:'<p>자료를 하나 골라 펼쳐 본다. 언제든 이야기로 돌아갈 수 있다.</p>'}</div></section>`;
+  }
+  function fitSceneEvidence(frame){
+    const object=frame.querySelector('[data-evidence-object]');
+    if(!object||frame.classList.contains('zoomed'))return;
+    let room=frame.clientHeight;
+    const sheet=frame.closest?.('[data-reader-mobile="game"]');
+    const mobile=sheet&&window.matchMedia?.('(max-width:600px) and (min-height:500px) and (orientation:portrait)').matches;
+    object.hidden=false;if(object.style)object.style.top='';
+    if(mobile){
+      const bounds=frame.getBoundingClientRect(),report=sheet.querySelector('.event-field-report'),head=sheet.querySelector('.event-head');
+      const ceiling=Math.max(bounds.top,(head?.getBoundingClientRect().bottom||bounds.top)+8);
+      const floor=Math.min(bounds.bottom,(report?.getBoundingClientRect().top||bounds.bottom)-12);
+      room=Math.max(0,floor-ceiling);object.style.top=`${ceiling+room/2-bounds.top}px`;
+    }
+    object.dataset.evidenceCompact='false';
+    if(object.getBoundingClientRect().height>room-16)object.dataset.evidenceCompact='true';
+    if(mobile&&object.getBoundingClientRect().height>room-16){
+      object.hidden=true;const source=frame.querySelector('[data-scene-document]');if(source)source.hidden=false;
+    }
+  }
+  function syncStoryEvidence(state,sheet,paint=false){
+    const event=curEv?.id===state.eventId?curEv:{id:state.eventId,inspection:state.inspection};
+    state.inspection=EvidenceScenes.inspection(event,state);
+    if(state.readerMode==='inspection'&&!state.inspection?.items?.length){
+      state.readerMode='current';state.reviewing=false;state.inspectionId='';
+    }
+    if(!paint)return;
+    wireStoryTools(sheet,state);
+    const frame=sheet.querySelector('.event-scene-frame');if(!frame)return;
+    const found=EvidenceScenes.current(state,sheet.dataset.narrativeTime);
+    const trigger=frame.querySelector('[data-scene-document]');if(trigger)trigger.hidden=!!found;
+    let object=frame.querySelector('[data-evidence-object]');
+    frame.dataset.evidenceVisible=String(!!found);
+    if(!found){object?.remove();return;}
+    if(object?.dataset.evidenceKey===found.key){fitSceneEvidence(frame);return;}
+    if(!object){object=document.createElement('button');object.type='button';object.className='scene-evidence-object';object.dataset.evidenceObject='';frame.appendChild(object);}
+    object.dataset.evidenceKey=found.key;
+    object.dataset.evidenceItem=found.id;
+    object.dataset.evidenceKind=['printout','form','terminal','sign'].includes(found.item.document?.kind)?found.item.document.kind:'form';
+    object.dataset.evidenceStack=String(found.count>1);
+    object.setAttribute('aria-label',`${found.item.label} 크게 보기`);
+    object.innerHTML=EvidenceScenes.previewHtml(found);
+    object.onclick=event=>{
+      event.preventDefault();event.stopPropagation();if(curStory!==state)return;
+      state.inspectionId=found.id;setStoryReaderMode(state,'inspection');
+    };
+    object.onkeydown=event=>{if(event.key==='Enter'||event.key===' ')event.stopPropagation();};
+    fitSceneEvidence(frame);
   }
   function toggleStoryAuto(state){
     if(curStory!==state)return;
@@ -1847,7 +1944,8 @@ function dialogueSide(turn,lanes,opt={}){
     clearStoryAuto();
     wireStoryTools($('#ev-sheet'),state);
     if(storyAuto)scheduleStoryAuto(state,state.turns[state.index]);
-    $('#ev-sheet [data-story-auto]')?.focus({preventScroll:true});
+    const menu=$('#ev-sheet [data-story-menu]');
+    (typeof MobileReader!=='undefined'&&menu?.offsetParent!==null?menu:$('#ev-sheet [data-story-auto]'))?.focus({preventScroll:true});
   }
   function wireStoryTools(sheet,state){
     // Place/time/source stays above the picture; scene titles remain accessible.
@@ -1856,6 +1954,17 @@ function dialogueSide(turn,lanes,opt={}){
       const heading=sheet.querySelector('.event-head');
       if(heading&&heading.parentElement!==sheet) sheet.prepend(heading);
     }
+    const frame=sheet.querySelector('.event-scene-frame');
+    const hasDocuments=state.inspection?.items?.some(item=>item.document?.rows?.length);
+    let documentButton=frame?.querySelector('[data-scene-document]');
+    if(frame&&hasDocuments){
+      if(!documentButton){documentButton=document.createElement('button');documentButton.type='button';documentButton.className='scene-document';documentButton.dataset.sceneDocument='';frame.appendChild(documentButton);}
+      documentButton.textContent=state.inspection.sceneLabel||'자료 살펴보기';
+      documentButton.setAttribute('aria-label',documentButton.textContent);
+      documentButton.setAttribute('aria-pressed',String(state.readerMode==='inspection'));
+      documentButton.onclick=event=>{event.preventDefault();event.stopPropagation();setStoryReaderMode(state,'inspection');};
+      documentButton.onkeydown=event=>{if(event.key==='Enter'||event.key===' ')event.stopPropagation();};
+    }else documentButton?.remove();
     let tools=sheet.querySelector('.story-reader-tools');
     if(!tools){tools=document.createElement('nav');tools.className='story-reader-tools';tools.setAttribute('aria-label','이야기 읽기');sheet.querySelector('.event-head')?.appendChild(tools);}
     tools.innerHTML=`<button type="button" data-story-auto aria-pressed="${storyAuto}" aria-label="자동 읽기 ${storyAuto?'끄기':'켜기'}">자동 읽기</button><button type="button" data-reader-mode="review" aria-pressed="${state.readerMode==='review'}">기록</button>${state.inspection?.items?.length?`<button type="button" data-reader-mode="inspection" aria-pressed="${state.readerMode==='inspection'}">자료 살펴보기</button>`:''}`;
@@ -1870,6 +1979,7 @@ function dialogueSide(turn,lanes,opt={}){
       renderStoryState();
       sheet.querySelector(`[data-inspect="${state.inspectionId}"]`)?.focus({preventScroll:true});
     });
+    if(typeof MobileReader!=='undefined')MobileReader.sync(sheet,{onOpen:clearStoryAuto,onClose:()=>{if(curStory===state)scheduleStoryAuto(state,state.turns[state.index]);},refit:()=>{if(curStory===state)renderStoryState();}});
   }
   function placeStoryDock(sheet,state){
     const dock=sheet.querySelector('.event-choice-dock');
@@ -2415,7 +2525,13 @@ function dialogueSide(turn,lanes,opt={}){
     const dismiss=()=>{rememberJourneyDetail();dialog.close();};
     dialog.querySelector('[data-journey-detail-close]').onclick=dismiss;
     dialog.oncancel=event=>{event.preventDefault();dismiss();};
-    dialog.onkeydown=event=>event.stopPropagation();
+    dialog.onkeydown=event=>{
+      event.stopPropagation();if(event.key!=='Tab')return;
+      const controls=[detail,close,viewport],at=controls.indexOf(document.activeElement);
+      if(at<0||event.shiftKey&&at===0||!event.shiftKey&&at===controls.length-1){
+        event.preventDefault();controls[event.shiftKey?controls.length-1:0].focus({preventScroll:true});
+      }
+    };
     dialog.onclick=event=>{
       if(event.target!==dialog)return;
       const r=dialog.getBoundingClientRect();
@@ -2701,8 +2817,8 @@ function dialogueSide(turn,lanes,opt={}){
   function stayDetailHtml(model,status=''){
     if(!model)return '<p class="stay-reason">지금 이곳에서 할 수 있는 일이 없다.</p>';
     const facts=(model.chips||[]).filter(Boolean).slice(0,3).map(chip=>typeof chip==='string'?{label:chip}:chip);
-    return `${model.disabled?`<p class="stay-reason" id="stay-reason">${esc(model.disabledCta||'지금은 이용 불가')} · 행동 설명에서 확인</p>`:`<div class="stay-facts">${facts.map(f=>`<span><small>${esc(f.label)}</small>${f.value!=null?`<b>${esc(f.value)}</b>`:''}</span>`).join('')}</div>`}
-      <div class="stay-execution"><button type="button" class="stay-execute" data-a="${esc(model.action)}" ${model.disabled?'disabled aria-describedby="stay-reason"':''}>${esc(model.disabled?(model.disabledCta||'이용 불가'):stayLabel(model.action))}<span aria-hidden="true">→</span></button>
+    return `${model.disabled?`<p class="stay-reason" id="stay-reason">${esc(model.disabledCta||'지금은 이용 불가')}</p>`:`<div class="stay-facts">${facts.map(f=>`<span><small>${esc(f.label)}</small>${f.value!=null?`<b>${esc(f.value)}</b>`:''}</span>`).join('')}</div>`}
+      <div class="stay-execution"><button type="button" class="stay-execute" ${model.disabled?'data-stay-alternatives aria-describedby="stay-reason"':`data-a="${esc(model.action)}"`}>${esc(model.disabled?'다른 행동 고르기':stayLabel(model.action))}<span aria-hidden="true">→</span></button>
       </div><div class="journey-quiet-row"><details class="stay-info" name="journey-help"><summary aria-label="선택한 행동 설명">행동 설명 <span aria-hidden="true">⌄</span></summary><p><b>${esc(model.title)}</b><br>${esc(model.description)}</p></details>
       <button type="button" class="journey-place-link" data-journey-detail="place" data-place-info="${esc(S.at)}" aria-haspopup="dialog" aria-controls="journey-detail-dialog" aria-expanded="false">장소 정보</button>
       ${status?`<details class="stay-guest" name="journey-help"><summary>임시 동행 상황</summary>${status}</details>`:''}</div>`;
@@ -2732,6 +2848,18 @@ function dialogueSide(turn,lanes,opt={}){
       picker.showModal();picker.setAttribute('aria-hidden','false');trigger.setAttribute('aria-expanded','true');
       choices.find(b=>b.dataset.staySelect===stayActionId)?.focus({preventScroll:true});
     };
+    const wireAlternatives=()=>{
+      const button=detail.querySelector('[data-stay-alternatives]');if(!button)return;
+      const ready=actions.some(a=>!a.disabled),route=panel.querySelector('button[data-journey-mode="route"]');
+      if(!ready&&route)button.innerHTML='목적지 고르기<span aria-hidden="true">→</span>';
+      button.onclick=()=>{
+        if(!button.isConnected||!trigger.isConnected)return;
+        if(!ready&&route){route.click();return;}
+        trigger.onclick();
+        choices.find(b=>actions.some(a=>a.action===b.dataset.staySelect&&!a.disabled))?.focus({preventScroll:true});
+      };
+    };
+    wireAlternatives();
     picker.onclose=()=>{
       picker.setAttribute('aria-hidden','true');trigger.setAttribute('aria-expanded','false');
       if(trigger.isConnected)trigger.focus({preventScroll:true});
@@ -2748,6 +2876,7 @@ function dialogueSide(turn,lanes,opt={}){
       stayActionId=button.dataset.staySelect;
       choices.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
       detail.innerHTML=stayDetailHtml(actions.find(a=>a.action===stayActionId),status);
+      wireAlternatives();
       trigger.innerHTML=stayChoiceHtml(stayActionId,actions.length);
       wireStopActionButtons(detail,node);wireJourneyDetails(panel);rememberJourneyView();
       picker.close();
@@ -3298,6 +3427,7 @@ function dialogueSide(turn,lanes,opt={}){
   let curEv=null, curStory=null;
   let curCombatChoices=[];
   let storyAuto=localStorage.getItem('caravan_story_auto')==='1', storyAutoTimer=0;
+  let storyAutoGeneration=0;
   function combatHudHtml(evd,opt={}){
     const c=evd&&evd.combat;
     if(!c) return '';
@@ -3459,14 +3589,21 @@ function dialogueSide(turn,lanes,opt={}){
     // Stored keys are historical data, never input to today's variant selector.
     if(stored?.sceneKeys?.length)return {sceneKeys:[...stored.sceneKeys],
       ...(stored.sceneTime?{sceneTime:stored.sceneTime}:{})};
-    const sceneTime=evd.campConversation
+    // Small-talk is ephemeral current speech, not a fabricated save receipt.
+    // A real historical owner, when present, retains its own clock/revision.
+    const historical=['memory','video'].includes(evd.storyOrigin?.kind)
+      ||turns.some(turn=>turn.timeKind&&turn.timeKind!=='current');
+    const liveLocal=evd.localConversation===true&&!owner&&!historical;
+    const sceneTime=liveLocal?G.presentationSceneTime({day:S.day,min:S.min}):evd.campConversation
       ?G.presentationSceneTime(phase==='outcome'?owner?.resultSceneTime:owner?.entrySceneTime)
       :owner?.phase===ownerPhase?G.presentationSceneTime(owner.sceneTime):null;
-    const keys=eventSceneKeys(evd,leading),currentVariant=D.eventSceneTimeVariantFor(evd.id);
+    const keys=eventSceneKeys(evd,leading);
+    const currentVariant=D.eventSceneTimeVariantFor(evd.id)
+      ||(liveLocal?D.localConversationSceneTimeVariants:null);
     // A new revision can have several historical layers. Match the saved owner
     // all the way back, so unmarked readers never adopt an intermediate revision.
     let variant=currentVariant;
-    while(variant?.revision&&owner?.sceneRevision!==variant.revision)variant=variant.legacy;
+    while(variant?.revision&&!liveLocal&&owner?.sceneRevision!==variant.revision)variant=variant.legacy;
     // Explicit authored memories own their depicted night/dawn, never today's clock.
     // Only a newly stamped receipt may adopt these cuts; stored views won above.
     if(variant?.authoredMemory===true&&G.presentationSceneRevision(variant.revision)
@@ -3483,10 +3620,17 @@ function dialogueSide(turn,lanes,opt={}){
       }
       return {sceneKeys:[...new Set(sceneKeys)]};
     }
+    // Authored epilogues can move between places without advancing gameplay's
+    // clock. Adopt only this stamped result's real markers; saved views won
+    // above, so earlier paid readers retain their original candidate list.
+    if(variant?.authoredEpilogue===true&&G.presentationSceneRevision(variant.revision)
+      &&owner?.sceneRevision===variant.revision&&owner.phase===ownerPhase
+      &&phase==='outcome'&&turns.length&&turns.every(turn=>turn.timeKind==='epilogue')){
+      return {sceneKeys:[...new Set([keys[0],...turns.map(turn=>turn.scene)]
+        .filter(key=>typeof key==='string'&&D.scenes[key]))]};
+    }
     const fixed=owner?.phase===ownerPhase&&G.presentationFixedScene(owner.fixedScene);
     if(fixed)return {sceneKeys:[...new Set(keys.map(key=>key===fixed.base?fixed.scene:key))]};
-    const historical=['memory','video'].includes(evd.storyOrigin?.kind)
-      ||turns.some(turn=>turn.timeKind&&turn.timeKind!=='current');
     if(!variant||!sceneTime||historical)return {sceneKeys:keys,...(sceneTime?{sceneTime}:{})};
     // Matches G.isNight's 05:30/19:30 boundary, including fractional minutes.
     const period=sceneTime.min<330||sceneTime.min>=1170?'night':'day';
@@ -3523,6 +3667,12 @@ function dialogueSide(turn,lanes,opt={}){
     const minute=Math.floor(Number(sceneTime?.min??S.min)||0);
     const clock=String(Math.floor(minute/60)%24).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
     return `지금 · ${place} · ${clock}`;
+  }
+  function storyReaderSkin(evd){
+    if(evd?.combat)return 'materials';
+    const id=String(evd?.id||'');
+    return ['meet_postman','postman_again','meet_scrapyard'].includes(id)||/^rq_minji_/.test(id)||
+      (evd?.campConversation&&/^camp_\d+_minji$/.test(id))?'cinematic':'materials';
   }
   function sceneFormat(key){
     const declared=D.sceneAssetMeta&&D.sceneAssetMeta[key]&&D.sceneAssetMeta[key].format;
@@ -3637,6 +3787,32 @@ function dialogueSide(turn,lanes,opt={}){
       });
     }
   }
+  function storyArtLightbox(sheet){
+    let dialog=sheet.querySelector('.story-art-lightbox');if(dialog?.__art)return dialog;
+    // Exact QA page replay restores markup, not native dialog state/handles.
+    dialog?.remove();
+    dialog=document.createElement('dialog');dialog.className='story-art-lightbox';
+    dialog.setAttribute('aria-label','그림 크게 보기');
+    const tools=document.createElement('div');tools.className='story-art-tools';
+    const detail=document.createElement('button');detail.type='button';detail.className='story-art-detail';
+    detail.textContent='세부 확대';detail.setAttribute('aria-pressed','false');
+    const close=document.createElement('button');close.type='button';close.className='story-art-close';close.textContent='닫기';
+    const viewport=document.createElement('div');viewport.className='story-art-viewport';viewport.tabIndex=0;
+    viewport.setAttribute('aria-label','확대한 그림 · 방향키 또는 드래그로 이동');
+    const picture=document.createElement('img');picture.className='story-art-image';picture.draggable=false;
+    tools.appendChild(detail);tools.appendChild(close);viewport.appendChild(picture);dialog.appendChild(tools);dialog.appendChild(viewport);
+    dialog.__art={detail,close,viewport,picture};
+    dialog.onkeydown=event=>{
+      event.stopPropagation();
+      if(event.key!=='Tab')return;
+      const controls=[detail,close,viewport],at=controls.indexOf(document.activeElement);
+      if(at<0||event.shiftKey&&at===0||!event.shiftKey&&at===controls.length-1){
+        event.preventDefault();
+        controls[event.shiftKey?controls.length-1:0].focus({preventScroll:true});
+      }
+    };
+    sheet.appendChild(dialog);return dialog;
+  }
   function wireSceneZoom(sheet){
     const sceneFrame=sheet.querySelector('.event-scene-frame');
     if(!sceneFrame) return;
@@ -3665,13 +3841,43 @@ function dialogueSide(turn,lanes,opt={}){
       zoom.type='button';zoom.className='scene-zoom';
       sceneFrame.appendChild(zoom);
     }
+    const state=curStory;
     const setZoom=expanded=>{
       sceneFrame.classList.toggle('zoomed',expanded);
       zoom.setAttribute('aria-expanded',String(expanded));
       zoom.setAttribute('aria-label',expanded?'그림 닫기':'그림 크게 보기');
       zoom.textContent=expanded?'×':'↗';
-      if(expanded) clearStoryAuto();
-      else if(curStory) scheduleStoryAuto(curStory,curStory.turns[curStory.index]);
+      if(expanded){
+        clearStoryAuto();
+        const lightbox=storyArtLightbox(sheet),art=lightbox.__art;
+        const closeArt=()=>{if(curStory!==state||!sceneFrame.isConnected)return;setZoom(false);zoom.focus({preventScroll:true});};
+        art.picture.src=image.src;art.picture.alt=image.alt||'현재 이야기의 그림';
+        if(!lightbox.open){
+          art.viewport.dataset.detail='false';art.detail.textContent='세부 확대';art.detail.setAttribute('aria-pressed','false');
+          art.viewport.scrollTop=art.viewport.scrollLeft=0;lightbox.showModal();art.close.focus({preventScroll:true});
+        }
+        art.close.onclick=closeArt;
+        art.detail.onclick=()=>{
+          const on=art.viewport.dataset.detail!=='true';art.viewport.dataset.detail=String(on);
+          art.detail.setAttribute('aria-pressed',String(on));art.detail.textContent=on?'전체 그림':'세부 확대';
+          art.viewport.scrollTop=on?(art.viewport.scrollHeight-art.viewport.clientHeight)/2:0;
+          art.viewport.scrollLeft=on?(art.viewport.scrollWidth-art.viewport.clientWidth)/2:0;
+        };
+        let drag=null;
+        art.viewport.onpointerdown=event=>{
+          if(event.pointerType!=='mouse'||art.viewport.dataset.detail!=='true')return;
+          drag={x:event.clientX,y:event.clientY,left:art.viewport.scrollLeft,top:art.viewport.scrollTop};art.viewport.setPointerCapture(event.pointerId);
+        };
+        art.viewport.onpointermove=event=>{if(!drag)return;event.preventDefault();art.viewport.scrollLeft=drag.left+drag.x-event.clientX;art.viewport.scrollTop=drag.top+drag.y-event.clientY;};
+        art.viewport.onpointerup=art.viewport.onpointercancel=art.viewport.onlostpointercapture=()=>{drag=null;};
+        lightbox.oncancel=event=>{event.preventDefault();closeArt();};
+        lightbox.onclose=()=>{if(sceneFrame.classList.contains('zoomed'))closeArt();};
+      }
+      else{
+        const lightbox=sheet.querySelector('.story-art-lightbox');if(lightbox?.open)lightbox.close();
+        fitSceneEvidence(sceneFrame);
+        if(curStory) scheduleStoryAuto(curStory,curStory.turns[curStory.index]);
+      }
     };
     setZoom(sceneFrame.classList.contains('zoomed'));
     zoom.onclick=event=>{event.preventDefault();event.stopPropagation();setZoom(!sceneFrame.classList.contains('zoomed'));};
@@ -3687,7 +3893,6 @@ function dialogueSide(turn,lanes,opt={}){
       next.setAttribute('aria-label','그림을 눌러 다음 대사');
       sceneFrame.insertBefore(next,zoom);
     }
-    const state=curStory;
     next.disabled=!state||state.readerMode==='review'||state.readerMode==='inspection'||(state.readingPage?state.readingPage.mode==='actions':state.index>=state.turns.length-1);
     let pointer=null,dragged=false;
     next.onpointerdown=event=>{
@@ -3720,6 +3925,7 @@ function dialogueSide(turn,lanes,opt={}){
     };
   }
   function clearStoryAuto(){
+    storyAutoGeneration++;
     if(storyAutoTimer){ clearTimeout(storyAutoTimer); storyAutoTimer=0; }
   }
   function storyAutoDelay(turn){
@@ -3763,13 +3969,19 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function scheduleStoryAuto(state,turn){
     clearStoryAuto();
+    if(lifecyclePaused||document.hidden)return;
+    if(typeof MobileReader!=='undefined'&&MobileReader.isOpen())return;
     if(!storyAuto||!state||(state.readingPage?state.readingPage.mode==='actions':state.index>=state.turns.length-1)||state.readerMode==='review'||state.readerMode==='inspection'||state.reviewing||state.userHoldingStory) return;
     const reader=$('#ev-sheet .story-reader');
     if(reader&&reader.scrollHeight-reader.scrollTop-reader.clientHeight>24)return;
     const expectedIndex=state.index, expectedOffset=state.readingPage?.cursor.offset, delay=storyAutoDelay(state._page?{text:state._page.rows.map(row=>row.text).join(' ')}:turn);
+    const generation=storyAutoGeneration;
     storyAutoTimer=setTimeout(()=>{
+      if(generation!==storyAutoGeneration)return;
       storyAutoTimer=0;
-      if(document.hidden||state.reviewing||state.userHoldingStory||$('#ev-sheet .event-scene-frame.zoomed')){
+      if(lifecyclePaused||document.hidden)return;
+      if(typeof MobileReader!=='undefined'&&MobileReader.isOpen())return;
+      if(state.reviewing||state.userHoldingStory||$('#ev-sheet .event-scene-frame.zoomed')){
         if(curStory===state&&state.index===expectedIndex) scheduleStoryAuto(state,turn);
         return;
       }
@@ -4022,12 +4234,15 @@ function dialogueSide(turn,lanes,opt={}){
       const key=JSON.stringify([row.kind,row.title,row.next]);if(seen.has(key))return;seen.add(key);
       rows.push({kind:'summary',text:row.title+(row.next?'\n'+row.next:'')});
     });
-    if(records.length)rows.push({kind:'summary',text:`남겨 둔 기록 ${records.length}개 · ‘기록’에서 다시 볼 수 있다.`});
+    if(records.length)rows.push({kind:'summary',text:['meet_postman','postman_again'].includes(state.eventId)
+      ?records.map(chip=>stripTags(chip.t||'')).join('\n')+'\n‘기록’에서 다시 볼 수 있다.'
+      :`남겨 둔 기록 ${records.length}개 · ‘기록’에서 다시 볼 수 있다.`});
     return rows;
   }
   function renderPagedStory(state,sheet){
     const reader=sheet.querySelector('.story-reader'),dock=sheet.querySelector('.event-choice-dock');
     const page=state.readingPage||(state.readingPage={cursor:{turn:state.index||0,offset:0},end:{turn:0,offset:0},trail:[],mode:'read',choicePage:0,resultPage:0});
+    if(typeof EvidenceScenes!=='undefined')syncStoryEvidence(state,sheet);
     // The mobile keyboard can resize the reader while a name is being composed.
     // Keep its live input/caret/IME node; CSS handles the reduced viewport.
     if(state.nameEntry&&page.mode==='actions'&&state.readerMode==='current'&&
@@ -4109,10 +4324,15 @@ function dialogueSide(turn,lanes,opt={}){
         const last=state.turns.at(-1);reader.innerHTML=pagedStoryHtml(last?[last]:[]);
       }
       const groups=[];let group=[];
+      // The panel now fits short text. Its current natural height is not the
+      // room available to additional choices; budget from the fixed viewport.
+      const reportRoom=Math.max(report.clientHeight,(sheet.parentElement?.clientHeight||sheet.clientHeight||0)
+        -(sheet.querySelector('.event-head')?.offsetHeight||52)
+        -(sheet.querySelector('.event-scene-frame')?.offsetHeight||0)-64);
       buttons.forEach(button=>button.hidden=true);
       for(const button of buttons){
         button.hidden=false;
-        if(state.phase==='event'&&group.length&&(dock.getBoundingClientRect().height>report.clientHeight-100||group.length>=3)){
+        if(state.phase==='event'&&group.length&&(dock.getBoundingClientRect().height>reportRoom-100||group.length>=3)){
           group.forEach(b=>b.hidden=true);groups.push(group);group=[];
         }
         group.push(button);
@@ -4160,6 +4380,7 @@ function dialogueSide(turn,lanes,opt={}){
       }
     }
     wireSceneZoom(sheet);
+    if(typeof EvidenceScenes!=='undefined')syncStoryEvidence(state,sheet,true);
     const live=$('#story-live');if(live)live.textContent=reviewing?'':stripTags(reader.textContent);
     G.capturePresentationView(state);
     // No clipping at exceptional zoom or a single oversized action. Ordinary
@@ -4361,7 +4582,7 @@ function dialogueSide(turn,lanes,opt={}){
     sheet.dataset.storyOrigin=evd.storyOrigin&&evd.storyOrigin.kind||'';
     const missionOnly=evd.id==='onboarding_main_mission';
     sheet.dataset.readerLayout=!evd.combat&&!missionOnly?'pages':'';
-    sheet.dataset.readerSkin=!evd.combat&&!missionOnly?'materials':'';
+    sheet.dataset.readerSkin=!evd.combat&&!missionOnly?storyReaderSkin(evd):'';
     sheet.dataset.readerDensity=!evd.combat&&!missionOnly?'quiet':'';
     sheet.dataset.missionLayout=missionOnly?'departure':'';
     const text = pending?.phase==='event'?pending.text:typeof evd.text==='function'?evd.text(S):evd.text;
@@ -5025,7 +5246,7 @@ function dialogueSide(turn,lanes,opt={}){
   /* ── SETTLEMENT ── */
   let curStl=null, chatNpc=null, stlQuests=null, garageGroup='fuel', stlFieldResult=null,
     stlMode='hub', stlFocus='market', stlFieldFocus='', marketSelection=null,
-    garageSelection='', peopleSelection='';
+    garageSelection='', peopleSelection='', garageRepairResult=null;
   function settlementScene(stlId,mode='section'){
     const sid=stlId==='miryang'&&mode==='hub'?'miryang-market-hub':D.nodeScenes&&D.nodeScenes[stlId];
     return sid&&D.scenes&&D.scenes[sid]?D.scenes[sid]:'';
@@ -5692,6 +5913,7 @@ function dialogueSide(turn,lanes,opt={}){
   }
   function showStl(stlId,mode='hub',options={}){
     if(!S||S.ended) return;
+    garageRepairResult=null;
     if(S&&S.at&&D.nodes[S.at]&&D.nodes[S.at].stl) S.roadGarage=false;   // 진짜 정착지는 제값
     if(curStl!==stlId){ marketSelection=null; garageSelection=''; peopleSelection=''; stlFieldFocus=''; restoreSettlementFocus(stlId); }
     if(options.previewOnly&&options.questId){
@@ -5905,6 +6127,20 @@ function dialogueSide(turn,lanes,opt={}){
     $('#tr-scrap').textContent=S.scrap;
     renderTrade(); renderHud();
   }
+  function garageWorkChanges(before){
+    return {hull:S.van-before.van,scrap:S.scrap-before.scrap,
+      parts:(S.items['부품']||0)-before.parts,minutes:S.day*1440+S.min-before.clock};
+  }
+  function garageWorkSnapshot(){
+    return {van:S.van,scrap:S.scrap,parts:S.items['부품']||0,clock:S.day*1440+S.min};
+  }
+  function garageWorkReceipt(before){
+    const change=garageWorkChanges(before),label=G.supplyAmountLabel;
+    return `<div class="garage-work-receipt" role="status"><b>작업 완료 · ${esc(G.durationLabel(change.minutes))} 경과</b>
+      <p>차체 ${label(before.van)} → ${label(S.van)}${change.hull?` (${change.hull>0?'+':''}${label(change.hull)})`:''}</p>
+      <small>${[change.scrap?`고철 ${change.scrap>0?'+':''}${label(change.scrap)}`:'',change.parts?`부품 ${change.parts>0?'+':''}${label(change.parts)}`:''].filter(Boolean).join(' · ')||'추가 물자 소모 없음'}</small>
+    </div>`;
+  }
   function playUpgradeInstall(u,before){
     const ovl=$('#ovl-stl');
     const group=(D.upgradeGroups||[]).find(x=>x.ids.includes(u.id))||D.upgradeGroups[0];
@@ -5925,9 +6161,9 @@ function dialogueSide(turn,lanes,opt={}){
         : u.id==='armor'
           ? `<b>최대 내구 ${before.vanMax} → ${S.vanMax}</b><small>하중이 몰리는 프레임부터 장갑판을 체결했다.</small>`
           : `<b>${esc(u.nm)} 장착</b><small>${esc(u.d)} · 작업 뒤 주행 점검까지 마쳤다.</small>`;
-    const layer=el('div','upgrade-install',`<div class="upgrade-install-art" ${art?`style="background-image:url('${art}')"`:''}></div>
+    const layer=el('div','upgrade-install ready',`<div class="upgrade-install-art" ${art?`style="background-image:url('${art}')"`:''}></div>
       <div class="upgrade-install-panel" role="dialog" aria-modal="true" aria-labelledby="upgrade-install-title">
-        <div class="upgrade-install-head"><small>${esc(group.nm)} 작업</small><h3 id="upgrade-install-title">${esc(u.nm)}</h3></div>
+        <div class="upgrade-install-head"><small>${esc(group.nm)} · 장착 완료</small><h3 id="upgrade-install-title">${esc(u.nm)}</h3></div>
         <div class="upgrade-compare">
           <figure><canvas id="up-before-van" aria-label="개조 전 달구지"></canvas><figcaption>개조 전</figcaption></figure>
           <span class="upgrade-arrow" aria-hidden="true">→</span>
@@ -5936,14 +6172,12 @@ function dialogueSide(turn,lanes,opt={}){
         <div class="upgrade-change">${physical}</div>
         ${adviser?`<div class="upgrade-adviser">${settlementPortrait(adviser.id,'upgrade-adviser-face',`${adviser.name} 초상`)}
           <span><b>${esc(adviser.name)}가 작업을 거든다</b><small>“${esc(adviser.line)}” · 유대 +1</small></span></div>`:''}
-        <div class="upgrade-phases" aria-label="개조 작업 순서">
-          ${work.phases.map((phase,i)=>`<span class="${i===0?'current':''}">${i+1} · ${esc(phase)}</span>`).join('')}
-        </div>
-        <button class="upgrade-step-action" id="upgrade-step-action">${esc(work.actions[0])}</button>
-        <button class="upgrade-install-done" id="upgrade-install-done">달구지를 확인한다</button>
-        <span class="sr-only" id="upgrade-step-live" aria-live="polite"></span>
+        ${before.work?garageWorkReceipt(before.work):''}
+        <details class="upgrade-work-record"><summary>작업 기록</summary><div class="upgrade-phases" aria-label="마친 개조 작업">
+          ${work.phases.map((phase,i)=>`<span class="active">${i+1} · ${esc(phase)}</span>`).join('')}
+        </div></details>
+        <button class="upgrade-install-done" id="upgrade-install-done">달구지 확인 · 정비소로</button>
       </div>`);
-    layer._returnFocus=document.activeElement;
     ovl.appendChild(layer);
     requestAnimationFrame(()=>{
       if(SCENE.drawSettlementVan){
@@ -5951,42 +6185,34 @@ function dialogueSide(turn,lanes,opt={}){
         SCENE.drawSettlementVan($('#up-after-van'),S.up);
       }
     });
-    const phases=[...layer.querySelectorAll('.upgrade-phases span')];
-    const stepButton=layer.querySelector('#upgrade-step-action');
-    const live=layer.querySelector('#upgrade-step-live');
-    const stepCopy=work.phases.map((phase,i)=>[
-      `${phase} 완료. ${i===work.phases.length-1?'달구지가 새 부품에 맞춰 낮게 떨린다.':'표시선과 체결 상태를 다시 확인했다.'}`,
-      work.actions[i+1]||''
-    ]);
-    let step=0;
+    const done=layer.querySelector('#upgrade-install-done');
     const finish=()=>{
       if(!layer.isConnected) return;
-      phases.forEach(x=>x.classList.add('active'));
-      phases.forEach(x=>x.classList.remove('current'));
-      layer.classList.add('ready');
-      stepButton.hidden=true;
-      const done=layer.querySelector('#upgrade-install-done');
-      if(done) done.focus();
-    };
-    stepButton.onclick=()=>{
-      if(step>=stepCopy.length) return;
-      phases[step].classList.remove('current');
-      phases[step].classList.add('active');
-      if(typeof SND!=='undefined') SND.combat(step===2?'engine':'tool');
-      if(live) live.textContent=stepCopy[step][0];
-      step++;
-      if(step>=stepCopy.length){ finish(); return; }
-      phases[step].classList.add('current');
-      stepButton.textContent=stepCopy[step-1][1];
-    };
-    stepButton.focus({preventScroll:true});
-    layer.querySelector('#upgrade-install-done').onclick=()=>{
-      const back=layer._returnFocus;
       layer.remove();
       renderGarage();
-      if(back&&back.isConnected) requestAnimationFrame(()=>back.focus({preventScroll:true}));
+      requestAnimationFrame(()=>$('[data-garage-key][aria-pressed="true"]')?.focus({preventScroll:true}));
+    };
+    done.onclick=finish;
+    done.focus({preventScroll:true});
+    layer.onkeydown=event=>{
+      if(event.key==='Escape'){ event.preventDefault(); event.stopPropagation(); finish(); }
+      if(event.key==='Tab'){
+        const items=[...layer.querySelectorAll('button,summary')].filter(x=>x.offsetParent!==null);
+        const first=items[0],last=items[items.length-1];
+        if(items.length&&((event.shiftKey&&document.activeElement===first)||(!event.shiftKey&&document.activeElement===last))){
+          event.preventDefault(); event.stopPropagation(); (event.shiftKey?last:first).focus();
+        }
+      }
     };
   }
+  function campPreparationState(kind,plan){
+    const done=!!plan[kind];
+    const reason=done?(kind==='meal'?'식사 완료':'취침 후 회복 예정')
+      :kind==='meal'?(!G.hasResource('food',1)||!G.hasResource('water',1)?'식량 1 · 물 1 필요':'')
+      :S.van>=S.vanMax?'차체 양호':!G.hasResource('부품',1)?'부품 1 필요':'';
+    return {done,enabled:!done&&!reason,reason};
+  }
+
   function showCampHub(){
     if(!S||S.driving||(UI.modalOpen()&&!$('#ovl-camp').classList.contains('on'))) return;
     const plan=S._campPlan||{};
@@ -6004,6 +6230,14 @@ function dialogueSide(turn,lanes,opt={}){
     const hungerLevel=S.hunger||0;
     const hungerText=hungerLevel===1?'허기 1/3':hungerLevel>1?`${G.hungerLabel(hungerLevel)} ${hungerLevel}/3`:'허기 0/3';
     const planned=plan.meal||plan.repair||plan.talk;
+    const mealState=campPreparationState('meal',plan),repairState=campPreparationState('repair',plan);
+    const preparationTitle=lastPreparationTitle();
+    function lastPreparationTitle(){
+      if(plan.last==='repair'&&plan.repair) return '차량 점검 준비를 마쳤다';
+      if(plan.last==='meal'&&plan.meal) return '따뜻한 한 끼를 먹었다';
+      if(resolved) return `${D.withParticle(D.comps[conversation.cid].name,'과','와')} 나눈 이야기`;
+      return '잠들기 전, 잠깐 쉬어 가자';
+    }
     const homeState={party:S.party,up:S.up,memories:S.campMemories,keepsakes:D.companionKeepsakes,upgrades:D.upgrades,scene:D.scenes?.['dalguji-home-interior-v1']};
     const activity={
       minji:'민지가 엔진과 차체를 점검하고 있다.',parkss:'박 선생이 약 가방과 구급품을 정리하고 있다.',kangwoo:'강우가 주차 위치와 주변을 확인하고 있다.',
@@ -6068,10 +6302,14 @@ function dialogueSide(turn,lanes,opt={}){
           <div class="camp-live-caption"><b>${esc(visual.label)}</b><span>${esc(location)} · ${party.length?`함께 ${party.length}명`:'혼자 야영'}</span></div>
         </div>`:''}
       </div>
+      <div class="camp-feedback" role="status"><b>${esc(preparationTitle)}</b>
+        <p>${plan.last==='repair'&&plan.repair?'부품을 사용해 준비했다. 차체 회복은 아침까지 쉰 뒤 반영된다.':plan.last==='meal'&&plan.meal?'식사와 회복은 이미 반영됐다. 다른 준비를 고르거나 바로 쉴 수 있다.':resolved?'대화는 마쳤다. 다시 읽거나 남은 준비를 고를 수 있다.':'준비는 선택이다. 대답하기 전에는 대화 시간도 흐르지 않는다.'}</p>
+        ${plan.meal||plan.repair?`<div>${plan.meal?'<span>식사 · 완료</span>':''}${plan.repair?'<span>차량 점검 · 취침 후 최대 +8</span>':''}</div>`:''}
+      </div>
       ${resource}
       <div class="camp-home-section camp-prep-section"><div class="camp-section-head"><b>잠들기 전에</b><small>필요한 준비만 골라도 됩니다.</small></div>
-        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${plan.meal?'disabled':''}><span>${ICO('food')} <strong>한 끼 준비</strong><small>식량 1 · 물 1 사용 / 사기 +3 · 피로 -6 · 허기 -1</small></span><em>${plan.meal?'완료':'선택'}</em></button>
-        <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${plan.repair?'disabled':''}><span>${ICO('parts')} <strong>차량 점검</strong><small>부품 1 사용 / 취침 후 차체 +8</small></span><em>${plan.repair?'완료':'선택'}</em></button>
+        <button class="camp-prep ${plan.meal?'done':''}" data-camp-prep="meal" ${mealState.enabled?'':'disabled'}><span>${ICO('food')} <strong>한 끼 준비</strong><small>식량 1 · 물 1 사용 / 사기 +3 · 피로 -6 · 허기 -1</small></span><em>${esc(mealState.reason||'준비')}</em></button>
+        <button class="camp-prep ${plan.repair?'done':''}" data-camp-prep="repair" ${repairState.enabled?'':'disabled'}><span>${ICO('parts')} <strong>차량 점검</strong><small>부품 1 사용 / 취침 후 차체 최대 +8</small></span><em>${esc(repairState.reason||'준비')}</em></button>
       </div>
       <div class="camp-home-section"><div class="camp-section-head"><b>함께 이야기할 사람</b><small>쉬기 전 한 사람과 이야기할 수 있습니다. 대답하기 전에는 시간이 흐르지 않습니다.</small></div>
         <div class="camp-talk-list">${party.length?party.map(id=>`<button class="camp-talk ${resolved&&conversation.cid===id?'done':''}" data-camp-talk="${id}" ${resolved&&conversation.cid!==id?'disabled':''}><span>${portraitHtml(id)} <strong>${esc(D.comps[id].name)}${S.party.includes(id)?'':'<small>임시 동행</small>'}</strong></span><em>${resolved&&conversation.cid===id?'다시 읽기':pending&&conversation.cid===id?'이어서':'이야기'}</em></button>`).join(''):'<p class="camp-empty">함께 머무는 사람이 없어 오늘은 혼자 쉽니다.</p>'}</div>
@@ -6133,7 +6371,7 @@ function dialogueSide(turn,lanes,opt={}){
     const ownedN=group.ids.filter(id=>S.up[id]).length;
     const upgrades=group.ids.map(id=>G.upDef(id)).filter(Boolean);
     const vanStage=G.vanStage();
-    const rows=[{key:'repair',kind:'repair',label:'차체 정비',sub:`내구 +${quote.amount}${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}`,
+    const rows=[{key:'repair',kind:'repair',label:'차체 정비',sub:`내구 최대 +${G.supplyAmountLabel(Math.min(quote.amount,Math.max(0,S.vanMax-S.van)))}${G.hasComp('minji')?' · 민지 할인':''} · 현재 ${Math.floor(S.van)}/${S.vanMax}`,
       meta:`고철 ${repCost} · ${G.durationLabel(quote.mins)}`,duration:G.durationLabel(quote.mins),
       budget:repairNeeded?{kind:'spend',resources:[{label:'고철',current:S.scrap,amount:repCost}]}:null,
       reason:!repairNeeded?'차체가 충분히 튼튼하다':!G.hasResource('scrap',repCost)?'고철 부족':'',
@@ -6151,18 +6389,20 @@ function dialogueSide(turn,lanes,opt={}){
     garageSelection=selected&&selected.key||'';
     const categories=`<nav class="field-board-categories" aria-label="개조 분야">${groups.map(item=>{
       const n=item.ids.filter(id=>S.up[id]).length;
-      return `<button class="${item.id===garageGroup?'selected':''}" data-ug="${item.id}" aria-pressed="${item.id===garageGroup}"><span>${esc(item.nm)}</span><small>${n}/${item.ids.length}</small></button>`;
+      const available=item.ids.filter(id=>!S.up[id]&&G.canBuyUp(id).ok).length;
+      return `<button class="${item.id===garageGroup?'selected':''}" data-ug="${item.id}" aria-pressed="${item.id===garageGroup}"><span>${esc(item.nm)}</span><small>${available?`${available}개 가능`:`${n}/${item.ids.length} 장착`}</small></button>`;
     }).join('')}</nav>`;
     const list=rows.map(row=>`<button class="field-board-row garage-board-row ${row.kind==='upgrade'?'upgrade-card':''} ${row.key===garageSelection?'selected':''} ${row.kind==='upgrade'&&S.up[row.id]?'owned':''}"
       data-garage-key="${row.key}" aria-pressed="${row.key===garageSelection}" ${row.enabled?'':'data-unavailable="true"'}>
-      <span class="field-board-row-icon" aria-hidden="true">${ICO(row.icon||'parts')}</span>
-      <span class="field-board-row-copy"><b>${esc(row.label)}</b><small>${esc(row.sub)}</small>${row.key===garageSelection&&row.installation?`<small>${esc(row.installation)}</small>`:''}</span>
+      <span class="field-board-row-icon" aria-hidden="true">${row.kind==='upgrade'&&D.upgradeItemArt?.[row.id]?`<img src="${D.upgradeItemArt[row.id]}" alt="">`:ICO(row.icon||'parts')}</span>
+      <span class="field-board-row-copy"><b>${esc(row.label)}</b><small class="garage-description">${esc(row.sub)}</small>${row.reason?`<small class="garage-availability">${esc(row.reason)}</small>`:''}${row.key===garageSelection&&row.installation?`<small>${esc(row.installation)}</small>`:''}</span>
       <span class="field-board-row-meta">${esc(row.meta)}</span>
     </button>`).join('');
-    const boardBody=`<div id="garage"><div class="field-board-van-overview">
-        <canvas id="garage-van-cv" aria-label="현재 달구지 차체"></canvas>
-        <div><b>${esc(vanStage.nm)}</b><small>차체 ${Math.floor(S.van)}/${S.vanMax} · 증축 +${vanStage.cm}cm · 정원 ${G.seatCapacity()+1}명</small></div>
-      </div>${categories}<section class="field-board-group"><header><span>${esc(group.nm)}</span><b>${ownedN}/${group.ids.length} 장착 · ${esc(group.sub)}</b></header>
+    const preview=selected?.kind==='upgrade'&&selected.enabled;
+    const vehicleOverview=preview
+      ?`<div class="garage-preview"><figure><canvas id="garage-van-cv" aria-label="현재 달구지 차체"></canvas><figcaption>현재 달구지</figcaption></figure><span aria-hidden="true">→</span><figure><canvas id="garage-preview-cv" aria-label="${esc(selected.label)} 장착 미리보기"></canvas><figcaption>장착 미리보기</figcaption></figure><small>선택만으로는 물자나 시간이 소모되지 않는다.</small></div>`
+      :`<div class="field-board-van-overview"><canvas id="garage-van-cv" aria-label="현재 달구지 차체"></canvas><div><b>${esc(vanStage.nm)}</b><small>차체 ${G.supplyAmountLabel(S.van)}/${S.vanMax} · 증축 +${vanStage.cm}cm · 정원 ${G.seatCapacity()+1}명</small></div></div>`;
+    const boardBody=`<div id="garage">${garageRepairResult?garageWorkReceipt(garageRepairResult):''}${vehicleOverview}${categories}<section class="field-board-group"><header><span>${esc(group.nm)}</span><b>${ownedN}/${group.ids.length} 장착 · ${esc(group.sub)}</b></header>
         <div class="field-board-list">${list}</div></section></div>`;
     const actionAttrs=selected?(selected.kind==='repair'?'data-rep="1"':`data-up="${selected.id}"`):'';
     body.innerHTML=fieldBoardShell({mode:'garage',title:settlementSpots(curStl).garage.label,
@@ -6171,7 +6411,10 @@ function dialogueSide(turn,lanes,opt={}){
       actionMeta:selected?[selected.reason,selected.duration&&`${selected.duration} 소요`].filter(Boolean).join(' · '):'',
       actionBudget:selected&&selected.budget,actionLabel:selected&&selected.action,
       actionAttrs,disabled:!(selected&&selected.enabled)});
-    requestAnimationFrame(()=>{ if(SCENE.drawSettlementVan) SCENE.drawSettlementVan($('#garage-van-cv')); });
+    requestAnimationFrame(()=>{ if(!SCENE.drawSettlementVan) return;
+      SCENE.drawSettlementVan($('#garage-van-cv'));
+      if(preview) SCENE.drawSettlementVan($('#garage-preview-cv'),{...S.up,[selected.id]:true});
+    });
     body.querySelectorAll('[data-ug]').forEach(button=>button.onclick=()=>{
       garageGroup=button.dataset.ug; garageSelection=''; renderGarage();
     });
@@ -6186,16 +6429,18 @@ function dialogueSide(turn,lanes,opt={}){
       if(!S||S.ended) return;
       const row=rows.find(item=>item.key===garageSelection); if(!row||!row.enabled) return;
       if(row.kind==='repair'){
+        const before=garageWorkSnapshot();
         const result=G.settlementRepair();
         if(S.ended) return;
         if(!result.ok){ if(result.why) UI.toast(result.why); return; }
         AMBI.action('repair');
-        UI.toast(`🔧 정비소 수리 완료 — 내구 +${result.amount}`); renderHud(); renderGarage(); return;
+        garageRepairResult=before;
+        UI.toast(`🔧 정비소 수리 완료 — 내구 ${S.van>before.van?'+':''}${G.supplyAmountLabel(S.van-before.van)}`); renderHud(); renderGarage(); return;
       }
       const u=G.upDef(row.id);
       const before={up:{...S.up},stage:{...G.vanStage()},capacity:G.seatCapacity(),
-        fuelMax:S.fuelMax,vanMax:S.vanMax};
-      if(G.buyUpgrade(row.id)&&!S.ended){ renderGarage(); renderHud();
+        fuelMax:S.fuelMax,vanMax:S.vanMax,work:garageWorkSnapshot()};
+      if(G.buyUpgrade(row.id)&&!S.ended){ garageRepairResult=null; renderGarage(); renderHud();
         playUpgradeInstall(u,before);
         const ts=$('#tr-scrap'); if(ts) ts.textContent=S.scrap; }
     };
@@ -6268,14 +6513,14 @@ function dialogueSide(turn,lanes,opt={}){
   function showNpcDialogue(nid,turns,actions,opt={}){
     clearStoryAuto();const sheet=$('#ev-sheet'),npc=D.npcs[nid];
     curEv={id:`local_chat_${nid}`,type:'대화',title:npc.name,localConversation:true};
-    const sceneKeys=eventSceneKeys({...curEv,locEvent:S.at});
+    const sceneInfo=eventScenePresentation({...curEv,locEvent:S.at},'event',[],turns),sceneKeys=sceneInfo.sceneKeys;
     sheet.classList.remove('companion-profile-mode','comp-perk-reveal-mode','craft-workbench-mode','combat-details-open','story-compact');
     sheet.classList.add('event-mode','passenger-reader');
     Object.assign(sheet.dataset,{eventKind:'story',storySurface:'talk',eventId:curEv.id,storyOrigin:'',missionLayout:'',readerLayout:'pages',readerSkin:'materials',readerDensity:'quiet'});
     sheet.innerHTML=`<div class="event-scroll"><section class="event-field-report"><div class="event-head"><div><p class="event-orientation" data-current-orientation="지금 · ${esc(npc.name)}">지금 · ${esc(npc.name)}</p><h2>${esc(npc.name)}</h2></div><button class="event-detail-toggle" type="button" data-local-close aria-label="대화를 마치고 정착지로 돌아가기">닫기</button></div><div class="story-reader"></div></section></div><div class="event-choice-dock"></div>`;
     sheet.querySelector('.event-scroll').insertAdjacentHTML('afterbegin',sceneFrameHtml(sceneKeys,npc.name+'와 대화'));
     const state=curStory={phase:'event',eventId:curEv.id,turns,index:0,readerMode:'current',localHistory:opt.history||[],
-      sceneKeys,sceneAlt:npc.name+'와 대화',sceneStart:0,knownSpeaker:true,offroad:opt.offroad,draft:'',
+      ...sceneInfo,sceneAlt:npc.name+'와 대화',sceneStart:0,knownSpeaker:true,offroad:opt.offroad,draft:'',
       finalDock:`<div class="choice-dock-head">내 대답</div><div class="choices">${actions.map((a,i)=>`<button type="button" class="choice" data-local-choice="${i}">${esc(a.label)}</button>`).join('')}</div>`,
       wireFinal:dock=>{
         dock.querySelectorAll('[data-local-choice]').forEach(button=>button.onpointerdown=()=>{state.consumeStoryPointerClick=false;});
@@ -7067,7 +7312,7 @@ function dialogueSide(turn,lanes,opt={}){
     return {ok:true,screen:view.screen,eventId:view.eventId||null,story:view.story||null};
   }
 
-  return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding, setLifecyclePaused,
+  return {boot, modalOpen, renderAll, renderHud, speak, toast, showEvent, showEnding, setLifecyclePaused, appBack,
     showNodeCard, showGraphNote, onDepart, onArrive, showStl, showCraft, playRadio, playChat, showSeoul,
     storyTurns:buildStoryTurns, finishStory, skipIntro, clearSpeech, clearToasts,
     qaViewState,restoreQaView,openQuestAction};

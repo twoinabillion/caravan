@@ -104,7 +104,7 @@ test('fresh story reading is manual and reachable auto control persists opt-in, 
    const reader={scrollHeight:100,scrollTop:0,clientHeight:100};
    const state={index:0,turns:[{text:'one'},{text:'two'},{text:'three'}],readerMode:'current'};
    const env=vm.createContext({console,Map,localStorage:{getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)},setTimeout:fn=>{timers.set(++serial,fn);return serial},clearTimeout:id=>timers.delete(id),curStory:state,document:{hidden:false},window:{},stripTags:t=>String(t||''),$:sel=>sel==='#ev-sheet'?sheet:sel.includes('[data-story-auto]')?toolbar.querySelector():sel.includes('zoomed')?null:sel==='#ev-wrap'?{classList:{contains:()=>true}}:reader,advanceStory:s=>s.index++,setStoryReaderMode:()=>{}});
-   vm.runInContext(declarations,env);for(const name of ['clearStoryAuto','storyAutoDelay','scheduleStoryAuto','wireStoryTools'])load(env,name);
+   Object.assign(env,{storyAutoGeneration:0,lifecyclePaused:false});vm.runInContext(declarations,env);for(const name of ['clearStoryAuto','storyAutoDelay','scheduleStoryAuto','wireStoryTools'])load(env,name);
    if(source.includes('  function toggleStoryAuto('))load(env,'toggleStoryAuto');
    env.scheduleStoryAuto(state,state.turns[0]);assert.equal(timers.size,stored==='1'?1:0,'only an explicit stored opt-in schedules reading');
    env.clearStoryAuto();env.wireStoryTools(sheet,state);const button=toolbar.querySelector('[data-story-auto]');assert(button,'automatic reading is reachable');assert(button.attrs.includes('aria-pressed="'+(stored==='1')+'"'));

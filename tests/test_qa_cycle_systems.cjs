@@ -49,7 +49,14 @@ test('two-o-clock live broadcast is selected only in the matching hour; unrelate
   const r=h.json('G.pickRadio()');assert.equal(r?.key==='radio_dj_open',allowed,'minute '+min);assert(r,'other broadcasts remain at '+min);
  }
 });
-const terminalTools=require('../qa-artifacts/qa-cycle-20261026/cycle2/systems/terminal-tools-audit.cjs');
+const historicalTerminalTools=require('../qa-artifacts/qa-cycle-20261026/cycle2/systems/terminal-tools-audit.cjs');
+// The preserved harness extracts only the action handler. Supply its current
+// presentation dependency here; never rewrite the historical audit artifact.
+const terminalTools={...historicalTerminalTools,installGarage(h,kind){
+ const ui=fs.readFileSync('src/07-ui.js','utf8'),start=ui.indexOf('  function garageWorkSnapshot(');
+ assert(start>=0);h.run(ui.slice(start,ui.indexOf('\n  function ',start+4)));
+ h.run('let garageRepairResult=null;');historicalTerminalTools.installGarage(h,kind);
+}};
 for(const kind of ['radio','repair','upgrade','settlement-repair'])test(`${kind} stops completion UI after fatal time and rejects old controls and direct calls`,()=>{
  const {fixture,installRoad,installGarage,snap}=terminalTools;
  for(const mode of ['during','stale']){

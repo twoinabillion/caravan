@@ -33,7 +33,7 @@ test('ready companion guidance requires stopping only while actually travelling,
     assert.equal(h.run('JSON.stringify(S)'),before);
   }
 });
-test('recruitment, perk selection, bond work and completed stories retain their existing next actions',()=>{
+test('recruitment, perk selection and bond work retain next actions; personal completion requires its real result',()=>{
   for(const mode of ['recruit','perk','bond','complete']){
     const current=setup(),old=setup(true);
     for(const h of [current,old]){
@@ -42,7 +42,25 @@ test('recruitment, perk selection, bond work and completed stories retain their 
       if(mode==='perk')h.run('S.comps.minji.pending=1');
       if(mode==='complete')h.run("S.comps.minji.lvl=3;S.used=D.events.filter(e=>e.once&&e.needsComp==='minji').map(e=>e.id)");
     }
-    assert.deepEqual(current.json('G.companionQuestEntries()'),old.json('G.companionQuestEntries()'),mode);
+    const before=current.run('JSON.stringify(S)'),oldBefore=old.run('JSON.stringify(S)');
+    const row=current.json('G.companionQuestEntries()[0]'),previous=old.json('G.companionQuestEntries()[0]');
+    for(const key of ['id','kind','tracked','companion','eyebrow','title'])assert.deepEqual(row[key],previous[key],mode+' '+key);
+    assert.deepEqual({have:row.progress.have,need:row.progress.need},{have:previous.progress.have,need:previous.progress.need});
+    assert.deepEqual(row.relationship,{have:row.progress.have,need:3,done:mode==='complete'});
+    assert.equal(row.status,'active','relationship progression and event entry do not finish physical work');
+    if(mode==='recruit')assert.equal(row.personal,null);
+    else assert.equal(row.personal.done,false);
+    if(mode!=='complete')assert.equal(row.next,previous.next,mode+' keeps its original action');
+    assert.equal(current.run('JSON.stringify(S)'),before,'guidance does not change current state');
+    assert.equal(old.run('JSON.stringify(S)'),oldBefore,'historical comparison does not change state');
+    if(mode==='complete'){
+      current.run('S.flags.mingyu_reunion=true');
+      const paidState=current.run('JSON.stringify(S)'),completed=current.json('G.companionQuestEntries()[0]');
+      assert.equal(completed.status,'completed');assert.equal(completed.personal.done,true);
+      assert.equal(completed.personal.event,'loc_mingyu');
+      assert.match(completed.next,/민지와 민규가 다시 만났다/);
+      assert.equal(current.run('JSON.stringify(S)'),paidState,'actual completion guidance remains read-only');
+    }
   }
 });
 for(const f of legacy){

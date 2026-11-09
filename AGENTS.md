@@ -15,6 +15,8 @@
 
 ## Visual assets
 
+- **Current runtime direction, 2026-11-07:** Sang explicitly requested rolling back the full pixel conversion to the previous high-detail version. Restore the existing HD vehicle, mounted parts, landscapes, narrative scenes and portraits; `assets/visual-contract.json` again owns runtime art. The pixel migration is archived under `qa-artifacts/hd-rollback-20261107/` and is not an active implementation mandate. Preserve earlier living-encounter improvements, story/effects/save owners and manual reading. Do not reapply whole-game pixels without a new user instruction.
+
 - Moving-road approach cues must be drawn with the same canvas/pixel renderer as the caravan. Never place generated or raster event art into the live road scene; cinematic art starts only after the caravan has stopped and the event view opens.
 - Dedicated base-vehicle and environment renderer assets (`journey-dalguji-base-v1`, `journey-road-backdrop-v1`) were introduced for the approved 2026-09-25 mock. They are transparent/live canvas parts, not event paintings or a screenshot backdrop. Preserve real upgrades, riders, weather, motion, braking and cue proportions; do not flatten them into one static game image.
 - Road-cue proportions are contractual: a vehicle near the stop point is roughly 45-55% of the caravan's visible width, an adult is roughly half the cue vehicle's body height, and roadside props remain subordinate to both. Keep the caravan scale fixed; express approach with position and no more than 18-20% cue growth.

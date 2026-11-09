@@ -98,8 +98,19 @@ test('C08: withdrawal warns about existing losses, but never requires fuel to le
  }
 });
 test('C09: two verses are ready for broadcast, not falsely marked a finished three-verse song',()=>{
- const h=setup();h.run("S.party=['leo'];G.grantPerk('leo','leo_story')");assert(h.messages.some(t=>/두 절.*방송|두 절.*청주/.test(t)));
- assert.match(h.run("QuestJournal.companionRecords.leo[2]"),/마지막 절은 서울에서/);assert.doesNotMatch(h.run("JSON.stringify(D.comps.leo.perks)"),/서울에서 완성했다/);
+ const h=setup();h.run("S.party=['leo'];S.comps.leo.lvl=2;S.comps.leo.bond=30;S.comps.leo.pending=0;S.used.push('talk_leo_09');G.checkLevel('leo')");
+ assert.equal(h.run('S.comps.leo.lvl'),3);assert(h.messages.some(t=>/두 절.*방송|두 절.*청주/.test(t)));
+ assert.match(h.run("D.comps.leo.perks[3].d"),/두 절.*방송.*마지막 절은 서울에서/);
+ assert.doesNotMatch(h.run("JSON.stringify(D.comps.leo.perks)"),/서울에서 완성했다/);
+ assert.equal(h.run('!!S.flags.song_400km'),false);
+ const active=h.json("G.companionQuestEntries().find(row=>row.companion==='leo')");
+ assert.equal(active.status,'active');assert.equal(active.personal.done,false);assert.equal(active.personal.target,'cheongju');
+ assert.match(h.run("QuestJournal.entry(G.companionQuestEntries().find(row=>row.companion==='leo')).guide"),/청주.*방송/);
+ h.run("S.at='cheongju';S.driving=null;S.min=600");paid(h,'leo_broadcast',0);
+ assert.equal(h.run('S.flags.song_400km'),true);replay(h);
+ const completed=h.json("QuestJournal.entry(G.companionQuestEntries().find(row=>row.companion==='leo'))");
+ assert.equal(completed.status,'completed');assert.match(completed.next,/지금까지 만든.*전파/);
+ assert.doesNotMatch(completed.next,/세 절|3절|마지막 절.*완성|서울에서 완성/);
 });
 test('C13: market and refusal format fractional capacity without rounding the fuel state',()=>{
  const h=setup(),ui=fs.readFileSync('src/07-ui.js','utf8');h.run("S.at='miryang';S.fuel=60.75103686666603;S.scrap=100;let curStl='miryang',stlQuests=[];");
@@ -122,7 +133,8 @@ test('C01-C04/C06/C10-C12: revised wording keeps authored effects and grounded c
  for(const [id,old]of Object.entries(before.events)){
   const strip=v=>JSON.parse(JSON.stringify(v,(k,x)=>['text','label','note','maxRemain','foreseeable','sleep'].includes(k)?undefined:x));
   const current=h.json(`event('${id}')`);
-  if(['story_parent_route_guarded','main_recovery_story_parent_route_guarded'].includes(id)){assert.equal(current.narrativeRevision,'story-rhythm-v1');delete current.narrativeRevision;delete current.turns;old.turns=undefined;}
+  require('../tools/story-refinement-contract.cjs').familyEntry(current,old);
+  require('../tools/story-refinement-contract.cjs')([current]);
   if(id==='loc_lake'){
    assert.deepEqual(current.turnSpeakers,[{who:'passer_elder',name:'낚시꾼'}]);
    assert.equal(old.turnSpeakers,undefined);

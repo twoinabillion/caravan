@@ -256,7 +256,23 @@ for (const event of events) {
   for (const speaker of event.turnSpeakers || []) validateSpeaker(speaker, where);
 }
 
-let choiceMemoryCount=0;
+// Four reviewed investigation-order memories extend the original 21 choices.
+// Pin their owners and indices; all 25 still pass the ordinary shape/reference
+// validation below, and an unrelated new memory cannot silently join the count.
+const parentWorkMemoryIds={
+  parents_separated_work:['parent_work_father_first','parent_work_mother_first'],
+  main_recovery_parents_separated_work:['main_recovery_parent_work_father_first','main_recovery_parent_work_mother_first']
+};
+for(const [eventId,ids]of Object.entries(parentWorkMemoryIds)){
+  const memories=D.choiceMemories?.[eventId],where=`choiceMemory:${eventId}`;
+  need(eventById.get(eventId)?.narrativeRevision==='family-records-v1',where,'조사 순서 기억은 검토된 family-records-v1 선택에 속해야 함');
+  need(Array.isArray(memories)&&memories.length===2,where,'검토된 조사 순서 선택은 정확히 2개여야 함');
+  ids.forEach((id,index)=>{
+    need(memories?.[index]?.id===id,`${where}[${index}]`,`검토된 기억 ID가 아님 (${id} 필요)`);
+    need(memories?.[index]?.afterKm===12,`${where}[${index}]`,'조사 순서의 후속 주행거리는 12km여야 함');
+  });
+}
+let choiceMemoryCount=0,parentWorkMemoryCount=0;
 for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
   const event=eventById.get(eventId), where=`choiceMemory:${eventId}`;
   need(!!event, where, '이벤트가 없음');
@@ -265,6 +281,7 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
   for (const [index, memory] of (memories || []).entries()) {
     if (!memory) continue;
     choiceMemoryCount++;
+    if(Object.hasOwn(parentWorkMemoryIds,eventId))parentWorkMemoryCount++;
     need(!!(event && event.choices[index]), `${where}[${index}]`, '해당 선택지가 없음');
     need(typeof memory.id === 'string' && memory.id.trim() && !ids.has(memory.id), `${where}[${index}]`, '없거나 중복된 기억 ID');
     ids.add(memory.id);
@@ -278,7 +295,9 @@ for (const [eventId, memories] of Object.entries(D.choiceMemories || {})) {
     }
   }
 }
-need(choiceMemoryCount===25, 'choiceMemory', `핵심 선택 기억은 정확히 25개여야 함 (현재 ${choiceMemoryCount})`);
+need(parentWorkMemoryCount===4,'choiceMemory','검토된 조사 순서 기억은 정확히 4개여야 함');
+need(choiceMemoryCount-parentWorkMemoryCount===21,'choiceMemory',`기존 핵심 선택 기억은 정확히 21개여야 함 (현재 ${choiceMemoryCount-parentWorkMemoryCount})`);
+need(choiceMemoryCount===25, 'choiceMemory', `핵심 선택 기억은 기존 21개와 조사 순서 4개여야 함 (현재 ${choiceMemoryCount})`);
 
 for (const [id, def] of Object.entries(D.knowledge || {})) {
   const where=`knowledge:${id}`;

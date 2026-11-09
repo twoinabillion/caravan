@@ -8,7 +8,8 @@ function section(a,b){const start=source.indexOf(a),end=source.indexOf(b,start);
 const controller=section('  function stayActionModel(', '  function journeyModeTabsHtml(');
 const dispatch=section('  function wireStopActionButtons(', '  function renderPanel(');
 const models=['explore','camp','repair','radio'].map(action=>({action,title:action,description:'행동 설명',chips:[{label:'시간',value:'+2시간'}]}));
-function fixture(){
+function fixture(blocked=[]){
+  const fixtureModels=models.map(m=>({...m,...(blocked.includes(m.action)?{disabled:true,disabledCta:'오늘 탐색 완료'}:{})}));
   const calls=[],memory=new Map(),handlers={};
   const ctx=vm.createContext({console,Math,JSON,Number,String,S:{at:'sejong',day:3,min:532.352,driving:null},D:{nodes:{sejong:{name:'세종'},gongju:{name:'공주'}}},
     stayActionAt:null,stayActionId:null,journeyViewKey:'test',journeyViewRestored:false,journeyConsoleMode:'local',navChoiceId:'gongju',navChoiceGuide:'',routeMapOpen:false,
@@ -16,13 +17,14 @@ function fixture(){
     AMBI:{action:()=>{}},
     esc:s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
     G:{explore:()=>calls.push('explore'),fieldRepair:()=>calls.push('repair'),fixRadio:()=>{calls.push('radio');return true;},seekFuel:()=>calls.push('walkfuel'),openRecruitStep:()=>calls.push('recruitstep')},
-    showCampHub:()=>calls.push('camp'),showStl:()=>calls.push('stl'),showCraft:()=>calls.push('craft'),renderAll:()=>{},closeModal:()=>{},wireJourneyDetails:()=>{},models});
+    showCampHub:()=>calls.push('camp'),showStl:()=>calls.push('stl'),showCraft:()=>calls.push('craft'),renderAll:()=>{},closeModal:()=>{},wireJourneyDetails:()=>{},models:fixtureModels});
   vm.runInContext(controller+dispatch+section('  function rememberJourneyView(){','  let questRouteFocus='),ctx);
   const choices=models.map(m=>({dataset:{staySelect:m.action},attrs:{},focus(){this.focused=true;},setAttribute(k,v){this.attrs[k]=v;}}));
   const trigger={isConnected:true,attrs:{},focus(){this.focused=true;},setAttribute(k,v){this.attrs[k]=v;}},close={};
   const picker={open:false,attrs:{},showModal(){this.open=true;},close(){this.open=false;this.onclose?.();},setAttribute(k,v){this.attrs[k]=v;},querySelector:()=>close,getBoundingClientRect:()=>({left:12,top:100,right:348,bottom:600})};
-  const detail={html:'',button:null,set innerHTML(v){this.html=v;this.button={disabled:v.includes('disabled aria-describedby')};},querySelector(s){return s===`[data-a="${ctx.stayActionId}"]`?this.button:null;}};
-  const panel={querySelectorAll:()=>choices,querySelector:s=>({'#stay-detail':detail,'[data-stay-choice]':trigger,'#stay-action-dialog':picker})[s]||null,set onkeydown(fn){handlers.keydown=fn;}};
+  const route={click(){ctx.journeyConsoleMode='route';}};
+  const detail={html:'',button:null,alternative:null,set innerHTML(v){this.html=v;this.button=v.includes('data-a=')?{disabled:false}:null;this.alternative=v.includes('data-stay-alternatives')?{isConnected:true}:null;},querySelector(s){return s==='[data-stay-alternatives]'?this.alternative:s===`[data-a="${ctx.stayActionId}"]`?this.button:null;}};
+  const panel={querySelectorAll:()=>choices,querySelector:s=>({'#stay-detail':detail,'[data-stay-choice]':trigger,'#stay-action-dialog':picker,'button[data-journey-mode="route"]':route})[s]||null,set onkeydown(fn){handlers.keydown=fn;}};
   ctx.panel=panel;vm.runInContext('stayConsoleHtml(models,"");',ctx);detail.innerHTML=vm.runInContext('stayDetailHtml(models[0])',ctx);vm.runInContext('wireStayConsole(panel,models,{stl:"jeonju"})',ctx);
   return {ctx,calls,memory,choices,detail,handlers,panel,trigger,picker,close};
 }
@@ -34,6 +36,18 @@ test('selection previews only; explicit execution uses existing engine actions',
     f.detail.button.onclick();assert.equal(f.calls[i],models[i].action);
   }
   assert.equal(JSON.stringify(f.ctx.S),before);
+});
+test('completed action opens free alternatives, cancel preserves selection, and only explicit execution spends',()=>{
+ const f=fixture(['explore']),before=JSON.stringify(f.ctx.S);assert(f.detail.alternative);assert(!f.detail.button);
+ f.detail.alternative.onclick();assert(f.picker.open);assert(f.choices[1].focused);assert.equal(f.calls.length,0);assert.equal(f.ctx.stayActionId,'explore');
+ f.picker.close();assert.equal(f.ctx.stayActionId,'explore');assert.equal(JSON.stringify(f.ctx.S),before);
+ f.detail.alternative.onclick();f.choices[1].onclick();assert.equal(f.ctx.stayActionId,'camp');assert.equal(f.calls.length,0);assert(!f.detail.alternative);assert(f.detail.button);
+ f.detail.button.onclick();assert.deepEqual(f.calls,['camp']);assert.equal(JSON.stringify(f.ctx.S),before);
+});
+test('all blocked actions point to destination selection free and detached controls do nothing',()=>{
+ const f=fixture(models.map(m=>m.action)),before=JSON.stringify(f.ctx.S),button=f.detail.alternative;
+ assert.match(button.innerHTML,/목적지 고르기/);button.onclick();assert.equal(f.ctx.journeyConsoleMode,'route');assert.equal(f.calls.length,0);assert.equal(JSON.stringify(f.ctx.S),before);
+ f.ctx.journeyConsoleMode='local';button.isConnected=false;button.onclick();assert.equal(f.ctx.journeyConsoleMode,'local');assert.equal(f.calls.length,0);
 });
 test('camp hull forecast formats fractional capacity without changing recovery or save',()=>{
   const campModel=section('    let campVanFix=4;', '    const nbs=G.neighbors(S.at)');
@@ -99,7 +113,8 @@ test('blocked actions stay inspectable, reasons and next-step information surviv
   const f=fixture();f.ctx.blocked={...models[0],disabled:true,description:'밤에는 <탐색>할 수 없다',disabledCta:'야간 탐색 불가'};
   const html=vm.runInContext('stayConsoleHtml([blocked],"")',f.ctx);
   assert.match(html,/data-stay-select="explore" aria-pressed="true"/);
-  assert.match(html,/disabled aria-describedby="stay-reason"/);
+  assert.match(html,/data-stay-alternatives aria-describedby="stay-reason"/);
+  assert.doesNotMatch(html,/data-a="explore"/);
   assert.match(html,/밤에는 &lt;탐색>/);assert.match(html,/야간 탐색 불가/);
   assert.match(html,/선택한 행동 설명/);
 });

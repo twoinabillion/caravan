@@ -1,0 +1,24 @@
+{
+  "id": "caravan-pixel-study-v1",
+  "logicalSize": [240, 144],
+  "pixelGrid": 1,
+  "palette": {
+    "ink": "#172d2a", "deep": "#21392f", "shade": "#314b3d",
+    "leafDark": "#314e42", "leaf": "#48634c", "leafLight": "#607457",
+    "woodDark": "#56604a", "wood": "#8c805b", "woodLight": "#aaa07a",
+    "metal": "#a4b294", "skinShade": "#ad8965", "skin": "#c69b70",
+    "cloth": "#4d6248", "clothShade": "#354b3a", "clothLight": "#74815b",
+    "rustCloth": "#996b4c", "rustShade": "#71513d", "rustLight": "#b18b61",
+    "hair": "#172d2a", "hairLight": "#35463a", "light": "#efd08b",
+    "fireDark": "#70472e", "fire": "#c97737", "fireLight": "#efb85b",
+    "ground": "#293e33", "night": "#172c36", "day": "#87978b"
+  },
+  "rules": {
+    "sourceFiltering": "nearest-neighbor",
+    "actorBaseline": "feet at local y=0; kneeling and standing share ground",
+    "toolAnchor": "tool origin is the active hand, carried through each pose frame",
+    "expressions": ["focused", "speaking", "relaxed"],
+    "lighting": "restrained amber practical light; muted green/blue world",
+    "review": "judge actors and imported objects together on 320px mobile"
+  }
+}

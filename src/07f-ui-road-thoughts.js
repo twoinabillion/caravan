@@ -119,10 +119,13 @@
     cue.append(status);
     stage.append(cue);
     document.documentElement.dataset.roadApproach = profile.kind;
+    // One physical discovery cue per approach, not on story pages or receipt reload.
+    if(['meet_postman','postman_again'].includes(profile.eventKey)&&!document.hidden&&typeof SND!=='undefined')SND.sceneCue('bicycle-bell');
     const total=Math.max(900,Number(profile.duration)||1450);
     roadApproachTimers.push(setTimeout(()=>{
       cue.classList.add('is-braking');
       action.textContent='제동 중';
+      if(!document.hidden&&['meet_postman','postman_again'].includes(profile.eventKey)&&typeof AMBI!=='undefined')AMBI.play('sfx_stop_brake',.22);
       if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='braking';
     },total*.24));
     roadApproachTimers.push(setTimeout(()=>{

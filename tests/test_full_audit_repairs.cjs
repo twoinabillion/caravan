@@ -40,6 +40,7 @@ test('only individually approved gates, disclosed costs and free exits change th
    assert.deepEqual(row.choices.pop(),{out:[{p:1,fx:{}}]});
   }
  }
+ require('../tools/story-refinement-contract.cjs')(rows.filter(Boolean));
  assert.deepEqual(rows,baseline.mechanics);
 });
 test('mountain introduction does not invent a dispatch; generation form does not change clear weather into rain',()=>{

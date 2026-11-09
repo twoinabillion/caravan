@@ -1,0 +1,3178 @@
+{
+  "schemaVersion": 1,
+  "scope": "Original editable pixel interpretations. Portrait anchors observed from canonical references; stature/body proportions and gesture timing are proposals, not biography changes. No production wiring.",
+  "order": [
+    "minji",
+    "parkss",
+    "kangwoo",
+    "leo",
+    "jaeyi",
+    "eunsu"
+  ],
+  "profiles": {
+    "minji": {
+      "name": "민지",
+      "reference": "assets/reference/portraits-canon/minji.png",
+      "canonicalAnchors": [
+        "dark ponytail",
+        "mechanic goggles",
+        "young slim face",
+        "worn workwear"
+      ],
+      "proposedGeometry": {
+        "height": 43,
+        "headWidth": 12,
+        "headHeight": 14,
+        "shoulderWidth": 12,
+        "legHeight": 14
+      },
+      "colors": {
+        "ink": "#172d2a",
+        "skinShade": "#a78362",
+        "skin": "#c49a73",
+        "skinLight": "#d0ad86",
+        "hair": "#202d29",
+        "hairLight": "#3c4637",
+        "metal": "#a6b29a",
+        "gold": "#b29d67",
+        "paper": "#c8c19a",
+        "wood": "#8d6b49",
+        "woodLight": "#b3915d",
+        "dark": "#304437",
+        "coat": "#52614a",
+        "coatShade": "#35483a",
+        "coatLight": "#7e865c"
+      },
+      "hair": [
+        [
+          -6,
+          -2,
+          12,
+          4,
+          "hair"
+        ],
+        [
+          -7,
+          1,
+          3,
+          8,
+          "hair"
+        ],
+        [
+          -9,
+          4,
+          3,
+          7,
+          "hair"
+        ],
+        [
+          -11,
+          9,
+          3,
+          9,
+          "hair"
+        ],
+        [
+          -5,
+          -3,
+          7,
+          1,
+          "hairLight"
+        ],
+        [
+          4,
+          1,
+          2,
+          3,
+          "hair"
+        ]
+      ],
+      "faceDetails": [
+        [
+          -4,
+          9,
+          1,
+          1,
+          "wood"
+        ],
+        [
+          2,
+          11,
+          1,
+          1,
+          "wood"
+        ]
+      ],
+      "headAccessories": [
+        [
+          -5,
+          -1,
+          4,
+          3,
+          "gold"
+        ],
+        [
+          1,
+          -1,
+          4,
+          3,
+          "gold"
+        ],
+        [
+          -4,
+          0,
+          2,
+          1,
+          "metal"
+        ],
+        [
+          2,
+          0,
+          2,
+          1,
+          "metal"
+        ],
+        [
+          -1,
+          0,
+          2,
+          1,
+          "dark"
+        ]
+      ],
+      "bodyDetails": [
+        [
+          -4,
+          1,
+          1,
+          10,
+          "coatLight"
+        ],
+        [
+          3,
+          5,
+          3,
+          2,
+          "coatShade"
+        ],
+        [
+          -7,
+          11,
+          4,
+          5,
+          "wood"
+        ],
+        [
+          -6,
+          12,
+          2,
+          1,
+          "gold"
+        ]
+      ],
+      "signatureProp": {
+        "anchor": "hand",
+        "rects": [
+          [
+            0,
+            -1,
+            7,
+            2,
+            "metal"
+          ],
+          [
+            6,
+            -3,
+            3,
+            2,
+            "metal"
+          ],
+          [
+            6,
+            1,
+            3,
+            2,
+            "metal"
+          ],
+          [
+            8,
+            -1,
+            1,
+            2,
+            "metal"
+          ]
+        ]
+      },
+      "gesture": "repair",
+      "cadenceMs": 740,
+      "stridePx": 2,
+      "headOffset": [
+        0,
+        0
+      ],
+      "visibleTraits": "고글 · 묶은 머리 · 가벼운 체형",
+      "activityFrames": [
+        {
+          "settle": 8,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -4,
+              -11
+            ],
+            [
+              15,
+              -18
+            ]
+          ],
+          "feet": [
+            [
+              -6,
+              -6,
+              10,
+              5
+            ],
+            [
+              3,
+              -3,
+              9,
+              2
+            ]
+          ]
+        },
+        {
+          "settle": 8,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -4,
+              -11
+            ],
+            [
+              16,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -6,
+              -6,
+              10,
+              5
+            ],
+            [
+              3,
+              -3,
+              9,
+              2
+            ]
+          ]
+        },
+        {
+          "settle": 8,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -4,
+              -11
+            ],
+            [
+              15,
+              -20
+            ]
+          ],
+          "feet": [
+            [
+              -6,
+              -6,
+              10,
+              5
+            ],
+            [
+              3,
+              -3,
+              9,
+              2
+            ]
+          ]
+        },
+        {
+          "settle": 8,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -4,
+              -11
+            ],
+            [
+              14,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -6,
+              -6,
+              10,
+              5
+            ],
+            [
+              3,
+              -3,
+              9,
+              2
+            ]
+          ]
+        }
+      ],
+      "faceRows": [
+        [
+          0,
+          -4,
+          8
+        ],
+        [
+          1,
+          -5,
+          10
+        ],
+        [
+          2,
+          -6,
+          12
+        ],
+        [
+          3,
+          -6,
+          12
+        ],
+        [
+          4,
+          -6,
+          12
+        ],
+        [
+          5,
+          -6,
+          12
+        ],
+        [
+          6,
+          -6,
+          12
+        ],
+        [
+          7,
+          -6,
+          12
+        ],
+        [
+          8,
+          -6,
+          12
+        ],
+        [
+          9,
+          -5,
+          11
+        ],
+        [
+          10,
+          -4,
+          9
+        ],
+        [
+          11,
+          -4,
+          8
+        ],
+        [
+          12,
+          -3,
+          6
+        ],
+        [
+          13,
+          -2,
+          4
+        ]
+      ],
+      "noseDetails": [
+        [
+          1,
+          7,
+          1,
+          3,
+          "skinShade"
+        ]
+      ],
+      "expressions": {
+        "neutral": [
+          [
+            -4,
+            4,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            4,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            3,
+            1,
+            "skinShade"
+          ]
+        ],
+        "speaking": [
+          [
+            -4,
+            4,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            4,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            2,
+            2,
+            "wood"
+          ]
+        ],
+        "relaxed": [
+          [
+            -4,
+            6,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            2,
+            6,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            1,
+            1,
+            "skinShade"
+          ],
+          [
+            0,
+            12,
+            2,
+            1,
+            "skinShade"
+          ]
+        ]
+      }
+    },
+    "parkss": {
+      "name": "박 선생",
+      "reference": "assets/reference/portraits-canon/parkss.png",
+      "canonicalAnchors": [
+        "silver/receding hair",
+        "round metal glasses",
+        "aged long face",
+        "calm posture"
+      ],
+      "proposedGeometry": {
+        "height": 42,
+        "headWidth": 14,
+        "headHeight": 16,
+        "shoulderWidth": 14,
+        "legHeight": 12
+      },
+      "colors": {
+        "ink": "#172d2a",
+        "skinShade": "#977957",
+        "skin": "#b49772",
+        "skinLight": "#c9b18b",
+        "hair": "#687268",
+        "hairLight": "#b9bba2",
+        "metal": "#a6b29a",
+        "gold": "#b29d67",
+        "paper": "#c8c19a",
+        "wood": "#8d6b49",
+        "woodLight": "#b3915d",
+        "dark": "#304437",
+        "coat": "#8b8b75",
+        "coatShade": "#616955",
+        "coatLight": "#b3ae8b"
+      },
+      "hair": [
+        [
+          -7,
+          -1,
+          14,
+          3,
+          "hairLight"
+        ],
+        [
+          -8,
+          1,
+          3,
+          8,
+          "hairLight"
+        ],
+        [
+          5,
+          1,
+          3,
+          8,
+          "hairLight"
+        ],
+        [
+          -4,
+          0,
+          7,
+          2,
+          "hair"
+        ],
+        [
+          -6,
+          -2,
+          10,
+          1,
+          "metal"
+        ]
+      ],
+      "faceDetails": [
+        [
+          -4,
+          3,
+          7,
+          1,
+          "skinShade"
+        ],
+        [
+          -5,
+          10,
+          3,
+          1,
+          "skinShade"
+        ],
+        [
+          2,
+          10,
+          3,
+          1,
+          "skinShade"
+        ],
+        [
+          -3,
+          13,
+          6,
+          1,
+          "skinShade"
+        ],
+        [
+          -1,
+          8,
+          1,
+          3,
+          "skinShade"
+        ]
+      ],
+      "headAccessories": [
+        [
+          -7,
+          5,
+          6,
+          1,
+          "metal"
+        ],
+        [
+          -7,
+          6,
+          1,
+          3,
+          "metal"
+        ],
+        [
+          -6,
+          9,
+          4,
+          1,
+          "metal"
+        ],
+        [
+          -2,
+          6,
+          1,
+          3,
+          "metal"
+        ],
+        [
+          1,
+          5,
+          6,
+          1,
+          "metal"
+        ],
+        [
+          1,
+          6,
+          1,
+          3,
+          "metal"
+        ],
+        [
+          2,
+          9,
+          4,
+          1,
+          "metal"
+        ],
+        [
+          6,
+          6,
+          1,
+          3,
+          "metal"
+        ],
+        [
+          -1,
+          6,
+          2,
+          1,
+          "metal"
+        ]
+      ],
+      "bodyDetails": [
+        [
+          -4,
+          0,
+          2,
+          7,
+          "paper"
+        ],
+        [
+          2,
+          0,
+          2,
+          7,
+          "paper"
+        ],
+        [
+          -5,
+          8,
+          3,
+          3,
+          "coatShade"
+        ]
+      ],
+      "signatureProp": {
+        "anchor": "hand",
+        "rects": [
+          [
+            -1,
+            -3,
+            4,
+            1,
+            "metal"
+          ],
+          [
+            -1,
+            -2,
+            4,
+            6,
+            "paper"
+          ],
+          [
+            0,
+            0,
+            2,
+            1,
+            "wood"
+          ]
+        ]
+      },
+      "gesture": "medicine",
+      "cadenceMs": 1250,
+      "stridePx": 2,
+      "headOffset": [
+        1,
+        1
+      ],
+      "visibleTraits": "둥근 안경 · 은빛 머리 · 긴 얼굴",
+      "activityFrames": [
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -1,
+              -19
+            ],
+            [
+              5,
+              -21
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -12,
+              4,
+              12
+            ],
+            [
+              2,
+              -12,
+              4,
+              12
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -1,
+              -19
+            ],
+            [
+              5,
+              -20
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -12,
+              4,
+              12
+            ],
+            [
+              2,
+              -12,
+              4,
+              12
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -1,
+              -19
+            ],
+            [
+              5,
+              -21
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -12,
+              4,
+              12
+            ],
+            [
+              2,
+              -12,
+              4,
+              12
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -1,
+              -19
+            ],
+            [
+              5,
+              -21
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -12,
+              4,
+              12
+            ],
+            [
+              2,
+              -12,
+              4,
+              12
+            ]
+          ]
+        }
+      ],
+      "faceRows": [
+        [
+          0,
+          -5,
+          10
+        ],
+        [
+          1,
+          -6,
+          12
+        ],
+        [
+          2,
+          -7,
+          14
+        ],
+        [
+          3,
+          -7,
+          14
+        ],
+        [
+          4,
+          -7,
+          14
+        ],
+        [
+          5,
+          -7,
+          14
+        ],
+        [
+          6,
+          -7,
+          14
+        ],
+        [
+          7,
+          -7,
+          14
+        ],
+        [
+          8,
+          -7,
+          14
+        ],
+        [
+          9,
+          -7,
+          14
+        ],
+        [
+          10,
+          -7,
+          14
+        ],
+        [
+          11,
+          -6,
+          12
+        ],
+        [
+          12,
+          -5,
+          10
+        ],
+        [
+          13,
+          -4,
+          9
+        ],
+        [
+          14,
+          -3,
+          7
+        ],
+        [
+          15,
+          -2,
+          5
+        ]
+      ],
+      "noseDetails": [
+        [
+          0,
+          8,
+          2,
+          3,
+          "skinShade"
+        ],
+        [
+          -1,
+          11,
+          3,
+          1,
+          "skinShade"
+        ]
+      ],
+      "expressions": {
+        "neutral": [
+          [
+            -4,
+            4,
+            4,
+            1,
+            "hairLight"
+          ],
+          [
+            2,
+            4,
+            4,
+            1,
+            "hairLight"
+          ],
+          [
+            -3,
+            7,
+            1,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            1,
+            1,
+            "ink"
+          ],
+          [
+            -2,
+            13,
+            5,
+            1,
+            "skinShade"
+          ]
+        ],
+        "speaking": [
+          [
+            -4,
+            4,
+            4,
+            1,
+            "hairLight"
+          ],
+          [
+            2,
+            4,
+            4,
+            1,
+            "hairLight"
+          ],
+          [
+            -3,
+            7,
+            1,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            1,
+            1,
+            "ink"
+          ],
+          [
+            -2,
+            13,
+            4,
+            2,
+            "wood"
+          ]
+        ],
+        "relaxed": [
+          [
+            -4,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            2,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            -2,
+            13,
+            1,
+            1,
+            "skinShade"
+          ],
+          [
+            -1,
+            14,
+            2,
+            1,
+            "skinShade"
+          ]
+        ]
+      }
+    },
+    "kangwoo": {
+      "name": "강우",
+      "reference": "assets/reference/portraits-canon/kangwoo.png",
+      "canonicalAnchors": [
+        "close cropped hair",
+        "square jaw",
+        "heavy brow",
+        "broad jacket"
+      ],
+      "proposedGeometry": {
+        "height": 48,
+        "headWidth": 14,
+        "headHeight": 15,
+        "shoulderWidth": 18,
+        "legHeight": 16
+      },
+      "colors": {
+        "ink": "#172d2a",
+        "skinShade": "#947555",
+        "skin": "#b58d66",
+        "skinLight": "#c4a17a",
+        "hair": "#202d29",
+        "hairLight": "#3c4637",
+        "metal": "#a6b29a",
+        "gold": "#b29d67",
+        "paper": "#c8c19a",
+        "wood": "#8d6b49",
+        "woodLight": "#b3915d",
+        "dark": "#304437",
+        "coat": "#4c5948",
+        "coatShade": "#2f4237",
+        "coatLight": "#728065"
+      },
+      "hair": [
+        [
+          -7,
+          -2,
+          14,
+          5,
+          "hair"
+        ],
+        [
+          -8,
+          0,
+          2,
+          6,
+          "hair"
+        ],
+        [
+          6,
+          0,
+          2,
+          6,
+          "hair"
+        ],
+        [
+          -5,
+          -3,
+          10,
+          1,
+          "hairLight"
+        ]
+      ],
+      "faceDetails": [
+        [
+          -4,
+          12,
+          8,
+          1,
+          "hairLight"
+        ],
+        [
+          -5,
+          10,
+          1,
+          2,
+          "hairLight"
+        ],
+        [
+          4,
+          10,
+          1,
+          2,
+          "hairLight"
+        ]
+      ],
+      "headAccessories": [],
+      "bodyDetails": [
+        [
+          -7,
+          1,
+          4,
+          5,
+          "coatShade"
+        ],
+        [
+          3,
+          1,
+          4,
+          5,
+          "coatShade"
+        ],
+        [
+          -6,
+          8,
+          4,
+          4,
+          "coatLight"
+        ],
+        [
+          2,
+          8,
+          4,
+          4,
+          "coatLight"
+        ],
+        [
+          -1,
+          2,
+          2,
+          13,
+          "dark"
+        ]
+      ],
+      "signatureProp": {
+        "anchor": "body",
+        "rects": [
+          [
+            -8,
+            4,
+            4,
+            7,
+            "dark"
+          ],
+          [
+            -7,
+            3,
+            1,
+            2,
+            "metal"
+          ],
+          [
+            -7,
+            5,
+            2,
+            1,
+            "gold"
+          ]
+        ]
+      },
+      "gesture": "watch",
+      "cadenceMs": 1000,
+      "stridePx": 3,
+      "headOffset": [
+        0,
+        0
+      ],
+      "visibleTraits": "짧은 머리 · 각진 턱 · 넓은 어깨",
+      "activityFrames": [
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -7,
+              -18
+            ],
+            [
+              8,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -16,
+              4,
+              16
+            ],
+            [
+              2,
+              -16,
+              4,
+              16
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            1,
+            0
+          ],
+          "hands": [
+            [
+              -7,
+              -18
+            ],
+            [
+              8,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -16,
+              4,
+              16
+            ],
+            [
+              2,
+              -16,
+              4,
+              16
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -7,
+              -18
+            ],
+            [
+              8,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -16,
+              4,
+              16
+            ],
+            [
+              2,
+              -16,
+              4,
+              16
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            -1,
+            0
+          ],
+          "hands": [
+            [
+              -7,
+              -18
+            ],
+            [
+              8,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -16,
+              4,
+              16
+            ],
+            [
+              2,
+              -16,
+              4,
+              16
+            ]
+          ]
+        }
+      ],
+      "faceRows": [
+        [
+          0,
+          -5,
+          10
+        ],
+        [
+          1,
+          -6,
+          12
+        ],
+        [
+          2,
+          -7,
+          14
+        ],
+        [
+          3,
+          -7,
+          14
+        ],
+        [
+          4,
+          -7,
+          14
+        ],
+        [
+          5,
+          -7,
+          14
+        ],
+        [
+          6,
+          -7,
+          14
+        ],
+        [
+          7,
+          -7,
+          14
+        ],
+        [
+          8,
+          -7,
+          14
+        ],
+        [
+          9,
+          -7,
+          14
+        ],
+        [
+          10,
+          -6,
+          13
+        ],
+        [
+          11,
+          -6,
+          13
+        ],
+        [
+          12,
+          -6,
+          13
+        ],
+        [
+          13,
+          -6,
+          12
+        ],
+        [
+          14,
+          -5,
+          10
+        ]
+      ],
+      "noseDetails": [
+        [
+          0,
+          7,
+          2,
+          4,
+          "skinShade"
+        ]
+      ],
+      "expressions": {
+        "neutral": [
+          [
+            -5,
+            4,
+            5,
+            2,
+            "hair"
+          ],
+          [
+            2,
+            4,
+            5,
+            2,
+            "hair"
+          ],
+          [
+            -4,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            -2,
+            11,
+            5,
+            1,
+            "skinShade"
+          ]
+        ],
+        "speaking": [
+          [
+            -5,
+            4,
+            5,
+            2,
+            "hair"
+          ],
+          [
+            2,
+            4,
+            5,
+            2,
+            "hair"
+          ],
+          [
+            -4,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            -2,
+            11,
+            4,
+            2,
+            "wood"
+          ]
+        ],
+        "relaxed": [
+          [
+            -5,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            2,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            -2,
+            11,
+            1,
+            1,
+            "skinShade"
+          ],
+          [
+            -1,
+            12,
+            2,
+            1,
+            "skinShade"
+          ]
+        ]
+      }
+    },
+    "leo": {
+      "name": "레오",
+      "reference": "assets/reference/portraits-canon/leo.png",
+      "canonicalAnchors": [
+        "patterned brown headscarf",
+        "shoulder length hair",
+        "narrow face",
+        "guitar"
+      ],
+      "proposedGeometry": {
+        "height": 47,
+        "headWidth": 13,
+        "headHeight": 15,
+        "shoulderWidth": 13,
+        "legHeight": 17
+      },
+      "colors": {
+        "ink": "#172d2a",
+        "skinShade": "#a1805e",
+        "skin": "#bd9670",
+        "skinLight": "#d0ad85",
+        "hair": "#202d29",
+        "hairLight": "#3c4637",
+        "metal": "#a6b29a",
+        "gold": "#b29d67",
+        "paper": "#c8c19a",
+        "wood": "#8d6b49",
+        "woodLight": "#b3915d",
+        "dark": "#304437",
+        "coat": "#876b4e",
+        "coatShade": "#5f503d",
+        "coatLight": "#ae8c62"
+      },
+      "hair": [
+        [
+          -7,
+          -1,
+          14,
+          5,
+          "hair"
+        ],
+        [
+          -8,
+          3,
+          3,
+          14,
+          "hair"
+        ],
+        [
+          5,
+          2,
+          3,
+          15,
+          "hair"
+        ],
+        [
+          -6,
+          13,
+          3,
+          7,
+          "hair"
+        ],
+        [
+          4,
+          12,
+          3,
+          8,
+          "hair"
+        ],
+        [
+          -4,
+          -2,
+          8,
+          1,
+          "hairLight"
+        ]
+      ],
+      "faceDetails": [
+        [
+          -3,
+          13,
+          6,
+          1,
+          "hairLight"
+        ],
+        [
+          -4,
+          11,
+          1,
+          2,
+          "hairLight"
+        ]
+      ],
+      "headAccessories": [
+        [
+          -7,
+          1,
+          14,
+          4,
+          "wood"
+        ],
+        [
+          -6,
+          2,
+          3,
+          1,
+          "gold"
+        ],
+        [
+          -1,
+          3,
+          3,
+          1,
+          "gold"
+        ],
+        [
+          4,
+          2,
+          2,
+          1,
+          "gold"
+        ],
+        [
+          -10,
+          4,
+          4,
+          3,
+          "wood"
+        ],
+        [
+          -12,
+          7,
+          3,
+          7,
+          "wood"
+        ]
+      ],
+      "bodyDetails": [
+        [
+          -5,
+          0,
+          3,
+          5,
+          "coatShade"
+        ],
+        [
+          2,
+          0,
+          3,
+          5,
+          "coatShade"
+        ],
+        [
+          -4,
+          3,
+          2,
+          14,
+          "wood"
+        ]
+      ],
+      "signatureProp": {
+        "anchor": "body",
+        "rects": [
+          [
+            4,
+            7,
+            7,
+            3,
+            "wood"
+          ],
+          [
+            2,
+            10,
+            11,
+            7,
+            "wood"
+          ],
+          [
+            3,
+            17,
+            10,
+            3,
+            "wood"
+          ],
+          [
+            4,
+            9,
+            6,
+            9,
+            "woodLight"
+          ],
+          [
+            6,
+            11,
+            3,
+            3,
+            "dark"
+          ],
+          [
+            8,
+            -1,
+            3,
+            13,
+            "woodLight"
+          ],
+          [
+            7,
+            -4,
+            5,
+            4,
+            "wood"
+          ],
+          [
+            9,
+            0,
+            1,
+            17,
+            "paper"
+          ]
+        ]
+      },
+      "gesture": "guitar",
+      "cadenceMs": 880,
+      "stridePx": 2,
+      "headOffset": [
+        0,
+        0
+      ],
+      "visibleTraits": "두건 · 긴 머리 · 기타",
+      "activityFrames": [
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              10,
+              -29
+            ],
+            [
+              5,
+              -19
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -17,
+              4,
+              17
+            ],
+            [
+              2,
+              -17,
+              4,
+              17
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              10,
+              -29
+            ],
+            [
+              5,
+              -18
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -17,
+              4,
+              17
+            ],
+            [
+              2,
+              -17,
+              4,
+              17
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              10,
+              -29
+            ],
+            [
+              5,
+              -17
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -17,
+              4,
+              17
+            ],
+            [
+              2,
+              -17,
+              4,
+              17
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              10,
+              -29
+            ],
+            [
+              5,
+              -18
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -17,
+              4,
+              17
+            ],
+            [
+              2,
+              -17,
+              4,
+              17
+            ]
+          ]
+        }
+      ],
+      "faceRows": [
+        [
+          0,
+          -4,
+          8
+        ],
+        [
+          1,
+          -5,
+          10
+        ],
+        [
+          2,
+          -6,
+          13
+        ],
+        [
+          3,
+          -6,
+          13
+        ],
+        [
+          4,
+          -6,
+          13
+        ],
+        [
+          5,
+          -6,
+          13
+        ],
+        [
+          6,
+          -6,
+          13
+        ],
+        [
+          7,
+          -6,
+          13
+        ],
+        [
+          8,
+          -6,
+          13
+        ],
+        [
+          9,
+          -5,
+          11
+        ],
+        [
+          10,
+          -4,
+          9
+        ],
+        [
+          11,
+          -4,
+          8
+        ],
+        [
+          12,
+          -3,
+          7
+        ],
+        [
+          13,
+          -3,
+          6
+        ],
+        [
+          14,
+          -2,
+          4
+        ]
+      ],
+      "noseDetails": [
+        [
+          1,
+          7,
+          1,
+          4,
+          "skinShade"
+        ]
+      ],
+      "expressions": {
+        "neutral": [
+          [
+            -4,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            4,
+            1,
+            "skinShade"
+          ]
+        ],
+        "speaking": [
+          [
+            -4,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            3,
+            2,
+            "wood"
+          ]
+        ],
+        "relaxed": [
+          [
+            -4,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            2,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            1,
+            1,
+            "skinShade"
+          ],
+          [
+            0,
+            12,
+            2,
+            1,
+            "skinShade"
+          ]
+        ]
+      }
+    },
+    "jaeyi": {
+      "name": "재이",
+      "reference": "assets/reference/portraits-canon/jaeyi.png",
+      "canonicalAnchors": [
+        "tousled curly hair",
+        "young round face",
+        "ochre hooded jacket",
+        "large backpack"
+      ],
+      "proposedGeometry": {
+        "height": 43,
+        "headWidth": 13,
+        "headHeight": 14,
+        "shoulderWidth": 15,
+        "legHeight": 13
+      },
+      "colors": {
+        "ink": "#172d2a",
+        "skinShade": "#a78362",
+        "skin": "#c49a73",
+        "skinLight": "#d0ad86",
+        "hair": "#202d29",
+        "hairLight": "#3c4637",
+        "metal": "#a6b29a",
+        "gold": "#b29d67",
+        "paper": "#c8c19a",
+        "wood": "#8d6b49",
+        "woodLight": "#b3915d",
+        "dark": "#304437",
+        "coat": "#a28a50",
+        "coatShade": "#76683f",
+        "coatLight": "#c1a66b"
+      },
+      "hair": [
+        [
+          -5,
+          -4,
+          8,
+          2,
+          "hair"
+        ],
+        [
+          -8,
+          -2,
+          6,
+          3,
+          "hair"
+        ],
+        [
+          3,
+          -2,
+          5,
+          3,
+          "hair"
+        ],
+        [
+          -9,
+          1,
+          4,
+          4,
+          "hair"
+        ],
+        [
+          5,
+          1,
+          4,
+          4,
+          "hair"
+        ],
+        [
+          -8,
+          5,
+          3,
+          7,
+          "hair"
+        ],
+        [
+          5,
+          5,
+          3,
+          7,
+          "hair"
+        ],
+        [
+          -7,
+          -3,
+          2,
+          2,
+          "hairLight"
+        ],
+        [
+          3,
+          -1,
+          2,
+          2,
+          "hairLight"
+        ],
+        [
+          -5,
+          1,
+          4,
+          2,
+          "hair"
+        ],
+        [
+          1,
+          1,
+          3,
+          1,
+          "hair"
+        ],
+        [
+          -9,
+          9,
+          2,
+          3,
+          "hair"
+        ],
+        [
+          7,
+          8,
+          2,
+          3,
+          "hair"
+        ]
+      ],
+      "faceDetails": [
+        [
+          -5,
+          8,
+          1,
+          1,
+          "skinShade"
+        ],
+        [
+          4,
+          9,
+          1,
+          1,
+          "skinShade"
+        ]
+      ],
+      "headAccessories": [],
+      "bodyDetails": [
+        [
+          -6,
+          -1,
+          12,
+          3,
+          "coatShade"
+        ],
+        [
+          -5,
+          1,
+          3,
+          3,
+          "coatLight"
+        ],
+        [
+          3,
+          1,
+          3,
+          3,
+          "coatLight"
+        ],
+        [
+          -4,
+          7,
+          1,
+          6,
+          "paper"
+        ],
+        [
+          4,
+          7,
+          1,
+          6,
+          "paper"
+        ]
+      ],
+      "signatureProp": {
+        "anchor": "back",
+        "rects": [
+          [
+            -12,
+            1,
+            6,
+            17,
+            "coatShade"
+          ],
+          [
+            -13,
+            5,
+            6,
+            9,
+            "wood"
+          ],
+          [
+            -12,
+            7,
+            4,
+            1,
+            "gold"
+          ],
+          [
+            -11,
+            16,
+            4,
+            3,
+            "dark"
+          ]
+        ]
+      },
+      "gesture": "sort",
+      "cadenceMs": 680,
+      "stridePx": 3,
+      "headOffset": [
+        0,
+        0
+      ],
+      "visibleTraits": "곱슬머리 · 황토색 후드 · 배낭",
+      "activityFrames": [
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -10,
+              -18
+            ],
+            [
+              -5,
+              -17
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -13,
+              4,
+              13
+            ],
+            [
+              2,
+              -13,
+              4,
+              13
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -10,
+              -18
+            ],
+            [
+              -4,
+              -17
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -13,
+              4,
+              13
+            ],
+            [
+              2,
+              -13,
+              4,
+              13
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -10,
+              -18
+            ],
+            [
+              -3,
+              -17
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -13,
+              4,
+              13
+            ],
+            [
+              2,
+              -13,
+              4,
+              13
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -10,
+              -18
+            ],
+            [
+              -4,
+              -17
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -13,
+              4,
+              13
+            ],
+            [
+              2,
+              -13,
+              4,
+              13
+            ]
+          ]
+        }
+      ],
+      "faceRows": [
+        [
+          0,
+          -4,
+          8
+        ],
+        [
+          1,
+          -6,
+          12
+        ],
+        [
+          2,
+          -6,
+          13
+        ],
+        [
+          3,
+          -6,
+          13
+        ],
+        [
+          4,
+          -6,
+          13
+        ],
+        [
+          5,
+          -6,
+          13
+        ],
+        [
+          6,
+          -6,
+          13
+        ],
+        [
+          7,
+          -6,
+          13
+        ],
+        [
+          8,
+          -6,
+          13
+        ],
+        [
+          9,
+          -5,
+          11
+        ],
+        [
+          10,
+          -5,
+          10
+        ],
+        [
+          11,
+          -4,
+          9
+        ],
+        [
+          12,
+          -3,
+          7
+        ],
+        [
+          13,
+          -2,
+          5
+        ]
+      ],
+      "noseDetails": [
+        [
+          0,
+          7,
+          1,
+          2,
+          "skinShade"
+        ]
+      ],
+      "expressions": {
+        "neutral": [
+          [
+            -4,
+            4,
+            2,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            4,
+            2,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            3,
+            1,
+            "skinShade"
+          ]
+        ],
+        "speaking": [
+          [
+            -4,
+            4,
+            2,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            4,
+            2,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            3,
+            6,
+            1,
+            2,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            2,
+            2,
+            "wood"
+          ]
+        ],
+        "relaxed": [
+          [
+            -4,
+            6,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            2,
+            6,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            11,
+            1,
+            1,
+            "skinShade"
+          ],
+          [
+            0,
+            12,
+            2,
+            1,
+            "skinShade"
+          ]
+        ]
+      }
+    },
+    "eunsu": {
+      "name": "은수",
+      "reference": "assets/reference/portraits-canon/eunsu.png",
+      "canonicalAnchors": [
+        "straight black bob",
+        "large over-ear headphones",
+        "dark high collar",
+        "portable receiver"
+      ],
+      "proposedGeometry": {
+        "height": 45,
+        "headWidth": 13,
+        "headHeight": 15,
+        "shoulderWidth": 14,
+        "legHeight": 14
+      },
+      "colors": {
+        "ink": "#172d2a",
+        "skinShade": "#a78362",
+        "skin": "#c49a73",
+        "skinLight": "#d0ad86",
+        "hair": "#202d29",
+        "hairLight": "#3c4637",
+        "metal": "#a6b29a",
+        "gold": "#b29d67",
+        "paper": "#c8c19a",
+        "wood": "#8d6b49",
+        "woodLight": "#b3915d",
+        "dark": "#304437",
+        "coat": "#51646a",
+        "coatShade": "#354b50",
+        "coatLight": "#82928a"
+      },
+      "hair": [
+        [
+          -6,
+          -3,
+          12,
+          4,
+          "hair"
+        ],
+        [
+          -8,
+          0,
+          4,
+          14,
+          "hair"
+        ],
+        [
+          5,
+          -1,
+          3,
+          15,
+          "hair"
+        ],
+        [
+          -6,
+          0,
+          7,
+          2,
+          "hair"
+        ],
+        [
+          -5,
+          2,
+          4,
+          2,
+          "hair"
+        ],
+        [
+          -7,
+          13,
+          4,
+          2,
+          "hair"
+        ],
+        [
+          5,
+          12,
+          3,
+          3,
+          "hair"
+        ]
+      ],
+      "faceDetails": [],
+      "headAccessories": [
+        [
+          -8,
+          -3,
+          16,
+          2,
+          "metal"
+        ],
+        [
+          -10,
+          1,
+          3,
+          10,
+          "dark"
+        ],
+        [
+          -11,
+          3,
+          2,
+          6,
+          "metal"
+        ],
+        [
+          7,
+          1,
+          3,
+          10,
+          "dark"
+        ],
+        [
+          9,
+          3,
+          2,
+          6,
+          "metal"
+        ],
+        [
+          8,
+          4,
+          1,
+          3,
+          "gold"
+        ]
+      ],
+      "bodyDetails": [
+        [
+          -7,
+          -1,
+          14,
+          4,
+          "coatShade"
+        ],
+        [
+          -5,
+          1,
+          10,
+          2,
+          "coatLight"
+        ],
+        [
+          -1,
+          3,
+          2,
+          12,
+          "dark"
+        ]
+      ],
+      "signatureProp": {
+        "anchor": "body",
+        "rects": [
+          [
+            -3,
+            7,
+            7,
+            9,
+            "dark"
+          ],
+          [
+            -2,
+            8,
+            5,
+            3,
+            "metal"
+          ],
+          [
+            -1,
+            12,
+            1,
+            1,
+            "gold"
+          ],
+          [
+            2,
+            12,
+            1,
+            1,
+            "gold"
+          ],
+          [
+            1,
+            4,
+            1,
+            3,
+            "metal"
+          ]
+        ]
+      },
+      "gesture": "listen",
+      "cadenceMs": 1080,
+      "stridePx": 2,
+      "headOffset": [
+        0,
+        0
+      ],
+      "visibleTraits": "단발 · 헤드폰 · 높은 옷깃",
+      "activityFrames": [
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -3,
+              -20
+            ],
+            [
+              9,
+              -36
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -14,
+              4,
+              14
+            ],
+            [
+              2,
+              -14,
+              4,
+              14
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -3,
+              -20
+            ],
+            [
+              9,
+              -36
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -14,
+              4,
+              14
+            ],
+            [
+              2,
+              -14,
+              4,
+              14
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -3,
+              -20
+            ],
+            [
+              9,
+              -35
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -14,
+              4,
+              14
+            ],
+            [
+              2,
+              -14,
+              4,
+              14
+            ]
+          ]
+        },
+        {
+          "settle": 0,
+          "headDelta": [
+            0,
+            0
+          ],
+          "hands": [
+            [
+              -3,
+              -20
+            ],
+            [
+              9,
+              -36
+            ]
+          ],
+          "feet": [
+            [
+              -5,
+              -14,
+              4,
+              14
+            ],
+            [
+              2,
+              -14,
+              4,
+              14
+            ]
+          ]
+        }
+      ],
+      "faceRows": [
+        [
+          0,
+          -4,
+          8
+        ],
+        [
+          1,
+          -5,
+          11
+        ],
+        [
+          2,
+          -6,
+          13
+        ],
+        [
+          3,
+          -6,
+          13
+        ],
+        [
+          4,
+          -6,
+          13
+        ],
+        [
+          5,
+          -6,
+          13
+        ],
+        [
+          6,
+          -6,
+          13
+        ],
+        [
+          7,
+          -6,
+          13
+        ],
+        [
+          8,
+          -6,
+          13
+        ],
+        [
+          9,
+          -5,
+          11
+        ],
+        [
+          10,
+          -4,
+          10
+        ],
+        [
+          11,
+          -4,
+          9
+        ],
+        [
+          12,
+          -3,
+          7
+        ],
+        [
+          13,
+          -3,
+          6
+        ],
+        [
+          14,
+          -2,
+          4
+        ]
+      ],
+      "noseDetails": [
+        [
+          1,
+          8,
+          1,
+          3,
+          "skinShade"
+        ]
+      ],
+      "expressions": {
+        "neutral": [
+          [
+            -4,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            12,
+            4,
+            1,
+            "skinShade"
+          ]
+        ],
+        "speaking": [
+          [
+            -4,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            2,
+            5,
+            3,
+            1,
+            "hair"
+          ],
+          [
+            -3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            3,
+            7,
+            2,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            12,
+            3,
+            2,
+            "wood"
+          ]
+        ],
+        "relaxed": [
+          [
+            -4,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            2,
+            7,
+            3,
+            1,
+            "ink"
+          ],
+          [
+            -1,
+            12,
+            1,
+            1,
+            "skinShade"
+          ],
+          [
+            0,
+            13,
+            2,
+            1,
+            "skinShade"
+          ]
+        ]
+      }
+    }
+  },
+  "sharedExpressionStates": [
+    "neutral",
+    "speaking",
+    "relaxed"
+  ],
+  "motions": [
+    "activity",
+    "walk"
+  ],
+  "profileExtension": "Add another profile with the same geometry/parts schema; renderer has no character-ID branches."
+}

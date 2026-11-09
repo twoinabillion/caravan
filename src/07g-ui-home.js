@@ -37,7 +37,7 @@ const HOME=(()=>{
       <div class="camp-section-head"><b>살아온 차 안</b><small>함께 쓰는 물건, 함께 남긴 기억.</small></div>
       <div class="home-space${items.length?'':' is-empty'}">
         <div class="home-room-view" role="img" aria-label="${escape(description)}">
-          ${state.scene?`<img class="home-shell" src="${escape(state.scene)}" alt="" width="1024" height="576">`:'<div class="home-shell home-shell-empty" aria-hidden="true"></div>'}
+          ${state.scene?`<img class="home-shell" src="${escape(state.scene)}" alt="" width="1024" height="576"><span class="home-lantern-glow" aria-hidden="true"></span>`:'<div class="home-shell home-shell-empty" aria-hidden="true"></div>'}
           ${placed.map(item=>`<span class="home-prop home-prop-${item.kind==='companion'?item.shape:art[item.key.split(':')[1]]}" data-home-prop="${escape(item.key)}" aria-hidden="true"></span>`).join('')}
         </div>
         <div class="home-zone-nav" role="group" aria-label="차 안 구역">${zones.map(([id,label])=>`<button type="button" data-home-zone="${id}" aria-pressed="${id===active}" aria-label="${label} · ${items.filter(item=>item.zone===id).length}개 물건">${label}${items.some(item=>item.zone===id)?'<i aria-hidden="true"></i>':''}</button>`).join('')}</div>
@@ -70,6 +70,7 @@ const HOME=(()=>{
         zoneButtons.forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
         panels.forEach(panel=>{panel.hidden=panel.dataset.homePanel!==button.dataset.homeZone;});
         buttons.forEach(other=>other.setAttribute('aria-pressed','false'));
+        container.querySelectorAll?.('[data-home-prop]').forEach(prop=>prop.classList.remove('is-inspected'));
         releaseReturn();
         if(detail){detail.hidden=true;detail.innerHTML='';}
       };
@@ -81,10 +82,12 @@ const HOME=(()=>{
         releaseReturn();
         detail.hidden=false;
         buttons.forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+        container.querySelectorAll?.('[data-home-prop]').forEach(prop=>prop.classList.toggle('is-inspected',prop.dataset.homeProp===item.key));
+        if(item.key==='companion:minji'&&typeof SND!=='undefined')SND.sceneCue('tools');
         detail.innerHTML=`<small>${escape(item.status)}</small><strong>${escape(item.name)}</strong>${item.desc?`<p>${escape(item.desc)}</p>`:''}${item.memory?`<blockquote>${escape(item.memory)}</blockquote>`:''}<button type="button" class="home-inspection-return" data-home-return>물건으로 돌아가기</button>`;
         const back=detail.querySelector?.('[data-home-return]');
         if(back){
-          const returnToObject=()=>{detail.hidden=true;button.setAttribute('aria-pressed','false');button.focus?.({preventScroll:true});button.scrollIntoView?.({block:'nearest'});};
+          const returnToObject=()=>{detail.hidden=true;button.setAttribute('aria-pressed','false');container.querySelectorAll?.('[data-home-prop]').forEach(prop=>prop.classList.remove('is-inspected'));button.focus?.({preventScroll:true});button.scrollIntoView?.({block:'nearest'});};
           back.onclick=returnToObject;returnBinding=[back,returnToObject];
         }
         detail.setAttribute?.('tabindex','-1');

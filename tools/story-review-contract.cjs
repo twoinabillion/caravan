@@ -231,6 +231,8 @@ function projectDiscoveryStoryChanges(rows){
   return rows;
 }
 module.exports=function projectReviewedStoryChanges(rows){
+  require('./story-refinement-contract.cjs')(rows);
+  rows.forEach(require('./evidence-document-contract.cjs'));
   projectExpeditionStoryChanges(rows);
   projectDiscoveryStoryChanges(rows);
   projectRegionalStoryChanges(rows);

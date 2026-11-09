@@ -77,9 +77,44 @@ G.roadCueKit=(()=>{
       top:Math.min(b.top,p.y),bottom:Math.max(b.bottom,p.y+p.height)}),{left:0,right:0,top:0,bottom:0});
     return {layers,primary,prop:!primary?spec.prop||'':'',adultHeight:adult,bounds};
   }
+  // Presentation only: elapsed seconds, never gameplay time or the game RNG.
+  function actorPose(profile,elapsed,reduced=false){
+    if(!['meet_postman','postman_again'].includes(profile?.eventKey))return null;
+    const total=Math.max(1.8,(Number(profile.duration)||5200)/1000);
+    const seconds=Number.isFinite(elapsed)?Math.max(0,elapsed):0;
+    const q=Math.min(1,seconds/total),start=.85,end=.98;
+    const walk=Math.max(0,Math.min(1,(q-start)/(end-start)));
+    const phase=q<.2?'noticed':q<start?'greet':q<end?'approach':'settled';
+    const smooth=walk*walk*(3-2*walk);
+    return {phase,offset:reduced||!smooth?0:-.28*smooth,
+      stride:!reduced&&phase==='approach'?Math.sin(walk*Math.PI*2)*.16:0,
+      arm:!reduced&&phase==='greet'?Math.sin((q-.2)*Math.PI*7)*.085:0};
+  }
+  function drawActor(ctx,image,layer,pose){
+    if(!pose||!image?.naturalWidth||!image?.naturalHeight)return false;
+    // Canonical 184x384 postman cutout, articulated at shoulder/hip/knee.
+    // Each polygon owns a disjoint part; the envelope stays in his right hand.
+    const drawPart=(points,px,py,angle=0,knee=0)=>{
+      ctx.save();ctx.translate(px,py);ctx.rotate(angle);
+      if(knee){ctx.translate(0,85);ctx.rotate(knee);ctx.translate(0,-85);}
+      ctx.translate(-px,-py);ctx.beginPath();
+      points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.clip();
+      ctx.drawImage(image,0,0,184,384);ctx.restore();
+    };
+    ctx.save();ctx.translate(layer.x,layer.y);ctx.scale(layer.width/184,layer.height/384);
+    // Feet stay on the shared ground plane; opposing strides are small at play scale.
+    drawPart([[35,217],[106,217],[101,307],[40,307]],79,222,pose.stride);
+    drawPart([[40,307],[101,307],[92,384],[37,384]],79,222,pose.stride,Math.max(0,-pose.stride)*.8);
+    drawPart([[106,217],[184,217],[184,307],[101,307]],131,222,-pose.stride);
+    drawPart([[101,307],[184,307],[184,384],[94,384]],131,222,-pose.stride,Math.max(0,pose.stride)*.8);
+    drawPart([[39,104],[63,88],[53,52],[55,0],[184,0],[184,219],[35,219]],0,0);
+    drawPart([[0,0],[53,0],[53,52],[63,88],[39,104],[0,103]],55,81,pose.arm);
+    // The held map and elbow remain part of the torso, never an independently waving prop.
+    ctx.restore();return true;
+  }
   // Start decoding before discovery; no first-frame empty truck while its image loads.
   if(typeof Image!=='undefined')Object.values(manifest.images).forEach(entry=>{
     const image=new Image();image.src=entry.src;entry.preloaded=image;
   });
-  return {images:manifest.images,compose};
+  return {images:manifest.images,compose,actorPose,drawActor};
 })();

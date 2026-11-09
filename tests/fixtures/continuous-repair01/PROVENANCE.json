@@ -1,0 +1,25 @@
+{
+  "scope": "Immutable natural cohort01 receipts; no synthetic/fresh player count",
+  "rows": [
+    {
+      "fixture": "afterword-entry-v1.json",
+      "source": "qa-artifacts/continuous-20261107/cohort01/story/agent201/attempt01/scene-seoul_afterword_choice-entry-507.json",
+      "sha256": "ff31127ba96dfc013b7d25a32c870453b8a2be22bc729ae81c92db3f29f0da05"
+    },
+    {
+      "fixture": "afterword-paid-v1.json",
+      "source": "qa-artifacts/continuous-20261107/cohort01/story/agent201/attempt01/scene-seoul_afterword_choice-result-507.json",
+      "sha256": "1e18e3f82c201a3e67d22792bb916205920e8231e6b67629dea98a89bc18f08a"
+    },
+    {
+      "fixture": "dome-entry-unmarked.json",
+      "source": "qa-artifacts/continuous-20261107/cohort01/explorer/agent203/attempt01/scene-cell_dome_meet-entry-269.json",
+      "sha256": "ae383640d944233365b8d8a486ef80d64478c9d62a78833a3104e980c9e39751"
+    },
+    {
+      "fixture": "dome-paid-unmarked.json",
+      "source": "qa-artifacts/continuous-20261107/cohort01/explorer/agent203/attempt01/scene-cell_dome_meet-result-269.json",
+      "sha256": "36b10cbbeb51b35e546ecdb4ab78c79fbaf3d3bf68730439ff570568ebb787f0"
+    }
+  ]
+}

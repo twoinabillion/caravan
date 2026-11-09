@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "file": "kenney-roguelike-sheet.png",
+      "author": "Kenney",
+      "title": "Roguelike/RPG pack",
+      "creatorUrl": "https://kenney.nl/assets/roguelike-rpg-pack",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "retrievalUrl": "https://github.com/superdevgit/MobileRPG/blob/main/roguelikeSheet_transparent.png",
+      "gitBlobSha": "79b13326ceb8557a98b2b78aa5e8e7b9269f6693",
+      "note": "Original creator identifies this 16x16 pack as CC0. Public GitHub mirror README explicitly credits Kenney Roguelike/RPG pack. Only the sheet is reused; no Unity project code.",
+      "sha256": "808c8d734480bc949b284f3bcc252e87e1ee53b24178791a6838cce6a319c439",
+      "downloaded": "2026-11-06",
+      "unmodifiedOriginal": true
+    },
+    {
+      "file": "krial-campfire.png",
+      "author": "krial",
+      "title": "16x16 Animated Campfire",
+      "creatorUrl": "https://opengameart.org/content/16x16-animated-campfire",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "retrievalUrl": "https://opengameart.org/sites/default/files/campfire_16x16.png",
+      "note": "Creator-provided DB16-palette transparent sheet, four 16x16 horizontal frames.",
+      "sha256": "1501a5323451320ce49008031d6acd2f987e0384f20277394e2d6aa0de1ec814",
+      "downloaded": "2026-11-06",
+      "unmodifiedOriginal": true
+    }
+  ],
+  "transform": "Original PNGs retained byte-for-byte. build.py reads pixels into row-run SVG shapes, using explicit per-source material palette maps in catalog.json. No network needed to rebuild or render."
+}

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-09T08:54:48.747Z",
+  "generatedAt": "2026-11-09T10:04:35.052Z",
   "html": {
-    "bytes": 167693574,
+    "bytes": 169132432,
     "warnBytes": 160000000,
     "maxBytes": 200000000
   },
@@ -11,12 +11,12 @@
   },
   "losslessDelivery": {
     "storage": "inert",
-    "assets": 910,
-    "savedBytes": 6639624
+    "assets": 913,
+    "savedBytes": 6696766
   },
   "embedded": {
-    "files": 1223,
-    "bytes": 124164859,
+    "files": 1228,
+    "bytes": 125228707,
     "categories": {
       "audio": {
         "files": 45,
@@ -29,9 +29,9 @@
         "encodedBytes": 57247560
       },
       "scene": {
-        "files": 801,
-        "bytes": 67274799,
-        "encodedBytes": 89700844
+        "files": 806,
+        "bytes": 68338647,
+        "encodedBytes": 91119316
       },
       "other": {
         "files": 78,

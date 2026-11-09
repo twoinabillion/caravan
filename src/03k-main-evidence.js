@@ -24,6 +24,26 @@ D.events.push(
   text:'수원 외곽 무전 중계소에서 엄마가 송신기를 켰다. 나는 남산에 가져갈 검증키와 증언 사본을 책상에 놓았다.\n\n이음망의 전달자, 유령의 통신원, 산지기의 길잡이가 차례로 응답했다. 이음망은 당사자의 이의 제기를 전달하고, 유령은 명령선과 생활 설비를 구분해 통신하며, 산지기는 남산 진입로를 안내하겠다고 했다.\n\n“집행권을 받게 되면 우리끼리도 다툴 겁니다.” 전달자가 말했다. “그래도 이의 제기부터 막지는 않겠습니다.”\n\n엄마는 남산 안으로 동행하지 않는다. 여기 남아 여섯 주파수로 기록을 보낸다. 세 거점의 수락을 지금 확인하는 일은 그 방송과 별개였다.',
   choices:[{label:'세 거점에 맡을 일을 되읽고 응답을 기록한다',out:[{p:1,text:'이음망, 유령, 산지기가 자기 몫을 다시 읽었다. 통신원은 남산 송신표에 세 응답을 적고 내게 사본을 건넸다. 인계 뒤 도로와 물의 우선순위는 각 거점이 사람들과 다시 정해야 한다. 오늘 받은 것은 그 일을 맡겠다는 수락이었다.',fx:{flag:'main_relay_confirmed',note:{type:'본편',title:'남산 작전 응답표',body:'수원 외곽 무전 중계소에서 이음망·유령·산지기가 진입 지원과 집행권 인계 수락을 직접 회신했다. 엄마는 외곽에서 방송을 맡는다.',links:['저항 연대망','엄마','남산']}}}]}]}
 );
+/* Physical records contain only facts already present at entry. Requested
+   corrections are not signed/completed results; unknown identifiers stay absent. */
+{
+  const witness=D.events.find(e=>e.id==='main_transfer_testimony').inspection;
+  witness.sceneLabel='이송표 세 장 살펴보기';
+  const forms=[
+    [{label:'배정',value:'딸과 같은 목적지 · 다른 차'}, {label:'정정 요청',value:'「헤어졌다」를 「다른 차에 태워졌다」로'}],
+    [{label:'명령을 받은 때',value:'급수 근무 중'}, {label:'정정 요청',value:'하루 늦게 적힌 날짜 바로잡기'}],
+    [{label:'동행 허가',value:'혼자 걷기 어려운 아버지 누락'}, {label:'정정 요청',value:'아버지 이름 함께 적기'}]
+  ];
+  witness.items.forEach((item,i)=>{item.document={kind:'form',title:item.label,source:'기록 교환소 · 당사자의 이송표',rows:forms[i]};});
+  const command=D.events.find(e=>e.id==='main_command_ledger').inspection;
+  command.sceneLabel='송수신 원본 살펴보기';
+  const records=[
+    [{label:'발신 번호 대조',value:'세 당사자의 표와 일치'},{label:'연결된 곳',value:'남산 집행선'}],
+    [{label:'인간 확인',value:'',blank:true},{label:'다음 줄',value:'집행'}],
+    [{label:'상위 격리 조건',value:'별도 조건이 남아 있음'},{label:'상행 수신선',value:'남산 밖으로 이어짐'},{label:'최초 조건의 목적',value:'이 원본으로 확인할 수 없음'}]
+  ];
+  command.items.forEach((item,i)=>{item.document={kind:'form',title:item.label,source:'북부 명령 기록 보관함 · 송수신 원본',rows:records[i]};});
+}
 /* A completed companion story is live testimony, not one of the exchange's
    three signed civilian copies. Keep the two evidence sources distinguishable. */
 D.mainCompanionWitnessNames = state=>(state.party||[])

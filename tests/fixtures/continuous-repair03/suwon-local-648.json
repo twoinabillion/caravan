@@ -1,0 +1,133 @@
+{
+  "actionN": 317,
+  "npc": "deokgu",
+  "localViews": [
+    {
+      "event": {
+        "id": "local_chat_deokgu",
+        "type": "대화",
+        "title": "덕구",
+        "localConversation": true
+      },
+      "view": {
+        "phase": "event",
+        "eventId": "local_chat_deokgu",
+        "turns": [
+          {
+            "kind": "dialogue",
+            "who": "deokgu",
+            "name": "덕구",
+            "text": "멈춰라! …차? 남쪽에서 왔나. 해 지기 전엔 문 연다. 서울 가는 미친놈만 아니면 환영이다. …가는 거냐? 하아."
+          }
+        ],
+        "index": 0,
+        "readerMode": "current",
+        "localHistory": [],
+        "sceneKeys": [
+          "suwon-fortress"
+        ],
+        "sceneTime": {
+          "day": 5,
+          "min": 648
+        },
+        "sceneAlt": "덕구와 대화",
+        "sceneStart": 0,
+        "knownSpeaker": true,
+        "draft": "",
+        "finalDock": "<div class=\"choice-dock-head\">내 대답</div><div class=\"choices\"><button type=\"button\" class=\"choice\" data-local-choice=\"0\">요즘 소문 들은 거 없어요?</button><button type=\"button\" class=\"choice\" data-local-choice=\"1\">이런저런 얘기를 나눈다</button><button type=\"button\" class=\"choice\" data-local-choice=\"2\">그만 일어난다</button></div>"
+      },
+      "clock": {
+        "at": "suwon",
+        "day": 5,
+        "min": 648
+      },
+      "owner": null,
+      "actions": [
+        "요즘 소문 들은 거 없어요?",
+        "이런저런 얘기를 나눈다",
+        "그만 일어난다"
+      ],
+      "provenance": {
+        "talkSHA": "b3e75fbedc4872f472156290c1a489de454204f153594aaca3a74fc066d72b8f",
+        "showNpcDialogueSHA": "1023f069e6a2967e0b6f84e9bbca54f307aed1e3597cad8ba9974157d05f7832",
+        "displaySHA": "287c3fa51e9bdfa8f8b368e19c38e761a8ef7dd8369501fe45b81a7c38d9ed17",
+        "sceneFrameSHA": "1425f23bab719e2f76b32a70454263938401944efad8f304cb1554089fd584f4",
+        "uiSHA": "8a3f2cdaac86b7e0329f95a86d3e39a31ead64c95c0694b20566fc807d4d28e6"
+      }
+    },
+    {
+      "event": {
+        "id": "local_chat_deokgu",
+        "type": "대화",
+        "title": "덕구",
+        "localConversation": true
+      },
+      "view": {
+        "phase": "event",
+        "eventId": "local_chat_deokgu",
+        "turns": [
+          {
+            "kind": "dialogue",
+            "who": "deokgu",
+            "name": "덕구",
+            "text": "평택 쪽 태양광 밭, 패널이 아직 살아 있다. 배터리 충전이 필요하면 거기지. 근데 관리 로봇이 돌아다녀. 천리안 말단이야. 조용히만 하면 눈치 못 채더라만."
+          }
+        ],
+        "index": 0,
+        "readerMode": "current",
+        "localHistory": [
+          {
+            "kind": "dialogue",
+            "who": "deokgu",
+            "name": "덕구",
+            "text": "멈춰라! …차? 남쪽에서 왔나. 해 지기 전엔 문 연다. 서울 가는 미친놈만 아니면 환영이다. …가는 거냐? 하아."
+          },
+          {
+            "kind": "action",
+            "text": "요즘 소문 들은 거 없어요?"
+          }
+        ],
+        "sceneKeys": [
+          "suwon-fortress"
+        ],
+        "sceneTime": {
+          "day": 5,
+          "min": 648
+        },
+        "sceneAlt": "덕구와 대화",
+        "sceneStart": 0,
+        "knownSpeaker": true,
+        "draft": "",
+        "finalDock": "<div class=\"choice-dock-head\">내 대답</div><div class=\"choices\"><button type=\"button\" class=\"choice\" data-local-choice=\"0\">고맙습니다</button></div>"
+      },
+      "clock": {
+        "at": "suwon",
+        "day": 5,
+        "min": 648
+      },
+      "owner": null,
+      "actions": [
+        "고맙습니다"
+      ],
+      "provenance": {
+        "talkSHA": "b3e75fbedc4872f472156290c1a489de454204f153594aaca3a74fc066d72b8f",
+        "showNpcDialogueSHA": "1023f069e6a2967e0b6f84e9bbca54f307aed1e3597cad8ba9974157d05f7832",
+        "displaySHA": "287c3fa51e9bdfa8f8b368e19c38e761a8ef7dd8369501fe45b81a7c38d9ed17",
+        "sceneFrameSHA": "1425f23bab719e2f76b32a70454263938401944efad8f304cb1554089fd584f4",
+        "uiSHA": "8a3f2cdaac86b7e0329f95a86d3e39a31ead64c95c0694b20566fc807d4d28e6"
+      }
+    }
+  ],
+  "text": [
+    {
+      "kind": "dialogue",
+      "who": "deokgu",
+      "name": "덕구",
+      "text": "평택 쪽 태양광 밭, 패널이 아직 살아 있다. 배터리 충전이 필요하면 거기지. 근데 관리 로봇이 돌아다녀. 천리안 말단이야. 조용히만 하면 눈치 못 채더라만."
+    }
+  ],
+  "actions": [
+    "고맙습니다"
+  ],
+  "method": "Exact production talk/showNpcDialogue/public local button callbacks in VM; DOM rendering/pagination stubbed; direct returned semantic state, never inferred image from trace"
+}

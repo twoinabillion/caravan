@@ -57,6 +57,13 @@ G.questObjectivePlan = (questId=null)=>{
   // Explicit tracking/focus wins; never require a second opt-in in the notebook.
   if(rq&&rq.target&&(questId?questId===`companion_${rq.id}`:ledger.tracked.includes(`companion_${rq.id}`)||(!ledger.tracked.length&&rq.stage==='task')))
     return {key:`companion_${rq.id}`,kind:'companion',target:['road','ready'].includes(rq.stage)?(S.driving?.to||S.at):rq.target,title:`${D.comps[rq.id].name}의 부탁`,action:G.recruitNextAction(rq)};
+  const companionKey=questId?.startsWith('companion_')?questId:
+    !questId?ledger.tracked.find(id=>id.startsWith('companion_')):null;
+  if(companionKey){
+    const id=companionKey.slice('companion_'.length),personal=G.companionPersonalAction(id);
+    if(personal?.available&&!personal.done&&personal.target)
+      return {key:companionKey,kind:'companion',target:personal.target,title:`${D.comps[id].name}의 이야기`,action:personal.next};
+  }
   if(questId&&questId!=='main_namsan') return null;
   const main=G.mainQuestEntry();
   const evidence=G.mainEvidenceOpportunity();
@@ -195,6 +202,48 @@ G.mainQuestEntry = ()=>{
   }
 };
 
+/* Relationship conversations unlock opportunities; only the existing paid
+   flags/records prove what happened there. This read model never grants a perk,
+   marks a visit, rewrites a receipt or adds a requirement to the main story. */
+G.companionPersonalAction = id=>{
+  if(!S||!D.comps?.[id]||!(S.party||[]).includes(id)) return null;
+  const f=S.flags||{},known=S.known||[],place=node=>D.nodes[node]?.name||'약속한 장소';
+  const visit=(target,event,next,record,done,available=true,arrival=false)=>
+    ({target:available||done?target:null,event:available||done?event:null,
+      next:available&&!done?next:'',record:done?record:'',done:!!done,available:!!available,arrival});
+  switch(id){
+    case 'minji': return visit('mingyu_ridge','loc_mingyu',
+      `${place('mingyu_ridge')}으로 가서 민규의 신호를 확인한다.`,
+      '능선에서 민지와 민규가 다시 만났다. 정오의 연락 약속은 계속 남았다.',
+      f.mingyu_reunion,known.includes('mingyu_ridge'),true);
+    case 'parkss': return visit(f.pss_met?'suwon':'daejeon',f.pss_met?'pss_forgive':'pss_daejeon',
+      f.pss_met?`${place('suwon')}에서 주변을 탐색하며 박 선생의 이야기를 이어 간다.`:
+        `${place('daejeon')}에서 주변을 탐색하며 박 선생이 찾던 사람을 찾아본다.`,
+      '박 선생과 수진이 다시 만났다. 선생이 오래 마음에 두었던 약국 이야기도 나눴다.',
+      f.pss_met&&f.pss_absolved,f.pss_list||f.pss_met);
+    case 'kangwoo': return visit('suwon','kw_base',
+      `${place('suwon')}에서 주변을 탐색하며 강우의 옛 부대 이야기를 듣는다.`,
+      // kw_absolved also belongs to a roadside confession. It proves hearing
+      // his past, not physically visiting the former defence line.
+      '강우가 겪은 추방과 그 뒤에 남은 이야기를 들었다.',
+      f.kw_absolved,f.kw_truth);
+    case 'leo': return visit('cheongju','leo_broadcast',
+      `${place('cheongju')}으로 가서 레오와 방송을 준비한다.`,
+      '청주 방송국에서 지금까지 만든 「400km」를 전파에 실었다.',
+      f.song_400km,f.leo_song,true);
+    case 'jaeyi': return visit('jaeyi_cache','loc_jaeyi_cache',
+      `${place('jaeyi_cache')}로 가서 재이와 문을 열어 본다.`,
+      '재이와 아빠의 창고를 열었다. 문 안쪽에 남은 글씨도 함께 읽었다.',
+      D.jaeyiCacheOpened?.(S),known.includes('jaeyi_cache'),true);
+    case 'eunsu': return {...visit(S.driving?.to||S.at,f.es_v1194?'es_backdoor':'es_nightshift',
+      f.es_v1194?'정차한 뒤 은수와 연결한 로그의 이야기를 이어 읽는다.':
+        '정차한 뒤 은수의 준비된 야간 당직 이야기를 이어 읽는다.',
+      '은수와 유지보수 로그를 열어 발신 기록과 승인 경로를 확인했다.',
+      D.eunsuBackdoorDone?.(S),f.es_backdoor_ready),story:true};
+    default:return null;
+  }
+};
+
 G.companionQuestEntries = ()=>{
   if(!S) return [];
   const ledger=G.ensureQuestLedger();
@@ -207,30 +256,33 @@ G.companionQuestEntries = ()=>{
     const recruiting=S.recruitQ&&S.recruitQ.id===id&&!S.party.includes(id);
     const level=Number(state.lvl)||0;
     const storyStage=typeof G.companionStoryStage==='function'?G.companionStoryStage(id):Math.min(level,3);
-    const completed=!recruiting&&level>=3&&storyStage>=3;
-    const deed=(D.deeds||[]).find(row=>row.comp===id);
-    const milestones=D.companionMilestones&&D.companionMilestones[id]||['서로의 생활 방식을 익힌다','과거와 선택을 더 깊이 듣는다','남산까지 가져갈 이야기를 완성한다'];
+    const relationshipDone=!recruiting&&level>=3&&storyStage>=3;
+    const personal=recruiting?null:G.companionPersonalAction(id);
+    const completed=relationshipDone&&!!personal?.done;
+    const milestones=['서로의 생활 방식을 익힌다','조금 더 편하게 이야기를 나눈다','서로에게 깊은 이야기를 건넨다'];
     const pending=Number(state.pending)||0;
-    const targetBond=!completed&&!pending&&D.bondTh?Number(D.bondTh[Math.min(level,2)])||0:0;
+    const targetBond=!relationshipDone&&!pending&&D.bondTh?Number(D.bondTh[Math.min(level,2)])||0:0;
     const remaining=Math.max(0,targetBond-(Number(state.bond)||0));
     let next;
-    if(completed) next='개인 이야기를 모두 들었다. 남산에서 이 동료의 의견을 들을 수 있다.';
+    if(completed) next=personal.record;
     else if(recruiting){
       next=G.recruitNextAction(S.recruitQ);
     }else if(pending) next=`동료 화면에서 Lv.${pending} 특기를 하나 고른다.`;
     else if(remaining>0) next=`야영에서 대화하거나 길 위 사건을 함께 해결해 유대를 ${remaining} 더 올린다.`;
     else if(storyStage<3) next=`${S.driving?'정차한 뒤 ':''}${comp.name}에게 말을 걸어 다음 이야기를 듣는다.`;
-    else next=deed&&deed.hint?deed.hint:'야영이나 정착지에서 대화를 이어 간다.';
+    else next=personal?.available?personal.next:'동료 화면에서 이야기를 나누고 새로 확인한 장소를 살핀다.';
     return {
       id:`companion_${id}`, kind:'companion', status:completed?'completed':'active',
       tracked:ledger.tracked.includes(`companion_${id}`), companion:id,
       eyebrow:recruiting?'동료 미션 · 합류':'동료 미션',
       title:recruiting?`${D.withParticle(comp.name,'과','와')} 함께할 이유`:comp.name,
-      phase:recruiting?'합류 조건 진행 중':pending?`새 퍼크 선택 가능 · 유대 ${Number(state.bond)||0}`:`개인 이야기 ${storyStage}/3 · 동료 Lv.${Math.min(level,3)} · 유대 ${Number(state.bond)||0}`,
-      why:recruiting?'서로 믿고 같은 차를 탈 수 있는지 확인하는 중이다.':`${comp.name}의 이야기를 끝까지 들으면 남산에서 이 동료의 의견을 들을 수 있다.`,
-      next, expected:completed?'남산에서 이 동료의 의견을 들을 수 있다.':'새 대화와 특기가 열리고, 남산에서 이 동료의 의견을 들을 수 있다.',
-      steps:milestones.slice(0,3).map((label,index)=>({id:`${id}_${index+1}`,label,state:index<storyStage?'done':index===storyStage?'current':'upcoming'})),
-      progress:{have:recruiting?0:storyStage,need:3,label:recruiting?'합류 전':`${storyStage}/3`},
+      phase:recruiting?'합류 조건 진행 중':pending?`새 퍼크 선택 가능 · 유대 ${Number(state.bond)||0}`:`관계 ${storyStage}/3 · 동료 Lv.${Math.min(level,3)} · 유대 ${Number(state.bond)||0}${relationshipDone&&!personal?.done?' · 함께할 일이 남음':''}`,
+      why:recruiting?'서로 믿고 같은 차를 탈 수 있는지 확인하는 중이다.':`${D.withParticle(comp.name,'과','와')} 이야기를 나누고, 각자 마음에 둔 일에도 함께할 수 있다.`,
+      next, expected:completed?personal.record:'함께 나눈 말과 실제로 마친 일을 따로 기록한다.',
+      relationship:{have:storyStage,need:3,done:relationshipDone},personal,
+      steps:[...milestones.map((label,index)=>({id:`${id}_${index+1}`,label,recordType:'relationship',state:index<storyStage?'done':index===storyStage?'current':'upcoming'})),
+        ...(personal?.done?[{id:`${id}_personal`,label:personal.record,recordType:'personal',state:'done'}]:[])],
+      progress:{have:recruiting?0:storyStage,need:3,label:recruiting?'합류 전':`관계 ${storyStage}/3`},
     };
   }).filter(Boolean);
 };
@@ -314,7 +366,17 @@ G.questActionPlan = id=>{
       const waitsForNight=rq.stage==='follow'&&Number.isFinite(rq.roadDay)&&S.day<=rq.roadDay;
       return action('local',waitsForNight?'야영 준비 보기':'동료의 부탁 보기',{focus:waitsForNight?'camp':'recruitstep'});
     }
-    if(S.comps[row.companion]?.pending||S.driving) return action('crew','동료 보기');
+    if(S.comps[row.companion]?.pending) return action('crew','동료 보기');
+    const personal=row.personal;
+    if(personal?.available&&!personal.done){
+      if(personal.story) return action('crew','동료 보기');
+      if(personal.target&&(S.driving||S.at!==personal.target)) return action('route','경로 보기');
+      // Arrival-owned readers open on arrival. Do not pretend an unrelated
+      // salvage action at that place can replay or pay their saved choice.
+      if(personal.arrival) return null;
+      return action('local','주변 탐색 보기',{target:S.at,focus:'explore'});
+    }
+    if(S.driving) return action('crew','동료 보기');
     return action('local','야영 준비 보기',{target:S.at,focus:'camp'});
   }
   return null;

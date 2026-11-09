@@ -45,8 +45,10 @@ test('new goodbye follows both paid keys, survives reload, costs nothing and com
     assert.equal(h.run(`G.continueOpening('opening_farewell')`),false);assert(h.run('G.canTravelTo("yangsan").ok'));
   }
 });
-test('short authored memory returns to the current appeal; immutable pagination cannot straddle that cut',()=>{
-  const h=engine();h.run(`G.newGame('onroad','다온','interactive');S.opening.step=2`);
+test('legacy presence memory returns to the current appeal; immutable pagination cannot straddle that cut',()=>{
+  // Pin the historical presence edition; the new prose edition has its own
+  // current-reader and memory/current metadata coverage in test_opening_flow.
+  const h=engine();h.run(`G.newGame('onroad','다온','interactive');delete S.opening.proseRevision;S.opening.step=2`);
   const event=plain(h.run('G.openingPending()'));
   assert.deepEqual(event.turns.filter(turn=>turn.timeKind).map(turn=>turn.timeKind),['current','memory','current']);
   assert.equal(event.turns.filter(turn=>turn.timeKind==='memory').length,1);
@@ -55,7 +57,11 @@ test('short authored memory returns to the current appeal; immutable pagination 
   assert.equal(pages.length,3);assert.deepEqual(pages.map(page=>page.rows[0].timeKind),['current','memory','current']);
   assert.deepEqual(event.choices.map(choice=>choice.out[0].fx.time),[15,30]);
   assert.deepEqual(event.turns.slice(5).map(turn=>turn.text),plain(h.run('D.openingDeparture[2].turns.slice(2).map(turn=>turn.text)')));
-  assert.match(event.turns[4].text,/이의 신청을 열세 번/);
+  assert.equal(event.turns[4].text,'열세 번 넣었어요. 접수됐다고는 해요. 다음 날 보면 신청한 것도 없어져 있고요.',
+    'the unmarked presence edition retains its historical dialogue, before opening-flow-v1 adds the application antecedent');
+  assert.deepEqual(event.turns[4],{
+    ...plain(h.run('D.openingDeparture[2].turns[1]')),scene:'intro-appeal-denied',timeKind:'current'
+  });
 });
 test('time source, picture, partial cursor and optional-history disclosure survive receipt reload',()=>{
   const h=engine();h.run(`G.newGame('onroad','다온','interactive');S.opening.step=2;

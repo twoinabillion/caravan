@@ -20,3 +20,7 @@
 - 사용자의 실제 LIVE4319 미저장 프롤로그를 새로고침하거나 새 코드를 강제 적용하지 않았다. 실제 현재 화면의 적용 뒤 검사는 보류한다.
 
 증거: 로컬 `qa-artifacts/memory-backlog-20261109/`의 PLAN.md, 각 persona REPORT.md/audit.json, 독립 UI fixture. 게시 게이트·Pages 결과는 배포 후 별도로 기록한다.
+
+## 게시 확인
+
+수정 커밋 `a04a032795c59eddb774601a63c7ac0eeef89448`. [gate42589583479](https://github.com/twoinabillion/caravan/actions/runs/42589583479) 전체 소스 **8,679/8,679** 및 저장·보안·결정성·게임 압박·전투·진행 단계·골든 경로 통과. [Pages42591560794](https://github.com/twoinabillion/caravan/actions/runs/42591560794) 성공. 공개 release.json의 커밋과 데스크톱 URL HTML 전체167,693,574B를 확인했고 로컬 SHA256 `2480bc6e19adf3918e419f19dfe5660712f7b73016af6110476c14794eba8871`과 일치한다. 실행 중인 사용자 프롤로그는 강제 적용하지 않았다. 검증 원본은 `qa-artifacts/memory-backlog-20261109/verification.json`.

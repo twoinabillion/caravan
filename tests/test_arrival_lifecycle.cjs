@@ -17,7 +17,7 @@ function fixture({hidden=false,reduced=false}={}){
   localStorage:{getItem:key=>stored.get(key)??null,setItem:(key,value)=>stored.set(key,String(value))},
   setTimeout:(fn,ms)=>{timers.set(++seq,{fn,due:now+ms});return seq;},clearTimeout:id=>timers.delete(id),requestAnimationFrame:noop,
   screen:'game',uiPrefs:{reduceMotion:reduced},journeyConsoleMode:'route',roadNotice:null,
-  esc:String,$:lookup,renderAll:noop,renderHud:noop,clearStoryAuto:noop,showCampHub:noop,showSeoul:noop,
+  esc:String,$:lookup,renderAll:noop,renderHud:noop,clearStoryAuto:noop,clearIntroAuto:noop,scheduleIntroAuto:noop,scheduleStoryAuto:noop,showCampHub:noop,showSeoul:noop,
   SND:{setDriving:noop},AMBI:{arrive:noop,restore:noop},
   closeModal:value=>{lookup(value).classList.remove('on');calls.push('close');},
   openModal:value=>lookup(value).classList.add('on'),activeModal:()=>Object.values(nodes).some(n=>n.classList.contains('on')),

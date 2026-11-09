@@ -30,6 +30,7 @@ test('modernization preserves all 1039 event gates, costs, effects and chains',(
   const busRecord=rows.find(row=>row.id==='ev_bus_timetable');assert.equal(busRecord.parseRecords,true);delete busRecord.parseRecords;
   rows.forEach(require('./choice-experience-contract.cjs'));
   require('./story-review-contract.cjs')(rows);
+  assert.equal(rows.length,1039);
   assert.equal(hash(rows),'df40ae877d70b811a8079d3845132af9964ddb78e5e63660c48df06197ecf2a4');
 });
 test('quote roles retain the pre-edit corpus except the explicitly reviewed continuity fixes',()=>{

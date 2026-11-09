@@ -108,6 +108,16 @@ const SND = (()=>{
     app.classList.add(cls);
     clearTimeout(pulseTimer); pulseTimer=setTimeout(()=>app.classList.remove(cls),500);
   }
+  function sceneCue(kind){
+    if(!on||suspended||!ac||ac.state!=='running')return;
+    if(kind==='bicycle-bell'){
+      tone('sine',1760,1740,.42,.065);
+      tone('sine',2637,2590,.3,.035,.09);
+    }else if(kind==='tools'){
+      tone('triangle',1180,720,.10,.035);
+      tone('sine',1920,1180,.14,.025,.045);
+    }
+  }
   function tone(type,f0,f1,dur,vol,delay=0){
     vol*=level('effects');
     if(vol<=0) return;
@@ -224,7 +234,7 @@ const SND = (()=>{
       gain.linearRampToValueAtTime(dbGain(speechActive?(key==='music'?-9:-6):0),t+(speechActive?.12:.65));
     }
   }
-  return {toggle, enable, isEnabled, setDriving, combat, suspend, resume, level, setLevel,
+  return {toggle, enable, isEnabled, setDriving, combat, sceneCue, suspend, resume, level, setLevel,
     route, setMediaVolume, mediaVolume, setSpeech};
 })();
 /* ═══════════════════ BGM (외부 생성 트랙 — D.bgm 슬롯) ═══════════════════
@@ -317,6 +327,7 @@ const BGM = (()=>{
   }
   function playSongOnce(){ const s=ensureSong(); if(s&&s.paused) toggleSong(); }
   function suspend(){
+    if(suspended)return;
     suspended=true;
     resumeSong=Boolean(song&&!song.paused);
     if(song) song.pause();

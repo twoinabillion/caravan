@@ -15,7 +15,8 @@ function fixture({hidden=false,screen='game'}={}){
   SND:audio('sound'),BGM:audio('music'),AMBI:audio('ambient'),VO:audio('voice'),
   SCENE:audio('scene'),MAPR:audio('map'),uiPrefs:{reduceMotion:false},screen,bgmEvKey:null,
   $:()=>({classList:{contains:()=>false}}),requestAnimationFrame:()=>calls.push(['frame']),
-  renderHud:()=>calls.push(['hud']),renderMission:noop,renderTravelbar:noop,GRAPH:{draw:noop}});
+  renderHud:()=>calls.push(['hud']),renderMission:noop,renderTravelbar:noop,GRAPH:{draw:noop},
+  curStory:null,clearIntroAuto:noop,clearStoryAuto:noop,scheduleIntroAuto:noop,scheduleStoryAuto:noop});
  for(const file of STATIC_CONTENT_FILES)vm.runInContext(read(file),context,{filename:file});
  for(const file of fs.readdirSync('src').filter(file=>/^04.*\.js$/.test(file)).sort())vm.runInContext(read('src/'+file),context,{filename:file});
  const run=code=>vm.runInContext(code,context);

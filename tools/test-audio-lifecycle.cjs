@@ -6,8 +6,8 @@ function fixture(){
   class Node{constructor(){this.gain=new Param(1);this.frequency=new Param();this.Q=new Param();this.connections=[];}
     connect(n){this.connections.push(n);}disconnect(){this.connections=[];}start(){}stop(){}}
   class Context{
-    constructor(){this.sampleRate=1000;this.currentTime=0;this.state='running';this.destination={};contexts.push(this);}
-    createGain(){return new Node();}createBiquadFilter(){return new Node();}createOscillator(){return new Node();}
+    constructor(){this.sampleRate=1000;this.currentTime=0;this.state='running';this.destination={};this.oscillators=[];contexts.push(this);}
+    createGain(){return new Node();}createBiquadFilter(){return new Node();}createOscillator(){const node=new Node();this.oscillators.push(node);return node;}
     createBufferSource(){return new Node();}createMediaElementSource(){return new Node();}
     createBuffer(ch,n){return {getChannelData:()=>new Float32Array(n)};}
     resume(){this.state='running';return Promise.resolve();}suspend(){this.state='suspended';return Promise.resolve();}
@@ -92,4 +92,13 @@ test('late rejected pooled effect cannot escape mute cleanup',async()=>{
   reject(new Error('interrupted old play'));await Promise.resolve();
   f.audio.AMBI.setOn(false);
   assert(a.paused,'the current pooled playback must still belong to mute cleanup');
+});
+test('physical bicycle/tool cues obey effects-zero, global mute and lifecycle suspension',()=>{
+  const f=fixture(),ctx=f.contexts[0],sound=f.audio.SND;
+  sound.sceneCue('bicycle-bell');assert.equal(ctx.oscillators.length,2);
+  assert(ctx.oscillators.every(o=>o.connections.length===1));
+  sound.setLevel('effects',0);sound.sceneCue('bicycle-bell');assert.equal(ctx.oscillators.length,2);
+  sound.setLevel('effects',1);sound.suspend();sound.sceneCue('bicycle-bell');assert.equal(ctx.oscillators.length,2);
+  sound.resume();sound.sceneCue('tools');assert.equal(ctx.oscillators.length,4);
+  sound.toggle();sound.sceneCue('bicycle-bell');assert.equal(ctx.oscillators.length,4);
 });
