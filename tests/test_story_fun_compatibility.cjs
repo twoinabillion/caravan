@@ -14,7 +14,11 @@ const baseline=JSON.parse(fs.readFileSync(path.join(beforeDir,'source-baseline.j
 const provenance=JSON.parse(fs.readFileSync(path.join(beforeDir,'receipt-provenance.json'),'utf8'));
 const {STATIC_CONTENT_FILES}=require('../tools/content-registry.cjs');
 // Exact pre-edit UI dependency, retained before later dialog integration.
-const dependencyBackups={'src/07-ui.js':{backup:'tests/fixtures/story-fun-compatibility/07-ui.js',sha256:'61123970537fe19fd3bbf18fc5f8788b7b31a739c234325ac8ad5790f673723b'}};
+// Camp dependency recovered from HEAD; its bytes match the original baseline hash.
+const dependencyBackups={
+  'src/07-ui.js':{backup:'tests/fixtures/story-fun-compatibility/07-ui.js',sha256:'61123970537fe19fd3bbf18fc5f8788b7b31a739c234325ac8ad5790f673723b'},
+  'src/03j-camp-conversations.js':{backup:'tests/fixtures/story-fun-compatibility/03j-camp-conversations.js',sha256:'53990752c074c5fff01bc28bb9ea575e75a66c017f43c9d6edfb3a7d070a9a79'}
+};
 const sourceBackups={...baseline.backups,...dependencyBackups};
 const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const clone=value=>JSON.parse(JSON.stringify(value));

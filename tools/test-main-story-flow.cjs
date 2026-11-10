@@ -1760,9 +1760,10 @@ test('camp branch history follows chosen work, survives back/reload and never pa
       h.S.campNight++;h.S.campConversation=null;h.S._campPlan={};return result;
     };
     enter();choose(a.id);enter();
-    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,b.text,`${cid}: untouched branch`);
+    const firstOther=cid==='jaeyi'?b.text.replace('재이가 높이를 묻기도 전에 답한다.','높이를 묻기도 전에 재이가 답한다.'):b.text;
+    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,firstOther,`${cid}: first choice on this branch`);
     h.S.campConversation.active=false;assert(h.G.prepareCamp('talk',cid).ok);h.reload();
-    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,b.text);
+    assert.equal(h.G.campConversationEvent().choices.find(c=>c.id===b.id).out[0].text,firstOther);
     choose(b.id);enter();
     let expectedFollowup=base.followup.choices[a.id].text;
     if(cid==='kangwoo'){

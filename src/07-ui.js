@@ -484,6 +484,7 @@ const UI = (()=>{
   function appBack(){
     const dialogs=[...document.querySelectorAll('dialog[open]')],dialog=dialogs.at(-1);
     if(dialog){const cancel=new Event('cancel',{cancelable:true});dialog.dispatchEvent(cancel);if(!cancel.defaultPrevented)dialog.close();return true;}
+    if(typeof QuestLedgerUI!=='undefined'&&QuestLedgerUI.isOpen()){QuestLedgerUI.close();return true;}
     const installation=document.querySelector('#ovl-stl.on .upgrade-install #upgrade-install-done');
     if(installation?.isConnected){installation.click();return true;}
     const modal=activeModal();
@@ -503,7 +504,7 @@ const UI = (()=>{
     return ['#install-guide','#intro-summary','#arrival-scene','#ev-wrap','#ovl-seoul','#ovl-stl','#ovl-map','#ovl-journal','#ovl-status','#ovl-menu','#ovl-camp','#ovl-local-actions']
       .map($).find(node=>node&&node.classList.contains('on'))||null;
   }
-  const modalOpen = ()=> screen!=='game' || $('#ev-wrap').classList.contains('on')
+  const modalOpen = ()=> screen!=='game' || (typeof QuestLedgerUI!=='undefined'&&QuestLedgerUI.isOpen()) || $('#ev-wrap').classList.contains('on')
     || $('#arrival-scene').classList.contains('on')
     || $('#ovl-stl').classList.contains('on') || $('#ovl-map').classList.contains('on')
     || $('#ovl-journal').classList.contains('on') || $('#ovl-status').classList.contains('on') || $('#ovl-menu').classList.contains('on')
@@ -746,6 +747,7 @@ const UI = (()=>{
   }
   function setLifecyclePaused(paused){
     lifecyclePaused=paused;
+    UI.setRoadApproachPaused?.(paused||UI.modalOpen());
     // No catch-up frame after a hidden WebView, including when RAF stopped entirely.
     last=null; lastVisual=0;
     if(paused){
@@ -783,6 +785,7 @@ const UI = (()=>{
     bgmCd-=dt; if(bgmCd<=0){ bgmCd=0.4; BGM.tick(bgmKey()); AMBI.syncWorld(screen); }
     if(screen==='title'&&drawFrame) SCENE.drawTitle(dt);
     else if(screen==='game'||screen==='end'){
+      UI.setRoadApproachPaused?.(UI.modalOpen());
       if(screen==='game'&&!S?.ended) G.tick(dt);
       if(screen==='game'&&drawFrame){
         SCENE.draw(dt);
@@ -6238,7 +6241,9 @@ function dialogueSide(turn,lanes,opt={}){
       if(resolved) return `${D.withParticle(D.comps[conversation.cid].name,'과','와')} 나눈 이야기`;
       return '잠들기 전, 잠깐 쉬어 가자';
     }
-    const homeState={party:S.party,up:S.up,memories:S.campMemories,keepsakes:D.companionKeepsakes,upgrades:D.upgrades,scene:D.scenes?.['dalguji-home-interior-v1']};
+    const homeState=HOME.state(S,D,G.homeParticipants());
+    homeState.mealControl=mealState;
+    const homeMoment=HOME.moment(homeState);
     const activity={
       minji:'민지가 엔진과 차체를 점검하고 있다.',parkss:'박 선생이 약 가방과 구급품을 정리하고 있다.',kangwoo:'강우가 주차 위치와 주변을 확인하고 있다.',
       leo:'레오가 기타를 정리하고 보리의 자리를 마련하고 있다.',jaeyi:'재이가 오늘 모은 물건과 짐을 분류하고 있다.',eunsu:'은수가 야간 수신 주파수를 확인하고 있다.'
@@ -6305,6 +6310,7 @@ function dialogueSide(turn,lanes,opt={}){
       <div class="camp-feedback" role="status"><b>${esc(preparationTitle)}</b>
         <p>${plan.last==='repair'&&plan.repair?'부품을 사용해 준비했다. 차체 회복은 아침까지 쉰 뒤 반영된다.':plan.last==='meal'&&plan.meal?'식사와 회복은 이미 반영됐다. 다른 준비를 고르거나 바로 쉴 수 있다.':resolved?'대화는 마쳤다. 다시 읽거나 남은 준비를 고를 수 있다.':'준비는 선택이다. 대답하기 전에는 대화 시간도 흐르지 않는다.'}</p>
         ${plan.meal||plan.repair?`<div>${plan.meal?'<span>식사 · 완료</span>':''}${plan.repair?'<span>차량 점검 · 취침 후 최대 +8</span>':''}</div>`:''}
+        ${homeMoment?`<button type="button" class="home-recap-link" data-camp-view="home" data-home-recap aria-pressed="false">${homeMoment.phase==='morning'?'아침 차 안의 자리 보기':'함께 먹고 나눈 이야기 보기'}</button>`:''}
       </div>
       ${resource}
       <div class="camp-home-section camp-prep-section"><div class="camp-section-head"><b>잠들기 전에</b><small>필요한 준비만 골라도 됩니다.</small></div>
@@ -6329,9 +6335,12 @@ function dialogueSide(turn,lanes,opt={}){
     viewButtons.forEach(button=>button.onclick=()=>{
       viewScroll[body.dataset.campView]=scroller.scrollTop;
       body.dataset.campView=button.dataset.campView;
-      viewButtons.forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+      viewButtons.forEach(other=>other.setAttribute('aria-pressed',String(other.dataset.campView===button.dataset.campView)));
       viewPanels.forEach(panel=>{panel.hidden=panel.dataset.campPanel!==button.dataset.campView;});
       scroller.scrollTop=viewScroll[button.dataset.campView];
+      if(button.hasAttribute('data-home-recap')){
+        const memory=body.querySelector('[data-home-moment]');memory?.focus({preventScroll:true});memory?.scrollIntoView({block:'nearest'});
+      }
     });
     $('#camp-mini').textContent=`${location} · ${timeLabel}`;
     ovl.classList.add('on'); ovl.setAttribute('aria-hidden','false');
@@ -6341,9 +6350,13 @@ function dialogueSide(turn,lanes,opt={}){
     });
     $('#camp-x').onclick=()=>closeOvl('#ovl-camp');
     body.querySelectorAll('[data-camp-prep]').forEach(b=>b.onclick=()=>{
-      const r=G.prepareCamp(b.dataset.campPrep);
-      if(!r.ok) UI.toast(r.why); else AMBI.action(b.dataset.campPrep);
+      const kind=b.dataset.campPrep,fromHome=body.dataset.campView==='home';
+      const r=G.prepareCamp(kind);
+      if(!r.ok) UI.toast(r.why); else AMBI.action(kind);
       showCampHub();
+      if(r.ok&&kind==='meal'&&fromHome){
+        const memory=body.querySelector('[data-home-moment]');memory?.focus({preventScroll:true});memory?.scrollIntoView({block:'nearest'});
+      }
     });
     body.querySelectorAll('[data-camp-talk]').forEach(b=>b.onclick=()=>{
       const current=G.currentCampConversation();
@@ -7177,7 +7190,7 @@ function dialogueSide(turn,lanes,opt={}){
     }
     const st=S? S.stats:{km:0,events:0};
     const closing=endingJourneyModel(S,kind);
-    const homeState={party:S?.party,up:S?.up,memories:S?.campMemories,keepsakes:D.companionKeepsakes,upgrades:D.upgrades,scene:D.scenes?.['dalguji-home-interior-v1']};
+    const homeState=HOME.state(S,D,S?G.homeParticipants():[]);
     const sceneKey=kind==='story_done'?'seoul-home-dawn-v2':'dalguji-home-interior-v1';
     const scene=D.scenes?.[sceneKey];
     const journey=`<section class="ending-journey"><p>${esc(closing.location)}</p>

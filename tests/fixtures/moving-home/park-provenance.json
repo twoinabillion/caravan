@@ -1,0 +1,7 @@
+{
+  "source": "qa-artifacts/living-home-20261110/quiet-household/scene-meet_bus-result-82.json.gz",
+  "sha256": "00481d9b9fc37229f7624e14f68e962830a2040a4954a3d9de53338acc9928f5",
+  "agent": "agent351",
+  "seed": 2026111122,
+  "kind": "Exact first-attempt natural paid Park ride acceptance; regression only, not another player"
+}

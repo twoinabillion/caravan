@@ -1,0 +1,8 @@
+{
+  "source": "qa-artifacts/moving-home-20261110/homesteader/scene-camp_1_minji-result-107.json.gz",
+  "sourceSha256": "4eb5f0dba5d347457f4c3257c83901274b5722a3a33cbeecfdca0399d940d054",
+  "agent": "agent331",
+  "seed": 2026111072,
+  "kind": "Unmodified paid camp result from one original finite fresh journey, reused as regression fixture only",
+  "scope": "No new game, no browser or subjective fun claim"
+}

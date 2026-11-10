@@ -1,3 +1,16 @@
+/* The hot-spring sigh is the player's own reaction. Historical unanswered and
+   paid owners retain their previous parser/reader rather than changing faces. */
+(()=>{
+  const row=D.events.find(event=>event.id==='loc_spring'),out=row.choices[0].out[0];
+  const revision='spring-self-voice-v1',legacy=out.turns;
+  const turns=[{kind:'dialogue',who:'me',text:'으어어어…'},
+    ...out.text.replace(/^"으어어어…"\s*/,'').replace(/\\n/g,'\n').split('\n\n')
+      .map(text=>({kind:'narration',text}))];
+  row.narrativeRevision=revision;
+  out.turns=S=>S.pendingPresentation?.eventId!==row.id||S.pendingPresentation.narrativeRevision===revision
+    ?turns.map(turn=>({...turn})):typeof legacy==='function'?legacy(S):legacy;
+})();
+
 /* New entries opt into this edition. Unmarked historical presentations and
    already-paid reader snapshots keep their original words and choices. */
 (() => {

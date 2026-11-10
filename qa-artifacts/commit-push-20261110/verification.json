@@ -1,0 +1,99 @@
+{
+  "verifiedAt": "2026-11-10T06:59:19.788319+00:00",
+  "baseCommit": "8e59df00032a95b3bab17e001c2619329d52009c",
+  "targetBranch": "master",
+  "sourceSuite": {
+    "tests": 9029,
+    "pass": 9028,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1
+  },
+  "checks": {
+    "quick": "passed",
+    "sourceHealth": "passed",
+    "diffCheck": "passed",
+    "productionFrozenInputs": 49,
+    "changedProductionInputs": []
+  },
+  "html": {
+    "bytes": 169153093,
+    "sha256": "49769025fcf772e84e6b0e417e40a9a670c0395d4aad9fb613572ca8555738d0",
+    "scope": "Existing final build revalidated by unchanged production inputs and exact embedded-asset checks; not a fresh native UI observation."
+  },
+  "draft": {
+    "id": "wayfinding-ui-v1",
+    "revision": "2",
+    "productionApplied": false,
+    "visualQA": "incomplete for revision2",
+    "terrainPreferenceConfirmed": true,
+    "commitFormatting": "Removed whitespace-only blank HTML lines and an extra CSS EOF blank line after staged diff-check; no runtime/style declarations changed.",
+    "sourceHashes": {
+      "tools/design-drafts/living-home-v1.html": "f2fc47d15e1e07336b729b20d7cd76150d73b00ca03dadf3b305e8e4ddc96878",
+      "tools/design-drafts/living-home-v1.css": "e4a672b39294ec96255787b4c90bb5c39274920af75db98fada47212e93e195a",
+      "tools/design-drafts/wayfinding-ui-v1.html": "4acf8dcdabf2aaffe87a2794550954aab376dc58147346b9f4552a320e5cff6a",
+      "tools/design-drafts/wayfinding-ui-v1.css": "02c24b71e04a6a22349e16583242cab553a8a5d18f2c62ef18f7beeee371d830"
+    }
+  },
+  "preservedUserState": {
+    "forcedApply": false,
+    "forcedRefresh": false,
+    "saveReset": false
+  },
+  "logHashes": {
+    "source-tests.log": "7fd1911349c234026eecc61d2d39c21fedf55bf96e1f09a40349c34139e81a02",
+    "quick.log": "ba13389d4ade188e7df6b436f241b3d4ae0373a3d660579430584bcc903d7013",
+    "health.log": "23ba479802285762671fdf47a888979c04819fc767596534db339bc2597d5af8"
+  },
+  "runtimeInputHashes": {
+    "src/01-style.html": "38abc57f9043730c284b42b5061f6bf64d544f297b9f41f14aae17ac5cb4b31f",
+    "src/01b-quest-style.html": "9d03f07188652cb026214f5a544c37a57040c46e5f509d13b6775ff481cdcff5",
+    "src/02-dom.html": "12acf9e0f02eee3da0267e9406102e684f605b4db5f10f378ec1c01d5dccfe18",
+    "src/03-data.js": "25f0d4796610855ef18bba7bb25c4716f670950c7017f7b138fa5908f3856362",
+    "src/03b-portraits.js": "1be24a24f8a55c05c241a31ac8d629a7b95346f8b020b401a2587d08a28ac450",
+    "src/03c-icons.js": "43c35b0eae246755a8703ac12ba117d9e3805c2af65991ae396391066a05e370",
+    "src/03d-bgm.js": "21040addf53954219257ec72dac46679d609929dcc185e5a7bee7fe74880245e",
+    "src/03e-bgm-title.js": "f615bed831348a698ceb9b8715f86c969337c229ca4e89f66a9a21534bf1aebf",
+    "src/03f-npc-portraits.js": "83d6d84750f1180139a91edc03128a7d1002d5a4af4970d08d6d06b930296555",
+    "src/03g-scenes.js": "4bfa971c1c2be8aa3b6503f191dba9dc143ecc49ee9a929018b3cc58c5771161",
+    "src/03h-audio.js": "957e6637474c0777b03b6fc7e834541dedb94df3c98004651972884be5ee1b01",
+    "src/03i-story-expansion.js": "39497aa1b57a4d0fa9f986d1d5dfa2e9abce25b6fe88ecb1306519b33498c947",
+    "src/03j-camp-conversations.js": "4318dc6fd1460d01f158f7a9ee68bfe519ff0ad9fbd3475194cbc9b3b406586c",
+    "src/03k-main-evidence.js": "552f415da304e7953f8928cc6b7f24ed59b509b9c2dda5964c8060617de565df",
+    "src/03l-main-recovery.js": "9ca1b0a99bbe6065dfbd9d90fe9bf1f17cacd1b083eefdad9b296fc5c4456377",
+    "src/03m-finale-reading.js": "85f7976006a622ac1ada8e91dfe5c841fb7288a943f1137bc464a7e4920852a3",
+    "src/03n-offline-foley.js": "325e4ec7781b000e5c97d5a9884858d182d9c04f8deb2494cc4004deee9df40b",
+    "src/03o-story-refinement.js": "269ff0bdef2f661ab0145b57bd3bbf99fee24190f1fdaac94b84c1625a2abaf9",
+    "src/04a-engine-core.js": "1fc4c72d3ad78b9b8acd20159a46957044cc2fc6b9156a4971d286d71dad158c",
+    "src/04b-engine-crew.js": "2f83041067e80d9798981a4644a112fcc40e871b299dced4c0ec57b02ef244e0",
+    "src/04c-engine-travel.js": "71e3dabfe563ebedbe16c2de10578e5232371c414319d03389c4d2e54d2f6d83",
+    "src/04d-engine-director.js": "d385dd6b0124b0018f725222771cc3c8b694fbc1c11724fd7a6d8d7b183fc068",
+    "src/04e-engine-world.js": "85744cf3c113a0b54afe4f5faa206b42a4c67d6daeda584a9e863e8e6c3c5dbc",
+    "src/04f-engine-quests.js": "16c59d79ac05976674959b2743f71152fcb4b4421d43229f28f3eec1799b6f34",
+    "src/04g-engine-evidence.js": "82591b69185615a7e03db7386600923348a314755760d682a5d6ca63fdceff34",
+    "src/04h-engine-presentation.js": "fe8cb23ce85cedc4701f798dc65cf599a627ad1a516bafdaced911b659311cac",
+    "src/05-scene.js": "92d8efb990bada46e47c0afc6aeec2235cc39597d299f3eea9b364374d832118",
+    "src/05a-road-environment.js": "de8acf7dc85c76ec9ed5efbf55428c3336b8abc1aaaed93a0a426ae742719e1d",
+    "src/05b-vehicle-kit.js": "3354ea777e00f1a8eabbd3e3795b4d2ea2e00d2aca7ba04a9b19c5e81d37a1ff",
+    "src/05c-road-cue-kit.js": "7ee23e785d74cba266c5c6361f977dd29fe21bf6ec2956253235755b26d2d467",
+    "src/05d-route-panorama.js": "72fed40558aa9db85cc0fd2f0c69ffedabf574472dfe47cd3dfa88131f759e84",
+    "src/05e-road-continuity.js": "9705ec95712411f5fcc5ab222e8b5a38deb1473a21d3a1c7a986dcf2f3697f1e",
+    "src/05f-continuous-terrain.js": "492a149acdc108af1c709fa3ea3877d7fe323fa388e95eb3520d7898e5565e30",
+    "src/06-mapgraph.js": "8c87a68afebd1379a6154a30b9db4be05fb2f66931a92c2beaa50081dd66c2a6",
+    "src/07-ui.js": "cabee4f17037f9ff33b7607fe0bec9c2433395b305cf66f04946def8b3b6157e",
+    "src/07d-ui-quests.js": "b96a7e1d800dea8b9d19b60124dfbc191c0c3e0cedd27b40fbd86fff845807ce",
+    "src/07e-ui-audio.js": "777b5b34c27f94c142cb3ae9a71ba156d98446ca3de4c47ff0e9a7bc981a197a",
+    "src/07f-ui-road-thoughts.js": "00b664b112329aed809228e610020f06072e4067fb7469f2c65feedd59b3dc9d",
+    "src/07g-ui-home.js": "1741ebf0fb265f318b7e9d49cc2b9a25db28e1b1ed23239dee6f758e1134a203",
+    "src/07h-story-pages.js": "b60b537b29aee726fe67924666eba6693b090837f079f52893d009f9a7c0b1e7",
+    "src/07i-evidence-scenes.js": "d43bba02b0569d6ec3cde0af1047f1ba879310ac3da4c930edd6b9895e69365e",
+    "src/07j-mobile-reader.js": "a48d662e7d022174223c52d3ec3ab5739b8c0f4c81daad793d2cfa9d4927ef92",
+    "src/07k-ui-travel-memory.js": "af0d1f103915f82739a8115cae52ad5fc6658ea26a373938dd717a4fc5516797",
+    "src/08-offroad.js": "26097b4830734a01bab583f4b8ce6e84c3990a3a8a55f5cfd0ccd5656942b9d0",
+    "src/09-close.html": "ce9c8226d4294cda7cbb1cdf76f2cab539d36de464e8abffec7136ace8f1b6a9",
+    "tools/content-registry.cjs": "fe0dd7faea3ee4d7170e414cc721015052b92c0d0b6a901baba0f94663859b96",
+    "tools/persona-corridor.cjs": "31663dd8c018baca026cc1bd2fc0861bd3442b46a2810683c5e6a8c1a1d17d7b",
+    "tools/persona-observer.cjs": "91c5f3fbc0c06e42de5deae85ff9c36f18f572b55bd0d0db1f7d8daa1b8e52cd",
+    "tools/persona-public-map.cjs": "8c66f266bb017e25ee99b02e6c2b265af2763087b94e7ff51b119b6ca56a8db2"
+  }
+}

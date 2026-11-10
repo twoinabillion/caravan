@@ -1,3 +1,31 @@
+## 2026-11-10 · 생활 공간 승인·로컬 구현 마감 — 최신 재개점
+
+Sang이 living-home-v1에 ‘이 방향으로 게임에 적용’ 승인. 실제 동료/임시 승객·개조에 따른 자리/짐 배치·낮밤 무료 열람·기존 식사 준비 결제·그날 동승자/문장 고정 homeLife·실제 취침 후 아침 연속성을 구현했다. 기존 HD/비용/효과/지급 문장을 보존. HOME의현재guest/떠난사람 오분류와 새 task&&escort물리명단 누락을 수선했으며, 실제 G.homeParticipants와 authored G.campParticipants는 역할을 구분한다. 최신 docs/CURRENT.md / qa-artifacts/living-home-20261110/verification.json 및 root/CLOSED.json.
+
+최종9029중9028pass0fail1native skip·37집중/quick/health/728키721원본7초상bytes PASS. HTML169153093B SHA49769025fcf772e84e6b0e417e40a9a670c0395d4aad9fb613572ca8555738d0.49입력 최종1ec28be82a661aaa0b39be7d5281e1653d1efd9da6df90785bffd038e5aa52bd 동결 전편마감까지 변경0. 초기d756freeze와4잘못된paid solo원본은별도보존.
+
+새350/351각1회808행동135선택(본편1/탈수1),정식인원1/0: 정책제약으로2~3formal생활미도달을성공으로세지않는다. 기존earned3명저장통합은별도controlled. escort수선후원정은같은정책·seed 통제재생2회/독립fresh추가0;808행동135선택과gameplay/reader/notes/resources동일,Minji/Park task손님자리·식사·아침만의도대로수정. strict raw false원본보존·모든leaf차이열거·정확한createdAt/lastSeenAt두scalar만Date.now분류,나머지_qualitymetrics포함unexpected0. 모든첫시행/원본/정책/SHA/보고서보존,새재실행필요없음.
+
+기존4319idle clients1, 사용자save/intro강제refresh/apply/reset없음. CUA host없음/nativeSafari·Chrome cgWindowNotFound라actualUI/crop/input/audio/phone미검수. 초안은Studio4327에별도보존. 로컬미커밋·미푸시·미배포. 아래같은날의의견대기/사전코호트기록은역사자료이며같은디자인승인을다시묻지말것.
+
+---
+
+## 2026-11-10 · 이동하는 집 — 동료의 자리·생활 초안과 손님 기억 수선
+
+Sang의 우선순위는 ‘동료가 늘면서 차 안의 자리와 생활이 달라지는 경험’. Studio manifest 첫 living-home-v1은 민지·재이2→실제 bench 공사12scrap/1parts/민지조력225분/40cm→Park3→낮밤·식사·다음아침 고정독립시안이다. 기존 HD 유지, 새 배치/대화/배치지속은 제안·게임UI미연결. 적용 질문 답변 대기이며 AGENTS의 초안 논의 규칙을 따른다. Studio4327에 HTML/CSS 정확bytes·6자산200, script0·24조합/7view 계약 확인; CUA browser host없음/Chrome·Safari cgWindowNotFound로 실제 pixels/crop/input/audio미검수. 자동생성4320 child만종료·기존4319설정복구, 사용자save/intro/refresh/apply/reset없음.
+
+현재guest를HOME이떠난사람으로표시하던결함은 `HOME.state`/actualcampParticipants 공통owner로수선. 미합류pendingBond>0와정식합류후0·legacy불명확0·현재/과거기억을구분하고실물기념품발명0. 자연331paid저장bytes보존·69집중/독립12상태/실제doRecruit→bond소비·nullending/조사검사PASS. 최종source9009중9008pass0fail1native skip, quick/healthPASS; HTML169136638B SHAd7f07466dad3f6cd6c80dba2b24b938d50b6844d0bcaad737a4cc5f3fa40fbae,728키/721원본/7초상bytes일치.
+
+원래49동결a0a6c4…의새3원정330~332는모두전편마감(본편1/탈수2); policy1회실패원본을보존했다. 수선후별도49동결16745b4b1ec4a04d08e8f5fa7ce99b129378622e25961ecafe6ed9abe09eab01의agent340/seed2026111094도단1회DAY23천안탈수/93선택628행동; 실제bench→susp→cabin완성,민지1. 총새4회1603행동259선택이며2~3동료생활미도달을성공검수로세지않는다. 재이제안/은수합류를상속연료·corridor·비축정책이제외한근거를보존하며게임하드락으로오인하지않는다. 원본첫3동결과새동결을별도유지. 상세 root/START-v2.json, 각 REPORT, home-review/guest-final-review.json 및 docs/CURRENT.md. 로컬미커밋·공개8e59df00미변경.
+
+---
+
+## 2026-11-10 · 자연스러운 진행 수선 재개점
+
+최신은 `docs/CURRENT.md`의2026-11-10항목과 `qa-artifacts/natural-flow-20261110/verification.json`. 수첩pause/back·도구/배경접근pause·새캠프응답·온천자기화자 수선 완료. 최종8993pass/0fail/1skip,src45/변경코드19해시유지·HTML169135925B. 새5여정(본편4/탈수1)376선택과 별도동일seed재현1회를 구분한다. 마지막새2여정과통제재현 검토에서 추가확정결함0. 실제현재화면/음향/실물폰미검수,로컬만준비·commit/push/deploy없음. 기존모든원본보존. 아래11/1및이전기록은역사자료다.
+
+---
+
 ## 2026-11-01 · 112차 전편 마감 — 최신 수선 검수 완료
 
 세FINAL root전부읽고2255SHA변경0 at04:36:19Z 확인(source-after-final.json),cohort동결마감. 112추가확정결함0. 240선택/1868reader/272notes/191speech,720reload/480rawview 불일치·재지급0,모든선택그림원본360480검수완료. story109Eunsunight-v2(n371 DAY9 00:32) 실제귀착용없음/닫힌가방손잡이대기 정상,111roof중립문구 storyn90/survivaln83 자연정상. 생존visitor기억night→emptydawn·Leo악기컷정상. 탐험일반배송1건실제완료/위기연료보충3회와식량0·물1잔량까지결산,예비재원있는진행으로오해하지않음.

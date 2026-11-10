@@ -33,6 +33,8 @@ module.exports=rows=>{
       assert.deepEqual(row.travelMemory,{title:'부산 터미널에서 기다리던 밤',cue:'문득, 그날이 떠올랐다.'});
       assert.equal(row.roadApproach,false);
       delete row.narrativeRevision;delete row.travelMemory;delete row.roadApproach;
+    }else if(row.id==='loc_spring'&&row.narrativeRevision!==undefined){
+      assert.equal(row.narrativeRevision,'spring-self-voice-v1');delete row.narrativeRevision;
     }else if(row.narrativeRevision!==undefined){
       assert(revised.has(row.id)||family.has(row.id)||rhythm.has(row.id)||row.id==='onboarding_first_road','unreviewed narrative edition: '+row.id);
       assert.equal(row.narrativeRevision,edition(row.id));delete row.narrativeRevision;

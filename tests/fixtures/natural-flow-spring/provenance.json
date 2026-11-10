@@ -1,0 +1,22 @@
+{
+  "seed": 2026111039,
+  "agent": "agent319",
+  "kind": "Unmodified natural journey saves before speaker repair; no reroll or fixture generation",
+  "files": {
+    "normal-unpaid-287-loc_spring.json.gz": {
+      "source": "qa-artifacts/natural-flow-20261110/persona-explorer/normal-unpaid-287-loc_spring.json.gz",
+      "sha256": "8d6113da30abaf32fc5774118588055b040c70796e5fe3a207fbe02c3efb1499",
+      "logicalSha256": "6f5e813b1e5c808fa2a71aa39209ae9a7508eda10438cd2961d205e88e327445"
+    },
+    "entry-after-view-287-loc_spring.json.gz": {
+      "source": "qa-artifacts/natural-flow-20261110/persona-explorer/entry-after-view-287-loc_spring.json.gz",
+      "sha256": "6b932966e5d5060a6b8dc027f0a636435b9d5edd709a0a6b63c8048318de26c1",
+      "logicalSha256": "fa0b069c80bde065f19b6667d24d3bcfc214ed9c9865f4143aa1b06c9ccbc7a8"
+    },
+    "scene-loc_spring-result-288.json.gz": {
+      "source": "qa-artifacts/natural-flow-20261110/persona-explorer/scene-loc_spring-result-288.json.gz",
+      "sha256": "f065a3312031fee4b7f292ecfc5c393b3d33343a4c3c0085ba9e124ea3aff93e",
+      "logicalSha256": "d922c72ae8b529018d5c07847ad278a84dccb659c864bff52a7ea26363e2fdba"
+    }
+  }
+}

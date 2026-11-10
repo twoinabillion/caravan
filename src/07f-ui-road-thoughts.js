@@ -55,10 +55,60 @@
    앞쪽 모듈(04d 등)에 두지 않는다. */
 (()=>{
   let roadApproachTimers = [];
+  let activeApproach=null,approachPaused=document.hidden===true;
   const clearRoadApproachTimers=()=>{
-    roadApproachTimers.forEach(clearTimeout);
+    roadApproachTimers.forEach(task=>clearTimeout(task.timer));
     roadApproachTimers=[];
+    activeApproach=null;
   };
+  const ownsApproach=run=>activeApproach===run&&S===run.state&&!S?.ended
+    &&S?.driving===run.leg&&run.leg?.approach===run.approach;
+  const armApproachTimer=task=>{
+    if(approachPaused||document.hidden)return;
+    task.startedAt=performance.now();
+    task.timer=setTimeout(()=>{
+      task.timer=0;
+      if(!ownsApproach(task.owner)){UI.roadApproach(null);return;}
+      if(approachPaused||document.hidden||UI.modalOpen()){
+        // Without a visibility event, retain this unread beat conservatively.
+        pauseApproach(true,false);return;
+      }
+      task.owner.observedAt=performance.now();task.owner.observedWall=Date.now();
+      roadApproachTimers=roadApproachTimers.filter(item=>item!==task);
+      task.next();
+    },task.remaining);
+  };
+  const scheduleApproach=(next,remaining)=>{
+    const task={owner:activeApproach,next,remaining,timer:0,startedAt:null};
+    roadApproachTimers.push(task);armApproachTimer(task);
+  };
+  const pauseApproach=(paused,countVisible=true)=>{
+    approachPaused=paused;
+    const run=activeApproach;
+    if(!run)return;
+    if(!ownsApproach(run)){UI.roadApproach(null);return;}
+    if(paused){
+      if(run.pausedAt!==null)return;
+      run.pausedAt=countVisible?Date.now():run.observedWall;
+      const until=countVisible?performance.now():run.observedAt;
+      for(const task of roadApproachTimers){
+        clearTimeout(task.timer);task.timer=0;
+        if(task.startedAt!==null)
+          task.remaining=Math.max(0,task.remaining-Math.max(0,until-task.startedAt));
+        task.startedAt=null;
+      }
+      run.animations=(run.cue.getAnimations?.({subtree:true})||[]).filter(animation=>animation.playState==='running');
+      run.animations.forEach(animation=>animation.pause());
+    }else if(!document.hidden&&run.pausedAt!==null){
+      // Canvas approach/deceleration uses this same wall-clock origin.
+      run.approach.startedAt+=Math.max(0,Date.now()-run.pausedAt);
+      run.pausedAt=null;
+      run.observedAt=performance.now();run.observedWall=Date.now();
+      run.animations.forEach(animation=>animation.play());run.animations=[];
+      roadApproachTimers.forEach(armApproachTimer);
+    }
+  };
+  UI.setRoadApproachPaused=pauseApproach;
   UI.roadApproach = (profile, onComplete)=>{
     clearRoadApproachTimers();
     const old = document.getElementById('road-approach-cue');
@@ -118,25 +168,28 @@
     status.append(eyebrow,label,action,progress);
     cue.append(status);
     stage.append(cue);
+    activeApproach={state:S,leg:S?.driving,approach:S?.driving?.approach,cue,pausedAt:null,animations:[],
+      observedAt:performance.now(),observedWall:Date.now()};
+    if(approachPaused||document.hidden)pauseApproach(true);
     document.documentElement.dataset.roadApproach = profile.kind;
     // One physical discovery cue per approach, not on story pages or receipt reload.
     if(['meet_postman','postman_again'].includes(profile.eventKey)&&!document.hidden&&typeof SND!=='undefined')SND.sceneCue('bicycle-bell');
     const total=Math.max(900,Number(profile.duration)||1450);
-    roadApproachTimers.push(setTimeout(()=>{
+    scheduleApproach(()=>{
       cue.classList.add('is-braking');
       action.textContent='제동 중';
       if(!document.hidden&&['meet_postman','postman_again'].includes(profile.eventKey)&&typeof AMBI!=='undefined')AMBI.play('sfx_stop_brake',.22);
       if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='braking';
-    },total*.24));
-    roadApproachTimers.push(setTimeout(()=>{
+    },total*.24);
+    scheduleApproach(()=>{
       cue.classList.add('is-stopped');
       action.textContent='정차 완료';
       if(S&&S.driving&&S.driving.approach)S.driving.approach.phase='stopped';
-    },total*.84));
-    roadApproachTimers.push(setTimeout(()=>{
+    },total*.84);
+    scheduleApproach(()=>{
       cue.classList.add('is-handoff');
       action.textContent='상황 확인';
-      roadApproachTimers.push(setTimeout(()=>{ if(onComplete) onComplete(); },100));
-    },total));
+      scheduleApproach(()=>{activeApproach=null;if(onComplete)onComplete();},100);
+    },total);
   };
 })();

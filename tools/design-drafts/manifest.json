@@ -2,6 +2,22 @@
   "version": 1,
   "drafts": [
     {
+      "id": "wayfinding-ui-v1",
+      "file": "wayfinding-ui-v1.html",
+      "title": "길과 사람을 한눈에 · 지형 지도판",
+      "revision": "2",
+      "recommended": true,
+      "description": "Sang이 기존의 사실적인 지형 지도를 선호한다고 확인해 지도 부분을 수정했습니다. 기존 HD 지역 지형을 살리고 밀양→대구(북)/합천(서)/양산(남동)의 좌표·거리·선택 경로·방향 안내를 또렷하게 표시합니다. 지형은 삽화이며 경로는 게임 도로망으로, 실측 GIS라고 주장하지 않습니다. 승객 자리·대화창은 같은 시안에서 비교합니다. 스크립트 없는 독립 고정 예시이며 실제 게임·저장·시간·자원과 분리됩니다. 선택만으로 자동 적용하지 않습니다."
+    },
+    {
+      "id": "living-home-v1",
+      "file": "living-home-v1.html",
+      "title": "한 사람의 자리를 더 · 함께 사는 달구지",
+      "revision": "1",
+      "recommended": true,
+      "description": "Sang이 2026-11-10 ‘이 방향으로 게임에 적용’ 승인 후 실제 인원·개조의 자리/짐 배치, 무료 낮밤 열람, 유료 식사 뒤 생활 대화와 실제 취침 후 아침을 로컬 본게임에 연결했습니다. 임시 승객과 긴 대화 자격을 구분하며 기존 HD·비용·지급 기록을 보존합니다. 검증: qa-artifacts/living-home-20261110/verification.json. 이 파일은 민지·재이→40cm 공사→박 선생→식사/다음 아침의 고정 독립 시안 보존본으로 게임·저장에 접근하지 않습니다. 선택만으로 자동 적용하지 않습니다. 실제 화면 검수는 연결 제한으로 미완료입니다."
+    },
+    {
       "id": "story-memory-shelf-v2",
       "file": "story-memory-shelf-v2.html",
       "title": "풍경 곁의 기억 · 책갈피와 열람 화면",

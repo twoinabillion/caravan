@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한 사람의 자리를 더 · Caravan 디자인 초안</title>
+<link rel="stylesheet" href="living-home-v1.css">
+</head>
+<body>
+<!-- Native controls only: this review draft works with scripts disabled. -->
+<input class="draft-choice" type="radio" name="living-stage" id="stage-0" aria-label="1. 동료 둘일 때" checked>
+<input class="draft-choice" type="radio" name="living-stage" id="stage-1" aria-label="2. 한 자리 공사">
+<input class="draft-choice" type="radio" name="living-stage" id="stage-2" aria-label="3. 셋이 탄 뒤">
+<input class="draft-choice" type="radio" name="living-stage" id="stage-3" aria-label="4. 한 끼, 다음 날">
+<input class="draft-choice" type="radio" name="living-mode" id="mode-day" aria-label="이동할 때 배치" checked>
+<input class="draft-choice" type="radio" name="living-mode" id="mode-sleep" aria-label="잠자리를 폈을 때 배치">
+<input class="draft-choice" type="radio" name="living-meal" id="meal-before" aria-label="식사 준비 전" checked>
+<input class="draft-choice" type="radio" name="living-meal" id="meal-after" aria-label="식사 준비 뒤">
+<input class="draft-choice" type="radio" name="living-meal" id="meal-morning" aria-label="다음 날 아침 배치">
+<header class="draft-wrap">
+<p class="draft-notice">고정 상황의 독립 초안 / 실게임 미적용</p>
+<div class="draft-heading"><div><h1>한 사람의 자리를 더</h1><p>민지와 재이가 타고 있는 차에, 박 선생의 자리를 만든다.</p></div><span class="draft-stamp">생활 공간 v1</span></div>
+<p class="draft-scope">선택하면 이 초안의 장면만 바뀝니다. 실제 게임·저장·시간·자원에는 연결되지 않습니다. 자리 배치와 아래 대화는 검토용 제안입니다.</p>
+<nav class="stage-nav" aria-label="생활 변화 단계">
+<label for="stage-0"><span>1</span>동료 둘일 때</label>
+<label for="stage-1"><span>2</span>한 자리 공사</label>
+<label for="stage-2"><span>3</span>셋이 탄 뒤</label>
+<label for="stage-3"><span>4</span>한 끼, 다음 날</label>
+</nav>
+</header>
+<main class="home-sheet">
+<section class="stage-panel stage-panel-0" aria-label="동료 둘일 때"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 12:30</p><h2>동료 둘이 자리 잡은 차 안</h2></div><p class="capacity">운전사 1명 + 동료 2명</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/scenes/dalguji-home-interior-v1.webp" width="1024" height="576" alt="등 하나가 빈 선반과 낡은 나무 바닥을 비추는 기존 달구지 실내 그림"><figcaption>기존 실내 그림. 사람과 물건의 배치는 별도 좌석도로 확인한다.</figcaption></figure>
+ <div class="crew-heading"><h3>함께 타는 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article></div>
+ <div class="scene-copy"><p>민지의 접시는 선반 왼쪽, 재이의 상자는 좌석 옆에 있다. 상자가 통로로 조금 나와 있어 지날 때 몸을 돌려야 한다.</p><p class="small-scene">박 선생과 동행하려면 이동 중 앉을 자리가 하나 더 필요하다.</p></div>
+
+
+
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>지금 쓰는 자리</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>기본 생활칸</span></div>
+ <div class="floor-plan   ">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞 운전석</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="shelf-space">오른쪽 여유</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 좌석</small><strong>민지</strong><span>도구를 꺼내기 쉬운 쪽</span></div>
+            <div class="aisle"><span>출입<br>통로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 좌석</small><strong>재이</strong><span>상자를 자기 쪽에</span></div>
+            <div class="bedding"><span>접어 둔 침구</span></div>
+            <div class="box-space is-protruding"><span class="plan-object">발견물 상자</span><small>통로로 조금 나옴</small></div>
+          </div>
+          <div class="rear-base">지금은 짐과 접은 침구가 쓰는 후미</div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">동료 자리는 둘. 세 번째 사람을 짐 위나 통로에 앉혀 출발할 수는 없다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 식사할 때도 접시는 여기에 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 자리 옆에 놓여 통로 쪽으로 조금 나와 있다.</p></div></details></section>
+ <div class="daily-change"><h4>먼저 지킬 자리</h4><p>민지의 도구, 재이의 상자, 뒷문으로 나가는 길. 한 사람을 더 태워도 함께 쓸 수 있어야 한다.</p></div></section>
+ <footer class="stage-actions"><p>둘의 물건과 출입구를 확인했다.</p><div><label class="primary" for="stage-1">한 사람 더 태우려면</label></div></footer>
+ </div></section>
+<section class="stage-panel stage-panel-1" aria-label="한 자리 공사"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 12:30 / 공사 전</p><h2>박 선생도 탈 수 있을까?</h2></div><p class="capacity">공사 뒤 동료 자리 3개</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/upgrades/upgrade-bench-v1.webp" width="768" height="512" alt="차량 후미에 설치된 레일 좌석을 보여 주는 기존 개조 원화"><figcaption>후미 레일 좌석칸 · 기존 개조 원화</figcaption></figure>
+ <div class="crew-heading"><h3>함께 탈 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article><article class="crew-person is-waiting"><img src="../../assets/portraits/parkss.png" alt="" width="48" height="48"><div><strong>박 선생</strong><span>동행 전 · 자리 공사 대기</span></div></article></div>
+ <div class="scene-copy"><p>지금 있는 두 자리는 그대로 쓴다. 뒷문 쪽 차대와 바닥을 늘려 세 번째 좌석을 넣는다.</p></div>
+ <section class="construction" aria-label="한 자리 공사 비용">
+        <div class="construction-title"><h3>후미 레일 좌석칸</h3><span>동료 자리 2 → 3</span></div>
+        <p>차대 레일과 바닥을 <b>40cm</b> 늘리고, 안전벨트 좌석을 고정한다.</p>
+        <dl class="build-cost">
+          <div><dt>정착지 비용</dt><dd>고철 <b>12</b> + 부품 <b>1</b></dd></div>
+          <div><dt>작업 시간</dt><dd><b>225분</b></dd></div>
+        </dl>
+        <p class="cost-note">민지가 함께 작업하는 상황. 12:30에 시작하면 16:15에 끝난다.</p>
+        <p class="build-limit">늘어난 곳은 한 사람의 좌석이다. 고정 침상이나 별도 방은 생기지 않는다.</p>
+      </section>
+
+
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>지금 쓰는 자리</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>공사 미리보기</span></div>
+ <div class="floor-plan is-extended  is-preview">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞 운전석</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="shelf-space">오른쪽 여유</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 좌석</small><strong>민지</strong><span>도구를 꺼내기 쉬운 쪽</span></div>
+            <div class="aisle"><span>출입<br>통로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 좌석</small><strong>재이</strong><span>상자를 자기 쪽에</span></div>
+            <div class="bedding"><span>접어 둔 침구</span></div>
+            <div class="box-space is-protruding"><span class="plan-object">발견물 상자</span><small>통로로 조금 나옴</small></div>
+          </div>
+          <div class="rear-extension"><span class="extension-measure">늘어난 바닥 40cm</span><div class="seat seat-park seat-proposed"><small>여기에 추가할 좌석</small><strong>박 선생의 자리</strong><span>공사 뒤에 동행</span></div></div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">빗금 영역이 늘어날 바닥과 새 좌석이다. 기존 두 좌석과 선반 위치를 함께 확인한다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 식사할 때도 접시는 여기에 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 자리 옆에 놓여 통로 쪽으로 조금 나와 있다.</p></div></details></section>
+ <div class="daily-change"><h4>먼저 지킬 자리</h4><p>민지의 도구, 재이의 상자, 뒷문으로 나가는 길. 한 사람을 더 태워도 함께 쓸 수 있어야 한다.</p></div></section>
+ <footer class="stage-actions"><p>공사 비용과 늘어날 자리를 확인한다.</p><div><label class="secondary" for="stage-0">지금 배치로 돌아가기</label><label class="primary" for="stage-2">공사 마친 배치 보기</label></div></footer>
+ </div></section>
+<section class="stage-panel stage-panel-2" aria-label="셋이 탄 뒤">
+<div class="phase-controls"><p>같은 공간의 낮과 밤</p><div class="mode-switch"><label for="mode-day">이동할 때</label><label for="mode-sleep">잠자리를 펴면</label></div></div>
+<div class="phase-view day-view"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 16:15 / 공사 뒤</p><h2>앉을 자리는 생겼다</h2></div><p class="capacity">운전사 1명 + 동료 3명</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/scenes/dalguji-home-interior-v1.webp" width="1024" height="576" alt="등 하나가 빈 선반과 낡은 나무 바닥을 비추는 기존 달구지 실내 그림"><figcaption>기존 실내 그림. 사람과 물건의 배치는 별도 좌석도로 확인한다.</figcaption></figure>
+ <div class="crew-heading"><h3>함께 타는 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article><article class="crew-person "><img src="../../assets/portraits/parkss.png" alt="" width="48" height="48"><div><strong>박 선생</strong><span>진료 깡통을 손 닿는 선반에</span></div></article></div>
+ <div class="scene-copy"><p>박 선생이 후미 좌석에 앉았다. 진료 깡통은 선반 오른쪽에, 재이의 상자는 좌석 아래로 옮겼다.</p><p class="small-scene">통로는 비었다. 대신 상자 뚜껑을 열 때마다 누군가는 다리를 비켜야 한다.</p></div>
+
+
+
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>지금 쓰는 자리</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>후미 +40cm</span></div>
+ <div class="floor-plan is-extended  ">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞 운전석</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="plan-object">진료 깡통</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 좌석</small><strong>민지</strong><span>도구를 꺼내기 쉬운 쪽</span></div>
+            <div class="aisle"><span>출입<br>통로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 좌석</small><strong>재이</strong><span>상자를 자기 쪽에</span></div>
+            <div class="bedding"><span>접어 둔 침구</span></div>
+            <div class="box-space is-tucked"><span class="plan-object">발견물 상자</span><small>재이 좌석 아래</small></div>
+          </div>
+          <div class="rear-extension"><span class="extension-measure">늘어난 바닥 40cm</span><div class="seat seat-park "><small>추가 좌석</small><strong>박 선생</strong><span>상자를 열 때 다리 비켜 주기</span></div></div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">상자를 좌석 아래로 돌려 넣어 통로를 비웠다. 물건을 꺼낼 때는 옆사람에게 자리를 부탁해야 한다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 박 선생의 깡통이 들어와도 공구를 꺼낼 자리는 비워 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 좌석 아래로 돌려 넣었다. 통로는 비었지만, 뚜껑을 열려면 앞사람이 잠깐 다리를 비켜야 한다.</p></div></details>
+<details class="object-fold"><summary>박 선생의 진료 깡통</summary><div><p>붕대, 연필, 체온표가 같은 순서로 정리되어 있다.</p><p class="object-placement">선반 오른쪽. 식사 뒤에도 깡통은 여기로 돌아온다.</p></div></details></section>
+ <div class="daily-change"><h4>한 자리로 달라진 생활</h4><ul><li>박 선생이 이동 중 앉을 좌석 하나</li><li>선반을 나눠 쓰는 접시와 진료 깡통</li><li>통로에서 좌석 아래로 옮긴 재이의 상자</li><li>밤에는 다시 펴고 아침에는 접는 침구</li></ul></div></section>
+ <footer class="stage-actions"><p>낮과 밤에 같은 공간을 어떻게 쓰는지 살펴본다.</p><div><label class="secondary" for="stage-1">공사 전과 비교</label><label class="primary" for="stage-3">넷이 한 끼 준비하기</label></div></footer>
+ </div></div>
+<div class="phase-view sleep-view"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 16:15 / 공사 뒤</p><h2>앉을 자리는 생겼다</h2></div><p class="capacity">운전사 1명 + 동료 3명</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/scenes/dalguji-home-interior-v1.webp" width="1024" height="576" alt="등 하나가 빈 선반과 낡은 나무 바닥을 비추는 기존 달구지 실내 그림"><figcaption>기존 실내 그림. 사람과 물건의 배치는 별도 좌석도로 확인한다.</figcaption></figure>
+ <div class="crew-heading"><h3>함께 타는 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article><article class="crew-person "><img src="../../assets/portraits/parkss.png" alt="" width="48" height="48"><div><strong>박 선생</strong><span>진료 깡통을 손 닿는 선반에</span></div></article></div>
+ <div class="scene-copy"><p>박 선생이 후미 좌석에 앉았다. 진료 깡통은 선반 오른쪽에, 재이의 상자는 좌석 아래로 옮겼다.</p><p class="small-scene">통로는 비었다. 대신 상자 뚜껑을 열 때마다 누군가는 다리를 비켜야 한다.</p></div>
+
+
+
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>잠자리를 펴면</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>밤 배치 제안</span></div>
+ <div class="floor-plan is-extended is-sleeping ">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞좌석에서 쉰다</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="plan-object">진료 깡통</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 접이식 자리</small><strong>민지</strong><span>침구를 편다</span></div>
+            <div class="aisle"><span>밤에는<br>침구가<br>통로로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 접이식 자리</small><strong>재이</strong><span>상자는 아래에 둔 채</span></div>
+            <div class="bedding"><span>밤에 쓰는 침구</span></div>
+            <div class="box-space is-tucked"><span class="plan-object">발견물 상자</span><small>재이 좌석 아래</small></div>
+          </div>
+          <div class="rear-extension"><span class="extension-measure">늘어난 바닥 40cm</span><div class="seat seat-park "><small>후미 좌석 위</small><strong>박 선생</strong><span>침구를 올려 쓴다</span></div></div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">밤 배치 제안. 고정 침상은 추가되지 않는다. 침구를 펴면 통로가 좁아져, 먼저 치워야 뒷문으로 나갈 수 있다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 박 선생의 깡통이 들어와도 공구를 꺼낼 자리는 비워 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 좌석 아래로 돌려 넣었다. 통로는 비었지만, 뚜껑을 열려면 앞사람이 잠깐 다리를 비켜야 한다.</p></div></details>
+<details class="object-fold"><summary>박 선생의 진료 깡통</summary><div><p>붕대, 연필, 체온표가 같은 순서로 정리되어 있다.</p><p class="object-placement">선반 오른쪽. 식사 뒤에도 깡통은 여기로 돌아온다.</p></div></details></section>
+ <div class="daily-change"><h4>한 자리로 달라진 생활</h4><ul><li>박 선생이 이동 중 앉을 좌석 하나</li><li>선반을 나눠 쓰는 접시와 진료 깡통</li><li>통로에서 좌석 아래로 옮긴 재이의 상자</li><li>밤에는 다시 펴고 아침에는 접는 침구</li></ul></div></section>
+ <footer class="stage-actions"><p>낮과 밤에 같은 공간을 어떻게 쓰는지 살펴본다.</p><div><label class="secondary" for="stage-1">공사 전과 비교</label><label class="primary" for="stage-3">넷이 한 끼 준비하기</label></div></footer>
+ </div></div>
+</section>
+<section class="stage-panel stage-panel-3" aria-label="한 끼, 다음 날">
+<div class="phase-controls"><p>직접 골라 보는 저녁과 다음 날</p><div class="meal-switch"><label for="meal-before">식사 준비</label><label for="meal-after">한 끼 뒤</label><label for="meal-morning">다음 날 아침</label></div></div>
+<div class="phase-view meal-before-view"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 그날 저녁</p><h2>같은 자리에 둘러앉아</h2></div><p class="capacity">운전사 1명 + 동료 3명</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/scenes/dalguji-home-interior-v1.webp" width="1024" height="576" alt="등 하나가 빈 선반과 낡은 나무 바닥을 비추는 기존 달구지 실내 그림"><figcaption>기존 실내 그림. 사람과 물건의 배치는 별도 좌석도로 확인한다.</figcaption></figure>
+ <div class="crew-heading"><h3>함께 타는 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article><article class="crew-person "><img src="../../assets/portraits/parkss.png" alt="" width="48" height="48"><div><strong>박 선생</strong><span>진료 깡통을 손 닿는 선반에</span></div></article></div>
+ <div class="scene-copy"><p>차를 세우고 접어 둔 자리를 편다. 네 사람이 한 끼를 먹을 수 있게 그릇을 놓는다.</p></div>
+
+ <section class="meal" aria-label="따뜻한 식사 준비"><div class="meal-head"><h3>따뜻한 식사 준비</h3><span>야영 준비</span></div><p class="meal-cost">식량 <b>1</b> + 물 <b>1</b></p><p>한 번의 식사 준비 비용. 이 초안에서는 실제 자원을 쓰지 않는다.</p></section>
+
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>지금 쓰는 자리</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>저녁 배치</span></div>
+ <div class="floor-plan is-extended  ">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞 운전석</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="plan-object">진료 깡통</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 좌석</small><strong>민지</strong><span>도구를 꺼내기 쉬운 쪽</span></div>
+            <div class="aisle"><span>출입<br>통로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 좌석</small><strong>재이</strong><span>상자를 자기 쪽에</span></div>
+            <div class="bedding"><span>접어 둔 침구</span></div>
+            <div class="box-space is-tucked"><span class="plan-object">발견물 상자</span><small>재이 좌석 아래</small></div>
+          </div>
+          <div class="rear-extension"><span class="extension-measure">늘어난 바닥 40cm</span><div class="seat seat-park "><small>추가 좌석</small><strong>박 선생</strong><span>상자를 열 때 다리 비켜 주기</span></div></div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">상자를 좌석 아래로 돌려 넣어 통로를 비웠다. 물건을 꺼낼 때는 옆사람에게 자리를 부탁해야 한다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 박 선생의 깡통이 들어와도 공구를 꺼낼 자리는 비워 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 좌석 아래로 돌려 넣었다. 통로는 비었지만, 뚜껑을 열려면 앞사람이 잠깐 다리를 비켜야 한다.</p></div></details>
+<details class="object-fold"><summary>박 선생의 진료 깡통</summary><div><p>붕대, 연필, 체온표가 같은 순서로 정리되어 있다.</p><p class="object-placement">선반 오른쪽. 식사 뒤에도 깡통은 여기로 돌아온다.</p></div></details></section>
+ <div class="daily-change"><h4>한 자리로 달라진 생활</h4><ul><li>박 선생이 이동 중 앉을 좌석 하나</li><li>선반을 나눠 쓰는 접시와 진료 깡통</li><li>통로에서 좌석 아래로 옮긴 재이의 상자</li><li>밤에는 다시 펴고 아침에는 접는 침구</li></ul></div></section>
+ <footer class="stage-actions"><p>식사 준비는 직접 눌러 진행한다.</p><div><label class="secondary" for="stage-2">자리 다시 살펴보기</label><label class="primary" for="meal-after">식량 1 · 물 1로 준비해 보기</label></div></footer>
+ </div></div>
+<div class="phase-view meal-after-view"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 그날 저녁</p><h2>같은 자리에 둘러앉아</h2></div><p class="capacity">운전사 1명 + 동료 3명</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/scenes/dalguji-home-interior-v1.webp" width="1024" height="576" alt="등 하나가 빈 선반과 낡은 나무 바닥을 비추는 기존 달구지 실내 그림"><figcaption>기존 실내 그림. 사람과 물건의 배치는 별도 좌석도로 확인한다.</figcaption></figure>
+ <div class="crew-heading"><h3>함께 타는 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article><article class="crew-person "><img src="../../assets/portraits/parkss.png" alt="" width="48" height="48"><div><strong>박 선생</strong><span>진료 깡통을 손 닿는 선반에</span></div></article></div>
+ <div class="scene-copy"><p>식사 그릇을 치우고 제 물건을 돌려놓는다. 선반과 좌석을 나눠 쓰는 데 작은 부탁이 하나 더 생겼다.</p></div>
+
+ <section class="meal" aria-label="따뜻한 식사 준비"><div class="meal-head"><h3>한 끼를 먹고</h3><span>식사 준비 완료</span></div><p>그릇을 치웠지만 네 사람은 잠깐 더 앉아 있다. 재이가 좌석 아래의 상자 손잡이를 잡는다.</p></section>
+ <section class="conversation" aria-label="식사 뒤의 짧은 대화"><h3>잠깐만 다리 좀</h3><div class="dialogue-line"><b>재이</b><p>선생님, 상자 좀 열게요. 잠깐만 다리 빼 주세요.</p></div><div class="dialogue-line"><b>박 선생</b><p>이제 됐나?</p></div><div class="dialogue-line"><b>재이</b><p>조금만 더요. 뚜껑까지 열어야 돼요.</p></div><div class="dialogue-line"><b>민지</b><p>자주 쓸 건 위에 꺼내 놔요. 매번 그러지 말고.</p></div><div class="dialogue-line"><b>재이</b><p>위에는 선생님 깡통 있잖아요.</p></div><div class="dialogue-line"><b>박 선생</b><p>그럼 내가 잠깐씩 일어나지.</p></div></section>
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>지금 쓰는 자리</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>저녁 배치</span></div>
+ <div class="floor-plan is-extended  ">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞 운전석</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="plan-object">진료 깡통</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 좌석</small><strong>민지</strong><span>도구를 꺼내기 쉬운 쪽</span></div>
+            <div class="aisle"><span>출입<br>통로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 좌석</small><strong>재이</strong><span>상자를 자기 쪽에</span></div>
+            <div class="bedding"><span>접어 둔 침구</span></div>
+            <div class="box-space is-tucked"><span class="plan-object">발견물 상자</span><small>재이 좌석 아래</small></div>
+          </div>
+          <div class="rear-extension"><span class="extension-measure">늘어난 바닥 40cm</span><div class="seat seat-park "><small>추가 좌석</small><strong>박 선생</strong><span>상자를 열 때 다리 비켜 주기</span></div></div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">상자를 좌석 아래로 돌려 넣어 통로를 비웠다. 물건을 꺼낼 때는 옆사람에게 자리를 부탁해야 한다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 박 선생의 깡통이 들어와도 공구를 꺼낼 자리는 비워 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 좌석 아래로 돌려 넣었다. 통로는 비었지만, 뚜껑을 열려면 앞사람이 잠깐 다리를 비켜야 한다.</p></div></details>
+<details class="object-fold"><summary>박 선생의 진료 깡통</summary><div><p>붕대, 연필, 체온표가 같은 순서로 정리되어 있다.</p><p class="object-placement">선반 오른쪽. 식사 뒤에도 깡통은 여기로 돌아온다.</p></div></details></section>
+ <div class="daily-change"><h4>한 자리로 달라진 생활</h4><ul><li>박 선생이 이동 중 앉을 좌석 하나</li><li>선반을 나눠 쓰는 접시와 진료 깡통</li><li>통로에서 좌석 아래로 옮긴 재이의 상자</li><li>밤에는 다시 펴고 아침에는 접는 침구</li></ul></div></section>
+ <footer class="stage-actions"><p>식사 뒤에 나눈 말이 다음 날 배치에도 이어진다.</p><div><label class="primary" for="meal-morning">다음 날 아침 배치 보기</label></div></footer>
+ </div></div>
+<div class="phase-view meal-morning-view"><div class="scene-grid">
+ <header class="home-heading"><div><p class="place">정착지 · 다음 날 아침 / 배치 예시</p><h2>아침에도 상자는 그 자리에</h2></div><p class="capacity">운전사 1명 + 동료 3명</p></header>
+ <section class="room-column" aria-label="실내와 함께 타는 사람">
+ <figure class="room-reference"><img src="../../assets/scenes/dalguji-home-interior-v1.webp" width="1024" height="576" alt="등 하나가 빈 선반과 낡은 나무 바닥을 비추는 기존 달구지 실내 그림"><figcaption>기존 실내 그림. 사람과 물건의 배치는 별도 좌석도로 확인한다.</figcaption></figure>
+ <div class="crew-heading"><h3>함께 타는 사람</h3><span>운전사는 앞 운전석</span></div><div class="crew"><article class="crew-person "><img src="../../assets/portraits/minji.png" alt="" width="48" height="48"><div><strong>민지</strong><span>자석 접시를 선반 왼쪽에</span></div></article><article class="crew-person "><img src="../../assets/portraits/jaeyi.png" alt="" width="48" height="48"><div><strong>재이</strong><span>발견물 상자는 자기 자리 곁에</span></div></article><article class="crew-person "><img src="../../assets/portraits/parkss.png" alt="" width="48" height="48"><div><strong>박 선생</strong><span>진료 깡통을 손 닿는 선반에</span></div></article></div>
+ <div class="scene-copy"><p>침구를 접고 나니 어제 정한 배치가 다시 드러났다. 재이의 상자는 좌석 아래, 진료 깡통은 접시 옆에 있다.</p></div>
+
+ <section class="meal" aria-label="따뜻한 식사 준비"><div class="meal-head"><h3>다음 날 아침</h3><span>배치를 다시 확인</span></div><p>박 선생은 깡통을 원래 선반에 올렸다. 재이는 상자를 꺼내다 말고, 아직 접히지 않은 무릎을 톡 두드렸다.</p></section>
+ <section class="conversation" aria-label="식사 뒤의 짧은 대화"><h3>아침에도 남은 자리 약속</h3><div class="dialogue-line"><b>재이</b><p>선생님, 잠깐만요. 그 상자요.</p></div><div class="dialogue-line"><b>박 선생</b><p>아, 다리. 알았네.</p></div></section>
+ </section>
+ <section class="layout-column" aria-label="자리와 물건 배치"><div class="layout-heading"><div><h3>다음 날, 다시 접은 자리</h3><p>공간 관계도 · 실제 치수 비례 아님</p></div><span>배치 유지</span></div>
+ <div class="floor-plan is-extended  ">
+        <div class="front-cab"><span>차량 앞쪽</span><div><b>운전사</b><small>앞 운전석</small></div></div>
+        <div class="living-cabin">
+          <div class="shelf-strip"><span>선반</span><span class="plan-object">자석 접시</span><span class="plan-object">진료 깡통</span></div>
+          <div class="seating-grid">
+            <div class="seat seat-minji"><small>기존 좌석</small><strong>민지</strong><span>도구를 꺼내기 쉬운 쪽</span></div>
+            <div class="aisle"><span>출입<br>통로</span><i aria-hidden="true"></i></div>
+            <div class="seat seat-jaeyi"><small>기존 좌석</small><strong>재이</strong><span>상자를 자기 쪽에</span></div>
+            <div class="bedding"><span>접어 둔 침구</span></div>
+            <div class="box-space is-tucked"><span class="plan-object">발견물 상자</span><small>재이 좌석 아래</small></div>
+          </div>
+          <div class="rear-extension"><span class="extension-measure">늘어난 바닥 40cm</span><div class="seat seat-park "><small>추가 좌석</small><strong>박 선생</strong><span>상자를 열 때 다리 비켜 주기</span></div></div>
+          <div class="rear-door"><span></span>뒷문 · 출입구<span></span></div>
+        </div></div><p class="plan-note">침구를 다시 접었다. 상자는 좌석 아래, 접시와 깡통은 선반에 그대로 남아 있다.</p>
+ <section class="object-inspection" aria-label="물건 살펴보기"><p class="inspection-hint">아래 물건 이름을 눌러 펼쳐보기</p><details class="object-fold"><summary>민지의 자석 접시</summary><div><p>크기별 나사와 닳은 퓨즈가 흔들리지 않게 붙어 있다.</p><p class="object-placement">선반 왼쪽. 박 선생의 깡통이 들어와도 공구를 꺼낼 자리는 비워 둔다.</p></div></details>
+<details class="object-fold" open><summary>재이의 발견물 상자</summary><div><p>버려진 단추와 표지 조각마다 발견한 장소가 적혀 있다.</p><p class="object-placement">재이 좌석 아래로 돌려 넣었다. 통로는 비었지만, 뚜껑을 열려면 앞사람이 잠깐 다리를 비켜야 한다.</p></div></details>
+<details class="object-fold"><summary>박 선생의 진료 깡통</summary><div><p>붕대, 연필, 체온표가 같은 순서로 정리되어 있다.</p><p class="object-placement">선반 오른쪽. 식사 뒤에도 깡통은 여기로 돌아온다.</p></div></details></section>
+ <div class="daily-change"><h4>다음 날에도 남는 것</h4><ul><li>박 선생이 이동 중 앉을 좌석 하나</li><li>선반을 나눠 쓰는 접시와 진료 깡통</li><li>통로에서 좌석 아래로 옮긴 재이의 상자</li><li>밤에는 다시 펴고 아침에는 접는 침구</li></ul></div></section>
+ <footer class="stage-actions"><p>밤이 지나도 물건과 자리를 처음 상태로 되돌리지 않는다.</p><div><label class="secondary" for="stage-2">셋의 자리 살펴보기</label><label class="primary" for="stage-0">처음 둘의 배치와 비교</label></div></footer>
+ </div></div>
+</section>
+</main>
+<footer class="review-footer"><p>기존 기능 수치: 후미 레일 좌석칸의 비용·시간·인원, 따뜻한 식사 준비 비용. 자리별 배치·낮밤 전환·생활 대화·다음 날 배치 유지는 이번 제안입니다.</p><p>기존 HD 실내·개조 원화와 공식 초상만 사용합니다. 실내 그림을 늘리거나 새 확장 실내로 합성하지 않았습니다. 모든 전환은 직접 선택하며, 실제 아침 식사나 자원 효과를 실행하지 않습니다.</p></footer>
+</body>
+</html>

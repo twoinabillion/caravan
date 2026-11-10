@@ -42,7 +42,7 @@ test('muting during repeated song suspension remains authoritative on return',()
 function introPauseFixture(automatic=true){
  const vm=require('node:vm'),timers=new Map(),record={open:false},nodes={};let seq=0,advanced=0,summary=false;
  for(const selector of ['#opening-history','#intro-skip','#intro-summary-continue'])nodes[selector]={};
- const c=vm.createContext({screen:'name',document:{hidden:false},introAuto:automatic,introAutoTimer:0,introAutoGeneration:0,introIdx:0,introTurnIdx:0,introPreview:false,lifecyclePaused:false,
+ const c=vm.createContext({screen:'name',UI:{},document:{hidden:false},introAuto:automatic,introAutoTimer:0,introAutoGeneration:0,introIdx:0,introTurnIdx:0,introPreview:false,lifecyclePaused:false,
   introPages:()=>[{beats:[{text:'미리 읽는 기억'}]}],stripTags:String,updateIntroAuto(){},nextIntro:()=>advanced++,
   setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id),record,
   pauseArrivalCountdown(){},resumeArrivalCountdown(){},clearStoryAuto(){},curStory:null,

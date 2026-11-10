@@ -112,6 +112,15 @@ G.campParticipants = ()=>{
   if(q&&['road','follow','ready'].includes(q.stage)&&D.comps[q.id]&&!ids.includes(q.id)) ids.push(q.id);
   return ids.filter(id=>D.campConversations[id]);
 };
+/* A riding escort is already sharing the house while their task is pending.
+   Camp-story eligibility stays narrower: its authored premises may require the
+   task to be finished. Physical presence never unlocks those conversations. */
+G.homeParticipants = ()=>{
+  if(!S)return [];
+  const ids=[...(S.party||[])],q=S.recruitQ;
+  if(q&&D.comps[q.id]&&(['road','follow','ready'].includes(q.stage)||(q.stage==='task'&&q.escort)))ids.push(q.id);
+  return [...new Set(ids)].filter(id=>D.comps[id]);
+};
 G.campTimeLabel = ()=> S.min<360?'새벽':S.min<720?'오전':S.min<1020?'오후':S.min<1200?'저녁':'밤';
 G.currentCampConversation = ()=>{
   const record=S.campConversation;
@@ -252,6 +261,7 @@ G.prepareCamp = (kind,cid)=>{
     S.hunger=Math.max(0,hungerBefore-1);
     S.fatigue=Math.max(0,S.fatigue-6);
     G.moodAll(3);
+    S.homeLife=D.homeMealMoment(S,G.homeParticipants());
     const hunger=S.hunger<hungerBefore?(S.hunger===0?' · 허기 해소':` · 허기 ${hungerBefore}→${S.hunger}`):'';
     UI.toast(`🍲 따뜻한 한 끼 · ${G.isInfiniteResourceMode()?'식량·물 ∞ · 테스트 소모 없음':'식량 -1 · 물 -1'} · 사기 +3 · 피로 -${fatigueBefore-S.fatigue}${hunger}`);
   } else if(kind==='repair'){
@@ -276,6 +286,7 @@ G.prepareCamp = (kind,cid)=>{
         day:S.day,timeLabel:G.campTimeLabel(),context:G.campContext(cid),revisit:!!experienced,
         chapter:Math.min(3,(choiceVisits[previousChoiceId]||0)+1),previousChoiceId,choiceVisits,
         choiceId:null,chips:[],active:true};
+      if(['jaeyi','parkss'].includes(cid)) S.campConversation.copyRevision='camp-natural-flow-v1';
       if(cid==='leo') S.campConversation.sceneContext='leo-rest-v1';
       if(cid==='parkss') S.campConversation.sceneContext='pss-rest-v1';
       if(cid==='eunsu'){S.campConversation.sceneContext='eunsu-records-v1';S.campConversation.sceneRevision='qa105';}

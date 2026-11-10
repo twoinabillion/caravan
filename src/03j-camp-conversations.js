@@ -1,4 +1,44 @@
 /* Optional camp exchanges; recruitment/revelations stay in their quests. */
+// A paid meal may leave a small domestic moment. Freeze its words and roster
+// at payment; looking around the room never creates or rewards one.
+D.homeMealMoment=(S,participants=[])=>{
+  const party=[...(S.party||[])],ids=[...new Set(participants)].filter(id=>D.comps[id]);
+  const has=id=>party.includes(id),say=(who,text)=>({who,text}),narrate=text=>({text});
+  let kind='shared-table',after,morning;
+  if(has('jaeyi')&&has('parkss')){
+    kind='box-knees';
+    const previous=S.homeLife,repeated=previous?.revision==='home-life-v1'&&previous.kind===kind&&
+      JSON.stringify([...(previous.party||[])].sort())===JSON.stringify([...party].sort());
+    after=repeated?[say('jaeyi','선생님, 상자요.'),say('parkss','아, 다리. 알았네.')]
+      :[say('jaeyi','선생님, 상자 좀 열게요. 잠깐만 다리 빼 주세요.'),say('parkss','이제 됐나?'),
+        say('jaeyi','조금만 더요. 뚜껑까지 열어야 돼요.'),
+        ...(has('minji')?[say('minji','자주 쓸 건 위에 꺼내 놔. 매번 그러지 말고.'),say('jaeyi','위에는 선생님 깡통 있잖아요.')]:[]),
+        say('parkss','그럼 내가 잠깐씩 일어나지.')];
+    morning=[say('jaeyi','선생님, 잠깐만요. 그 상자요.'),say('parkss','아, 다리. 알았네.')];
+  }else if(has('jaeyi')&&has('minji')){
+    kind='box-door';after=[say('jaeyi','상자 여기 두면 돼?'),say('minji','문 열리는 데만 비워 둬.'),say('jaeyi','알았어. 안쪽으로 밀게.')];
+    morning=[narrate('재이가 상자를 꺼냈다가, 뒷문이 열릴 만큼 다시 안으로 밀어 넣었다.')];
+  }else if(has('kangwoo')){
+    after=[say('kangwoo','문 쪽은 비워 둘게요. 그릇은 이쪽으로 주세요.'),narrate('그릇을 모으고 나니 뒷문으로 나가는 길이 났다.')];
+    morning=[narrate('강우가 먼저 침구를 접어 문 옆을 비웠다. 다른 사람의 짐은 건드리지 않았다.')];
+  }else if(has('leo')){
+    after=[say('leo','기타부터 치울게. 그릇 놓을 데가 없네.'),narrate('레오가 기타를 안쪽으로 밀어 넣고 빈자리에 앉았다.')];
+    morning=[narrate('접은 침구 옆에서 레오가 기타를 꺼냈다. 어제 비워 둔 자리는 다시 통로가 됐다.')];
+  }else if(has('eunsu')){
+    after=[say('eunsu','기록은 닫아 둘게요. 여기 놓으세요.'),narrate('은수가 기록을 덮어 안쪽에 밀자 그릇 하나를 더 놓을 자리가 났다.')];
+    morning=[narrate('은수는 그릇을 치운 자리에 기록을 다시 폈다. 옆 사람의 짐이 닿지 않게 조금 안으로 당겼다.')];
+  }else if(has('parkss')){
+    after=[say('parkss','그릇은 주게. 이건 내가 치우지.'),narrate('박 선생이 깡통을 선반에 돌려놓고 그릇을 받아 갔다.')];
+    morning=[narrate('박 선생의 깡통은 선반에 그대로 있었다. 그는 앉기 전에 접힌 침구를 안쪽으로 밀었다.')];
+  }else if(has('minji')){
+    after=[say('minji','그릇 다 썼어? 공구함 좀 내려놓게.'),narrate('민지가 빈 그릇을 받아 옮기고 자기 무릎의 공구함을 내려놓았다.')];
+    morning=[narrate('민지가 공구함을 들어 무릎에 올렸다. 밤에 나눠 쓰던 자리가 다시 비었다.')];
+  }else{
+    after=[narrate(ids.length?'그릇을 모아 치우고, 서로의 짐이 놓인 쪽을 피해 다리를 폈다.':'그릇 하나를 씻어 올려놓았다. 접어 둔 침구를 꺼낼 만큼 바닥이 비었다.')];
+    morning=[narrate(ids.length?'침구를 접어 안쪽에 두었다. 어제 그릇을 놓았던 자리는 다시 함께 쓰는 통로가 됐다.':'침구를 접고 어제 올려 둔 그릇을 꺼냈다. 혼자 쓰던 자리가 그대로 남아 있다.')];
+  }
+  return {revision:'home-life-v1',kind,day:S.day,night:S.campNight||0,party,participants:ids,after,morning};
+};
 D.campConversations={
   minji:{title:'고치지 않아도 되는 소리',
     first:'민지가 점검 덮개에 귀를 붙인 채 손을 든다. 조용히 하라는 뜻이다.',
@@ -198,6 +238,12 @@ D.campConversationData=record=>{
     }
     if(record.cid==='minji'&&record.previousChoiceId==='sort'&&choice.id==='listen'&&!visits)
       next.label='퓨즈 정리 대신 점검 덮개 소리를 함께 듣는다';
+    if(record.copyRevision==='camp-natural-flow-v1'&&!visits){
+      if(record.cid==='jaeyi'&&choice.id==='shelf')
+        next.text=next.text.replace('재이가 높이를 묻기도 전에 답한다.','높이를 묻기도 전에 재이가 답한다.');
+      if(record.cid==='parkss'&&record.chapter===1&&choice.id==='record')
+        next.text=next.text.replace('"다시 못 지나가도 다음 사람이 이어 읽을 수 있게요."','손을 내밀다가 펼쳐 둔 체온표를 가리켰다.\n\n"선생님, 이 기록부터 같이 봐도 될까요? 다시 못 지나가도 다음 사람이 이어 읽을 수 있게요."');
+    }
     return next;
   })};
 };
